@@ -70,7 +70,7 @@
 
 # クエリカーソル
 * https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=ja
-    * 公式ドキュメントだと初見でカーソルには何を指定できるのか、という点が理解できなかったので以下を参考にした
+    * 公式ドキュメントの内容だけではカーソルが何を指定できるのか、という点が正確に理解できなかったため以下を参考にした
     * 参考
         * https://mokajima.com/how-to-paginate-data-in-cloud-firestore/
 * firestoreではモバイルやWEBのSDKにおいて、クエリでオフセットを指定できない。

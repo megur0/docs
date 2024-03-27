@@ -16,7 +16,7 @@
 * なおバックグラウンドでは .add(...) と .doc().set(...) は完全に同等
 * update
     * 対象のフィールドのみ更新する
-    * フィールドがネストされたものだと、setのmerge:trueと挙動が異なる点に注意。
+    * フィールドがネストされていると、setのmerge:trueと挙動が異なる点に注意。
         * 参考 
             * https://tomokazu-kozuma.com/difference-between-set-and-update-when-updating-cloud-firestore-data/
 * タイムスタンプの取得
