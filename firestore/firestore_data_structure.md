@@ -1,4 +1,4 @@
-- [TOP](./firestore_index.md)
+- [TOP](./README.md)
 - [このメモについて](../README.md)
 
 # 構成要素
