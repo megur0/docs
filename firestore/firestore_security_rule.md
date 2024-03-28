@@ -137,7 +137,7 @@ service cloud.firestore {
 * https://firebase.google.com/docs/firestore/security/rules-fields?hl=ja#partial_writes_are_never_allowed
 
 # セキュリティルールはフィルタではない
-* 例えば、`allow read: if resource.data.visibility == 'public';`　は　publicのものだけを抽出して返してくれるわけではない。
+* 例えば、`allow read: if resource.data.visibility == 'public';`　は　publicのものだけを抽出して返すわけではない。
 * リクエスト内容として、publicなものだけを取得するクエリになっている必要がある。
 * したがってリクエスト結果に1件でもpublicではないものが含まれているとリクエストは拒否される。
 * 取得対象が複数件の場合、すべてのドキュメントの実際のフィールドの値ではなく、結果セットの可能性に対してクエリを評価。一方、ドキュメントIDを使用して単一のドキュメントを取得する場合、セキュリティ ルールと実際のドキュメント プロパティを使用してリクエストを評価。

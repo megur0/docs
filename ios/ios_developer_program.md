@@ -1,0 +1,23 @@
+- [TOP](./README.md)
+- [このメモについて](../README.md)
+
+
+# Apple Developer Program（ADP）
+* Apple社が運営するiOSアプリ開発者の登録制度
+* 法人でも個人でも99米ドル。
+
+# Apple Developer Enterprise Program(ADEP)
+* 組織の社内用のアプリを展開するためのプログラム
+* ADEPは現在実質利用不可能。
+   
+# Develorer Program の種類と配布方法
+* 配布方法
+    * AppStore
+    * AdHoc
+    * Development
+    * InHouse
+        * ADEPのみ。したがって現状は実質不可となる。
+* 参考
+    * https://www.micss.biz/2019/11/28/980/
+
+

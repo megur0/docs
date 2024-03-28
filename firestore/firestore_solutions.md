@@ -35,7 +35,7 @@
     * https://firebase.google.com/docs/firestore/query-data/aggregation-queries?hl=ja
 * 方法2
     * 集約情報をFirestoreに保存: クライアントサイドでトランザクションを実行
-    * クライアントサイドによるトランザクションなので、高度なセキュリティルールとか、オフライン時の失敗とかの考慮が必要。
+    * クライアントサイドによるトランザクションなので、高度なセキュリティルールとか、オフライン時の失敗などの考慮が必要。
 * 方法3
     * 集約情報をFirestoreに保存: Cloud Functionsでトリガーして更新
     * 評価が追加されるたびに Cloud Functions の関数が呼び出されるため、コストが増加する可能性がある。
