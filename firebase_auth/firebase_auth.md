@@ -1,4 +1,4 @@
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 # IDトークン と 更新トークン
 * Firebase Authenticationの認証時にはIDトークンと更新トークン(refresh token)を受け取る。

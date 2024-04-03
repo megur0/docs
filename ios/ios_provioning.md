@@ -1,5 +1,5 @@
 - [TOP](./README.md)
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 # Apple IDの設定
 * Xcodeプロジェクトの設定からApple IDを設定できる

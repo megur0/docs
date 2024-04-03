@@ -1,5 +1,5 @@
 - [TOP](./README.md)
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 
 
@@ -34,7 +34,7 @@
 * 値が空の文字列（""）、null、NaN（数値ではない）でも、フィールドは存在するとみなされる。
 * not-in 、!= クエリ句は、コレクション内の多数のドキュメントに一致する場合があるので注意。
 * 範囲比較（<, <=, >, >=）は、暗黙的にorderByも適用される。
-    * これは該当フィールドのorder-by句を加えたクエリと同等
+    * こちらは該当フィールドのorder-by句を加えたクエリと同等
 * 範囲比較と order-byと最初のフィールドは、同じフィールドである必要がある。
     * 複数のorder-byの場合は、２つ目以降であればOK？
     * https://firebase.google.com/docs/firestore/query-data/order-limit-data?hl=ja#limitations

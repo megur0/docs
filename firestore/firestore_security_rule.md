@@ -1,5 +1,5 @@
 - [TOP](./README.md)
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 
 # セキュリティルール
@@ -122,7 +122,7 @@ service cloud.firestore {
         * 禁止を使うより、必須＋限定の方が、新しいフィールドがデフォルトで禁止されるので安全?
 * フィールドタイプを制限する
     * https://firebase.google.com/docs/firestore/security/rules-fields?hl=ja#enforcing_field_types
-    * スキーマレスなので、同一のフィールドでもドキュメントによって違うタイプを入れることができる。
+    * スキーマレスのため、同一のフィールドでもドキュメントによって違うタイプを入れることができる。
     * セキュリティルールで制限することができる
     * 有効な型：
         * bool、bytes、float、int、list、latlng、number、path、map、string、timestamp

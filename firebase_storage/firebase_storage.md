@@ -1,4 +1,4 @@
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 
 # Cloud Storageをはじめる
@@ -41,5 +41,5 @@ match /users/{userId}/{allPaths=**} {
     * (参考)
         * この`projectViewer:PROJECT_ID`は、IAM バケット ポリシーにのみ適用できる特別なプリンシパルと記載されている。
         * https://cloud.google.com/storage/docs/access-control/iam?hl=ja#convenience-values
-* これはファイル自体は誰でもアクセス可能だが、ファイルの一覧表示は不可となる。
+* こちらはファイル自体は誰でもアクセス可能だが、ファイルの一覧表示は不可となる。
 * `https://storage.googleapis.com/(バケット名)`へアクセスしてもdeniedとなる。

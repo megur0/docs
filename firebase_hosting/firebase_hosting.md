@@ -1,4 +1,4 @@
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 # 既存のプロジェクトへhostingを追加する
 * `firebase logout && firebase login`

@@ -1,5 +1,5 @@
 - [TOP](./README.md)
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 # Firebase Local Emulator Suite
 * https://firebase.google.com/docs/emulator-suite?hl=ja

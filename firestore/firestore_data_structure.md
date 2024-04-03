@@ -1,5 +1,5 @@
 - [TOP](./README.md)
-- [このメモについて](../README.md)
+- [このメモ・独自表記について](../README.md)
 
 # 構成要素
 * https://firebase.google.com/docs/firestore/data-model?hl=ja
