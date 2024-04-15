@@ -51,7 +51,7 @@ Stream<int> countStream(int to) async* {
     return i;
   }).take(5);
   ```
-## （参考）Iterableの作成
+## (参考)Iterableの作成
 * https://dart.dev/guides/language/language-tour#generators
 * Iterableオブジェクトを返す。
 * sync*をつける。

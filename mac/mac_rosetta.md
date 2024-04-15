@@ -46,7 +46,7 @@
     * 例外となるケースでは、明示的に`arch -x86_64 〜` で指定する。
         * 例
             * iOSアプリ開発で使うCocoapods では`pod install`の際、依存先モジュールがARM64に未対応のモジュールがある等でエラーが発生することがある。
-            * その場合は、`arch -x86_64 pod install`することで、podの x86_64のバイナリの方を実行することで対応した。
+            * その場合は、`arch -x86_64 pod install`を実行することで、podの x86_64のバイナリの方を実行することで対応した。
 ## (IME)Terminal 
 * Terminalにも「Rosettaで開く」がある。
 * デフォルトのARM64で開くで良い。
@@ -62,7 +62,7 @@
     * 下記のdiscussionsとかみても、「HOMEBREW_PREFIX: /usr/local」ではなく「HOMEBREW_PREFIX: /opt/homebrew」が適切なように見える。
     * https://github.com/orgs/Homebrew/discussions/4397
     * https://github.com/orgs/Homebrew/discussions/417
-* （参考）x86_64とarm64を併用してしまうと、例えば、下記のようにARM64環境下でインストールをして際に「依存するモジュールがarm64でコンパイルされていない」といったエラーが出た。
+* (参考)x86_64とarm64を併用してしまうと、例えば、下記のようにARM64環境下でインストールをして際に「依存するモジュールがarm64でコンパイルされていない」といったエラーが発生した。
 ```
 brew install cocoapods
 ...
