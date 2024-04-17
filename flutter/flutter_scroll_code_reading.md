@@ -436,9 +436,10 @@
         * https://api.flutter.dev/flutter/widgets/NotifiableElementMixin/onNotification.html
         > Mixin this class to allow receiving Notification objects dispatched by child elements.
         > Return true to cancel the notification bubbling. Return false to allow the notification to continue to be dispatched to further ancestors.
-        * 伝播中の処理や伝播を条件によってキャンセルさせたい際に利用すると考えられる。使う機会は少ない？   
-        * Flutter Framework上で"NotifiableElementMixin"を検索すると、使っている箇所は以下の4つのElementのみだった。現状はスクロール関連でのみ利用されている。
+        * 伝播中の処理や伝播を条件によってキャンセルさせたい際に利用すると考えられる。
+        * Flutter Framework上で"NotifiableElementMixin"を検索すると、使っている箇所は以下の4つのElementだった。
             * _NotificationElement
+                * こちらはNotificationListener(ProxyWidget派生クラス)によってcreateElementされる。
             * _ViewportElement
             * _SingleChildViewportElement
             * _TwoDimensionalViewportElement
