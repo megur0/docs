@@ -109,6 +109,15 @@
     * 新しい Flutter プロジェクトを作成すると、基本的な pubspec が生成される。
     * environment
         * sdk: 対象のdart-sdkのバージョン。
+    * version
+        * アプリのバージョン・ビルド番号の管理
+            * (例) version: 1.0.0+1
+            * この場合ビルド番号は"+1"の部分となる。
+        * バージョン・ビルド番号の管理はpubspec.yamlにて行う。
+            * pubspec.yaml のversionを元に、flutter build コマンド実行時に各OSのネイティブファイルも更新される。
+            * 例えばiOSではGenerated.xcconfigのFLUTTER_BUILD_NAME・FLUTTER_BUILD_NUMBERが更新される。      
+        * ビルド時のオプションで上書きができる。
+            * `flutter build ios --build-name=0.1.2 --build-number=5`            
 * プラグイン関連
     * パッケージにおいて、プラットフォーム固有の機能をFlutterアプリに提供する（例えばデバイスのカメラ機能を使う場合等）ものを特別に「プラグイン（Plugin）」と呼ぶ。
     * プラグインでは以下のファイルが自動生成、更新される
@@ -171,7 +180,21 @@
         * これは内部的にdart 2.12.0以上のときに、最大バージョンを3.0.0未満から4.0.0未満に置き換えるため。
         * 参考
             * https://zenn.dev/yumemi_inc/articles/20230518_dart_sdk_3
-
+## トラブルシューティング
+* Flutter本体をアップグレードした結果、利用するパッケージでエラーが発生
+    * メジャーアップデートでは互換性が壊れる破壊的変更（Breaking change）を伴うことがある。
+    * (例)(IME) qr_flutterパッケージで型エラーとなったケース
+        * パッケージをアップデートする。基本的にpub.devを確認することで更新情報が分かる。
+            * (例: Dart3.0に伴う変更) https://pub.dev/packages/qr_flutter/changelog
+            * 4.0.1で Dart3.0にあわせた変更をしている。（BREAKING: Rename QrImage to QrImageView）
+        * パッケージのアップデートを実行する
+* `Your flutter checkout has local changes that would be erased by upgrading.`
+    * 意図せずにFlutter frameworkのコードを更新してしまっている。
+    * (IME)例えば、コードリーディングをしている際　に 誤って自動フォーマットしてしまった等
+        * 問題なければ`flutter upgrade --force` で更新
+        * 以下でどの箇所が変更されてしまったか確認できる。
+            * `cd /Users/〜〜〜/flutter`
+            * `git diff --stat` 
 
 # パッケージをアップデート
 * https://docs.flutter.dev/release/upgrade#upgrading-packages

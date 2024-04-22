@@ -12,8 +12,6 @@
 # null safety
 * https://dart.dev/null-safety
 * not null が保証されていない（or 保証されていない可能性があるとコンパイラが判断する）変数についてコンパイルエラーを出すこと。
-* 参考
-  * https://medium.com/flutter-jp/null-safety-fe6503a81d5c
 
 # null assertion
 * null safetyのデメリットとして、このチェックはコンパイラの推論によるものであり、実行時にnullになりえないケースでもコンパイルエラーとしてしまうものが多くあること。
@@ -65,3 +63,10 @@ if (a?.b != null) {
  int b = a ?? 4;
  a ??= 3;
 ```
+
+# (参考)null と 値自体が渡されていないことの区別
+* optionalな引数や、名前付き引数において、引数がnullableの際に「nullとして渡されたのか？」「渡されていないのか？」を直接的に区別する事はできない。
+* https://stackoverflow.com/questions/30830592/checking-if-optional-parameter-is-provided-in-dart/30838348#30838348
+* https://www.reddit.com/r/dartlang/comments/u3o43q/can_i_differentiate_between_a_parameter_not_being/
+* これは例えばインスタンス変数をコピーして別オブジェクトを作成するメソッドを実装などで考慮が必要となる。
+  * https://stackoverflow.com/questions/68009392/dart-custom-copywith-method-with-nullable-properties

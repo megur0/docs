@@ -51,8 +51,6 @@
             * 回避方法があるが、開発モードでのビルドかつデバッグモードになっている実機にインストールした時のみ有効。
 
 
-
-
 # Custom URL Schemes と UniversalLinksの 設定
 * 参考
     * https://rnfirebase.io/dynamic-links/usage
@@ -73,20 +71,88 @@
     * apple-app-site-associationの探索はApple CDNのキャッシュが効いている?
         * ユニバーサルリンクを押下した際に動作端末（シミュレーターや実機）はApple CDNを通してapple-app-site-associationを探しに行く。
         * この時に失敗するとおそらくキャッシュが働き、その後apple-app-site-associationをアップロードしてもすぐには成功せず、少しタイムラグが発生した。
+## (参考)apple-app-site-associationのホスティングにFirebase Hostingを利用する場合
+* 参考
+    * https://docs.flutter.dev/cookbook/navigation/set-up-universal-links
+* Firebase Hostingでは、apple-app-site-association をデフォルトでホスティングする。
+* 任意のファイルをアップロードして「https://firebaseのプロジェクトID.web.app/」が有効になると自動的に生成される。
+* firebase hostingを「はじめる」のみでは「https://firebaseのプロジェクトID.web.app/」は有効にならないので注意。
+    * なお、下記のFlutterの手順の場合はfirebaseが自動的に生成することは書かれておらず、手動でapple-app-site-associationをアップロードしている。
+    * https://docs.flutter.dev/cookbook/navigation/set-up-universal-links
 ## Xcodeの設定
 * 手動で設定する場合
     * 「Signing & Capabilities」>「＋ Capability」>「Associated Domains」を追加
         * Domainsを設定
             * 「applinks:xxxxx.xxx.xxx」のように入力
     * カスタムURLスキームを追加
-        * [Info]タブから、URL タイプをプロジェクトに追加。[URL Schemes] フィールドに、アプリのバンドル ID を設定（ID は Bundle ID など自由に設定）
+        * [Info]タブから、URL タイプをプロジェクトに追加。[URL Schemes] フィールドに設定（自由なIDを設定可能。）
 * ファイルで設定
     * Associated Domains
         * ios/Runner/Runner.entitlements　に「com.apple.developer.associated-domains」を設定する。
+        ```
+        <plist version="1.0">
+        <dict>
+            〜〜〜〜
+            <key>com.apple.developer.associated-domains</key>
+            <array>
+                <string>applinks:xxxxx.xxx.xxx</string>
+            </array>
+        </dict>
+        </plist>
+        ```
     * カスタムURLスキーム
         * ios/Runner/Info.plistに設定する
+        ```
+        <plist version="1.0">
+        <dict>
+        〜〜〜〜
+        <key>CFBundleURLTypes</key>
+        <array>
+            <dict>
+                <key>CFBundleTypeRole</key>
+                <string>Editor</string>
+                <key>CFBundleURLName</key>
+                <string>カスタムURL</string>
+                <key>CFBundleURLSchemes</key>
+                <array>
+                    <string>カスタムURL</string>
+                </array>
+            </dict>
+	    </array>
+        </dict>
+        </plist>
+        ```
 ## Apple developerの設定
 * identifierの設定のAssociated Domainsにチェックを入れる
 * 現在使っているProvisioning Profileは無効になるので注意。
 * 再度Profileを開き「save」することで変更を反映して有効化する
 * ローカルのXcode上で再度ダウンロードする。
+
+
+# 動作確認
+* シミュレーター
+    * UniversalLinksは実機でのみ動作する。
+        * シミュレーターで押下しても、ブラウザが開いてしまう。
+        * (?)ただ、WEBの記事ではapple-app-site-associationがアップロードされていればシミュレーターでも機能する、という記載が確認できる。
+            * 現時点で、筆者の手元の環境では機能していない状況。
+            * https://codewithandrea.com/articles/flutter-deep-links/#how-to-test-deep-links-on-ios
+    * Custom URL Schemesは  "customURL://hoge/fuga/" というURLからアクセスすることでアクセス可能。
+        * (例)
+            * ブラウザのURLへ貼り付けて開く
+            * リマイダー等に貼り付けてクリックして開く
+            * コマンドから開く
+                * xcrun simctl openurl booted "customURL://hoge/fuga/"
+* 実機
+    * UniversalLinks、Custom URL Schemesの両方を確認可能
+
+
+
+
+
+
+
+
+
+
+
+

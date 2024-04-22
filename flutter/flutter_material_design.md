@@ -177,8 +177,30 @@ main() => runApp(MaterialApp(
 
 ```
 
+# その他
+## (参考)Scaffoldウィジェットを親とするかどうかでテキストの表示が異なるのはなぜか？
+* 例えば下記で標準出力へ出力されるスタイルや画面に表示されるテキストはScaffoldで囲むかどうかによって異なる。
+```
+main() => runApp(const MaterialApp(
+        //theme: theme,
+        home: Scaffold(
+      body: MyApp(),
+    )));
 
-
-
-
-
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+  @override
+  Widget build(BuildContext context) {
+    debugPrint(DefaultTextStyle.of(context).style.toString());
+    return const Text("test");
+  }
+}
+```
+* Scaffold内部ではMaterial/_MaterialStateクラスを使っていて、_MaterialState.build()で Theme.of(context).textTheme.bodyMedium!をstyleに適用しているため。
+    ```
+    contents = AnimatedDefaultTextStyle(
+        style: widget.textStyle ?? Theme.of(context).textTheme.bodyMedium!,
+        duration: widget.animationDuration,
+        child: contents,
+    );
+    ```

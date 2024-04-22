@@ -108,6 +108,18 @@ void a() {} // トップレベルの関数はconstとなる
 * https://github.com/dart-lang/language/issues/1048
 
 
+# (参考)引数のデフォルト値のconstは省略ができない。
+* 下記はエラーとなる。
+  ```
+  void f([List<int> a = []]) {} // エラー: The default value of an optional parameter must be constant.
+  ```
+* エラーは`void f([List<int> a = const []]) {}` とすると解消する。
+* `[]`の時点でconstになると筆者は考えてしまったが、constをつけなければconstとはならない。
+* なお下記は右辺がconstと推論されるためエラーにならない。
+  ```
+  const List<int> a = []; // エラーにならない
+  ```
+
 # late
 * トップレベル変数やクラス変数の初期化処理は、その変数が初めて使われる際に実行される。（lazily initialized）
 * 変数は使われるときまでに初期化されていれば良いが、それをコンパイラが上手く検出できないときがあり、その場合にlateを利用する

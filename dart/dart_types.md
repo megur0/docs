@@ -182,3 +182,8 @@ void main() {
     }
   }
   ```
+
+# typedef
+* https://dart.dev/language/typedefs
+* パブリックAPIにおいてはプライベートのtypedefはできない
+  * https://github.com/dart-lang/linter/issues/4658

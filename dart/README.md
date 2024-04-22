@@ -13,7 +13,7 @@
 
 * [オブジェクト](./dart_object.md)
 
-* [組み込み型](./dart_basic_type.md)
+* [型](./dart_types.md)
 
 * [Null](./dart_nullable.md)
 
@@ -42,3 +42,7 @@
 * [Json](./dart_json.md)
 
 * [日時](./dart_datetime.md)
+
+* その他
+    * [ライブラリ(随時整理)](./dart_etc_library.md)
+    

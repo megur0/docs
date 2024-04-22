@@ -26,3 +26,39 @@
 
 # About Dart
 * [Dart](../dart/dart_introduction.md)
+
+
+# (参考)React Nativeとの比較した各機能
+* https://docs.flutter.dev/get-started/flutter-for/react-native-devs
+* JSとの比較
+    * null safeである
+    * 値の初期値はnull
+    * ifで使える値はboolean型のみ。
+    * 非同期処理は似ている。
+* ウィジェットはReact Nativeのコンポーネントに該当する。
+    * Reactのpropsのようにwidgetに引数を渡す。
+    * Flutterではスクリーン自体もウィジェットとなる。
+* 状態を持つStatefulWidget(State)とStatelessWidgetの２つに分かれている
+    * Flutterの場合は、ウィジェットが状態を持つか否かはどちらを継承するかによって決める。
+    * ReactはどちらもReact.FC型の関数で、状態管理はuseStateに寄って行う。
+* 状態の変更はState.setState() によってフレームワークに伝え、フレームワークによるリビルドによってStatefulWidgetとStatelessWidgetのbuildメソッドが呼ばれる。
+* React Nativeのviewコンポーネントに相当するwidgetはContainer, Column, Row, and Center等。
+* React NativeのFlatList、 SectionListに相当するウィジェットはListView
+* キャンバス系はCustomPaint 
+* ReactNativeの場合はviewコンポーネントでstyle propsによってスタイルでレイアウトを調整するが、Flutterの場合は各ウィジェットとコントロールウィジェットによって行う。
+* アイコン系はIconクラスやCupertino (iOS-style) パッケージ
+* テーマはThemeData
+* ローカルストレージはSharedPreferences。
+* React Nativeの場合は 主要なナビゲーターはStackNavigator, TabNavigator, DrawerNavigatorの３つだがFlutterの場合はRouteとNavigatorで構成される。
+    * A Route
+        * Abstraction for an app screen or page.
+    * A Navigator
+        * Widget that manages routes.
+* タブに関しては TabController、TabBar、Tab、TabBarView
+* ドローワーナビは Drawer。
+    * AppBarはドローワーが利用可能な際にメニューを表示
+* httpによるデータ取得はhttpパッケージを利用する。
+* 入力はTextField, TextFormField.
+    * TextEditingControllerを利用して管理する。
+* プラットフォームの取得や判定は`Theme.of(context).platform`
+* アニメーションはAnimation、AnimationController

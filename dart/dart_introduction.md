@@ -48,6 +48,14 @@
     * https://api.flutter.dev/index.html
 
 
+# クラス、OOP志向
+* DartやOOP, クラスを中心としたプログラミング
+* Flutterのウィジェットはクラス
+* Reactのコンポーネントは関数
+    * https://ja.react.dev/learn/your-first-component#defining-a-component
+    > React コンポーネントとは、マークアップを添えることができる JavaScript 関数
+
+
 
 # Dartコードのコンパイル
 * https://docs.flutter.dev/resources/faq#run-ios

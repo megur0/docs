@@ -35,7 +35,7 @@
     * 参考
         * https://zenn.dev/tkow/scraps/8160da23277fb8
 
-
+必要は
 # Firestore エミュレータ
 * Emulator Suite UIでは、Firebase セキュリティ ルールの評価トレースなどを行うことができる。
 * トランザクション

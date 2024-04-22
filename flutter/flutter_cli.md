@@ -23,10 +23,11 @@
     * `flutter create --org com.example your_project_name`
     * サンプルプロジェクトから作成
         * `flutter create --sample=widgets.PageStorage.1 mysample`
+        * APIのドキュメントにサンプルの名前が記載されているものもある。
 
-# クリーン
-* `flutter clean`
-* build/と.dart_tool/ ディレクトリを削除
+# flutterのインストール状態の確認
+* `flutter doctor`
+* 各種ツールチェインが正常にインストールされていることを確認
 
 # pub系コマンド
 * `flutter pub get`
@@ -53,8 +54,19 @@
 * `flutter run -d デバイス`
 * pub get、ビルド、インストール、実行まで全てを行う。ホットリロードなどのショートカットも表示される
 * モードの指定
-    * --debug, --release, --profile
-    * デフォルトでは--debugとなっている。
+    * https://docs.flutter.dev/testing/build-modes
+    * --debug(デフォルト)
+        * JITコンパイルでHOTリロードが利用可能
+        * アサーションが有効となっている。
+        * なお、端末上でアプリアイコンをタップすることで再度開くことはできない。
+            * profileモード以上が必要。
+    * --profile
+        * リリースに近いパフォーマンスとなる。
+        * パフォーマンスの分析が可能。
+    * --release
+        * ホットリロード等のデバッグ機能は利用できない。(AOTコンパイルとなる)
+        * iOSシミュレータが利用できない
+        * リリース時のパフォーマンスを確認できる。
 * --[no-]build
     * ビルドを行うか否かを指定。
     * デフォルトは--build
@@ -74,10 +86,14 @@
             * https://zenn.dev/tatsuyasusukida/scraps/a740047660e72e
 
 
+
 # ビルド、インストール
 * `flutter build`
 * `flutter install`
 
+# クリーン
+* `flutter clean`
+* build/と.dart_tool/ ディレクトリを削除
 
 # デバイスのデタッチ・アタッチ
 * https://docs.flutter.dev/add-to-app/debugging

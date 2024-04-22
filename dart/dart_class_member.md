@@ -79,7 +79,7 @@ void main() {
   * enumもclass内に入れることはできない。
 
 
-# (IME) プライベートクラスの中のメンバーはプライベートにする必要はあるか?
+# (IME) プライベートクラスの中のメンバーはプライベートとした方が良いか?
 * いずれにせよ同じライブラリ内でのみアクセス可能となるため、意味は無い?
 
 
@@ -132,6 +132,25 @@ class B2 {
   * 諦める。
 
 
-
-
+# (参考) Dartのsetter
+* 呼び出し側からは、setterの内部処理はブラックボックスとなる。
+    ```
+    main() {
+        final a = A(1);
+        print(a.f);// 1
+        a.f = 2;// 一般的にはfには2が代入されるように見える。
+        print(a.f);// 3
+    }
+    class A {
+        A(this._f);
+        int _f = 1;
+        int get f => _f;
+        set f (int fa) {
+            _f = fa + 1;
+            // ...
+        }
+    }
+    ```
+* 関連
+    * https://dart.dev/effective-dart/design#do-use-setters-for-operations-that-conceptually-change-properties
 

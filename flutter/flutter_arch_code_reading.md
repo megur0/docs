@@ -30,7 +30,7 @@
 
 # WidgetとElementのクラス図
 
-![](./svg/flutter_widget_element_class.drawio.svg)
+![](./svg/arch_code_reading/flutter_widget_element_class.drawio.svg)
 
 # フレーム処理
 ## runApp実行時の流れ
@@ -53,7 +53,7 @@
 
 * 以下はSchedulerBindingsの各フェーズとdrawFrameの各処理の概要を図にしたものである。
 
-<img src="./svg/flutter_frame_abst.drawio.svg" width="50%"><br/><br/>  
+<img src="./svg/arch_code_reading/flutter_frame_abst.drawio.svg" width="50%"><br/><br/>  
 
 1. dirtyな各Elmentに対して、rebuild()によってツリーがアップデートされる。
     * 具体的な処理は各ElementのperformRebuildメソッドの実装に従う。
@@ -72,11 +72,11 @@
 ## レンダーツリー構築に焦点を当てた図
 * 以下はrunApp(ウィジェット)を実行した際に内部で行われるレンダーツリー構築の流れを図にしたものである。
 
-![](./svg/flutter_render_tree.drawio.svg)
+![](./svg/arch_code_reading/flutter_render_tree.drawio.svg)
 
 ## クラス図と処理の流れ
 
-![](./svg/flutter_run_app_flow.drawio.svg)
+![](./svg/arch_code_reading/flutter_run_app_flow.drawio.svg)
 
 * RenderObject
     * あるサブツリー上のRenderObjectは同じownerとなる。
@@ -132,7 +132,7 @@
 
 * 以下はStateに関連するクラスとメソッド、処理を表記した図
 
-    ![](./svg/flutter_class_relate_to_state.drawio.svg)
+    ![](./svg/arch_code_reading/flutter_class_relate_to_state.drawio.svg)
 
     * Elementのupdate
         * Stateクラスのライフサイクルにおいて使われるメソッドState.didUpdateWidgetは、このupdateメソッドから呼ばれる。
@@ -182,6 +182,30 @@
             * https://github.com/flutter/engine/tree/main/shell/platform/darwin/ios
         * fuchsia
             * https://github.com/flutter/engine/tree/main/shell/platform/fuchsia
+* (IMO)GlobalKeyクラスとWidgetsBindingインスタンスの結合
+    * GlobalKey.currentContextでは、現在のBuildContextを取得することができる。
+    * 内部の実装としてはWidgetsBindingのシングルトンが持つマップを参照している。
+        ```
+        abstract class GlobalKey<T extends State<StatefulWidget>> extends Key {
+            //...
+            Element? get _currentElement => WidgetsBinding.instance.buildOwner!._globalKeyRegistry[this];
+            BuildContext? get currentContext => _currentElement;
+            //...
+        }
+        ```
+    * BuildOwnerクラスでは以下のように_globalKeyRegistryを定義していて_registerGlobalKeyによって登録を行っている。
+        ```
+        final Map<GlobalKey, Element> _globalKeyRegistry = <GlobalKey, Element>{};
+        void _registerGlobalKey(GlobalKey key, Element element)
+        ```
+    * この結合が(筆者にとって)問題となったシーン
+        * 通常のアプリケーション開発で行うことはまず無いが、FlutterではWidget.createElement()やElement.mount()を直接呼び出すと自前でレンダリングツリーを作ることが可能である。
+        * ただ、そのウィジェットツリーの中で、上記のcurrentContextを参照しているウィジェットを利用するとエラーとなってしまう。 
+        * 例えばListTileはInkクラスを内部で使っていて、その_InkStateクラスが以下の行でnull assertionでエラーとなってしまう。
+            ```
+            referenceBox: _boxKey.currentContext!.findRenderObject()! as RenderBox,// WidgetsBinding.instance.buildOwner!._globalKeyRegistry[this]には存在しないためエラーとなる。
+            // ※ _boxKeyは、final GlobalKey _boxKey = GlobalKey();　として生成されている。
+            ```
 * 下記の内容については（体力が尽きたため）コードリーディングしていない。
     * activate, deactivate
     * アンマウント（dispose）系の処理

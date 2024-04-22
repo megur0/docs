@@ -24,7 +24,7 @@
 
 # ScrollableState, ScrollPosition, ScrollActivity
 
-![](./svg/flutter_scroll_activity_class.drawio.svg)
+![](./svg/scroll_code_reading/flutter_scroll_activity_class.drawio.svg)
 
 
 ## ScrollableStateのビルド
@@ -126,13 +126,13 @@
 
 * 下記の図はビルド・レイアウトフェーズにおいてListViewのbuildメソッド以降で生成されるWidgetとRenderObjectの階層を表した図となる。<br/><br/>
 
-![](./svg/flutter_scroll_view_build.drawio.svg)
+![](./svg/scroll_code_reading/flutter_scroll_view_build.drawio.svg)
 
 <br/>
 
 * 下記の図はListViewを起点として生成されるViewportやSliver、それらのElementとRenderObject、関連するクラスと処理の流れを表記している。<br/><br/>
 
-![](./svg/flutter_scroll_view_class.drawio.svg)
+![](./svg/scroll_code_reading/flutter_scroll_view_class.drawio.svg)
 
 * 前提としてListViewに関連するクラスの一部を以下に示す。
     * ScrollView
@@ -367,13 +367,13 @@
 
 # Scrollbar
 * 以下はスクロールバーに関連するクラスと処理の流れを表した図となる。<br/><br/>
-![](./svg/flutter_scroll_bar_class.drawio.svg)
+![](./svg/scroll_code_reading/flutter_scroll_bar_class.drawio.svg)
 
 <br/>
 
 * 以下はRawScrollbarState.build()によって生成されるウィジェットの階層を表した図となる。<br/><br/>
 
-<img src="./svg/flutter_scroll_bar_build_widget.drawio.svg" width="70%">
+<img src="./svg/scroll_code_reading/flutter_scroll_bar_build_widget.drawio.svg" width="70%">
 
 <br/>
 
@@ -424,7 +424,7 @@
 ## (参考)その他
 * AppBarはスクロールを開始位置から動かすと背景色が透過するが、これはAppBar内部で下記のように処理されている。
 
-    ![](./svg/flutter_scroll_app_bar.drawio.svg)
+    ![](./svg/scroll_code_reading/flutter_scroll_app_bar.drawio.svg)
 
 * Notification
     * https://api.flutter.dev/flutter/widgets/Notification-class.html

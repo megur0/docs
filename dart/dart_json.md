@@ -35,6 +35,12 @@ assert(firstScore['score'] == 40);
 ```
 
 
+# (参考)比較対象: Go言語
+  * Goの構造体 <=> jsonのように、オブジェクト（クラス）をjsonに直接変換できる。
+* Dartの場合、まずはMapオブジェクトとしてからjsonへ変換する必要がある。
+
+
+
 # Flutter
 * https://docs.flutter.dev/development/data-and-backend/json
 * flutterでのjsonの一般的な取り扱いは2種類あり、dart:convertパッケージをつかった方法とコードジェネーションを使った方法がある。

@@ -16,6 +16,12 @@
   > Note: When the library directive isn’t specified, a unique tag is generated for each library based on its path and filename. Therefore, we suggest that you omit the library directive from your code unless you plan to generate library-level documentation.
 
 
+# (参考) Dartの名前空間名前空間について
+* 比較対象: Go
+  * Go言語の場合はimportしたパッケージはデフォルトでパッケージ名で名前空間が分けられる。（アクセスの際はパッケージ名.xxxとなる）
+* importしたライブラリは別々の名前空間とはならない。
+* 衝突する場合はimportの際にプレフィクスを指定する必要がある。
+
 # エントリーポイント
 * エントリーポイントはmain関数となる
 * mainは引数指定可能。

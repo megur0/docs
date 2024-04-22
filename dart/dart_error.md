@@ -72,7 +72,10 @@ assert(number < 100);
 assert(urlString.startsWith('https'));
 ```
 
+
 # その他
+* StackTraceの取得
+  * `main() => print(StackTrace.current);`
 * Dartで定義されているError, Exceptionクラス
     * 参考
         * https://www.cresc.co.jp/tech/java/Google_Dart2/language/exceptions/exceptions.html

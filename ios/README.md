@@ -3,7 +3,7 @@
 
 # iOS develop(執筆中)
 
-[導入](./ios_developer_program.md)
+[導入](./ios_introduction.md)
 
 [Xcodeプロジェクトの構成](./ios_project.md)
 
@@ -12,3 +12,6 @@
 [ローカルデータ](./ios_local_data.md)
 
 [ディープリンク](./ios_deep_link.md)
+
+* その他
+    [iOSシミュレーターの操作](./ios_simulator.md)

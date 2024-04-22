@@ -65,17 +65,18 @@
             * https://i-app-tec.com/ios/apply-application.html
     * 現在は、XcodeのPreference から作成できる。
         * Accounts > Apple IDsで対象のアカウントを選択（登録してなければ、「+」から追加）
-        * 右下で、対象のチームを選択して「Manage Certificates」>「+」にて作成できる。
+        * 右下で、対象のチームを選択して「Manage Certificates」>「+」>「Apple Development」にて作成できる。
         * 参考
             * https://xyk.hatenablog.com/entry/2020/10/29/171732
 * 仕様上、同じ証明書が２つ存在するとエラーとなる?
     * 既に証明書を作成済みの状態でdevelopの証明書をXcodeで作成すると、現在のプロジェクトのProvisioning profile上でエラーが発生した。なお削除するとエラーは消えた。
         * `Provisioning profile "XXXXXX" doesn't include signing certificate YYYY`
-* 証明書の削除
+* 証明書の無効化・削除の方法
     * apple developerのサイトから「Revoke」を行う。
-        * なお、Preference > Account　からは削除できない。（クリックしてもdelete メニューが非アクティブとなっている）
-    * ローカル上でも削除する
-        * アプリケーション>ユーティリティ>キーチェーンアクセスを開き、証明書から対象の証明書を削除する
+        * Preference > Account　からはこの操作はできない。（クリックしてもdelete メニューが非アクティブとなっている）
+    * Revoke済みの証明書をローカル上でも削除する
+        * アプリケーション>ユーティリティ>キーチェーンアクセスを開き、ログイン > 証明書からRevokeした証明書を削除する
+        * 削除後はXcodeを再起動するとPreference > Accountからも消える。
     * 参考
         * https://qiita.com/warapuri/items/2a32cb2201ce75aa5f4b
 
@@ -109,10 +110,11 @@
 * 期限は1週間になる。
 * 対象のIDがApple Developerの「Identifier」に登録されていない場合は、自動で「Identifier」に登録し、それがProvisioning Profileに使われる。
     * このとき、Automatically manage signingの場合は、Bundle IDが *（ワイルドカード）となる。
-    * Automatically manage signingにおいても、通常のIDと同じように世界で一意なものになる点に注意。（Provisioning Profileの有効期限が切れれば無効になる。）
-    * (参考）
-        * https://halzoblog.com/apple-developer-app-id/
-        * https://zenn.dev/usamaru/articles/725b759d6a9561
+* Automatically manage signingにおいても、通常のIDと同じように世界で一意なものである必要がある点に注意。
+* Provisioning Profileの有効期限が切れればIDも無効となる。
+* 参考
+    * https://halzoblog.com/apple-developer-app-id/
+    * https://zenn.dev/usamaru/articles/725b759d6a9561
 
 # 実機確認
 * 実機にインストールするためには、対象のApp ID、対象のデバイス（UDID）、チームに対する開発者の本人確認が必要で、それが含まれるProvisioning Profileが必要。
