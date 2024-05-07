@@ -2,13 +2,15 @@
 - [このメモ・独自表記について](../README.md)
 
 
+# VSCodeのFlutter環境の構築
+* [環境構築・アップデート](./flutter_install_update.md)を参照
+
 # Devtools
 * https://docs.flutter.dev/tools/devtools/overview
     > DevTools is a suite of performance and debugging tools for Dart and Flutter.
 * 参考
     * https://marble-heroes.com/blog/cqldl6nt3xgw
  
-
 # （こちらを推奨）VSCode上でDevtoolsを利用する
 * Flutter extension for VS Codeを入れることでVSCode上でDevtoolsを使用可能となる。
 * VSCode上で実行すると、自動的にDevtools上の出力を「DEBUG CONSOLE」へ出力する。
@@ -16,7 +18,6 @@
 * 「Run and Debug」パネルからDevtoolsのブレークポイントやログの設定ができる。
     * Devtoolsに組み込まれたUIと異なり、リスタートしてもブレークポイントがリセットされない。
         * IMO) DevtoolsのUIよりも高機能となっている。
-
 
 # コマンドラインからDevtoolsを利用する
 * flutter runから起動する
@@ -70,12 +71,56 @@
         * 引数の型はObject?型
         * 記述すると警告が表示される。
 
-
 # (参考)VSCode vs コマンドライン+Devtools
 * FlutterチームはVSCodeを推奨
     > If you write Flutter apps only with Dart code, you can debug your code using your IDE’s debugger. The Flutter team recommends VS Code.
     * https://docs.flutter.dev/testing/native-debugging
 
 
-# VSCode
-* [環境構築・アップデート](./flutter_install_update.md)を参照
+# 様々なdebugフラグやメソッド
+* https://docs.flutter.dev/testing/code-debugging
+* 例えばエディタ上で"debug"と打つと様々なデバッグのグローバルなフラグやメソッドがレコメンドされる。
+* これらのメソッドや、フラグをtrueにすることで様々な情報を確認する事ができる。
+* 具体的にどの箇所で出力・実行されているかはFlutterのコードを読むと良い。
+* スタックトレースを出力
+    * debugPrintStack();
+* 階層構造の出力
+    * debugDumpApp()
+        * runApp()によって構成されるウィジェットの階層を出力
+        * 多くのFlutter標準のウィジェットはbuild()内で別のウィジェットやプライベートなウィジェットを生成する。
+        * これらのオブジェクトを目視で確認するために便利なメソッド
+    * debugDumpRenderTree()
+        * RenderObjectのツリーを出力
+    * debugDumpLayerTree()
+        * Layerのツリーを出力。LayerはRenderObjectのツリーから生成された合成レイヤーである。
+    * debugDumpSemanticsTree();
+        * SemanticsNodeのツリーを出力
+* フレームやレンダリングパイプラインのデバッグ
+    * debugPrintBeginFrameBanner
+        * フレームのスタート時にコンソールにバナーを出力
+    * debugPrintEndFrameBanner = true;
+        * フレームの終了時にコンソールにバナーを出力
+    * debugPrintRebuildDirtyWidgets
+        * Element.rebuild()のコールの度に対象のElementの情報が出力される
+        * コールバックを渡す方法もある: debugOnRebuildDirtyWidget
+    * debugPrintMarkNeedsLayoutStacks, debugPrintMarkNeedsPaintStacks
+        * RenderObject.markNeedsLayout()やmarkNeedsPaint()の際にデバッグメッセージを出力
+    * debugPrintBuildScope
+        * BuildOwner.BuildScope()が呼び出された際に出力
+    * debugPrintScheduleFrameStacks
+        * フレームのスケジューリングが行われた時にデバッグメッセージを出力
+* UI上にデバッグ表示を表示
+    * debugPaintLayerBordersEnabled
+        * 各レイヤーの境界を表示する
+    * debugRepaintRainbowEnabled
+        * 各ウィジェットの周囲に色付きの境界線を表示する
+* ※ 上記以外にも多くのフラグやメソッドがある。
+
+
+# パフォーマンス測定(未読)
+* https://docs.flutter.dev/testing/code-debugging#trace-dart-code-performance
+* TODO
+
+# アニメーションのデバッグ(未読)
+* https://docs.flutter.dev/testing/code-debugging#debug-animation-issues
+* TODO

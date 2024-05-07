@@ -10,14 +10,12 @@
 
 # Flutter
 
-* [導入説明](./flutter_introduction.md)
+* [導入(About Flutter)](./flutter_introduction.md)
 
 * 環境
     * [環境構築・アップデート](./flutter_install_update.md)
 
     * [CLI](./flutter_cli.md)
-
-    * [Devtools](./flutter_debug.md)
 
     * [Firebase](./flutter_flutterfire.md)
 
@@ -36,6 +34,8 @@
     * [レイアウト](./flutter_layout.md)
 
     * [主なウィジェット](./flutter_widget.md)
+
+* [デバッグ](./flutter_debug.md)
 
 * エラー
     * [エラーハンドリング](./flutter_error_handling.md)

@@ -467,6 +467,7 @@ flutter: future after runApp
 * PipelineOwnerのオブジェクトは下記のような構成となる。
     * ※ 現在(v3.19.6)ではrunAppからRendererBinding.pipelineOwnerが_deprecatedPipelineOwnerとして渡されている。
     * v4以降は_deprecatedPipelineOwnerは廃止されるかnullとなり_RawViewElement内で生成されたオブジェクトがeffectivePipelineOwnerへ設定されると考えられる。
+    * debugDumpPipelineOwnerTree()によってPipelineOwnerの階層構造をプリントすることができる。
 
     <img src="./svg/arch_code_reading/flutter_pipeline_owner.svg" width="65%"><br/><br/>  
 
