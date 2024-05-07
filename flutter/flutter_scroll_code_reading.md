@@ -57,7 +57,7 @@
     3. ドラッグ終了/キャンセル（ドラッグが終了）
     4. スクロールアニメーション
 * ScrollState内の子ウィジェットであるRawGestureDetectorによってドラッグなどの操作を検出され、ScrollPosition(ScrollPositionWithSingleContext)からDragContollerオブジェクトが生成される。
-* ドラッグ中はDragContoller -> 委譲クラスのScrollActivityDelegate(具象はScrollPositionWithSingleContext).applyUserOffset()によってオフセットが更新されてリレイアウト・リレンダリングされる。
+* ドラッグ中はDragContoller -> 委譲クラスのScrollActivityDelegate(具象はScrollPositionWithSingleContext).applyUserOffset()によってオフセットが更新されて再レイアウト・レンダリングされる。
 * ドラッグを終了した時点で下記が行われる。
     * その区間の時間と距離から速度(velocity)が算出され、以降の時間経過に対するスクロールの物理的な移動距離を算出する Simulation オブジェクトが生成される。
     * BallisticScrollActivityが生成され、そのオブジェクトでAnimationオブジェクトのライフサイクル（生成・開始・破棄）の管理と委譲クラス（ScrollActivityDelegate）を通じてスクロールのオフセットのアップデートを行う
@@ -66,11 +66,11 @@
     * これはTickerというフレーム毎の処理をアニメーションフレームとして抽象化したクラスにコールバックとして渡す。
     * 内部ではTickerはコールバックを_transientCallbacksとして登録する。
         * アクティブである限りコールバック実行後に再度コールバックを_transientCallbacksへ登録することで連続したフレームで処理が行われる。
-    * _transientCallbacksは_persistentCallbacksの前（リビルド・リレイアウト・リレンダリング）に実行される。
+    * _transientCallbacksは_persistentCallbacksの前（リビルド・再レイアウト・レンダリング）に実行される。
     * https://api.flutter.dev/flutter/scheduler/Ticker-class.html
 * Animation.valueの値を使って、BallisticScrollActivityは(委譲クラスを通じて)スクロールのオフセットのアップデート（ScrollActivityDelegate.setPixels()）を行う。
-* オフセットがアップデートされると、ChangeNotifierを継承したScrollPosition.notifyListenerが呼ばれ、マウント時にaddListenerされているmarkNeedsLayoutが呼ばれてリレイアウト・リレンダリングされて画面へ反映される。
-* このAnimationオブジェクトによる値の更新とオフセットのアップデート・markNeedsLayoutとリレンダリングが毎フレーム繰り返されることで、スクロール画面が動いているように見える。
+* オフセットがアップデートされると、ChangeNotifierを継承したScrollPosition.notifyListenerが呼ばれ、マウント時にaddListenerされているmarkNeedsLayoutが呼ばれて再レイアウト・レンダリングされて画面へ反映される。
+* このAnimationオブジェクトによる値の更新とオフセットのアップデート・markNeedsLayoutとレンダリングが毎フレーム繰り返されることで、スクロール画面が動いているように見える。
 
 ## (参考)ScrollController.onAttach
 * ScrollContollerを使ったScrollPositionの各種メソッドの実行
@@ -86,13 +86,13 @@
         }
         ```
 * そのため、よくある手段としてWidgetsBinding.instance.addPostFrameCallbackで渡すコールバック内でScrollContoller.positionを参照する処理を行う手段がある。
-* しかし、この時点ではすでにリビルド・リレイアウト・画面へのリレンダリングは終わっている点に注意する必要がある。
+* しかし、この時点ではすでにリビルド・再レイアウト・画面へのレンダリングは終わっている点に注意する必要がある。
     * WidgetsBinding.instance._postFrameCallbacksはフレームの最後に実行される
     * ほとんどのユースケースでは上記は問題にならず、WidgetsBinding.instance.addPostFrameCallbackで十分。
-* 例えば描画前にスクロールのオフセットを変更したい（※）といった場合は、リレイアウトの前に実行する必要がある。
+* 例えば描画前にスクロールのオフセットを変更したい（※）といった場合は、再レイアウトの前に実行する必要がある。
     * ※ 基本的にアプリケーション開発でこのような要件が発生することは少ないかもしれない。
     * 実際にaddPostFrameCallbackでオフセットを変更してみると1フレーム遅れてオフセットの変更が画面に反映されることが確認できた。
-* アタッチ〜リレイアウトの前に実行する方法
+* アタッチ〜再レイアウトの前に実行する方法
     * ScrollController.onAttachを利用する。
         * ScrollPostionがアタッチされた直後に実行されるため、確実にエラーを回避できる。
     * (参考)
@@ -228,7 +228,7 @@
 * (参考)ScrollPosition.applyContentDimensions()
     * https://api.flutter.dev/flutter/rendering/ViewportOffset/applyContentDimensions.html
     * スクロールの表示領域のextentを設定することができるものの、以下のような仕様を理解して使う必要がある。
-        1. このAPIは、RenderViewport.performLayout()から呼ばれている。（リレイアウトのたびに実行）
+        1. このAPIは、RenderViewport.performLayout()から呼ばれている。（再レイアウトのたびに実行）
         2. レイアウトフェーズ（performLayoutの実行中）で呼ばないとエラーとなる関数を内部で呼んでいる。
             * ScrollPosition.applyContentDimensions ->  ScrollPositionWithSingleContext.applyNewDimensions -> context.setCanDrag -> replaceGestureRecognizers
             ```
@@ -382,8 +382,8 @@
 * RawScrollbarStateはこのNotificationオブジェクトを監視して、その内容によってスクロールバーの描画情報（ScrollbarPainter）を更新してmarkNeedsPaintを呼び再描画する
 * また、スクロールバーのThumb(つまみ)をドラッグする事でScrollPostionのオフセットが更新されるが、これはRawScrollbarStateがScrollPosition.jump()を呼ぶ事で更新を行っている。
     * ScrollPostion.jumpTo()（実際にはその具象クラスのjumpTo()）によって
-        * ScrollPosition.pixelsがアップデートされてmarkNeedsLayoutが呼ばれ次回フレームでリレイアウト・リレンダーされる。
-        * ScrollNotificationが伝搬されてRawScrollbarStateが受け取り次回フレームでリレンダーされる。
+        * ScrollPosition.pixelsがアップデートされてmarkNeedsLayoutが呼ばれ次回フレームで再レイアウト・レンダリングされる。
+        * ScrollNotificationが伝搬されてRawScrollbarStateが受け取り次回フレームでレンダーされる。
 
 * CupertinoApp, MaterialAppでは、実行環境がlinux, macOS, windowsの場合は明示的に宣言しなくてもスクロールバーが表示される。
     * 下記ではScrollbarウィジェットを指定していないが、上記のOS上で実行するとスクロールバーが表示される事が確認できる。(上記以外は表示されない。)

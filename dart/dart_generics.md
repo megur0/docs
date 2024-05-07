@@ -47,3 +47,25 @@ Future<Response<T>> request<T>(Uri url, T Function(Map<String, dynamic> json) co
   return (code:res.statusCode, data:data);
 }
 ```
+
+# Genericsの型に対してnewはできない
+* 例えば下記のような処理は不可
+  ```
+  import 'package:flutter/material.dart';
+
+  mixin CreateElement<T extends State> on StatefulWidget {
+    @override
+    T createState() => new T(); // エラー
+  }
+
+  class SW extends StatefulWidget with CreateElement<S> {
+    const SW({super.key});
+  }
+
+  class S extends State<SW> {
+    @override
+    Widget build(_) => Text("");
+  }
+  ```
+* 関連
+  * https://github.com/dart-lang/sdk/issues/30074

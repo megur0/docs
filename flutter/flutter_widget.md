@@ -14,6 +14,31 @@
     * 内部実装では継承はかなり多い。
     * ただ、責務が異なる機能はCompositionの使用、同じ責務のクラスの拡張は継承という使い分けがされている。
 
+# ウィジェットは@immutable
+* Widgetクラスは@immutableになっている
+    ```
+    @immutable
+    abstract class Widget extends DiagnosticableTree {
+        //...
+    }
+    ```
+* したがってconstコンストラクタではない場合はアナライザによって警告が表示される。
+    * https://dart.dev/tools/diagnostic-messages#must_be_immutable
+
+    ```
+    class A extends StatelessWidget {
+    A({super.key, this.a = true});
+    bool a;
+
+    @override
+    Widget build(BuildContext c) {
+        return const Text("a");
+    }
+    }
+    // This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: A.adartmust_be_immutable
+    ```
+
+
 # ステートレス、ステートフルなウィジェット
 * ステートレスなウィジェット
     * Icon, IconButton, Text 等
@@ -55,6 +80,7 @@
 * OverflowBox
 * LimitedBox
 * FittedBox
+* Table, DataTable
 
 # テキスト関連
 * Text

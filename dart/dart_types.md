@@ -3,6 +3,16 @@
 
 
 
+# Dartsの型システム
+* https://dart.dev/language/type-system
+* Dartはタイプセーフ
+* 静的型チェックと実行時チェックを組み合わせて使用する。
+* 静的型チェックの利点の 1 つは、Dart の静的解析を使用して実行前に不具合を発見できること
+## sound type system
+* 健全な型システムとは、ある式が評価されたときに、その式の静的型と一致しない値が返されるような状態にならないことを意味する
+* Java や C# の型システムと同様にDartも健全な型システムである。
+
+
 # 型
 * num
 * int, double
@@ -63,6 +73,7 @@ print(runes); // [68, 97, 114, 116]
 
 # Iterable
 * https://dart.dev/codelabs/iterables
+* https://api.dart.dev/stable/3.3.4/dart-core/Iterable-class.html
 * コレクション
   * 要素と呼ばれるオブジェクトのグループを表すオブジェクト
 * Iterable 
@@ -78,6 +89,21 @@ var list = [
   'Boat',
   'Plane',
 ];
+```
+```
+void main() {
+ void main() {
+  final l = [3,2,5,7,0];
+  l.sort((int a, int b) => a - b);// 昇順
+  print(l);
+  l.sort((int a, int b) => b - a);// 降順
+  print(l);
+  l.sort((int a, int b) => a.compareTo(b));// 昇順
+  print(l);
+  l.sort((int a, int b) => b.compareTo(a));// 降順
+  print(l);
+}
+}
 ```
 ## セット
 * セットは値の重複不可。

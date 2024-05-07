@@ -356,6 +356,7 @@ class Vector3d extends Vector2d {
 ```
 
 # 定数コンストラクタ
+* 定数コンストラクタのdataはすべてfinalで非lateである必要がある。
 ```
 class ImmutablePoint {
   final num x, y;
@@ -367,6 +368,24 @@ assert(identical(a, b)); // They are the same instance!
 assert(!identical(a, const ImmutablePoint(1, 2)));
 assert(!identical(a, ImmutablePoint(1, 1)));
 ```
+## 定数コンストラクタで生成されるオブジェクトがconst値となるかどうかは、呼び出し側に依存する
+* 定数コンストラクタで生成されるオブジェクトは必ずイミュータブルにはなる。
+* 一方でオブジェクトがconst値となるかどうかは利用側に依存する。
+  ``` 
+  main(){
+    print(f(3).hashCode); // 例: 1046420307
+    print(const A(3).hashCode); // 例: 649446554
+    print(const A(3).hashCode); // 例: 649446554
+  }
+  A f(final int a1) {
+    return A(a1);
+  }
+  class A {
+    const A(this.v);
+    final int v;
+  }
+  ```
+
 
 # ファクトリコンストラクタ
 * factoryを先頭につけたコンストラクタを設定すると、自動でインスタンスが作成されず、コンストラクタ内でインスタンスを生成することができる。

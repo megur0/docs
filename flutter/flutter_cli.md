@@ -103,6 +103,11 @@
     * 再度デバイスをアタッチ
     * --device-id でデバイスを指定しない場合、先頭のデバイスが使われる？
 
+# フォーマット
+* `dart format`
+* ※ `flutter format` は `dart format`をラップするコマンドだったが削除された。
+    * https://github.com/flutter/flutter/pull/129360
+
 # その他
 * `flutter screenshot --out 出力先ファイル`  
     * 現在接続中のデバイスのスクリーンショットを撮る

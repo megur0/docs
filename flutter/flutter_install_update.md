@@ -65,6 +65,105 @@
 * 推奨されるeditorの設定を行う
     * コマンドパレットで「Dart: Use Recommended Settings」とするとグローバルな設定ファイルへ設定が行われる。
     * https://dartcode.org/docs/recommended-settings/
+## 基本的な操作方法や設定
+* https://docs.flutter.dev/tools/vs-code
+* 新規プロジェクト
+    * cmd + shift + p > Flutter: New Project
+* 実行
+    * エンドポイントのファイルを開いた状態でF5
+    * シミュレータによる動作確認
+        * 画面右下から選択することができる。
+        * シミュレーターを立ち上げておく必要がある
+    * launch.jsonで選択したコンフィグを選択して実行したい場合
+        * エンドポイントを開いた状態で、左パネルの「Run and Panel」にて選択・実行ができる。
+    * (参考)(IME)VSCodeは、Dart VM に接続している
+        * Debug Consoleに「Connecting to VM Service at ws://127.0.0.1:57588/XXXXXXXXXXX=/ws」のように表示される。
+        * 「ws://127.0.0.1:57588/XXXXXXXXXXX=/ws」は、VSCodeが内部的に起動（flutter run）した Dart VMのウェブソケットのURLとなる。
+        * VSCode上のDevtoolsがウェブソケットによって上記URLへ接続し、各種API（ホットリロード等）を実行していると考えられる。
+* レイアウトのデバッグ
+    * https://docs.flutter.dev/tools/vs-code#debugging-visual-layout-issues
+    * アイコンからスローアニメーションの切り替え、ベースラインの表示などを行える。
+* Inspector
+    * https://docs.flutter.dev/tools/devtools/inspector
+* ブレークポイント、ステップ実行 等の操作
+    * https://docs.flutter.dev/tools/vs-code#run-app-with-breakpoints
+    * 「Run and Debug」パネルからDevtoolsのブレークポイントやログの設定ができる。
+    * デバッグで行える操作やブレークポイントの設定等は、VSCodeが共通で提供するデバッグ機能に準拠
+        * https://code.visualstudio.com/docs/editor/debugging#_debug-actions
+* エディタ
+    * hot reload
+        * cmd + s もしくは F5
+    * Restart
+        * shift + cmd + F5
+    * コードアシスト・クイックフィクス
+        * エディタ上の電球を押下するか、cmd + .
+    * デフォルトのスニペット
+        * stless
+        * stful
+        * stanim
+    * オーバーライドするメソッド
+        * メソッド名を打ち込むとintelliSenseによって候補が出現する。
+        * 選択すると@overrideやメソッドが挿入される。
+* dart.flutterHotReloadOnSave
+    * デフォルトでは手動保存時にホットリロードが実行されるされる。（"manual"）
+    * こちらは"never"とすることでオフにすることが可能。
+        * https://dartcode.org/docs/settings/#dartflutterhotreloadonsave
+        * https://github.com/Dart-Code/Dart-Code/issues/3110#issuecomment-771561427
+## (参考)設定ファイル
+* .vscode/settings.jsonの例
+    * "explicit"の箇所を "always" とするかは好みに依る
+    ```
+    {
+        // フォーマット
+        // dart formatが実行される
+        "editor.formatOnSave": true,
+
+        // 保存時に実行されるアクション
+        "editor.codeActionsOnSave": {
+            // dart fix --applyが保存時に自動適用される
+            "source.fixAll": "explicit", 
+
+            // organizeImportsを有効化するとDartの場合は不要なImportが削除される。一方、足りていないImportに関しては何も実行されない。
+            "source.organizeImports": "explicit"
+        },
+
+        // 保存時にホットリロードをしない。
+        "dart.flutterHotReloadOnSave": "never",
+
+        // pubspec.yamlが更新された際にpub getを実行しない。
+        "dart.runPubGetOnPubspecChanges": "never", 
+    }
+    ```
+* launch.jsonの例
+    * 複数の起動方法やオプションの管理は.vscode/launch.jsonで設定する。
+    ```
+    {
+        "version": "0.2.0",
+        "configurations": [
+            {
+                "name": "dev",
+                "request": "launch",
+                "type": "dart",
+                "flutterMode": "debug",
+                "args": [
+                    "--dart-define-from-file=dart_defines/dev.json"
+                ]
+            },
+            {
+                "name": "profile",
+                "request": "launch",
+                "type": "dart",
+                "flutterMode": "profile",
+                "args": [
+                    "--dart-define-from-file=dart_defines/dev.json"
+                ]
+            },
+            // ...
+        ]
+    }
+    ```
+
+
 
 # Flutterプロジェクトの作成
 * 参考
@@ -143,18 +242,10 @@
     * Android Studio(IDE)の設定情報などが記載されたファイルが格納されている。
         * VSCodeの場合は特に使われない(はず)
 
-
-# フォーマット
-* https://docs.flutter.dev/tools/formatting
-* `flutter format`
-    * `dart format`のラッパーコマンド。
-* IME
-    * VSCodeを利用する場合、フォーマット実行は上記コマンドの処理をラップしているため、直接コマンドを使ってフォーマットすることはほとんどない。
-
-# リンター
-* flutter createで作成したプロジェクトはflutter_lintsパッケージがデフォルトで設定されている。
-    * analysis_options.yamlにリンターの設定が記述される。   
-
+# 静的解析 の設定
+* analysis_options.yamlに設定が記述される。
+* flutter createで作成したプロジェクトはリンターとして、flutter_lintsパッケージがデフォルトで設定されている。
+    
 # Flutter本体のアップグレード
 * Channelを指定
 * `flutter channel`

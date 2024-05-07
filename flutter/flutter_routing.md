@@ -12,6 +12,7 @@
 * Navigator自体はStatefulWidgetである。
     * Navigator2.0と言われているものから通常のウィジェットのように状態を持つウィジェットとなった。
     * MaterialAppやCupetinoApp, WidgetsAppではデフォルトでNavigatorウィジェットで包含される。
+    * StatefulWidgetのためネストが可能である。
 * ナビゲーションスタックで遷移を管理する。
     * ナビゲーションスタック
         * ページが積まれる(push)ことで「戻る」アクションが可能になる。
@@ -37,7 +38,9 @@
             MaterialPage(child: Page("page A")),
             MaterialPage(child: Top())
         ],
-        // pages利用の際は、onPopPageを設定する必要がある。（設定しない場合はエラーとなる。）（
+        // pages利用の際は、onPopPageを設定する必要がある。設定しない場合はエラーとなる。
+        // また、onPopPageのAPIドキュメントに記載の通りonPopPageはroute.didPopを実行して結果をreturnする責任がある。
+        // したがって「onPopPage: (route, result) => true,」のように実装するとassertエラーとなってしまう。
         onPopPage: (route, result) => route.didPop(result),
         )));
 
@@ -110,13 +113,11 @@ onPressed: () {
 ```
 
 # Router
-* StatefulWidget派生クラス
 * 以下のような処理が可能な、汎用的なカスタマイズ可能なルーティングの仕組みとなる。
     * historyの操作
-    * Navigator を入れ子とする(Nested Navigator)
-    * 宣言的なルーティングの定義
     * Webアプリの戻る/進むボタン、ロケーションバーとの連動
     * Deep linkの処理
+* Router自体はStatefulWidget派生クラス
 * Routerウィジェットを直接利用するのではなく、MaterialApp.routerコンストラクタ等へRouterConfigオブジェクトを渡すことで利用する。            
     ```
     MaterialApp.router(
@@ -124,9 +125,10 @@ onPressed: () {
         routerConfig: RouterConfig(//...),
     );
     ```
-    * これによって内部的にRouterウィジェットが生成される。
     * RouterConfigにはデリゲーター(必須), ルーター情報のプロバイダ、パーサー、戻るボタンのディスパッチャとして抽象クラスを実装したオブジェクトを渡す必要がある。
-    * サンプルコードとして下記のサイトが参考となった。
+    * 内部的にRouterウィジェットが生成され、そのStateクラスである_RouterStateがRouterInformationをOSやプロバイダーから受取り、パーサーへ渡して、結果をデリゲーターへ渡すといったオーケストレーションのような処理を行う。
+    * 基本的にはデリゲーター内のbuild()から、パースされた情報に基づいて構成したNavigator()を返すように実装する。
+    * 自前でRouterConfigを実装するサンプルコードとして下記のサイトが参考となった。
         * https://medium.com/flutter/learning-flutters-new-navigation-and-routing-system-7c9068155ade
 * アプリケーション開発で一般的なルーティング処理を目的とするのであれば、go_router等のパッケージを利用することで通常は問題ない。
     ```
@@ -205,7 +207,7 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
 * 下記のような実装となっていた
     * _historyというIterable<_RouteEntry>のメンバーを保持
         * _RouteEntryは、Routeオブジェクト(実際には具象はMaterialRoute等)を持つ。
-        * RouteオブジェクトはNavigatorStateを持っているため、これによってNavigatorがネスト可能になっていると考えられる。
+        * RouteオブジェクトはNavigatorStateを持っている。
         * RouteオブジェクトのList<OverlayEntry> get overlayEntriesが実際にウィジェットとしてビルドされるビルダーを保有する。
     * push, pop命令などによって_historyが操作される。
     * _historyが操作されるとNavigationNotificationがdispatchされる。（という処理が行われるコールバックをInitStateでaddListenerしている）
@@ -444,7 +446,6 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
         // 利用方法として、ValueListenable.valueにRouteInformationを持たせ、ChangeNotifierをwithしてnotifyListenerすることにより、リスナーであるRouterが
         // RouterInformationをパーサー、デリゲーターへハンドリングする、といった流れになると考えられる。
 
-        // これはおそらく、他にInformation
         void routerReportsNewRouteInformation(RouteInformation routeInformation, {RouteInformationReportingType type = RouteInformationReportingType.none}) {}
     }
     ```
@@ -494,7 +495,6 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 
 ## _RouterStateの実装
 * _RouterStateはルーター情報のプロバイダーとパーサー、戻るボタンのディスパッチャとデリゲーターをオーケストレーションしている。
-
 * routeInformationProviderのリスナーのコールバックとして routeInformationProviderから受け取ったRouteInformationをrouteInformationParserにパースさせ、戻ってきたコンフィグ情報でrouterDelegate.setNewRoutePath()によってルートパスとして設定して、setStateを行っている。
 * backButtonDispatcherのコールバックとして、routerDelegate.popRoute()を実行してsetStateを行う。
 * routerDelegateのリスナーのコールバックとして、setStateを行っている。

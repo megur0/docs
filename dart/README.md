@@ -45,4 +45,6 @@
 
 * その他
     * [ライブラリ(随時整理)](./dart_etc_library.md)
+
+    * [共変・反変](./dart_variant.md)
     
