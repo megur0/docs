@@ -96,6 +96,7 @@
 # アイコン
 * Icon
 * CircleAvatar
+* FlutterLogo
 * アイコンは下記から探すことができる。
 * https://fonts.google.com/icons
 * 例 `Icon(Icons.notifications)`

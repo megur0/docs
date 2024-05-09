@@ -302,6 +302,7 @@ flutter: future after runApp
         * 生成したElementは thisの子となる。
     * ウィジェットにGlobalKeyが設定されている、かつ対象のkeyに紐づくElementが存在し、かつアップデート可能(canUpdate()が真)な場合
         * activate()してElementを再利用する。
+            * なお、この直前にelement._parent != nullの場合はnullにしてdeactivate()をしているので対象のelementは必ず非アクティブ状態になっている。
     * 上記以外
         * 対象のウィジェットのWidget.createElement()を実行してElementを生成する。
         * Element.mount()を実行する。
@@ -325,7 +326,7 @@ flutter: future after runApp
             final Element? element = key._currentElement;
             if (element == null)  return null;
             if (!Widget.canUpdate(element.widget, newWidget)) return null;
-            if (!element._parent != null ) parent.forgetChild(element);parent.deactivateChild(element);
+            if (element._parent != null ) parent.forgetChild(element);parent.deactivateChild(element);
             owner!._inactiveElements.remove(element);
             return element;
         ```
@@ -335,6 +336,8 @@ flutter: future after runApp
 * Element.update(covariant Widget newWidget)
     * https://api.flutter.dev/flutter/widgets/Element/update.html
     * 指定のウィジェットでElementを再構成する。指定されたウィジェットは古いウィジェットに対してcanUpdate()である必要がある。
+    * ウィジェット自身がリビルドされた際には呼ばれるわけではなく、updateChild()を通して呼ばれる点に注意。
+        * 例えばStateがsetStateを呼んでリビルドされても、rebuild()は呼ばれて子のupdate()は呼ばれる可能性があるが、自身のupdate()は呼ばれない。
     * コードの概要
         ```
         void update(covariant Widget newWidget)
@@ -361,6 +364,16 @@ flutter: future after runApp
             * runtimeTypeが同一であり、かつ keyが一致する場合　に 真となる。
                 * 両者のkeyがnullの場合も一致する。
                 * したがってkeyがnullで、constでない場合は常にupdate()が実行される
+    * なお、Widgetクラスの==メソッドはObjectの==を利用(同一のオブジェクトである場合のみtrue)していて、サブクラスでオーバーライドすると@nonVirtualによるエラーが表示される。
+        ```
+        abstract class Widget extends DiagnosticableTree {
+            // ...
+            @override
+            @nonVirtual
+            bool operator ==(Object other) => super == other; // Objectの==を利用。
+            // ...
+        }
+        ```
     * コードの概要
         ```
         updateChild(Element? child, Widget? newWidget, Object? newSlot)
@@ -576,7 +589,7 @@ flutter: future after runApp
 * dependOnInheritedWidgetOfExactType()では監視する側のElementが、監視される側のInheritedElement._dependentsに追加される。
 * 以下はInheritedElement.dependOnInheritedWidgetOfExactType()で_dependentsが設定される処理、および監視する側のElement.didChangeDependencies(), State.didChangedDependencies()が実行される処理の流れについて記載した図である。
 
-<img src="./svg/arch_code_reading/flutter_class_relate_to_inherit.drawio.svg" width="70%"><br/><br/>  
+<img src="./svg/arch_code_reading/flutter_flow_inherited_widget.drawio.svg" width="70%"><br/><br/>  
 
 
 

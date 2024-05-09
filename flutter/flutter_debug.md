@@ -115,6 +115,40 @@
     * debugRepaintRainbowEnabled
         * 各ウィジェットの周囲に色付きの境界線を表示する
 * ※ 上記以外にも多くのフラグやメソッドがある。
+## flutter test の際の注意点
+* Flutterのテストではデバッグ変数を有効にしている場合にassertエラーとなる。
+* これを回避したい場合はテストの末尾でデバッグ変数にfalseに戻しておく必要がある。
+```
+══╡ EXCEPTION CAUGHT BY FLUTTER TEST FRAMEWORK ╞════════════════════════════════════════════════════
+The following assertion was thrown running a test:
+The value of a widget debug variable was changed by the test.
+```
+
+
+# DiagnosticableTree.toStringDeep()
+* https://api.flutter.dev/flutter/foundation/DiagnosticableTreeMixin/toStringDeep.html
+* ElementはDiagnosticableTreeの派生クラスで、toStringDeep()を利用する事で自身と子孫の構成を出力できる。
+```
+main() => runApp(MyWidget());
+class MyWidget extends StatelessWidget {
+  const MyWidget({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    Future.microtask(
+        () => debugPrint((context as StatelessElement).toStringDeep()));
+    return const Placeholder();
+  }
+}
+// MyWidget
+// └Placeholder
+//  └LimitedBox(maxWidth: 400.0, maxHeight: 400.0, renderObject: RenderLimitedBox#60f66)
+//   └CustomPaint(renderObject: RenderCustomPaint#af45e)
+```
+* WidgetもDiagnosticableTreeの派生クラスだが、試してみたところElementとは異なり、自身のクラス名のみ出力された。
+    * 参考
+        * この違いは、おそらくElementクラスがオーバーライドしているtoDiagnosticsNode()などが関係していると考えられる。
+        * TextTreeRenderer.render()が実際にStringを生成している箇所で、このあたりの実装を読めばわかるかもしれない。
 
 
 # パフォーマンス測定(未読)

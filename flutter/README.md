@@ -24,9 +24,9 @@
 
     * [アーキテクチャ(レンダリング)](./flutter_arch_rendering.md)
 
-    * [(参考)アーキテクチャ(コードリーディング)](./flutter_arch_code_reading.md)
+    * [(参考)内部処理の理解(コードリーディング)](./flutter_arch_code_reading.md)
 
-    * [(参考)スクロール関連の処理(コードリーディング)](./flutter_scroll_code_reading.md)
+    * [(参考)スクロール関連の内部処理の理解(コードリーディング)](./flutter_scroll_code_reading.md)
 
 * ウィジェット
     * [マテリアルデザイン](./flutter_material_design.md)
@@ -36,6 +36,8 @@
     * [主なウィジェット](./flutter_widget.md)
 
 * [デバッグ](./flutter_debug.md)
+
+* [状態管理](./flutter_state_management.md)
 
 * エラー
     * [エラーハンドリング](./flutter_error_handling.md)

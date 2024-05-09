@@ -2,19 +2,22 @@
 - [このメモ・独自表記について](../README.md)
 
 
-# オブジェクト
-> Dart is an object-oriented language with classes and mixin-based inheritance. 
-  * https://dart.dev/language/classes
+# オブジェクト指向
+* https://dart.dev/language/classes
+  > Dart is an object-oriented language with classes and mixin-based inheritance. 
 * Dartはオブジェクト指向言語
-* オブジェクトはクラスのインスタンス
-* 関数もリテラルもnullも全てオブジェクト
-    * Dartは真のオブジェクト指向言語のため、関数もオブジェクトであり、Functionという型を持つ。
-* null以外はObjectクラスを継承。
+* すべてのオブジェクトはクラスのインスタンス
+* Null以外はObjectクラスを継承。(関数もObject派生クラスとなる)
+  * https://api.dart.dev/stable/3.3.4/dart-core/Object-class.html
+    > The base class for all Dart objects except null.  
+  * https://dart.dev/language/functions
+    > Dart is a true object-oriented language, so even functions are objects and have a type, Function.
 * オブジェクトは関数とデータを持つ（メソッドとvariable）
   * メンバへのアクセスは"." で行う
 * 以下は同じ。
     * `var p1 = Point(2, 2);`
     * `var p1 = new Point(2, 2);`
+
 
 # identical
 * オブジェクトが同一かどうかを判定する
@@ -23,6 +26,7 @@ expect(identical(Object(), Object()), false);
 ```
 
 # ==メソッド
+* https://api.dart.dev/stable/3.3.4/dart-core/Object/operator_equals.html
 * == はメソッドである。
   > 1. If x or y is null, return true if both are null, and false if only one is null.
   > 2. Return the result of invoking the == method on x with the argument y. (That’s right, operators such as == are methods that are invoked on their first operand. For details, see Operators.)
