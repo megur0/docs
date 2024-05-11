@@ -110,3 +110,27 @@
 
 
 
+# トラブルシュート
+* Flutterプラグインが依存するFirebaseのSDKのバージョンと、Podsに入っているライブラリのバージョンが不一致
+    * ビルドの際に "CocoaPods could not find compatible versions" のエラーが発生する 
+    * 以下の２つのバージョンがマッチしていない
+        * ios/Podsに入っているFirebaseのライブラリ(iOS用のライブラリ)のバージョン
+        * Flutter用のプラグインが依存するFirebaseのライブラリのバージョン
+            * これはPodfile.lock内で`firebase_core: 〜〜 :path: ".symlinks/plugins/firebase_core/ios"`の記述が指すフォルダ内にある`firebase_sdk_version.rb`が示すバージョン
+    * この場合、対象となる依存先のライブラリのバージョンをアップデート等すると解決する。
+    * 例えば、下記のケースは `pod update Firebase/CoreOnly` を実行する事で Firebase/CoreOnlyをアップデートする。
+        ```
+        Analyzing dependencies
+        firebase_auth: Using Firebase SDK version '10.7.0' defined in 'firebase_core'
+        firebase_core: Using Firebase SDK version '10.7.0' defined in 'firebase_core'
+        firebase_messaging: Using Firebase SDK version '10.7.0' defined in 'firebase_core'
+        [!] CocoaPods could not find compatible versions for pod "Firebase/CoreOnly":
+        In snapshot (Podfile.lock):
+            Firebase/CoreOnly (= 10.3.0)
+        In Podfile:
+            firebase_core (from `.symlinks/plugins/firebase_core/ios`) was resolved to 2.10.0, which depends on
+            Firebase/CoreOnly (= 10.7.0)
+        You have either:
+        * changed the constraints of dependency `Firebase/CoreOnly` inside your development pod `firebase_core`.
+        You should run `pod update Firebase/CoreOnly` to apply changes you've made.
+        ```

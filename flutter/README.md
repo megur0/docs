@@ -19,6 +19,10 @@
 
     * [Firebase](./flutter_flutterfire.md)
 
+    * [iOSでビルドされる構成](./flutter_ios_build_dir.md)
+
+    * [環境を入れ替え可能とする](./flutter_separate_env.md)
+
 * アーキテクチャ
     * [アーキテクチャ](./flutter_arch.md)
 

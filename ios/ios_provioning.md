@@ -122,6 +122,18 @@
     * Automatically manage signing で作成されたProvisioning Profileを利用
     * 既に自動生成されたプロファイルに対して対象の実機を追加するには、Xcode上で実機を接続した状態で対象の実機を選択すると、プロファイルが自動アップデートされる。
 
+# 実機のトラブルシュート
+* 実機接続時に発生するエラーメッセージ
+    * `codesignは、キーチェーンに含まれるキーへアクセスしようとしています。許可するにはキーチェーン”ログイン”のパスワードを入力してください。`
+        * Macのログインパスワードを入力して「常に許可」を押す。
+        * 実機が本人性を確認するためにMacのキーチェーン上の証明書を確認しようとしている
+    * `Appを検証できません。信用を確認するにはインターネット接続が必要です"  "“iproxy”は、開発元を検証できないため開けません`
+        * 証明書を検証するために、認証局（Apple）に接続が必要だが、アプリがインターネット接続を許可されていない
+        * iOS側で一般＞VPNとデバイス管理でデベロッパAPPを承認
+* 現在のXcodeと、実機のバージョンが合わない。
+    * `This operation can fail if the version of the OS on the device is incompatible with the installed version of Xcode.`
+    * MacのOS、Xcodeのバージョンを上げる必要がある。
+
 
 # App Store申請(未整理)
 * ADPへの登録が必要

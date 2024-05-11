@@ -21,3 +21,10 @@
 * ソフトウェアキーボード
     * I/O > keyboard > Toggle Software keyboard
     * キーボードから入力するとソフトウェアキーボードは自動的にOFFとなるため注意
+
+
+# トラブルシュート
+* シミュレーターで「Unable to boot the Simulator」のエラーが発生して 起動できない。
+    * システム設定>一般>ストレージ>デベロッパ で以下のデータを削除する。
+    * Xcode Caches
+    * Project Build Data and Indexes

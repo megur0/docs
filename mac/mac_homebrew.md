@@ -101,4 +101,21 @@ lrwxr-xr-x  1 xxxx  admin    29 11 21 13:22 tree -> ../Cellar/tree/2.1.1/bin/tre
     * 2.6.0より前は `brew cask install パッケージ名`
 
 
+# (参考)Homebrewとアーキテクチャ
+* arm64のhomebrewにてインストールされる個々のパッケージについては、基本的に /opt/homebrew/bin 配下にインストールされる。
+    * arm64に対応していないものは、/usr/local/binにインストールされる
+        * /usr/local/binにインストールされているものを実行する際は`arch -x86_64 コマンド` で明示的にアーキテクチャを指定する。
+    * 両方にインストールされるモジュールもある？
+* (IMO)Homebrew自体は ARM64のみインストールで良いと考えている。
+    * 下記のdiscussionsをみても、「HOMEBREW_PREFIX: /usr/local」ではなく「HOMEBREW_PREFIX: /opt/homebrew」が適切なように見える。
+        * https://github.com/orgs/Homebrew/discussions/4397
+        * https://github.com/orgs/Homebrew/discussions/417
+    * (参考)x86_64とarm64を併用してしまうと、例えば、下記のようにARM64環境下でインストールをした際に「依存するモジュールがarm64でコンパイルされていない」といったエラーが発生した。
+    ```
+    brew install cocoapods
+    ...
+    Error: cocoapods dependencies not built for the arm64 CPU architecture:
+    ca-certificates was built for x86_64
+    mpdecimal was built for x86_64
+    ```
 
