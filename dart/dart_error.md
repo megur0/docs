@@ -57,9 +57,10 @@ void a() {
 // finally
 ```
 
-# Assert
+
+# assert
 * https://dart.dev/language/error-handling#assert
-* 開発中に、結果がfalseになる場合に処理を中断させる。
+* assertはリリースビルドでは処理されず残しておいても問題ないため、コードテストに適している。
 * Flutter はデバッグ モードでアサーションを有効にする。
 ```
 // Make sure the variable has a non-null value.
@@ -71,7 +72,40 @@ assert(number < 100);
 // Make sure this is an https URL.
 assert(urlString.startsWith('https'));
 ```
+* 例1
+  * コンストラクタの引数について複雑な条件をチェック
+    ```
+    const ScrollView({
+        ...
+        this.controller,
+        this.primary,
+      }) : assert(
+            !(controller != null && (primary ?? false)),
+            'Primary ScrollViews obtain their ScrollController via inheritance '
+            'from a PrimaryScrollController widget. You cannot both set primary to '
+            'true and pass an explicit controller.',
+          );
 
+    ```
+* 例2
+  * 以下はFlutter内部のホットリロードを考慮したチェックとなる。
+  * 変数のhasSameSuperclassのデフォルトがtrueとなるためassertの実行有無によって処理結果に影響が発生することはない。
+  ```
+  bool hasSameSuperclass = true;
+  assert(() {
+      final int oldElementClass = Element._debugConcreteSubtype(child);
+      final int newWidgetClass = Widget._debugConcreteSubtype(newWidget);
+      hasSameSuperclass = oldElementClass == newWidgetClass;
+      return true;
+  }());
+  if (hasSameSuperclass && child.widget == newWidget) {
+      ...
+  } else if (hasSameSuperclass && Widget.canUpdate(child.widget, newWidget)) {
+      ...
+  } else {
+      ...
+  }
+  ```
 
 # その他
 * StackTraceの取得

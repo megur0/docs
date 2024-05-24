@@ -69,3 +69,45 @@ Future<Response<T>> request<T>(Uri url, T Function(Map<String, dynamic> json) co
   ```
 * 関連
   * https://github.com/dart-lang/sdk/issues/30074
+
+
+# 派生クラスの親のジェネリクスの型
+* 派生クラスは親のジェネリクスの型を明示的に指定しない場合はdynamicとなる
+* mixinがonで指定したクラスのジェネリクスの型は明示的に指定しなくてもwithの際に決定される。
+```
+import 'package:flutter_test/flutter_test.dart';
+
+void main() {
+  test("", () {
+    expect(Parent(Param()) is Parent<Param>, true);
+    expect(Child() is Parent<Param>, false); //Parent<dynamic>となる
+    expect(Child() is M<Param>, false); //M<dynamic>となる
+    expect(Child2(Param()) is Parent<Param>, true);
+    expect(Child2(Param()) is M<Param>, true);
+    expect(Child3() is Parent<Param>, true);
+    expect(Child3() is M<Param>, true);
+  });
+}
+
+class Child extends Parent with M {
+  Child() : super(Param());
+}
+
+class Child2<T> extends Parent<T> with M {
+  Child2(super.m);
+}
+
+class Child3 extends Parent<Param> with M {
+  Child3() : super(Param());
+}
+
+class Parent<T> {
+  const Parent(this.m);
+  final T m;
+}
+
+class Param {}
+
+mixin M<T> on Parent<T> {}
+
+```

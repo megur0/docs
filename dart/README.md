@@ -5,6 +5,8 @@
 
 * [導入](./dart_introduction.md)
 
+* [静的解析](./dart_static_analysis.md)
+
 * [ライブラリ](./dart_library.md)
 
 * [文法](./dart_syntax.md)
@@ -35,6 +37,8 @@
 
 * [エラーハンドリング](./dart_error.md)
 
+* [テスト](./dart_test.md)
+
 * [Generics](./dart_generics.md)
 
 * [拡張](./dart_extension.md)
@@ -47,4 +51,6 @@
     * [ライブラリ(随時整理)](./dart_etc_library.md)
 
     * [共変・反変](./dart_variant.md)
+
+    * [fake_async/clockパッケージ](./dart_fake_async_clock.md)
     

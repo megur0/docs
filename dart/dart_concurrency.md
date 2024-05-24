@@ -208,13 +208,28 @@ Future<void> f5() async => print(5);// 単なるasync関数は通常の処理と
   // 3
 ```
 
-# その他
-## Timer.run
+
+# Timer.run
 * equivalent to new Timer(Duration.zero, callback).
 * 参考
   * Flutterのブートストラップ処理の随所で使われている。
-* Timer.run((){print("aaa")}) と Future((){print("aaa")})) は 結果は等価??
-## Future.sync
+  * Timer.run((){print("aaa")}) と Future((){print("aaa")})) は 結果は等価
+    * Future()の中で内部でTime.run()が呼ばれている。
+    ```
+    factory Future(FutureOr<T> computation()) {
+      _Future<T> result = new _Future<T>();
+      Timer.run(() {
+        try {
+          result._complete(computation());
+        } catch (e, s) {
+          _completeWithErrorCallback(result, e, s);
+        }
+      });
+      return result;
+    }
+    ```
+
+# Future.sync
 * Future.value(値) と Future.sync(()=>値) は等価
 ```
 Future.sync((){print("1");}).then((_){print("2");});
@@ -224,7 +239,8 @@ print("3");
 // 2
 ```
 
-
+# FakeAsync
+* [参照](./dart_fake_async.md)
 
 
 

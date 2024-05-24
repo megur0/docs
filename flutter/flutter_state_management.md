@@ -948,6 +948,27 @@ MyWidget
 */
 ```
 
+# ValueNotifier
+* https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html
+* 単一の値を保持するChangeNotifier。
+* value が等価演算子 == によって評価された古い値と等しくないものに置き換えられるとリスナーに通知する。
+```
+void main() {
+  test('valueNotifier test', () async {
+    final notifier = ValueNotifier<int>(1);
+    var isListenerCalled = false;
+    notifier.addListener(() {
+      isListenerCalled = true;
+    });
+    notifier.value = notifier.value;
+    expect(isListenerCalled, false);// 値が変わらなければリスナーはコールされない。
+    notifier.value += 1;
+    expect(isListenerCalled, true);
+  });
+}
+```
+
+
 # (IMO) アプリ全体で利用するデータは、Listenable派生クラスとInheritedWidget派生クラスのどちらを利用するか?
 * これについて、筆者はどちらでも好みのものを選択すれば良いと考える。
 * Listenable派生クラスであればChangeNotifier等を継承させたクラスを外部に定義して、それを直接参照するか適宜インジェクションしたものを各画面でListenableBuilderなどで監視すれば良いだろう。

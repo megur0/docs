@@ -27,29 +27,29 @@
 * async*をつける。
 * returnの代わりにyieldを使い値を何度も返す。
 ```
-Stream<int> asynchronousNaturalsTo(int n) async* {
+Stream<int> countStream(int to) async* {
   int k = 0;
   while (k < n) yield k++;
 }
 ```
-```
-Stream<int> countStream(int to) async* {
-  for (int i = 1; i <= to; i++) {
-    await Future.delayed(Duration(seconds: 1));
-    yield i;
-  }
-}
-```
-* Stream.fromIterable
+* Stream.fromIterable()
   ```
   final stream = Stream.fromIterable([1, 2, 3]);
   final subscription = stream.listen((n) => print(n));
   ```
-* Stream.periodic
+* Stream.periodic()
   ```
   final stream1 = Stream<int>.periodic(const Duration(seconds: 1), (i) {
     return i;
   }).take(5);
+  ```
+* Stream.value()
+  ```
+  Stream.value(1).listen(print);
+  ```
+* Stream.error()
+  ```
+  expect(Stream.error(Exception()), emitsError(isException));
   ```
 ## (参考)Iterableの作成
 * https://dart.dev/guides/language/language-tour#generators
@@ -84,28 +84,32 @@ Iterable<int> r(int n) sync* {
 ## listen
 * StreamSubscriptionオブジェクトが返却される。
 * Streamのイベントは非同期に発生する。
-  * IME: ドキュメントで見つけられなかったがおそらくイベント発生時にマイクロタスクとして追加されると推測している。
+* 下記の結果を確認するとマイクロタスクよりは遅く、Futureよりも早いタイミングで受け取る。
 ```
 void main() {
-  final subscription = Stream.fromIterable([1, 2, 3]).listen(print);
-  Future.microtask(()=>print(4));// 1よりも後に出力される。
-  print("$subscription");// こちらが先に実行される。
-}
-// Instance of '_ControllerSubscription<int>'
-// 1
-// 4
-// 2
-// 3
-```
-```
-void main() {
-  Stream.fromIterable([1, 2, 3]).asyncMap((n) async {
-    await Future(() {});
-    return n;
-  }).listen(print);
+  Future(() => print(5));
+  countStream(1, 3).listen(print);
+  countStream(6, 8).listen(print);
   Future.microtask(() => print(4));
-  print(5);
 }
+
+Stream<int> countStream(int from, int to) async* {
+  for (int i = from; i <= to; i++) {
+    //if (i > 2) await Future((){});
+    yield i;
+  }
+}
+
+/* 
+4
+1
+6
+2
+7
+3
+8
+5
+*/
 ```
 ## await for
 * listenとは異なる点として、await for の場合は後続のステートメントには進まない。
@@ -299,34 +303,47 @@ Stream<int> stream2() async* {
 * シングルサブスクリプションストリーム
   ```
   main() {
-  final sbsc = stream.listen(print);
-  sbsc.pause();
-  sbsc.resume(); 
-  sbsc.cancel();// サブスクの破棄。
-  stream.listen((event) {});//エラーとなる。他のサブスクがキャンセルをしても、別のサブスクを作成することができない。
+    final sbsc = stream.listen(print);
+    sbsc.pause();
+    sbsc.resume(); 
+    sbsc.cancel();// サブスクの破棄。
+    //stream.listen((event) {});//エラーとなる。他のサブスクがキャンセルをしても、別のサブスクを作成することができない。
   }
-  final stream = Stream.fromIterable([1, 2, 3]);
+  final stream = countStream(3);
+  Stream<int> countStream(int to) async* {
+    for (int i = 1; i <= to; i++) {
+      yield i;
+    }
+  }
   ```
+  * なお、Stream.fromIterable()の場合は_MultiStreamクラスを内部で生成していて、_MultiStreamクラスはlistenの度に新しいStreamControllerを生成して.streamを返している。
+    * したがって何度でもlistenが可能である。
+    ```
+    main() {
+      final stream = Stream.fromIterable([1,2,3]);
+      stream.listen(print).cancel();
+      stream.listen(print);// 
+    }
+    ```
 * ブロードキャストストリーム
   ```
   main() async{
-  stream.listen(print);
-  stream.listen(print);
-  
-  await Future.microtask(()=>print(4)); // このタスクが終わるタイミングで既にブロードキャストの１つ目のイベントは送信済のため、３つ目の購読ではそれを受け取れない。
-  stream.listen(print);
+    stream.listen(print);
+    stream.listen(print);
+    
+    await Future(()=>print(4)); 
+   
+    // Future実行後のlistenの時点で既に送信が完了しているため、受信は無い。 
+    stream.listen(print);
   }
-  final stream = Stream.fromIterable([1, 2, 3]).asBroadcastStream();
-
+  final stream = countStream(3).asBroadcastStream();
   // 1
   // 1
+  // 2
+  // 2
+  // 3
+  // 3
   // 4
-  // 2
-  // 2
-  // 2
-  // 3
-  // 3
-  // 3
   ```
 * ブロードキャストストリームは一度購読されるとキャンセルされて購読が0件となってもイベントが発生する
   ```
@@ -361,6 +378,7 @@ Stream<int> stream2() async* {
 
 
 # StreamController
+* https://api.flutter.dev/flutter/dart-async/StreamController-class.html
 * Streamを扱いやすくしたクラス。
 * async* 〜 yieldを使ったStreamの作成は、Streamオブジェクトの宣言時にイベント自体を定義する必要がある。
   * もしStreamControllerを使わずにこれらを切り離すには仲介用のキューを自前で実装する必要がある?（未検証）

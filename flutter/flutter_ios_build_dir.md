@@ -10,6 +10,11 @@
     * デフォルトでFlutterのビルドモードに相当するxcconfigファイルが含まれる
         * Release.xcconfig
         * Debug.xcconfig
+            * 例(Pods-Runnerはプラグインを利用している場合)
+                ```
+                #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
+                #include "Generated.xcconfig"
+                ```
         * ※ Profile.xcconfig は含まれていなかった。
     * Generated.xcconfig
         * Release.xcconfigやDebug.xcconfigは共通で「Generated.xcconfig」をincludeしており、ここに主な記述がされている。
@@ -34,7 +39,7 @@
 * flutter_export_environment.sh
     * flutter runのオプションの--dart-defineや--dart-define-from-fileを利用した際に、Xcodeプロジェクトへの橋渡しを行う。
 ## CocoaPods, プラグイン
-* Flutterのプラグインをpubspec.ymlへ追加してビルドすると、ios/.symlinks/pluginsや、cocoapods関係のファイル・フォルダが自動生成される。
+* Flutterのプラグインをpubspec.ymlへ追加してビルドや、futter pub addを実行すると、ios/.symlinks/pluginsや、cocoapods関係のファイル・フォルダが自動生成される。
 * ios/.symlinks/plugins
     * プラグイン関連を追加してビルドするとこのディレクトリが生成される。
     * ここには各プラグインのFlutterプロジェクトがそのまま配置される。

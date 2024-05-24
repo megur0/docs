@@ -5,6 +5,9 @@
 # DateTimeクラス
 * https://api.dart.dev/stable/3.3.3/dart-core/DateTime-class.html
 * DateTime は、エポック (1970-01-01 UTC) から最大 100,000,000 日離れた時刻値を表すことができる。
+```
+void main() => print(DateTime.now().microsecondsSinceEpoch);
+```
 * UTC タイム ゾーンで明示的に作成されない限り、オブジェクトDateTimeはローカル タイム ゾーンとなる。
 ```
 void main() {
@@ -21,6 +24,9 @@ void main() {
   print(DateTime.now().isAfter(DateTime.parse("1900-01-01 00:00:00"))); // true
 }
 ```
+
+# 日時の矯正
+* [参照](./dart_fake_async.md)
 
 
 # (参考) DartPad や Flutter Web 上ではparseの際にマイクロ秒の情報がロストする

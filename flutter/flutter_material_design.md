@@ -177,6 +177,34 @@ main() => runApp(MaterialApp(
 
 ```
 
+
+# Material系のウィジェットは先祖にMaterialウィジェットを必要とする
+* したがって先祖にMaterialウィジェットを置くか、Materialウィジェットを生成する(かつ先祖にMaterialウィジェットを必要としない)ウィジェットが必要となる   
+    * 例えば、Card, Dialog, Drawer, or Scaffoldウィジェットなど
+```
+testWidgets("", (widgetTester) async {
+    await widgetTester.pumpWidget(MaterialApp(
+      // home: ListTile(),// assert error
+      home: Material(child: ListTile(),),
+    ));
+  });
+```
+* https://stackoverflow.com/questions/43947552/no-material-widget-found
+* (参考) 実装
+```
+// lib/src/material/list_tile.dart
+class ListTile extends StatelessWidget {
+    // ...
+    @override
+    Widget build(BuildContext context) {
+        assert(debugCheckHasMaterial(context)); // 先祖のMaterialウィジェットが無い場合にassert error
+        // ...
+    }
+    // ...
+}
+```
+
+
 # その他
 ## (参考)Scaffoldウィジェットを親とするかどうかでテキストの表示が異なるのはなぜか？
 * 例えば下記で標準出力へ出力されるスタイルや画面に表示されるテキストはScaffoldで囲むかどうかによって異なる。

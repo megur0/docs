@@ -16,20 +16,32 @@
 |-|-|-|
 |1|フレームワークの処理によるエラー|FlutterError.onError|
 |2|フレームワーク外のエラー|PlatformDispatcher.instance.onError|
-|3 *1|レンダリング失敗時<br/>※デフォルトの挙動をカスタマイズ|ErrorWidget.builderで 挙動をカスタマイズ|
+|3|レンダリング失敗時<br/>※デフォルトの挙動をカスタマイズ|ErrorWidget.builderで 挙動をカスタマイズ|
 * ErrorWidget.builderのデフォルトの挙動
-    * デフォルトでは全画面表示でエラーが表示される。
-    * 画面はえんじ色、エラー内容が黄色文字で表示される
-    * (IMO)基本的にはErrorWidget.builderはリリースモードではエラー内容は表示しないようにカスタマイズしておく方が良いと考えられる
+    * リリースモードの場合はエラーメッセージは出力されないようになっている。
+    ```
+    // flutter/lib/src/widgets/framework.dart
+    static ErrorWidgetBuilder builder = _defaultErrorWidgetBuilder;
+    //...
+    static Widget _defaultErrorWidgetBuilder(FlutterErrorDetails details) {
+        String message = '';
+        assert(() {
+            message = '${_stringify(details.exception)}\nSee also: https://flutter.dev/docs/testing/errors';
+            return true;
+        }());
+        final Object exception = details.exception;
+        return ErrorWidget.withDetails(message: message, error: exception is FlutterError ? exception : null);// 渡しているexceptionは インスペクタ表示用で画面に表示はされない。
+    }
+    ```
+* ErrorWidget.builder の実行時には、FlutterError.onErrorも呼び出しされる。
 * サンプルコード
 ```
 void main() {
+    // ErrorWidget.builderの実行時にはFlutterError.onErrorも呼ばれるため、この中でエラーレポートは不要。
     ErrorWidget.builder = (FlutterErrorDetails details) {
         if (kDebugMode) {
             return ErrorWidget(details.exception);
         }
-        // エラーレポート送信等の処理
-        // ... 
         return Container(
             alignment: Alignment.center,
             child: Text(
@@ -83,3 +95,5 @@ class RenderErrorBox extends RenderBox {
     // ...
 }
 ```
+
+

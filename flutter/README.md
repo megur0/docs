@@ -46,6 +46,8 @@
 * エラー
     * [エラーハンドリング](./flutter_error_handling.md)
 
+* [テスト](./flutter_test.md)
+
 * ローカルデータ
     * [ローカルデータ](./flutter_localdb.md)
 
@@ -60,3 +62,5 @@
 
 * その他
     * [プラグイン](./flutter_plugin_package.md)
+
+    * [パッケージ開発](./flutter_package_dev.md)

@@ -11,6 +11,7 @@
 # グローバルオプション
 * --help(-h)
 * -v, --verbose
+    * 内部で実行されているシェルコマンドのログを詳細に出力する
 * -d, --device-id 
     * 実行環境を指定
 * --version
@@ -24,6 +25,9 @@
     * サンプルプロジェクトから作成
         * `flutter create --sample=widgets.PageStorage.1 mysample`
         * APIのドキュメントにサンプルの名前が記載されているものもある。
+    * 現在のディレクトリ内で生成
+        * `flutter create --org com.example .`
+        * プロジェクト名はディレクトリ名となる。
 
 # flutterのインストール状態の確認
 * `flutter doctor`

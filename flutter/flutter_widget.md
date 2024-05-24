@@ -125,6 +125,27 @@
     * pubspec.yamlに設定が必要
 * Image.memory
     * Uint8List形式で画像を表示
+* ImageProvider
+    * https://api.flutter.dev/flutter/painting/ImageProvider-class.html
+    * Flutterの画像関連のウィジェットでは内部でImageProviderを利用して画像を読み込みしている。
+    * 派生する具象クラスとして、FileImage, ResizeImage, AssetImageやMemoryImage等がある。
+    ```
+    const assetImage = AssetImage('assets/Dash.png');
+    final 1pixeldot = MemoryImage(base64Decode("R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="));
+
+    testWidgets(i.toString(), (widgetTester) async {
+        await widgetTester.pumpWidget(MaterialApp(
+            home: Scaffold(
+            body: Center(
+            child: CircleAvatar(
+                radius: 100,
+                //backgroundImage: 1pixeldot,
+                backgroundImage: assetImage,
+            ),
+            ),
+        )));
+    });
+    ```
 
 # 非同期関連
 * FutureBuilder
@@ -146,9 +167,6 @@
     > Less configurable than Row, but easier to use
 * SwitchListTile
 * RefreshIndicator
-
-
-
 
 
 
