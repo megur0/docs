@@ -115,6 +115,7 @@
 # その他
 * `flutter screenshot --out 出力先ファイル`  
     * 現在接続中のデバイスのスクリーンショットを撮る
-
+* パッケージの依存関係のツリーを表示
+    * flutter pub deps
 
 

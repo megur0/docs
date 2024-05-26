@@ -48,9 +48,10 @@
 * [日時](./dart_datetime.md)
 
 * その他
-    * [ライブラリ(随時整理)](./dart_etc_library.md)
+    * [http](./dart_http.md)
 
     * [共変・反変](./dart_variant.md)
 
     * [fake_async/clockパッケージ](./dart_fake_async_clock.md)
     
+    * [各ライブラリ(随時整理)](./dart_etc_library.md)
