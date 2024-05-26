@@ -55,3 +55,5 @@
     * [fake_async/clockパッケージ](./dart_fake_async_clock.md)
     
     * [各ライブラリ(随時整理)](./dart_etc_library.md)
+
+    * [(IMO)拡張や実装やclass修飾子の使い分け](./dart_class_usecase.md)
