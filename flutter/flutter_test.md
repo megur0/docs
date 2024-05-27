@@ -126,10 +126,39 @@
     * --concurrency
         * 利用するCPUコアを明示的に指定する
     * 筆者の手元の環境(Macで8-core CPU)では'--concurrency=1'で実行すると体感でも明確に速度が低下した。
-    * トップレベルの変数やstatic variable等の値の競合は起きないか?
-        * Dartのマルチコアによる並列処理は別々アイソレート上で行われ、このアイソレートはそれぞれ独自のメモリを持つため、各テストでそれらが競合することはない。
-        * https://dart.dev/language/concurrency#isolates
-* シャーディング
+    * 並列処理時のメモリと 変数
+      * Dartのマルチコアによる並列処理は別々アイソレート上で行われ、このアイソレートはそれぞれ独自のメモリを持つ。
+          * https://dart.dev/language/concurrency#isolates
+      * したがって、変数の状態などは共有されないと考えられる。
+    * (IMO)並列処理の分割の単位は?
+      * main処理内の一連の処理は同じメモリ空間で行う必要がある(と筆者は理解している)ため、おそらく並列処理の単位もmain関数(ファイル)単位と考えられる。
+* テスト同士の依存について
+  * testやtestWidgetsの外のスコープのイミュータブルを利用する場合はテスト同士の依存関係が発生する可能性があるため注意したい。
+    * 例えば下記のテストは `flutter test` では成功するが --test-randomize-ordering-seed=シード値 によって順番をシャッフルすると失敗することが確認できる。
+    ```
+    int var1 = 0;
+    void main() {
+      for (int i = 0; i < 3; i++) {
+        test(
+          'MyTest$i',
+          () {
+            expect(i, var1);
+            print(var1++);
+          },
+        );
+      }
+    }
+    /*
+      00:01 +0: MyTest0 
+      0
+      00:01 +1: MyTest1                                              
+      1
+      00:01 +2: MyTest2                                              
+      2
+    */
+    ```
+  * 外のスコープの変数を利用する必要がある場合はsetUp関数等で初期状態に戻し、テスト同士の依存は避けるようにすることが良いだろう。
+* シーディング
     * TODO
     * https://pub.dev/packages/test#sharding-tests
     * https://github.com/flutter/flutter/pull/76382
@@ -190,9 +219,14 @@
         // Fake test in order to make each file reachable by the coverage
     }
     ```
+    * なお、1行もカバレッジ対象のコードが含まれないファイルは出力されない。
+      * 例えば、coverage:ignore-start 〜 endですべてのコードを囲んでいるファイルはカバレッジ対象であっても出力されない。
 
 # setUpAll, setUp, tearDown, tearDownAll
 ```
+int var1 = 0;
+int var2 = 0;
+
 void main() {
   setUpAll(() {
     print("setUpAll");
@@ -200,6 +234,7 @@ void main() {
 
   setUp(() {
     print("setUp");
+    var1 = 0;
   });
 
   tearDownAll(() {
@@ -215,29 +250,32 @@ void main() {
       testWidgets(
         'MyTest$i',
         (WidgetTester tester) async {
-          print(i);
+          print("var1:${var1++}, var2:${var2++}");
         },
       );
     }
   });
 }
 
+
 /*
 flutter: setUpAll
-flutter: 00:00 +1: MyGroup MyTest0
-flutter: setUp
-flutter: 0
-flutter: tearDown
-flutter: 00:00 +2: MyGroup MyTest1
-flutter: setUp
-flutter: 1
-flutter: tearDown
-flutter: 00:00 +3: MyGroup MyTest2
-flutter: setUp
-flutter: 2
-flutter: tearDown
-flutter: 00:00 +4: (tearDownAll)
-flutter: tearDownAll
+00:01 +0: (setUpAll)                                   
+setUpAll
+00:01 +0: MyGroup MyTest0                                             
+setUp
+var1:0, var2:0
+tearDown
+00:01 +1: MyGroup MyTest1                   
+setUp
+var1:0, var2:1
+tearDown
+00:01 +2: MyGroup MyTest2                                     
+setUp
+var1:0, var2:2
+tearDown
+00:01 +3: (tearDownAll)                                             
+tearDownAll
 */
 
 ```
