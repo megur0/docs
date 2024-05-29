@@ -20,7 +20,9 @@ void main() {
   print(DateTime.now()); // 例: 1930-04-02 12:08:59.908  
   print(DateTime.now().toIso8601String()); // 例: 1930-04-02T03:08:59.908Z
   print(DateTime.parse("2000-02-02 00:00:00")); // 2000-02-02 00:00:00.000
-  print(DateTime.parse('2023-09-04T15:54:04.274164+09:00').timeZoneName);// タイムゾーン情報がある場合はUTCとなる。
+  print(DateTime.parse("2000-02-02 00:00:00").timeZoneName); // 例: 日本標準時 ※ parseしたときはタイムゾーンがローカルタイムゾーンとなる。
+  print(DateTime.parse('2023-09-04T15:54:04.274164+09:00').timeZoneName);// UTC ※ parseにおいてタイムゾーン付きで渡すとタイムゾーンがUTCとなる
+  print(DateTime.parse('2023-09-04T15:54:04.274164+09:00'));// 2023-09-04 06:54:04.274Z
   print(DateTime.now().isAfter(DateTime.parse("1900-01-01 00:00:00"))); // true
 }
 ```

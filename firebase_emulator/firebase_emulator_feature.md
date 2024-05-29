@@ -35,7 +35,7 @@
     * 参考
         * https://zenn.dev/tkow/scraps/8160da23277fb8
 
-必要は
+
 # Firestore エミュレータ
 * Emulator Suite UIでは、Firebase セキュリティ ルールの評価トレースなどを行うことができる。
 * トランザクション
@@ -61,7 +61,9 @@
         * 調べたが、`FirebaseFirestore.instance.terminate()`してから実行する方法しか見つからなかった。アプリのライフサイクルにうまく組み込む方法が見つからなかったのでこの方法は断念。
             * https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#clearPersistence()
             * https://stackoverflow.com/questions/63930954/how-to-properly-call-firebasefirestore-instance-clearpersistence-in-flutter
-
+## 適用されたセキュリティルールの確認
+* エミュレーターのFirestore>Requestsより どのセキュリティルールが適用されたか確認できる。
+* https://firebase.google.com/docs/firestore/security/test-rules-emulator?hl=ja
 
 # Cloud Storage エミュレータ
 * https://firebase.google.com/docs/emulator-suite/connect_storage?hl=ja
