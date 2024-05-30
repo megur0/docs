@@ -8,38 +8,88 @@
 > Use extends to create a subclass, and super to refer to the superclass:
 
 # Dartのさまざまなclass
+* Dart3からinterface class, base class, final class, sealed classが追加された。
 ## abstract class
 * インスタンス化できない。
 * 抽象メソッドを定義できる。
 * 具象メソッドを定義することもできる。
 * コンストラクタも定義できる。
 * 継承も実装もできる。
-## concrete class
-* 抽象クラスとは反対にインスタンス化できるクラスはconcrete class(具象クラス)と呼ぶ。
+## 具象クラス
+* 抽象クラスとは反対にインスタンス化できるクラスはconcrete class(具象クラス)となる。
+* abstractをつけていない場合は具象クラスとなる
 * 抽象メソッドを定義できない。
 ## interface class
-* Dart3から追加。
-* 特徴
-    * 継承できない
-* 注意: "interface"を付与することで追加される制約は「継承ができない」のみであることに注意。
+* ライブラリ外では継承できない
+  * interface classのサブクラスはlibrary外で継承できる。
+* 注意: "interface"を付与することで追加される制約は「ライブラリ外で継承ができない」のみであることに注意。
     * 抽象クラスとしたい場合はabstract interface classとする。
-    * Java等の他言語の「インターフェース」とは異なり、具象メソッドもコンストラクタも定義可能である。
+    * Java等の他言語の「インターフェース」とは異なり、具象メソッドもコンストラクタも定義可能であり、抽象メソッドは(abstractを付与しない限り)利用できない。
 ## base class
-* Dart3から追加。
-* 特徴
-  * base or final or sealed のクラスのみ継承できる
-  * implementsができない
+* base or final or sealed のクラスのみ継承できる
+  * 注意
+    * これはライブラリ内外に関わらず適用される。
+    * また、すべての先祖クラスへ適用される。
+    * したがってbaseクラスから派生するクラスはすべてが「base, final, sealed」のいずれかであることが保証される。
+    * 例えば base class -> sealed class -> 修飾子無しclass  といった先祖はエラーとなる。
+* ライブラリ外ではimplementsができない
+  * 先祖がbase, final, sealed class のみとなるため、ライブラリ外ではすべての先祖が継承関係となる。
 ## final class
-* Dart3から追加
-* 特徴
-  * 継承できない
-  * implementsができない
+* ライブラリ外では継承できない
+* ライブラリ外では実装できない
+* base or final or sealed のクラスのみ継承/実装できる
+  * これはbase classと同様にすべての先祖に適用される。
+* final class のサブクラスはライブラリ外でも継承・実装は禁止されない
+  * ただし、finalの先祖はbase or final or sealedとなるため、結果としてライブラリ外の先祖は継承のみしかできない。
 ## sealed class
-* library外ではextends/implementsができない。
-* sealed classのサブクラスはlibrary外でextends/implementsができる。
+* ライブラリ外ではextends/implementsができない。
+  * sealed classのサブクラスはlibrary外でextends/implementsができる。
 * サブクラスの種類が決定的となるため、enumのようにswitchに渡すことが可能。
     * IMO enumでは出来ないextendsやconstではない値を含めたい時に使う?
     * enumのように.valuesメソッドで羅列することはできない。
+## サンプルコード
+```
+base class A {}
+base class AA implements A{}// 同じライブラリ内であればimplementsできる
+
+// class B extends A {} // error: base classの先祖はbase, final, sealed classのみ
+base class B extends A {}
+
+sealed class C extends B {}
+
+// class E extends C {} // error: base classの先祖はbase, final, sealed classのみ
+base class E extends C {}
+base class EE implements C{}
+
+sealed class F {}
+class G extends F {}
+
+interface class P {}
+class Q extends P{}// 同じライブラリ内であればextendsできる
+
+final class R {}
+base class S extends R{}// 同じライブラリ内であればextendsできる
+base class SS implements R{} // 同じライブラリ内であればimplementsできる。
+```
+```
+// ライブラリ外
+
+// class X extends F {} // error: sealed classはライブラリ外でextendsできない。
+// class X implements F {} // error: sealed classはライブラリ外でimplementsできない。
+//final class X implements A{} // error: base classはライブラリ外でimplementsできない。
+final class XX extends A{} 
+class XXX extends G {} // sealed classの派生クラスはextendsできる
+class XXXX implements G {}// sealed classの派生クラスはimplementsできる
+
+// class Y extends P{} // error: interfaceはライブラリ外でextendsできない。
+class Y implements P{}
+class YY extends Q{} // interface classのサブクラスであればextendsできる。
+// base class YY extends R{}// error: final はライブラリ外でextends/implementsできない。
+
+base class Z extends S{}// final classのサブクラスであればextendsできる。
+
+```
+
 
 
 # Implicit interfaces

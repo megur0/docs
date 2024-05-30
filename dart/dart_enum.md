@@ -12,7 +12,8 @@
 * index、hashCode、等号演算子 == をオーバーライドすることはできない。
 * valuesという名前のメンバをenumで宣言することはできない。
   * valuesメソッドと衝突するため。
-* extendsは使えない。
+* 親クラスをextendsすることはできない。
+  * implementsすることは可能
 * enumをextendsすることはできない。
 * .values.byName(String)でenumを取得可能
 * .nameによって名前を取得できる。
