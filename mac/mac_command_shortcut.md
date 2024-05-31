@@ -25,6 +25,10 @@
 * アプリケーションのウィンドウを全てDockにしまう。
     * cmd + opt + M
 
+# Finder
+* 隠しファイルを表示・非表示
+    * cmd + shift + .
+
 # Spotlight検索
 * cmd + space
    

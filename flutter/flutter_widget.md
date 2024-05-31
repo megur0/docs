@@ -167,6 +167,7 @@
     > Less configurable than Row, but easier to use
 * SwitchListTile
 * RefreshIndicator
-
-
+## page by page
+* PageView
+    * https://api.flutter.dev/flutter/widgets/PageView-class.html
 

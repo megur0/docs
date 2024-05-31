@@ -58,6 +58,21 @@
     * Flutter Engine。
         * ${install先}/flutter/bin/cache/artifacts/engine
         * これは事前に各種ターゲットアーキテクチャ (CPU) 毎にクロスビルド（例えばiosとかandroid)された.soファイルとして用意されている。
+* `which flutter`
+    * 筆者の環境(Mac)では /Users/xxx/flutter/bin/flutter
+
+
+
+# Channel
+* https://docs.flutter.dev/release/archive
+    > The Stable channel contains the most stable Flutter builds
+* `flutter channel` で確認
+* なお、これはflutterのブランチに対応しているため、`cd ~/flutter; git status` のように実行してもチャンネル(ブランチ)を確認できる。
+    * 参考: stableブランチ
+        * https://github.com/flutter/flutter/branches/all?query=stable
+* チャネルにはstable, beta, dev, masterがある。
+    * 参考
+        * https://github.com/flutter/flutter/blob/master/docs/releases/Flutter-build-release-channels.md
 
 # VSCode
 * VSCodeを未インストールであればVSCodeをインストールする
@@ -208,15 +223,64 @@
     * 新しい Flutter プロジェクトを作成すると、基本的な pubspec が生成される。
     * environment
         * sdk: 対象のdart-sdkのバージョン。
+        * flutter: Flutter (SDK) のバージョン
+        * flutter create --template=app の場合は 初期状態でsdkのみが指定されている。
     * version
         * アプリのバージョン・ビルド番号の管理
             * (例) version: 1.0.0+1
             * この場合ビルド番号は"+1"の部分となる。
         * バージョン・ビルド番号の管理はpubspec.yamlにて行う。
             * pubspec.yaml のversionを元に、flutter build コマンド実行時に各OSのネイティブファイルも更新される。
-            * 例えばiOSではGenerated.xcconfigのFLUTTER_BUILD_NAME・FLUTTER_BUILD_NUMBERが更新される。      
+            * バージョン・ビルド番号がネイティブ側でどの項目に対応するかはプラットフォームによって異なる。
+            * 例えば「version: 1.0.0+1」の場合、ビルド時に下記のように上書きされる。
+                * iOS
+                    * ios/Flutter/Generated.xcconfig
+                        ```
+                        FLUTTER_BUILD_NAME=1.0.0
+                        FLUTTER_BUILD_NUMBER=1
+                        ```  
+                    * ios/Flutter/flutter_export_environment.sh
+                        ```
+                        export "FLUTTER_BUILD_NAME=1.0.0"
+                        export "FLUTTER_BUILD_NUMBER=1"
+                        ```
+                    * build/ios/Debug-iphonesimulator/Runner.app.dSYM/Contents/Info.plist
+                        ```
+                        <key>CFBundleShortVersionString</key>
+                        <string>0.1.0</string>
+                        <key>CFBundleVersion</key>
+                        <string>1</string>
+                        ```
+                    * iOSのCFBundleVersionは[メジャー].[マイナー].[パッチ]の形式だが、上記のように指定すると1.0.0と解釈される。
+                        * https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleversion#discussion
+                * Android
+                    * android/app/build.gradle
+                        ```
+                        def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
+                        //...
+
+                        def flutterVersionName = localProperties.getProperty('flutter.versionName')
+                        //...
+                        defaultConfig {
+                            // ....
+                            versionCode flutterVersionCode.toInteger()
+                            versionName flutterVersionName
+                        }
+                        ```
         * ビルド時のオプションで上書きができる。
-            * `flutter build ios --build-name=0.1.2 --build-number=5`            
+            * `flutter build ios --build-name=0.1.2 --build-number=5` 
+    * パッケージのバージョン
+        * some_package: 1.2.2
+            * 1.2.2のみ許容
+        * some_package: ">=1.2.2 <1.3.0"
+        * some_package: ">=1.2.2"
+        * some_package: "<1.3.0"
+        * some_package: ^1.2.2
+            * 指定されたバージョン以上、かつ メジャーバージョンが同じであれば許容
+            * ">=1.2.2 <2.0.0" と同じ
+        * some_package: any
+            * バージョン指定なし
+            * 空白も同じ意味と成る
 * プラグイン関連
     * パッケージにおいて、プラットフォーム固有の機能をFlutterアプリに提供する（例えばデバイスのカメラ機能を使う場合等）ものを特別に「プラグイン（Plugin）」と呼ぶ。
     * プラグインでは以下のファイルが自動生成、更新される
@@ -247,18 +311,16 @@
 * flutter createで作成したプロジェクトはリンターとして、flutter_lintsパッケージがデフォルトで設定されている。
     
 # Flutter本体のアップグレード
-* Channelを指定
-* `flutter channel`
-    * https://docs.flutter.dev/release/archive
-        > The Stable channel contains the most stable Flutter builds
-    * チャネルにはstable, beta, dev, masterがある。
-    * 安定版であるstableが選択されていることを確認。
 * バージョンを確認
     * `flutter --version`
     * `dart --version`
 * Flutterのアップグレード
 * `flutter upgrade`
     * flutterのSDK内にDartのバイナリも付属しているので、同時にDartのバージョンも上がる。
+* リリースノート
+    * https://docs.flutter.dev/release/release-notes
+    * stableへのリリースが未済のbreaking change
+        * https://docs.flutter.dev/release/breaking-changes#not-yet-released-to-stable
 * プロジェクトのアップグレード
     * pubspec.yaml
         * environmentのsdk（これはdart-sdkのバージョン）を変更する。
@@ -294,8 +356,10 @@
     * `flutter pub outdated`
 * 互換性のある最新バージョンに更新
     * `flutter pub upgrade`
+    * `flutter pub upgrade パッケージ名`
 * すべての依存関係の最新バージョンに更新
     * `flutter pub upgrade --major-versions`
+    * `flutter pub upgrade --major-versions パッケージ眼`
 
 # パッケージを削除
 * パッケージを削除
@@ -303,3 +367,12 @@
 * ios/配下のpodfileなどは、ビルドまで実行しないと削除されない。
     
 
+# Flutterのダウングレード
+* `flutter downgrade バージョン`
+    * ただし現在のChannelに該当のバージョンがない場合はダウングレードできない。
+* 直接gitのブランチを切り替えることでバージョンを変更できる
+    ```
+    cd ~/flutter/
+    git tagで確認
+    git checkout 対象のバージョン
+    ```

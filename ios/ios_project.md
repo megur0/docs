@@ -108,4 +108,22 @@
 * gemで提供される。
 
 
-
+# Bundle configuration
+* https://developer.apple.com/documentation/bundleresources/information_property_list/bundle_configuration
+* CFBundleIdentifier
+    * バンドルの一意の識別子。
+* CFBundleShortVersionString
+    * バンドルのリリースまたはバージョン番号。
+* CFBundleVersion
+    * バンドルの反復を識別するビルドのバージョン
+* CFBundleName
+    * ユーザーに表示されるバンドルの短縮名
+* MinimumOSVersion
+    * iOS、iPadOS、tvOS、watchOS でアプリを実行するために必要なオペレーティング システムの最小バージョン。
+* CFBundleDevelopmentRegion
+    * バンドルのデフォルトの言語と地域 (言語 ID)
+* CFBundlePackageType
+    * バンドルの種類
+    * APPL: アプリ
+    * FMWK: フレームワーク
+    * BNDL: バンドル

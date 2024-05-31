@@ -69,7 +69,14 @@
     * プラットフォームインターフェースパッケージ
 
 # pub.devにパブリッシュされていないパッケージを利用する
-* https://docs.flutter.dev/packages-and-plugins/using-packages
+* https://docs.flutter.dev/packages-and-plugins/using-packages#dependencies-on-unpublished-packages
+* pathでローカルのフォルダを指定できる。
+* gitでgitリポジトリを指定できる。
+    * urlでリポジトリを指定
+    * pathでリポジトリ内のパスを指定できる。
+    * refではコミットハッシュやブランチ、タグ等を指定できる。
+        * 最新版を常に取得するにはref: HEADと指定する。（指定しない場合は初回にダウンロードしたコミットハッシュのバージョンを使用し続ける?）
+    * https://stackoverflow.com/questions/54022704/how-to-add-a-package-from-github-in-flutter
 
 # その他
 ## plugin_platform_interface

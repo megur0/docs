@@ -37,7 +37,8 @@
     * s.sourceとして'https://github.com/flutter/engine'が指定されている
     * これがエンジン本体となる。
 * flutter_export_environment.sh
-    * flutter runのオプションの--dart-defineや--dart-define-from-fileを利用した際に、Xcodeプロジェクトへの橋渡しを行う。
+    * 各環境変数をexport
+    * flutter runのオプションの--dart-defineや--dart-define-from-fileで定義した変数も"DART_DEFINES"としてBase64でエンコードされた状態でexportされる。
 ## CocoaPods, プラグイン
 * Flutterのプラグインをpubspec.ymlへ追加してビルドや、futter pub addを実行すると、ios/.symlinks/pluginsや、cocoapods関係のファイル・フォルダが自動生成される。
 * ios/.symlinks/plugins

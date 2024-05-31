@@ -28,6 +28,10 @@
     * 現在のディレクトリ内で生成
         * `flutter create --org com.example .`
         * プロジェクト名はディレクトリ名となる。
+    * テンプレート
+        * `flutter create --template=app`
+            * --templateを指定しない場合もデフォルトでappとなる。
+        * module, package, plugin, plugin_ffi, skeleton
 
 # flutterのインストール状態の確認
 * `flutter doctor`

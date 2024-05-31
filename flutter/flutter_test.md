@@ -873,20 +873,7 @@ void main() {
           ),
         )));
 
-        // 確実にイメージが表示されるように、ImageProviderをキャッシュしておく。
-        await widgetTester.runAsync(() async {
-          // https://github.com/flutter/flutter/issues/38997#issuecomment-555687558
-          for (var element in find.byType(CircleAvatar).evaluate()) {
-            // print(element);
-            final CircleAvatar widget = element.widget as CircleAvatar;
-            final ImageProvider? image = widget.backgroundImage;
-            if (image != null) {
-              await precacheImage(image, element);
-            }
-            // 上記を実行するとrenderObject.debugNeedsPaint が trueになるためフレームを進める必要がある。
-            await widgetTester.pump();
-          }
-        });
+        await cacheCircleAvatorImage(widgetTester);
 
         await expectLater(
             find.byType(Scaffold),
@@ -895,6 +882,74 @@ void main() {
       });
     }
   });
+}
+
+Future<void> cacheCircleAvatorImage(WidgetTester widgetTester) async {
+  // 確実にイメージが表示されるように、ImageProviderをキャッシュしておく。
+  await widgetTester.runAsync(() async {
+    // https://github.com/flutter/flutter/issues/38997#issuecomment-555687558
+    for (var element in find.byType(CircleAvatar).evaluate()) {
+      // print(element);
+      final CircleAvatar widget = element.widget as CircleAvatar;
+      final ImageProvider? image = widget.backgroundImage;
+      if (image != null) {
+        await precacheImage(image, element);
+      }
+      // 上記を実行するとrenderObject.debugNeedsPaint が trueになるためフレームを進める必要がある。
+      await widgetTester.pump();
+    }
+  });
+}
+```
+* また、画像が変更された場合に変更後の画像が画面に反映されるまでに複数フレームが必要であることが確認できた。下記のコードではゴールデンファイルの生成を実行する前にpumpを実行するかpumpAndSettleを実行するかによって結果のゴールデンファイルが異なる内容となる。
+```
+
+void main() {
+  group("asset test", () {
+    testWidgets("test", (tester) async {
+      await tester.pumpWidget(const MaterialApp(
+          home: Scaffold(
+        body: MyWidget(),
+      )));
+
+      cat = true;
+      (tester.element(find.byType(MyWidget)) as StatefulElement)
+          .state
+          // ignore:invalid_use_of_protected_member
+          .setState(() {});
+
+      // pumpとpumpAndSettlerのどちらを実行するかによって後続のゴールデンテストで生成されるファイルが異なる。
+      //await tester.pump(); 
+      await tester.pumpAndSettle();
+
+      await cacheCircleAvatorImage(tester);
+
+      // pumpの場合: ゴールデンテストのイメージはcatに変わっていない
+      // pumpAndSettleの場合: ゴールデンテストのイメージはcatに変わっている
+      await expectLater(find.byType(Scaffold),
+          matchesGoldenFile("./golden/test/${tester.testDescription}1.png"));
+    });
+  });
+}
+
+bool cat = false;
+
+class MyWidget extends StatefulWidget {
+  const MyWidget({super.key});
+
+  @override
+  State<MyWidget> createState() => _MyWidgetState();
+}
+
+class _MyWidgetState extends State<MyWidget> {
+  @override
+  Widget build(BuildContext context) {
+    return CircleAvatar(
+      backgroundImage: cat
+          ? const AssetImage('assets/cat.png')
+          : const AssetImage('assets/Dash.png'),
+    );
+  }
 }
 ```
 
