@@ -60,7 +60,11 @@
 
     * [go_router](./flutter_routing_go_router.md)
 
+* [アニメーション](./flutter_animation.md)
+
 * その他
     * [プラグイン](./flutter_plugin_package.md)
 
     * [パッケージ開発](./flutter_package_dev.md)
+
+    * [フォント](./flutter_font.md)
