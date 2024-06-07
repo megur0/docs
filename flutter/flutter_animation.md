@@ -3,6 +3,33 @@
 
 
 
+# Flutter のアニメーションの作成
+* Flutterでアニメーションを描画する方法は下記の方法が考えられる。
+  1. 値を算出してウィジェットへ渡す
+    * 通常のウィジェット
+    * CustomPaint
+  2. アニメーション系のウィジェットを利用する。
+    * この場合はパラメータやAnimationオブジェクトを渡すことで目的を達成でき、アニメーションに使う値の算出は不要なことが多い。
+  3. 外部ライブラリを利用する
+     * flameなど
+  * 1, 2は 基本的にはsetStateによってウィジェットをリビルドすることで画面への反映を行う。
+* Flutterでアニメーションに用いる値の算出は主に下記の方法が考えられる。
+  1. 単純な値の変化によるアニメーション
+      * 線形の値の変化
+      * カーブで表現できる値の変化
+        * https://api.flutter.dev/flutter/animation/Curves-class.html
+      * 1次元の物理シミュレーションによる値の変化
+        * https://api.flutter.dev/flutter/physics/physics-library.html
+        * スプリング、摩擦、重力
+      * 具体的な手段
+        * 主にAnimation(AnimationController)やAnimatable(Tweenなど)を利用する。
+  2. 上記を複数同時・連続で利用することで実現するアニメーション
+      * 主にAnimation(AnimationController)やAnimatable(Tweenなど)を利用する。
+  3. 直接算出した値を利用したアニメーション
+      * 算出処理をコールバックとしてTickerProviderへ渡すことで値を毎フレーム更新する。
+  4. 外部ライブラリを用いて算出する
+      * flameやforge2d(flame_forge2d)など
+  * UIの動作は1や2で実現し、より複雑なアニメーションやゲームのモーション等は3や4を採用すると良いだろう。
 
 # Ticker, TickerProvider
 * https://api.flutter.dev/flutter/scheduler/Ticker-class.html
