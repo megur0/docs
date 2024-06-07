@@ -124,7 +124,7 @@
         * リスナーとしてコールバックを設定すると(addListener)、Tickerのコールバックが実行されるたび(毎フレーム)呼び出される。
     * その他、reset, repeat, fling, stopなどのAPIを提供
 * 以下はデモのコードとなる
-    ```
+  ```
   import 'package:flutter/material.dart';
   import 'package:flutter/physics.dart';
 
@@ -143,12 +143,12 @@
         _AnimationControllerTestState();
   }
 
-  enum BoundType { normal, unbound }
+  enum BoundType { bound1, bound100, unbound }
 
   class _AnimationControllerTestState extends State<AnimationControllerTest>
       with TickerProviderStateMixin {
     late AnimationController controller;
-    BoundType boundType = BoundType.normal;
+    BoundType boundType = BoundType.bound1;
 
     @override
     void initState() {
@@ -160,9 +160,15 @@
       if (!initial) controller.dispose();
 
       switch (boundType) {
-        case BoundType.normal:
+        case BoundType.bound1:
           controller = AnimationController(
               vsync: this, duration: const Duration(milliseconds: 1000));
+        case BoundType.bound100:
+          controller = AnimationController(
+              upperBound: 100.0,
+              lowerBound: -100,
+              vsync: this,
+              duration: const Duration(milliseconds: 1000));
         case BoundType.unbound:
           controller = AnimationController.unbounded(
               vsync: this, duration: const Duration(milliseconds: 1000));
@@ -219,9 +225,11 @@
               },
               child: const Text("reset")),
           TextButton(
-              onPressed: boundType == BoundType.normal ?  () {
-                controller.repeat();
-              } : null,
+              onPressed: boundType == BoundType.bound1
+                  ? () {
+                      controller.repeat();
+                    }
+                  : null,
               child: const Text("repeat")),
           TextButton(
               onPressed: () {
@@ -235,14 +243,14 @@
               child: const Text("animateTo(bounceIn)")),
           TextButton(
               onPressed: () {
-                controller.animateWith(GravitySimulation(10.0, 0.0, 100.0, 0.0));
+                controller.animateWith(GravitySimulation(10.0, 0.0, 80.0, 0.0));
               },
               child: const Text("animateWith(GravitySimulation)")),
         ],
       );
     }
   }
-    ```
+  ```
 
 
 # Animatable<T>
