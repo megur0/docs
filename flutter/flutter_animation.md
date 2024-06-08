@@ -501,3 +501,55 @@ class Tween<T extends Object?> extends Animatable<T> {
     * AnimatedList
 
 
+
+# その他
+## フレーム単位でsetStateを行う際の注意
+* 例として、下記ではTextFieldへ入力をすることができない。
+* これはおそらく、setStateが毎フレーム実行されることで、TextFieldのジェスチャー検知からカーソル表示までの処理に影響が出ていると考えられる。
+* 対策としては、下記が考えられる。
+  * フレーム毎にsetStateを行う処理を別のウィジェットに分ける。
+  * TextField部分をクラス化してconstにする。
+```
+import 'package:flutter/material.dart';
+
+void main() {
+  runApp(const MaterialApp(
+      home: Scaffold(
+    body: Center(
+      child: TextFieldTest(),
+    ),
+  )));
+}
+
+class TextFieldTest extends StatefulWidget {
+  const TextFieldTest({super.key});
+
+  @override
+  State<TextFieldTest> createState() => _TextFieldTestState();
+}
+
+class _TextFieldTestState extends State<TextFieldTest>
+    with SingleTickerProviderStateMixin {
+  @override
+  void initState() {
+    super.initState();
+
+    final ticker = createTicker((_) {
+      setState(() {});
+    });
+    ticker.start();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: TextField(
+          controller: TextEditingController(),
+        ),
+      ),
+    );
+  }
+}
+
+```
