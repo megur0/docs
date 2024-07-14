@@ -69,3 +69,19 @@ switch (status) {
 }
 ```
 
+
+# byXXXの実装
+```
+enum MyEnum {
+  a(10),
+  b(20);
+
+  const MyEnum(this.code);
+
+  static MyEnum byCode(int code) {
+    return MyEnum.values.where((rt) => rt.code == code).toList().first;
+  }
+
+  final int code;
+}
+```

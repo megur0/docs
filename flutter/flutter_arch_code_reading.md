@@ -642,7 +642,7 @@ flutter: future after runApp
 * Flexible
     * https://api.flutter.dev/flutter/widgets/Flexible-class.html
     * Row, Column, またはFlexの子孫のflexを制御するウィジェット
-    * ParentDataWidgetの派生クラスであり、内部処理としてParentDataWidget.applyParentData()によって最も近い子孫のRenderObjectのparentData.flexやfixを上書きする。
+    * ParentDataWidgetの派生クラスであり、内部処理としてParentDataWidget.applyParentData()によって最も近い子孫のRenderObjectのparentData.flexやfitを上書きする。
     * FlexibleウィジェットはRow, Column, またはFlexの子孫である必要がある。
         * FlexはsetupParentData()によってFlexParentDataを子のRenderObject.parentDataへセットしている。
         * これによってFlexibleウィジェットがapplyParentData()によってFlexParentDataを扱うことが出来るようになっている。

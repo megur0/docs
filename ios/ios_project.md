@@ -75,6 +75,9 @@
     * cocoapodsが生成したConfigファイルの設定を読み込む必要がある
     * 各Configurationごとのファイルで生成されたファイルを#includeする。
 
+# Project > Info > Configurations
+* デフォルトでDebug, Release の２つの設定が用意されている。
+
 
 # Assets.xcassets
 * プロジェクト内の画像フォルダ

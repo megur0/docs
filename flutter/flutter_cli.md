@@ -78,6 +78,7 @@
 * --[no-]build
     * ビルドを行うか否かを指定。
     * デフォルトは--build
+    * ビルドの対象は、対象のデバイスで実行可能な対象をビルドすると考えられる。
 * --[no-]hot
     * ホットリロード機能をONで利用するか否かを指定。
     * デフォルトは--hot
@@ -97,6 +98,13 @@
 
 # ビルド、インストール
 * `flutter build`
+    * サブコマンドを省略した場合、ビルド可能な対象をビルドすると思われる。
+    * `flutter build ios`
+        * iosアプリをビルドする
+    * `flutter build apk`
+        * androidアプリをビルドする
+    * `flutter build ipa`
+        * iosのアーカイブ(ipa)ファイルを生成する
 * `flutter install`
 
 # クリーン

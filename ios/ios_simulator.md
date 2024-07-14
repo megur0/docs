@@ -7,7 +7,7 @@
     * option押しながら動かす
 * 現在地の設定
     * Features>Location
-*  ホームボタンのクリック
+* ホームボタンのクリック
     * shift + ⌘ + H
 * シミュレーターを工場出荷状態（ファクトリリセット）状態にする
     * シミュレーターのメニューバー > Device > Erase All content and settingsをクリック

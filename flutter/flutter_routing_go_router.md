@@ -85,8 +85,11 @@ GoRouter
             * CupertinoAppを利用しているのであればCupertinoPage
             * WidgetAppであればNoTransitionPage
     * pageBuilder
-        * ウィジェットではなくPageを渡す。
-        * 例えばMaterialPageを渡してfullscreenDialogを指定したい際等に利用する。
+        * ウィジェットではなくPageを渡して表示動作をカスタマイズ
+            * (例) MaterialPageを渡してfullscreenDialogを指定
+        * CustomTransitionPageというカスタム用のクラスが用意されている。
+            * https://pub.dev/documentation/go_router/latest/topics/Transition%20animations-topic.html
+        
 * ShellRoute/StatefulShellRoute
     * Navigatorをネストする
     * サンプルコード
@@ -545,6 +548,11 @@ void main() {
         * ディープリンクの処理はFlutter Framework(go_router)ではなく、別パッケージで行う。
 * 関連Issue
     * https://github.com/flutter/flutter/issues/138632
+
+
+# NavigatorObserver 
+* ShellRouteでは NavigatorObserver が発火しない。
+* https://github.com/flutter/flutter/issues/112196
 
 
 # optionURLReflectsImperativeAPIs

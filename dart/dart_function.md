@@ -43,7 +43,7 @@ final a = () => print("a");
 a();
 ```
 
-# 無名関数
+# 無名関数(lambda)
 * 下記の「(item) {return item.toUpperCase();}」 や 「(item) => print('$item: ${item.length}')」 は無名関数
 ```
 const list = ['apples', 'bananas', 'oranges'];
@@ -148,6 +148,18 @@ void namedParamTest6({required String? c, String d="ddd"}, String? a, String? b)
 }*/
 ```
 
+# tear-off
+* https://dart.dev/effective-dart/usage#dont-create-a-lambda-when-a-tear-off-will-do
+* https://dart.dev/language/constructors
+* 関数、メソッド、または名前付きコンストラクタを括弧なしで参照すると、tear-offが作成される。
+* tear-offは関数と同じパラメータを受け取り、呼び出し時に基礎となる関数を呼び出すクロージャとなる。
+* tear-offが利用可能な場合は、lambda(無名関数)を使わずにtear-offを利用することが推奨されている。
+* 無名コンストラクタは クラス.new で参照することができる。
+```
+void main() {
+  [1,2,3].forEach(print);
+}
+```
 
 
 

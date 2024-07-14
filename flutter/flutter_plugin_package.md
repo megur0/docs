@@ -5,8 +5,11 @@
 # TODO
 * ここはよく利用するプラグインを随時追記していく?予定
 
-# スプラッシュ
+# 起動画面・スプラッシュ
 * https://pub.dev/packages/flutter_native_splash
+
+# アプリアイコン
+* https://pub.dev/packages/flutter_launcher_icons
 
 # テキストのシェア
 * share-plus

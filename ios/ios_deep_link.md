@@ -76,6 +76,11 @@
     * https://docs.flutter.dev/cookbook/navigation/set-up-universal-links
 * Firebase Hostingでは、apple-app-site-association をデフォルトでホスティングする。
 * 任意のファイルをアップロードして「https://firebaseのプロジェクトID.web.app/」が有効になると自動的に生成される。
+* ただし、プロジェクトの設定 > 全般 > Appleアプリ で 以下を登録しておく必要があり、登録していない場合は空の内容 `{"applinks":{"apps":[],"details":[]}}` が表示される。
+    * Team ID
+    * Bundle ID
+    * Apple Store ID
+        * こちらは開発中であれば適当なIDで良い。
 * firebase hostingを「はじめる」のみでは「https://firebaseのプロジェクトID.web.app/」は有効にならないので注意。
     * なお、下記のFlutterの手順の場合はfirebaseが自動的に生成することは書かれておらず、手動でapple-app-site-associationをアップロードしている。
     * https://docs.flutter.dev/cookbook/navigation/set-up-universal-links

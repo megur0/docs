@@ -365,6 +365,10 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
   * アプリケーション開発で頻繁に利用するものではないが、BuildContextのAPIを使うとすべてのツリー構造にアクセスが可能である。
   * BuildContext.findRenderObject
   * BuildContext.findAncestorWidgetOfExactType()
+    ```
+    print((context as Element).findAncestorWidgetOfExactType<MaterialApp>());
+    print((context).findAncestorWidgetOfExactType<CupertinoApp>());
+    ```
   * BuildContext.visitChildElements
     * https://api.flutter.dev/flutter/widgets/BuildContext/visitChildElements.html
     * 子に対して走査を行いたい場合等に利用する。

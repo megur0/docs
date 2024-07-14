@@ -456,6 +456,24 @@ ScrollController? getScrollController() {
 * ジェネリクスを持つウィジェット
     * find.byTypeにおいて SomeWidget<dynamic>はSomeWidget<具体的な型>にはヒットしない為注意。
     * 例えば `find.byType(SomeWidget)` は SomeWidget\<dynamic\>にヒットするがSomeWidget\<int\>にはヒットしない
+## byWidgetPredicateの活用: PageViewのScrollable
+* 例えば下記のようにScrollableを含むウィジェットが子に存在するPageViewをスクロールしたいケースがあるとする。
+* この場合、scrollUntilVisibleに指定するscrollableは、単に「PageViewの子孫のScrollable」と指定すると一意に定まらずエラーとなってしまう。
+* この場合、筆者は以下のようにbyWidgetPredicateで属性を絞り込むことで PageView自身のScrollableを取得している。
+```
+PageView(children: [
+  PageA(),// Scrollableを含む
+  PageB()
+])
+```
+```
+final pageViewScrollable = find.descendant(
+    of: find.byType(PageView),
+    matching: find.byWidgetPredicate((widget) =>
+        widget is Scrollable &&
+        widget.axisDirection == AxisDirection.right));
+```
+
 
 # WidgetTester
 * https://docs.flutter.dev/cookbook/testing/widget/introduction

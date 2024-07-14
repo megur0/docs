@@ -140,6 +140,8 @@
 * 申請したいアプリの配布用(Distribute)Provisioning Profileの作成
 * App Store Connectでアプリの情報を登録
 * 審査へ提出
+* 審査ガイドライン
+    * https://developer.apple.com/jp/app-store/review/guidelines/
 
 
 # 参考

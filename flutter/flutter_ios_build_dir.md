@@ -2,6 +2,13 @@
 - [このメモ・独自表記について](../README.md)
 
 
+# FlutterのDebug/Profile/Release と iOSのConfigulations
+* Flutterの3つのビルドモードは、iOSのプロジェクトには Project > Info > Configulations として反映されている。
+    * これらはproject.pbxprojのXCBuildConfigurationやXCConfigurationListで定義されている
+    * XCBuildConfigurationの内容として、ios/Flutter内のxcconfigファイルが読み込みされている。
+* Flutterのビルドモード（Debug/Profile/Release）については[こちら](./flutter_arch.md)を参照
+
+
 # ios/ディレクトリの構成
 ## ios/Flutter
 * Xcodeの設定ファイル(xcconfig, plist)と、Flutterのエンジンのパッケージ（Flutter.podspec）が含まれている。
@@ -24,8 +31,6 @@
         ```
         #include? "Pods/Target Support Files/Pods-Runner/Pods-Runner.debug.xcconfig"
         ```
-    * Flutterのではpodsの設定を読み込んでいる。
-        * Pods/Target Support Files/Pods-Runner/Pods-Runner.release.xcconfig
     * ビルド時に自動生成されるios/Flutter/Generated.xcconfigを、Debug.xcconfigとRelease.xcconfigがincludeしている。
 * AppFrameworkInfo.plist
     * https://docs.flutter.dev/deployment/ios#updating-the-apps-deployment-version

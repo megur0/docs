@@ -26,16 +26,31 @@
         // ...
     }
     ```
+    * Navigator.pushやpopによって操作可能だが、直接pagesを入れ替えても良い。
+    * どちらの場合もPageやPageRouteに応じた遷移のアニメーションが発生する
+* Page
     * MaterialAppで使われるMaterialPageはPageの派生クラス。
+    * CupertinoAppではCupertinoPageが利用される。
+    * Pageのサブクラスを作成してcreateRouteメソッドを実装して、Route派生オブジェクトを返すことで遷移時のアニメーションが指定することができる。
+* PageRoute
+    * ModalRoute, ..., Routeの派生クラス
+    * Navigator.pushではRouteを指定できる。
+        * Routeのサブクラスを作成して遷移時のアニメーションなどをカスタマイズすることができる。
+        * PageRouteBuilderというユーティリティクラスもある
+            * https://api.flutter.dev/flutter/widgets/PageRouteBuilder-class.html
+    * buildContentメソッドでは表示するウィジェットを指定する。
+        * MaterialPageやCupertinoAppのcreateRouteでは、プライベートクラスのPageRouteが指定されこれはMaterialPageやCupertinoAppのchildを返す。
+        * MaterialPageRouteやCupertinoPageRouteではbuilder引数を実行して生成したウィジェットを返す。
+    
 * Navigator.of(context) はBuildContextからNavigatorStateを取得する
 * サンプルコード
     ```
     main() => runApp(MaterialApp(
             home: Navigator(
         pages: const [
-            MaterialPage(child: Page("page C")),
-            MaterialPage(child: Page("page B")),
-            MaterialPage(child: Page("page A")),
+            MaterialPage(child: MyWidget("page C")),
+            MaterialPage(child: MyWidget("page B")),
+            MaterialPage(child: MyWidget("page A")),
             MaterialPage(child: Top())
         ],
         // pages利用の際は、onPopPageを設定する必要がある。設定しない場合はエラーとなる。
@@ -49,13 +64,16 @@
 
         @override
         Widget build(BuildContext context) {
-            return Page("top page",
+            return MyWidget("top page",
                 child: Column(
                 children: [
                     TextButton(
                     onPressed: () {
-                        Navigator.of(context).push(MaterialPageRoute(
-                            builder: (_) => const Page("pushed page")));
+                        // MaterialPageRouteとCupertinoPageRouteで遷移のアニメーションが異なることがわかる。
+                        //Navigator.of(context).push(MaterialPageRoute(
+                        //    builder: (_) => const MyWidget("pushed page")));
+                        Navigator.of(context).push(CupertinoPageRoute(
+                            builder: (_) => const MyWidget("pushed page")));
                     },
                     child: const Text("push page"),
                     ),
@@ -67,8 +85,8 @@
         }
     }
 
-    class Page extends StatelessWidget {
-        const Page(this.pageName, {this.child, super.key});
+    class MyWidget extends StatelessWidget {
+        const MyWidget(this.pageName, {this.child, super.key});
 
         final String pageName;
         final Widget? child;
@@ -83,6 +101,61 @@
             );
         }
     }
+    ```
+    ```
+    import 'package:flutter/material.dart';
+    import 'package:flutter/cupertino.dart';
+
+    main() => runApp(const MaterialApp(home: MyWidget()));
+
+    class MyWidget extends StatefulWidget {
+    const MyWidget({super.key});
+
+    @override
+    State<MyWidget> createState() => _MyWidgetState();
+    }
+
+    class _MyWidgetState extends State<MyWidget> {
+    List<Page> pages = const [
+        MaterialPage(child: Content("page C")),
+        MaterialPage(child: Content("page B")),
+        MaterialPage(child: Content("page A")),
+    ];
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+        body: Navigator(
+            pages: pages,
+            onPopPage: (route, result) => route.didPop(result),
+        ),
+        floatingActionButton: FloatingActionButton(onPressed: () {
+            // CupertinoPage, MaterialPageのそれぞれで異なったアニメーションが確認できる
+            pages = [const CupertinoPage(child: Content("added page"))];
+            //pages = [const MaterialPage(child: Content("added page"))];
+            setState((){});
+        }),
+        );
+    }
+    }
+
+    class Content extends StatelessWidget {
+    const Content(this.pageName, {this.child, super.key});
+
+    final String pageName;
+    final Widget? child;
+
+    @override
+    Widget build(BuildContext context) {
+        return Scaffold(
+        appBar: AppBar(
+            title: Text(pageName),
+        ),
+        body: child,
+        );
+    }
+    }
+
     ```
 
 

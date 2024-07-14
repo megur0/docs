@@ -4,6 +4,7 @@
 
 # 公式ドキュメント
 * https://docs.flutter.dev/development/ui/layout
+* https://docs.flutter.dev/ui/layout/constraints
 * https://docs.flutter.dev/development/ui/layout/constraints
 
 # 原則: 制約は親から子へ。子が希望のサイズを伝える。親がポジションを決定。
@@ -25,5 +26,25 @@
     * 仕様はflutterのコードを読むことでも理解可能。
     * 具体的には対象のウィジェットのRenderObjectのperformLayout()関数の処理
 
+# Constraints
+* https://api.flutter.dev/flutter/rendering/Constraints-class.html
+* 制約の抽象クラス
+* BoxConstraints
+    * ボックスレイアウトモデルによる制約
+    * RenderBoxを継承するRenderObjectにてレイアウトされるウィジェットは、すべてBoxConstraintsを利用する。
+    * BoxConstraints.tight, BoxConstraints.loose, BoxConstraints.expand  等
+    * https://api.flutter.dev/flutter/rendering/BoxConstraints-class.html
+## Constraintsの種類や用語
+* Incoming constraints
+    * 「親から子へ入力される制約」を指す。
+* Tight constraintesと Loose constraints
+    * https://docs.flutter.dev/ui/layout/constraints#tight-vs-loose-constraints
+    * Tight constraintesは正確な１つのサイズによる制約
+    * Loose constraintsは最小値がゼロで最大値がゼロ以外の制約
+* Unbounded constraints
+    * https://docs.flutter.dev/ui/layout/constraints#unbounded-constraints
+    * 無制限となる(double.infinityが設定される)制約
 
 
+# ケーススタディ
+* https://docs.flutter.dev/ui/layout/constraints
