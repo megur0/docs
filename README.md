@@ -44,6 +44,4 @@
 
 * [iOSアプリ開発](./ios/README.md)
 
-* [Mac](/mac/index.md)
-
-* [test](./test/index.md)
+* [Mac](./mac/README.md)
