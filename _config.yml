@@ -1,0 +1,10 @@
+relative_links:
+  enabled:     true
+  collections: true
+
+markdown: CommonMarkGhPages
+commonmark:
+ extensions:
+   - autolink
+   - strikethrough
+   - table

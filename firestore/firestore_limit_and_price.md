@@ -1,5 +1,4 @@
-- [TOP](./README.md)
-- [このメモ・独自表記について](../README.md)
+[TOP(About this memo))](../README.md) > [一覧](./README.md) >
 
 # 使用量と上限
 * 無料の割当て

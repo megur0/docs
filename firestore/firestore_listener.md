@@ -1,5 +1,4 @@
-- [TOP](./README.md)
-- [このメモ・独自表記について](../README.md)
+[TOP(About this memo))](../README.md) > [一覧](./README.md) >
 
 # Cloud Firestore でリアルタイム アップデート
 * https://firebase.google.com/docs/firestore/query-data/listen?hl=ja
