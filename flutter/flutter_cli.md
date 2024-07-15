@@ -96,8 +96,7 @@
 
 
 # ビルド、インストール
-* `flutter build`
-    * サブコマンドを省略した場合、ビルド可能な対象をビルドすると思われる。
+* `flutter build [target]`
     * `flutter build ios`
         * iosアプリをビルドする
     * `flutter build apk`
