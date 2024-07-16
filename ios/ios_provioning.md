@@ -133,16 +133,6 @@
     * `This operation can fail if the version of the OS on the device is incompatible with the installed version of Xcode.`
     * MacのOS、Xcodeのバージョンを上げる必要がある。
 
-
-# App Store申請(未整理)
-* ADPへの登録が必要
-* 申請したいアプリの配布用(Distribute)Provisioning Profileの作成
-* App Store Connectでアプリの情報を登録
-* 審査へ提出
-* 審査ガイドライン
-    * https://developer.apple.com/jp/app-store/review/guidelines/
-
-
 # 参考
 * 公式
     * https://developer.apple.com/jp/help/

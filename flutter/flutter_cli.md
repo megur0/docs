@@ -97,6 +97,9 @@
 
 # ビルド、インストール
 * `flutter build [target]`
+    * デフォルトがリリースモードとなる。
+        * (IMO)
+            * 基本的にflutter runでデバッグをするため、flutter buildを利用する際にリリースモード以外を利用することはないだろう。
     * `flutter build ios`
         * iosアプリをビルドする
     * `flutter build apk`

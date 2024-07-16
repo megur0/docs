@@ -17,7 +17,10 @@
 
 [デザインガイドライン](./ios_design_guideline.md)
 
+[App Store Connect/リリース](./ios_appstore_connect.md)
+
 [レビュー](./ios_review.md)
+
 
 * その他
     [iOSシミュレーターの操作](./ios_simulator.md)

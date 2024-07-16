@@ -23,6 +23,8 @@
 
     * [環境を入れ替え可能とする](./flutter_separate_env.md)
 
+    * [リリース](./flutter_release.md)
+
 * アーキテクチャ
     * [アーキテクチャ](./flutter_arch.md)
 

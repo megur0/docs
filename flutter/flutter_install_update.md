@@ -243,7 +243,7 @@
                         export "FLUTTER_BUILD_NAME=1.0.0"
                         export "FLUTTER_BUILD_NUMBER=1"
                         ```
-                    * build/ios/archive/Runner.xcarchive/Info.plist
+                    * build/ios/archive/Runner.xcarchive/Info.plist や　build/ios/Debug-iphoneos/Runner.app.dSYM/Contents/Info.plist
                         ```
                         <key>CFBundleShortVersionString</key>
                         <string>1.0.0</string>
