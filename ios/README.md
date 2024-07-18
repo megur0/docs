@@ -21,6 +21,8 @@
 
 [レビュー](./ios_review.md)
 
+[クラッシュレポート](./ios_clash_report.md)
+
 
 * その他
     [iOSシミュレーターの操作](./ios_simulator.md)

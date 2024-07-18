@@ -218,6 +218,9 @@
 * pubspec.yaml
     * https://docs.flutter.dev/tools/pubspec
         > The pubspec file specifies dependencies that the project requires, such as particular packages (and their versions), fonts, or image files. It also specifies other requirements, such as dependencies on developer packages (like testing or mocking packages), or particular constraints on the version of the Flutter SDK.
+    * https://dart.dev/tools/pub/versioning
+        * Dartはセマンティックバージョニングに基づく
+        * https://dart.dev/tools/pub/versioning#semantic-versions
     * 現在のバージョン、依存関係、同梱するアセットなど、アプリの基本情報を設定するYAML形式のファイル
     * 新しい Flutter プロジェクトを作成すると、基本的な pubspec が生成される。
     * environment
@@ -348,17 +351,40 @@
             * `cd /Users/〜〜〜/flutter`
             * `git diff --stat` 
 
-# パッケージをアップデート
+# パッケージのアップデート
 * https://docs.flutter.dev/release/upgrade#upgrading-packages
-* pubspec.yamlのバージョンを変更し、`flutter pub get`
-* 古いパッケージの確認
-    * `flutter pub outdated`
-* 互換性のある最新バージョンに更新
-    * `flutter pub upgrade`
-    * `flutter pub upgrade パッケージ名`
-* すべての依存関係の最新バージョンに更新
+## パッケージの状態を確認する
+* 新しいパッケージの確認
+* `flutter pub outdated`
+## pubspec.ymlの指定の範囲内で更新する
+* 下記コマンドで、互換性のある最新バージョンに更新する
+* `flutter pub upgrade`
+* `flutter pub upgrade パッケージ名`
+* これによってpubspec.lockが更新され、同時にflutter pub getも実行される。
+* セマンティックバージョニングに基づけば、APIの互換性は保たれる変更のみとなる。
+## pubspec.ymlの指定を変更する
+* 最新バージョンに更新
     * `flutter pub upgrade --major-versions`
-    * `flutter pub upgrade --major-versions パッケージ眼`
+    * `flutter pub upgrade --major-versions パッケージ名`
+    * これによってpubspec.yml, pubspec.lockが更新され、同時にflutter pub getも実行される。
+    * この変更はAPIの互換性が保たれないため、ソースコード自体の修正が必要になる可能性がある。
+* 手動で更新する
+    * pubspec.yamlのバージョン指定を変更
+    * `flutter pub get`
+## (IMO) pubspec.ymlの指定と、バージョン解決について
+* pubspec.ymlは定期的にメンテナンスすることは勿論として、バージョン解決が狭くなりすぎないようにする必要がある。
+* 例えば `some_packeage: 8.2.1` といった固定の指定は問題を引き起こすことが多い。
+* 事由として下記がある
+1. バージョン解決に失敗する可能性が上がる
+    * 例えば、他のパッケージに`some_package: ^8.3.0`といった指定がある場合は競合してしまう。
+2. 不具合が発生しやすい/解決しづらい
+    * バージョン解決した場合でも、(筆者の経験上)必ずしも問題なく動作するとは限らない。
+    * 各パッケージ側のpubspec.ymlで指定されているバージョンの範囲が、完全に隈なくテストされているとは限らない。
+    * バージョンが固定化されてしまうことで、新しいバージョンを取得しづらくなり、よりニッチな組み合わせが発生しやすい。
+    * その場合に問題が起きた場合の情報が少ない。（あるいは無い）
+
+
+
 
 # パッケージを削除
 * パッケージを削除

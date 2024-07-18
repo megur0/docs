@@ -26,3 +26,5 @@
         * https://stackoverflow.com/questions/61289553/if-set-io-flutter-embedded-views-preview-to-true-cant-run-flutter-project-norm
     * Androidの初期設定等は現在のバージョンでは不要?
 
+# バージョン情報取得
+* https://pub.dev/packages/package_info_plus

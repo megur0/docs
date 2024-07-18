@@ -8,7 +8,7 @@
         * 口語で記載した文章が残っている場合がある。なるべく表現を直してはいるものの、漏れているものがあるかもしれない。
 * 情報は古くなる可能性がある
     * 特に数値や金額などは執筆時点の値となる。
-* 高頻度で再構成・リライトするため、ファイル名やディレクトリ構造などは結構変わる。
+* 高頻度で再構成・リライトするため、ファイル名やディレクトリ構造などの構成は変わることがある。
 * 独自の表記
     * 理解が怪しい箇所や推測で書いてある場所は「(?)」「?」などの表記がしてある。
     * 個人の見解や経験、検証結果は「IMO(in my opinion)」「IME(in my experience)」などの表記がある
@@ -18,11 +18,11 @@
         * run()と表記している場合でも引数が0個とは限らない点に注意
 
     * 随時アップデートを繰り返しているため、一貫性がない場合も多い。
+* 編集中、WIP、未完成なメモ
+    * すべてのメモは随時更新していく前提であるが、特に中途半端な記載となっているメモは、こういった表記を冒頭に入れている。
 
 
 # コンテンツ
-* [共通](./common/about_class_diagram.md)
-
 * [Dart](./dart/README.md)
 
 * [Flutter](./flutter/README.md)
@@ -42,8 +42,13 @@
 
     * [Firestore](./firestore/README.md)
 
+    * [Firebase Clashlytics](./firebase_clashlytics/firebase_clashlytics.md)
+
 * [iOSアプリ開発](./ios/README.md)
 
 * [Mac](./mac/README.md)
 
 * [Git](./git/README.md)
+
+* 表記などについて
+    * [クラス図の表記](./common/about_class_diagram.md)

@@ -16,7 +16,12 @@
 # アーカイブ
 * Xcodeで、Product > Archive でアーカイブが生成される。
     * ビルドとアーカイブが行われる。
+    * これによって.xcarchiveファイルが作成される
+        * 参考: https://stackoverflow.com/questions/8591004/difference-between-ipa-and-xcarchive
+            > IPA は、YourApp.app バンドルを含む、圧縮された Payload フォルダーです。.app には、イメージ、plist ファイル、圧縮された nib と実行可能ファイル、CodeSigning リソースなどのすべてのアプリケーション リソースが含まれます。
+            > xcarchive にはアプリと dsym ファイルが含まれています。クラッシュ ログを非シンボリック化するには .DSYM が必要です。保存した .xcarchive を右クリックし、パッケージの内容を表示を選択して、その内容を確認します。
 * アーカイブをすると、Organizerの画面へ遷移する。
+
 
 # App Store Connectへアップロード
 * (未登録であれば)App Store Connectでアプリを登録しておく

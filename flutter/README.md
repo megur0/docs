@@ -17,7 +17,11 @@
 
     * [CLI](./flutter_cli.md)
 
-    * [Firebase](./flutter_flutterfire.md)
+    * Firebase
+
+        * [FlutterFire](./flutter_flutterfire.md)
+
+        * [Clashlytics](./flutter_firebase_clashlytics.md)
 
     * [iOSでビルドされる構成](./flutter_ios_build_dir.md)
 
