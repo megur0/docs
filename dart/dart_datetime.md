@@ -1,6 +1,19 @@
 [TOP(About this memo))](../README.md) > [一覧](./README.md) >
 
 
+# Duration
+* https://api.flutter.dev/flutter/dart-core/Duration-class.html
+  > A span of time, such as 27 days, 4 hours, 12 minutes, and 3 seconds.
+* 比較や+, -のメソッドが実装されている
+```
+void main() {
+  print(Duration(hours:1)+Duration(hours:2));
+  print(Duration(hours:1) < Duration(hours:2));
+  // 3:00:00.000000
+  // true
+}
+```
+
 # DateTimeクラス
 * https://api.dart.dev/stable/3.3.3/dart-core/DateTime-class.html
 * DateTime は、エポック (1970-01-01 UTC) から最大 100,000,000 日離れた時刻値を表すことができる。

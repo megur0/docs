@@ -184,7 +184,9 @@ void main() {
   // pattern variable declaration
   final (b, r) = getResponse();
   final (:body, :responseCode) = getResponse2();
+  // final (:body, :_) = getResponse2();//エラーとなる。値の無視はできない。
   final (body:b2, responseCode:r2) = getResponse2();
+  final (body:b3, responseCode:_) = getResponse2();// 値の無視ができる
   print("$b, $r, $body, $responseCode, $b2, $r2");// {result: success, data: }, 200, {result: success, data: }, 200, {result: success, data: }, 200
 }
 
