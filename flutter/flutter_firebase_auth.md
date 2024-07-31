@@ -25,7 +25,7 @@
     * このAPIのverifyBeforeUpdateEmailとの違いは以下となる。
         * 実行されるとemailVerified が falseとなる。
         * 変更後のメールアドレスへの検証メールは送信されない。(したがって、検証するためには別途sendEmailVerificationを送信する必要がある)
-            * updateEmailもverifyBeforeUpdateEmailも、変更前のメールアドレスへのrevoke用メールは送信する。
+        * updateEmailは変更前のメールアドレスへのrevoke用メールを送信する。(verifyBeforeUpdateEmailは送信しない)
     * 24/7/30時点で、下記のドキュメントはupdateEmailが掲載されている。
         * https://firebase.google.com/docs/auth/flutter/manage-users?hl=ja#set_a_users_email_address
 
