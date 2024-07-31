@@ -27,3 +27,37 @@
         * Admin SDK側でIDトークンの検証時に更新トークンが無効化されているかどうかの判定をする
         * 無効化されている場合はバックエンドから特定のレスポンスを返してフロントでサインアウトさせる
         * あるいは直接対象ユーザーをブラックリストへ追加してチェックする 等
+
+
+
+# メールアドレス列挙保護の有効化
+* https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection?hl=ja
+* Firebase Authenticationの 設定 > ユーザーアクション にて有効／無効の設定ができる
+* なお、以下のように新しいプロジェクトはデフォルトで有効となっている。
+    > 2023 年 9 月 15 日以降にプロジェクトを作成した場合、メール列挙保護はデフォルトで有効になっています。
+* 上記を有効にした場合、サインイン時のエラーメッセージでパスワードやメールアドレスが間違っていた場合に、それらを特定できるエラーコードではなく、"invalid-credential"という形で返ってくる。
+    * コードをプログラム中で参照している場合は、有効化に伴ってプログラムの修正が必要な可能性があるため注意。
+* なおFirebaseに関係なく、仕組み上、メールアドレス・パスワードによるサインアップやパスワードリセットに関しては列挙保護を回避することはできない。
+    * https://stackoverflow.com/questions/75455503/how-to-protect-against-email-enumeration-on-sign-up
+   
+
+# パスワードのセキュリティポリシー
+* Firebase Authenticationにはパスワードのセキュリティポリシーを設定する機能が無い。
+* Firebase Authenticationはパスワードの条件が6文字以上という条件のみのため、そのまま利用した場合はセキュリティ上の課題が残る
+    * https://firebase.google.com/docs/auth/admin/manage-users?hl=ja
+* 対策として考えられるもの
+    * 呼び出し側でバリデーションを行う
+        * パスワードをFirebase の APIへ渡す前にアプリケーション側でバリデーションを行う方法となる。
+        * ただしこの方法の場合では、パスワードの再設定メールの送信機能についてはカバーできないため、個別に対応する必要がある。
+            * パスワードの再設定メールの送信機能については、アクションURLから独自のサーバー処理へ渡してパスワードの設定処理を行う事で対応可能ではある。
+            * しかし、最大のデメリットは独自のサーバーおよびサーバー側の処理の実装が必要となること
+    * (未検証)Firebase Authentication on Identity Platform へアップグレードする
+        * Firebase Authentication とは 料金体系が異なる点に注意
+            * https://firebase.google.com/docs/auth?hl=ja#identity-platform
+        * 現時点(24/7/30)で、管理コンソールからパスワードポリシーを設定する方法は無く、SDKを利用した設定方法のみとなる。
+            * https://cloud.google.com/identity-platform/docs/password-policy?hl=ja
+* 参考
+    * https://stackoverflow.com/questions/49183858/is-there-a-way-to-set-a-password-strength-for-firebase
+
+
+

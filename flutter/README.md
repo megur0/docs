@@ -21,6 +21,8 @@
 
         * [FlutterFire](./flutter_flutterfire.md)
 
+        * [Authentication](./flutter_firebase_auth.md)
+
         * [Clashlytics](./flutter_firebase_clashlytics.md)
 
     * [iOSでビルドされる構成](./flutter_ios_build_dir.md)
