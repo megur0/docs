@@ -703,10 +703,10 @@ main() {
         //...
     }
     ```
-* 上記の仕組みよって、以下が実現されている
-    * Elementの生成の際に、keyによってグローバルなマップに保存されたElementを参照することでElementの再利用が可能か確認する。
+* 上記の仕組みによって、以下が実現されている
+    * Elementの生成の際に、GlobalKeyによってグローバルなマップに保存されたElementを参照することでElementの再利用が可能か確認する。
         * ref. Element.inflateWidget()
-    * 任意のウィジェットにkeyを設定することで、GlobalKey.currentContextのAPIによってBuildContextを取得することができる。
+    * 任意のウィジェットのkeyにGlobalKeyを設定することで、GlobalKey.currentContextのAPIによってBuildContextを取得することができる。
 * (参考)(IME)GlobalKeyクラスとWidgetsBindingインスタンスの密結合について
     * この結合が筆者にとって問題となったシーンがある。
     * 通常のアプリケーション開発で行うことはまず無いが、FlutterではWidget.createElement()やElement.mount()のAPIを利用すれば自前でElementツリーやRenderObjectのツリーを作成することが可能である。

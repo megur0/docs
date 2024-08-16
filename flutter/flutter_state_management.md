@@ -74,9 +74,6 @@
   * void dispose()
     * 参照されなくなったツリー上のノードは非アクティブ化された後に廃棄(unmount)される。
     * その際にState.dispose()が呼ばれる。
-
-
-
   * Widgetが前回のビルド時のオブジェクトと同一のものであれば再利用される。
   * Widgetに関しては、const値のオブジェクトではなく、かつ、共通のオブジェクトを使いまわししていない場合(例えばbuildメソッド内で直接生成したりビルダーから生成している等)は、リビルドの度に都度生成される。
 
@@ -99,7 +96,7 @@
   * Element.update()が不可の場合
     * 上記を満たさない場合は、Elementは再利用できず、非アクティブ化(deactivate())された後に(フレーム処理の最後に）破棄（unmount()）される。
     * Widget.keyを使った再利用の確認
-      * Widget.keyがnullではない場合は、そのkeyをもとにグローバルなマップからElementを取得する。
+      * Widget.keyがGlobalKeyである場合は、そのkeyをもとにグローバルなマップからElementを取得する。
       * 今回のウィジェットと、取得したElement.widgetとで、再度(X)のElement.update()が可能かどうかを試みる。
     * Widget.keyによる再利用ができない場合
       * ウィジェットのcreateElement()メソッドからElementを新規に生成し、Element.mount()によってマウントを行う。
@@ -109,7 +106,7 @@
 * https://api.flutter.dev/flutter/widgets/GlobalKey-class.html
 * https://docs.flutter.dev/ui#keys
 * GlobalKeyをウィジェットに設定することによって以下を実現することが出来る。
-  * GlobalKey.currentContext を使って直接BuildContextを参照
+  * GlobalKey.currentContext を使って直接BuildContextを参照したり、currentStateでStateを参照することができる。
   * ウィジェット内部のElementやRenderObjectのツリー(およびState)を再利用
 * Widget.keyは初回のビルド(マウント)を実行した時点で、グローバルなマップ(Map<GlobalKey, Element>)へ登録され、GlobalKey.currentContextはこの値を参照する。
 * したがって、初回のマウント前に参照すると実行時エラーとなる点に注意。

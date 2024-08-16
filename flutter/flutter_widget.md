@@ -51,6 +51,33 @@
     * Stateful widgets は StatefulWidget のサブクラスである。
 
 
+# Key
+* https://api.flutter.dev/flutter/foundation/Key-class.html
+* Keyはフレームワーク内部ではElementのアップデートの判定に利用されている
+    * 同一オブジェクトの場合はElementはそのまま利用される。（アップデートもされない）
+    * 旧ウィジェットと新ウィジェットを比較して同じruntimeTypeでkeyが同じ場合にElementはアップデートされる。(異なる場合はElementは再生成 or GlobalKeyならグローバルマップから再利用を試みる)
+        * なお、keyはnullである場合も同一と判定される。
+* Key自体は抽象クラスであり、factoryコンストラクタのKey(String value)によってValueKey<String>が生成される。
+* また、ウィジェットによっては独自の処理によってKeyを利用して子の再利用や識別をしている。
+* GlobalKey
+    * フレームワーク内部では、Elementの再利用のために利用されている
+    * グローバルなマップで管理されており、任意のウィジェットからGlobalKey.currentContextやcurrentStateによって直接BuildContextやStateを参照できる
+    * GlobalKey自体は抽象クラスであり、factoryコンストラクタでは LabeledGlobalKeyが生成される。
+* LocalKey(abstract class)
+    * https://api.flutter.dev/flutter/foundation/LocalKey-class.html
+    * GlobalKeyではないキー
+    * GlobalKeyはアプリ全体で一意だが、LocalKeyは同じ親に対しては一意である必要がある。
+    * ObjectKey
+        * ==において、ObjectKey.valueのidenticalで比較される
+    * UniqueKey
+        * 自分自身とのみ等しいキーが割り当てされる。
+        * 内部的には単にconstではないコンストラクタが定義されている。
+            * ==はデフォルトの動作としてidenticalであり、constではないため常に他のオブジェクトに対してfalseとなる
+        * 必ず値同士で不一致となるため、再利用させずに再構築させる目的で利用する
+    * ValueKey
+        * ValueKey<T> は、==においてValueKey.valueの値で比較される
+
+
 # レイアウトの基本的なウィジェット
 * Align
 * Center
@@ -197,9 +224,13 @@
 ## ダイアログ
 * showDialog
     * https://api.flutter.dev/flutter/material/showDialog.html
+* DialogやCupertinoDialogではなく、AlertDialog, SimpleDialog, CupertinoAlertDialogを使うことが推奨されている。
+    > This dialog widget does not have any opinion about the contents of the dialog. Rather than using this widget directly, consider using AlertDialog or SimpleDialog, which implement specific kinds of Material Design dialogs.
 * Dialog
 * AlertDialog
 * SimpleDialog
+* CupertinoAlertDialog
+* CupertinoDialog
 ## スナックバー
 * Snackbar
     ```

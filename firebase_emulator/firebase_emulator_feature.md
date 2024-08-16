@@ -57,6 +57,10 @@
     * (参考)エミュレータ利用時は、オフラインキャッシュを都度クリアできないか？
         * clearPersistenceを使って毎回オフラインデータをクリアする方法も試したが、permissionのエラーが出てきてしまった。
             * `FirebaseFirestore.instance.clearPersistence();`
+            * 発生したエラーの一例
+            ```
+            FirebaseException ([cloud_firestore/failed-precondition] Operation was rejected because the system is not in a state required for the operation's execution. If performing a query, ensure it has been indexed via the Firebase console.)
+            ```
         * 調べたが、`FirebaseFirestore.instance.terminate()`してから実行する方法しか見つからなかった。アプリのライフサイクルにうまく組み込む方法が見つからなかったのでこの方法は断念。
             * https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#clearPersistence()
             * https://stackoverflow.com/questions/63930954/how-to-properly-call-firebasefirestore-instance-clearpersistence-in-flutter
