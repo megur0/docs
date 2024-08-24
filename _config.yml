@@ -6,3 +6,4 @@ plugins:
   - jekyll-sitemap
 google_analytics: G-64HQB5R4XW
 description: "このサイトは筆者の学習用のメモです"
+lang: ja
