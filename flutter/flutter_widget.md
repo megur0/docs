@@ -247,11 +247,17 @@
 
 
 # Builder
-* https://api.flutter.dev/flutter/widgets/Builder-class.html
-* StatelessWidget サブクラスを定義するためのインラインの代替手段
-
-
-
+* Builder
+    * https://api.flutter.dev/flutter/widgets/Builder-class.html
+    * StatelessWidget サブクラスを定義するためのインラインの代替手段
+* StatefulBuilder
+    * https://api.flutter.dev/flutter/widgets/StatefulBuilder-class.html
+    * https://stackoverflow.com/questions/72179234/dropdown-menu-inside-dialog
+    * インラインで状態を持たせる事ができ、setStateを利用できる。
+    * ただし、状態はを表す変数は外で持たせる必要があるため、StatefulWidgetの完全な代替手段ではない。
+* LayoutBuilder
+    * https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html
+    * 親ウィジェットの制約を参照することができる
 
 # テキスト関連
 * Text
@@ -308,6 +314,16 @@
 * CheckboxListTile
 * SwitchListTile
 * RadioListTile
+
+# ドロップダウン
+* https://api.flutter.dev/flutter/material/DropdownButton-class.html
+* DropdownButton
+* DropdownMenu
+* ドキュメントによると、DropdownMenuがDropdownButtonのアップデートバージョンとなる。
+    > There is a Material 3 version of this component, DropdownMenu that is preferred for applications that are configured for Material 3 (see ThemeData.useMaterial3). The DropdownMenu widget's visuals are a little bit different, see the Material 3 spec at m3.material.io/components/menus/guidelines for more details.
+* (IME)子要素の幅が長くオーバーフローするケース
+    * DropdownButtonの場合はisExpandedによって解決する。
+    * DropdownMenuはwidthを指定することで解決するが、ダイアログなどの内側で利用している場合は幅の取得が難しいケースがある。(この場合は筆者はDropdownButtonを利用している)
 
 
 # カラー

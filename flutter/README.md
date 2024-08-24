@@ -73,7 +73,10 @@
 * [アニメーション](./flutter_animation.md)
 
 * その他
-    * [プラグイン](./flutter_plugin_package.md)
+    * プラグイン
+        * [プラグイン(各種)](./flutter_plugin_package.md)
+        
+        * [permission_handler](./flutter_permission_handler.md)
 
     * [パッケージ開発](./flutter_package_dev.md)
 

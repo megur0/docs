@@ -1030,6 +1030,31 @@ test("", () async{
 ```
 * Mockitoを利用してモック化する方法もある
     * https://docs.flutter.dev/cookbook/testing/unit/mocking
+## スタブ化したいオブジェクトをグローバル(トップレベル)変数として宣言しておく方法
+* アプリケーションコードであれば、共通で利用するクラスをグローバル変数として扱う事が多いだろう。
+* グローバル変数として定義しておくメリットは、APIを置換可能にするためにインジェクションを利用する必要がないため、コード量を減らすことができる。
+* 下記のように各画面で利用するbackendという変数をトップレベルに定義しておけば、テストでは直接サブクラスで置き換えれることでスタブ化できる。
+```
+Backend backend = Backend(/* 省略 */);
+
+class Backend {
+  // 省略
+}
+```
+* テストでは以下のようにサブクラスを作成して変数を置き換える。
+```
+backend = BackendStub(/* 省略 */);
+class BackendStub extends Backend {
+    // 省略
+}
+```
+* テストファイル内で共通で初期化したいのであればsetUpAllを利用する。
+```
+setUpAll(() {
+  backend = ackendStub(/* 省略 */);
+});
+```
+
 ## プラグインのテスト
 * https://docs.flutter.dev/testing/plugins-in-tests
 * 最も手軽な方法はプラグインのAPIの呼び出しをラップして、それをスタブ化する方法となる。 
