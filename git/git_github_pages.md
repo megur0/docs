@@ -130,3 +130,34 @@
 * https://docs.github.com/ja/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll#customizing-your-themes-html-layout
 * minimalのカスタマイズ方法
   * https://github.com/pages-themes/minimal
+
+
+# sitemap
+* _config.ymlへ以下を追記
+```
+plugins:
+  - jekyll-sitemap
+```
+
+# Google Analytics
+* https://github.com/pages-themes/primer#customizing-google-analytics-code
+* _config.ymlへ以下を追記
+```
+google_analytics: G-XXXXXXXXXX
+```
+* _includes/head-custom-google-analytics.html を作成
+```
+{% if site.google_analytics %}
+  <!-- Google tag (gtag.js) -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id={{ site.google_analytics }}"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+
+    gtag('config', '{{ site.google_analytics }}');
+  </script>
+{% endif %}
+```
+* 参考
+  * https://zenn.dev/key_luvless/articles/d6b14182c0b4e0
