@@ -68,7 +68,7 @@
 * 下記のサンプルコードのPermissionHandlerWidgetをコピーして、自身のアプリケーションで出力すると権限の状況が把握できる。
 * https://pub.dev/packages/permission_handler/example
 * 許可した覚えのない項目でgrantedとなっている箇所は、デフォルトで有効になっている項目や、iOSの場合はpermisssion_handlerが常にgrantedを返している項目になる。
-* まだ許可がされていない項目はdeniedとなっている。
+* 許可のリクエストが未済の項目はdeniedとなっている。
 * マクロ上でコメントアウトした項目は(押下して)リクエストを行ってもpermanentlyDeniedが返る
 * リクエストに対してユーザーが拒否をした場合は、permanentlyDeniedが返る
 * PermissionWithService(Permissionのサブクラス)

@@ -131,13 +131,16 @@
 * minimalのカスタマイズ方法
   * https://github.com/pages-themes/minimal
 
-
-# sitemap
-* _config.ymlへ以下を追記
-```
-plugins:
-  - jekyll-sitemap
-```
+# その他 _config.ymlの設定
+* sitemap
+  ```
+  plugins:
+    - jekyll-sitemap
+  ```
+* lang
+  ```
+  lang: ja
+  ```
 
 # Google Analytics
 * https://github.com/pages-themes/primer#customizing-google-analytics-code
@@ -161,3 +164,13 @@ google_analytics: G-XXXXXXXXXX
 ```
 * 参考
   * https://zenn.dev/key_luvless/articles/d6b14182c0b4e0
+
+
+# (IME)Google サーチコンソールへの登録
+* 筆者の場合は以下の手順で登録した。
+* プロパティを追加 > URLプレフィックス追加 > Google Analyticsで認証
+* サイトマップの登録
+* 危険なコンテンツ判断されてしまった場合
+  * ソースコードを大量に含んでいることが原因と考えられるが、危険なコンテンツを含んでいると、サーチコンソールで判定されてしまった（具体的なページなどは表示されない）
+  * 修正が完了したことを報告できるので、そのフォームに「当該コンテンツはGithub Pagesによって作成した、ソフトウェア開発に関するコンテンツを扱ったWEBサイトでサンプルコードを多く含むものであり、ブラウザ上で動作するコードは一切含まない」という旨を記載して送信
+  * 翌日にはGoogleより通知が届き、有害なサイトやダウンロードへのリンクが含まれていないことを確認できたので警告を削除する、という旨の通知メールが届く。
