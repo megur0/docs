@@ -20,7 +20,7 @@
 
 # identical
 * オブジェクトが同一かどうかを判定する
-```
+```dart
 expect(identical(Object(), Object()), false);
 ```
 
@@ -48,7 +48,7 @@ expect(identical(Object(), Object()), false);
 
 
 # サンプルコード
-```
+```dart
 void main() {
   print(Person == Person); // true
   print(Person == Taro); // false

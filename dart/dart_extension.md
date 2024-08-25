@@ -4,7 +4,7 @@
 # Extension
 * https://dart.dev/language/extension-methods
 > Extension methods add functionality to existing libraries. You might use extension methods without even knowing it. For example, when you use code completion in an IDE, it suggests extension methods alongside regular methods.
-```
+```dart
 extension NumberParsing on String {
   int parseInt() {
     return int.parse(this);
@@ -13,7 +13,7 @@ extension NumberParsing on String {
 }
 ```
 * extensionプライベートのフィールドにはライブラリ外からはアクセスが出来ないため注意
-  ```
+  ```dart
   extension Iso8601Ex on DateTime {
     String toIso8601StringEx() {
       String y =

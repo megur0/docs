@@ -127,7 +127,7 @@ The value of a widget debug variable was changed by the test.
 # DiagnosticableTree.toStringDeep()
 * https://api.flutter.dev/flutter/foundation/DiagnosticableTreeMixin/toStringDeep.html
 * ElementはDiagnosticableTreeの派生クラスで、toStringDeep()を利用する事で自身と子孫の構成を出力できる。
-```
+```dart
 main() => runApp(MyWidget());
 class MyWidget extends StatelessWidget {
   const MyWidget({super.key});

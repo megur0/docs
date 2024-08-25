@@ -63,7 +63,7 @@
         * GTMSessionFetcher
         * PromisesObjC
 * アプリケーションコードでは下記のように読み込みを行う。
-    ```
+    ```dart
     await Firebase.initializeApp(
         options: DefaultFirebaseOptions.currentPlatform,// 上記で作成した「firebase_options.dart」を参照
     );

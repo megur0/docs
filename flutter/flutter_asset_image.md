@@ -13,7 +13,7 @@
     * https://api.flutter.dev/flutter/dart-ui/FlutterView/devicePixelRatio.html
     > The number of device pixels for each logical pixel for the screen this view is displayed on.
     * 各論理ピクセルのデバイスピクセル数
-    ```
+    ```dart
     final mediaQuery = MediaQuery.of(context);
     print("height:${mediaQuery.size.height}, width:${mediaQuery.size.width} devicePixceRatio:${mediaQuery.devicePixelRatio}");
     ```

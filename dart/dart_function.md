@@ -5,7 +5,7 @@
 * Dartの関数はすべてクロージャである。
 > Dart is a lexically scoped language, which means that the scope of variables is determined statically, simply by the layout of the code.
 * 例
-```
+```dart
 void main() {
   print(data());// 1
   print(data(increment:true));// 2
@@ -25,7 +25,7 @@ final data = () {
 ```
 
 # 同名の変数は近くのスコープが優先される。
-```
+```dart
 main(){
   int a = 3;
   (int a) {
@@ -37,14 +37,14 @@ main(){
 
 # 関数は第一級オブジェクト
 * 関数を変数のようにあつかうことができる
-```
+```dart
 final a = () => print("a");
 a();
 ```
 
 # 無名関数(lambda)
 * 下記の「(item) {return item.toUpperCase();}」 や 「(item) => print('$item: ${item.length}')」 は無名関数
-```
+```dart
 const list = ['apples', 'bananas', 'oranges'];
 list.map((item) {
   return item.toUpperCase();
@@ -63,14 +63,14 @@ list.map((item) {
   * Optional named parameters
 ## Positional parameters
 * 順序にしたがって必ず指定する必要がある引数
-```
+```dart
 void positionalParamTest(String a, String b) {
   print("positionalParamTest: $a, $b");
 }
 positionalParamTest("aaa", "bbb");
 //positionalParamTest("aaa");//compile error
 ```
-```
+```dart
 void positionalNullableParamTest(String a, String? b) {
   print("positionalNullableParamTest: $a, $b");
 }
@@ -86,7 +86,7 @@ positionalNullableParamTest2(null, null);
 * Optional positional parameters
 > If you don’t provide a default value, their types must be nullable as 
 > their default value will be null
-```
+```dart
 void OptionalPositionalParamTest(String? a, String? b, [String c="ccc", String? d]) {
   print("OptionalPositionalParamTest: $a, $b, $c, $d");
 }
@@ -100,7 +100,7 @@ OptionalPositionalParamTest("aaa", "bbb", "ccc", "ddd");
 * Optional Named parameters
   * requiredをつけない場合は任意の引数となる。
 * requredをつけると必須の引数となる。
-```
+```dart
 /* 
 // コンパイルエラー
 // nullableではない場合は必須とする必要がある。
@@ -117,13 +117,13 @@ namedParamTest2(c:null);
 > Named parameters are optional unless they’re explicitly marked as required.
 > If you don’t provide a default value or mark a named parameter as required, 
 > their types must be nullable as their default value will be null.
-```
+```dart
 //namedParamTest2("aaa"); //compile error
 //namedParamTest2("aaa", "bbb"); //compile error
 //namedParamTest2(a:"aaa", b:"bbb");//compile error
 ```
 * その他検証
-```
+```dart
 void namedParamTest3(String? a, String? b, {required String? c, String d="ddd"}) {
   print("namedParamTest3: $a, $b, $c, $d");
 }
@@ -154,7 +154,7 @@ void namedParamTest6({required String? c, String d="ddd"}, String? a, String? b)
 * tear-offは関数と同じパラメータを受け取り、呼び出し時に基礎となる関数を呼び出すクロージャとなる。
 * tear-offが利用可能な場合は、lambda(無名関数)を使わずにtear-offを利用することが推奨されている。
 * 無名コンストラクタは クラス.new で参照することができる。
-```
+```dart
 void main() {
   [1,2,3].forEach(print);
 }

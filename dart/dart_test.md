@@ -11,7 +11,7 @@
 # Matcher
 * DartおよびFlutterには様々なMatcherが用意されている。以下は一例。
 * prints
-```
+```dart
 test('', () {
   expect(() {
     print('my test');
@@ -19,7 +19,7 @@ test('', () {
 });
 ```
 * equal
-```
+```dart
 test('', () async {
     expect(1, equals(1));
     expect(1, lessThanOrEqualTo(2));
@@ -28,7 +28,7 @@ test('', () async {
   });
 ```
 * エラー
-```
+```dart
 test('', () async {
   expect(() {
     throw Exception();
@@ -42,14 +42,14 @@ test('', () async {
 });
 ```
 * Future
-```
+```dart
 test('', () async {
   expect(Future.value(0), completes);
   expect(Future.value(0), completion(1));
 });
 ```
 * Stream
-```
+```dart
 test('', () {
   expect(Stream.fromIterable([0, 1, 2, 3]), emitsInOrder([0, 1, 2, 3]));
   expect(Stream.fromIterable([3]), emits(3));
@@ -59,7 +59,7 @@ test('', () {
 });
 ```
 * expectAsync0~6
-```
+```dart
 test('', () async {
   var callback = expectAsync0(() {});// 渡したコールバック処理が呼び出されるまではテストを終了しない。0は引数0のコールバックを対象としていることを表す(コールバックは戻り値から実行可能)
   Timer(const Duration(milliseconds: 100), () {
@@ -69,7 +69,7 @@ test('', () async {
 });
 ```
 * predicate
-```
+```dart
   test('', () async {
     var isTwoDigits = predicate((e) => e is int && e > 9 && e < 100, 'is two digits');
     expect(15, isTwoDigits);// ok

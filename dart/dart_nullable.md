@@ -3,7 +3,7 @@
 
 # nullable
 * 型に?をつけると、nullableになる。初期化していない場合はnullが入る。
-```
+```dart
  int? a;
  print(a);
 ```
@@ -15,7 +15,7 @@
 # null assertion
 * null safetyのデメリットとして、このチェックはコンパイラの推論によるものであり、実行時にnullになりえないケースでもコンパイルエラーとしてしまうものが多くあること。
 * この場合、!(非nullであることのassert)を使う。
-```
+```dart
 class A{
   A(this.a);
   final Function()? a;
@@ -29,7 +29,7 @@ class A{
 }
 ```
 * null assertionは、nullだった場合は実行時エラーが発生する。したがって確実にnullではない場合に使う。
-```
+```dart
 void main() {
   String? test;
   print('$test');
@@ -46,7 +46,7 @@ void main() {
 * Conditional function ？（名称は不明）
   * `obj?.hoge()`は objがnullの場合はhogeを実行しない。
 * Conditional　accessが役に立つシーン。
-```
+```dart
 if (a != null && a.b != null) {
   // ....
 }
@@ -57,7 +57,7 @@ if (a?.b != null) {
 ```
 
 # 省略記法
-```
+```dart
  int? a;
  int b = a ?? 4;
  a ??= 3;

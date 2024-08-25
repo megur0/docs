@@ -11,7 +11,7 @@
 
 # (IMO) 所感
 * 筆者がDartの初学の際、コンストラクタの学習コストが高かった。例えば下記のようなコードは多少の慣れが必要かもしれない。
-```
+```dart
 class A {
   final double x;
   final double y;
@@ -24,7 +24,7 @@ class B extends A {
 ```
 
 # 無名コンストラクタ、名前付きコンストラクタ
-```
+```dart
 class Book {
   String title = '';
   Book(String title) {// 無名コンストラクタ
@@ -37,7 +37,7 @@ class Book {
 ```
 
 # コンストラクタのオーバーロードはできない
-```
+```dart
 class Book {
   String title = '';
   Book(String title) {// 無名コンストラクタ
@@ -50,7 +50,7 @@ class Book {
 
 # Automatic field initialization
 * Automatic field initializationは、コンストラクタが走る前に値がセットされる。
-```
+```dart
 class Book {
   String title = '';
   // コンストラクタの処理で設定する。
@@ -65,7 +65,7 @@ class Book {
 ```
 
 # 初期化が必要なフィールドはコンストラクタ実行前に設定する必要がある
-```
+```dart
 class Book {
   String title;
   //Book(String title); // エラーとなる。non nullableなtitleが初期化されていないため。
@@ -92,7 +92,7 @@ class Book2 {
 # Initializer List
 * コンストラクタの宣言の後ろに「:処理内容」という形式で記述できる処理。 
 * Initializer Listはコンストラクタの中身が実行される前に処理を行うことができる。
-```
+```dart
 Point(double x, double y): this.x = x, this.y = y1 {
   // ここのコンストラクタ処理が実行される前にxとyには既に値が設定されている。
 };
@@ -101,7 +101,7 @@ Point(double x, double y): this.x = x, this.y = y1;
 ```
 ## (参考) Flutterでよく見る記述
 * Flutterのウィジェットでよく見られる下記の書き方も Initializer Listになる。
-```
+```dart
 class MyWidget extends StatefulWidget {
   MyWidget({Key? key}) : super(key: key);
   // ...
@@ -114,14 +114,14 @@ class MyWidget2 extends StatefulWidget {
 ```
 ## Initilizerは式
 * ステートメントをはエラーとなる。
-```
+```dart
 class Book {
   String title;
   // Book(this.title): print(title); // エラー
 }
 ```
 ## Initilizerは親クラスのフィールドの初期化ができない
-```
+```dart
 class A {
   int a = 0;
   A() {
@@ -138,7 +138,7 @@ class B extends A{
 # デフォルトコンストラクタ
 * https://dart.dev/language/constructors#default-constructors
 * デフォルトコンストラクタは、引数なしの無名のコンストラクタとなる。
-```
+```dart
 class Book {}
 void main() => print(Book());
 ```
@@ -172,7 +172,7 @@ void main() => print(Book());
   * スーパークラスの引数なし、かつ無名のコンストラクタを呼ぶ。
 * デフォルトコンストラクタ以外のコンストラクタの場合
   * スーパークラスの名前無しコンストラクタを呼ぶ。
-```
+```dart
 class B extends A{
   B() {// エラー（親クラスに無名で引数なしコンストラクタが存在しないため。）
     print("b");
@@ -200,7 +200,7 @@ class A {
 ```
 ## 明示的にスーパークラスのコンストラクタを呼ぶ
 * Initializer Listからsuperを使って呼ぶことができる。
-```
+```dart
 class Person {
   String? firstName;
   Person.fromJson(Map data) {
@@ -220,7 +220,7 @@ class Employee extends Person {
 }
 ```
 * (参考)他のオブジェクト指向の言語とは異なり下記のようにコンストラクタ内で親のコンストラクは呼べない点に注意。
-```
+```dart
 class Person {
   String? firstName;
   Person.fromJson(Map data) {
@@ -235,7 +235,7 @@ class Employee extends Person {
   }
 }
 ```
-```
+```dart
 class A {}
 class B {
   B() {
@@ -250,7 +250,7 @@ class B {
   * スーパークラスのinitializer list
   * スーパークラスのコンストラクタ
   * サブクラスのコンストラクタ
-```
+```dart
 int c() {
   print("c");
   return 1;
@@ -283,7 +283,7 @@ main a: 1
 ```
 
 # Initializer List の superの省略記法
-```
+```dart
 /*
 // OK
 class A {
@@ -315,7 +315,7 @@ class B extends A{
   // B({required a}): super(a); // この場合はOK
 }
 ```
-```
+```dart
 class Vector2d {
   final double x;
   final double y;
@@ -327,7 +327,7 @@ class Vector3d extends Vector2d {
   Vector3d(super.x, super.y, this.z);
 }
 ```
-```
+```dart
 class Vector2d {
   final double x;
   final double y;
@@ -340,7 +340,7 @@ class Vector3d extends Vector2d {
   // Vector3d(super.x, super.y, this.z); //なお、この場合「無名コンストラクタが存在しない」というエラーになる
 }
 ```
-```
+```dart
 class Vector2d {
   final double x;
   final double y;
@@ -356,7 +356,7 @@ class Vector3d extends Vector2d {
 
 # 定数コンストラクタ
 * 定数コンストラクタのdataはすべてfinalで非lateである必要がある。
-```
+```dart
 class ImmutablePoint {
   final num x, y;
   const ImmutablePoint(this.x, this.y);
@@ -370,7 +370,7 @@ assert(!identical(a, ImmutablePoint(1, 1)));
 ## 定数コンストラクタで生成されるオブジェクトがconst値となるかどうかは、呼び出し側に依存する
 * 定数コンストラクタで生成されるオブジェクトは必ずイミュータブルにはなる。
 * 一方でオブジェクトがconst値となるかどうかは利用側に依存する。
-  ``` 
+  ```dart
   main(){
     print(f(3).hashCode); // 例: 1046420307
     print(const A(3).hashCode); // 例: 649446554
@@ -388,7 +388,7 @@ assert(!identical(a, ImmutablePoint(1, 1)));
 
 # ファクトリコンストラクタ
 * factoryを先頭につけたコンストラクタを設定すると、自動でインスタンスが作成されず、コンストラクタ内でインスタンスを生成することができる。
-```
+```dart
 class City {
   final String? name;
   final String? state;
@@ -410,7 +410,7 @@ class City {
 
 # プライベートのコンストラクタを扱う
 * _(アンダースコア)で始まる名前付きコンストラクタを使うことで、利用をライブラリ内に制限する。
-```
+```dart
 class Foo {
     Foo._();
 }
@@ -418,7 +418,7 @@ class Foo {
 
 # リダイレクトコンストラクタ
 * コンストラクタから別のコンストラクタを呼び出す。
-```
+```dart
 class Dog {
   var name;
   Dog(): this.anonymous();

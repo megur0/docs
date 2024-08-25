@@ -16,7 +16,7 @@
 * https://github.com/dart-lang/http/issues/184#issuecomment-511945225
 * dart.devの公式パッケージであるhttpパッケージのRequestでは、content-typeに暗黙的にcharset=utf-8を付与する。
 * 実装を確認すると下記のようになっている。
-  ```
+  ```dart
   // http-1.1.0/lib/src/request.dart
   class Request extends BaseRequest {
     //...

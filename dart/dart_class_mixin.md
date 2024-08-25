@@ -23,7 +23,7 @@
   * mixin が withを使うことはできない。
 * 以下はサンプルコードを示す
   * 機能確認のため、実際にアプリケーションのコードでは使わないような書き方をしている。
-```
+```dart
 class C1 extends A2 with M2 {
   // M1がonをしているA2を継承する必要がある。
   
@@ -62,7 +62,7 @@ class C3 extends C1 with M3 {
 }
 ```
 
-```
+```dart
 class C1 {
   f() => print("C1");
 }
@@ -101,7 +101,7 @@ void main() => C2().f();
 * 最終的にもっとも後ろのmixinのメソッドが採用される。
 * superによってオーバーライドされたメソッドを呼ぶこともできる。
   * superが指すメソッドはmixinの定義のみでは定まらず、呼び出し側の定義にも依存する点に注意。
-```
+```dart
 void main() => C2();
 abstract class C1 {
   C1() {
@@ -138,7 +138,7 @@ C2 constructor
 ## (参考)  Flutterの ensureInitialized()メソッド
 * Flutterの初期化時に呼ぶ WidgetsFlutterBinding.ensureInitialized()メソッドでは、mixinによるオーバーライドを使って各初期化処理が実行されている。
 * superで親呼ぶことで、各mixinで定義されているinitInstance　メソッドが順に呼ばれることで各シングルトンの初期化処理が行われている。
-  ```
+  ```dart
   class WidgetsFlutterBinding extends BindingBase with GestureBinding, SchedulerBinding, ServicesBinding, PaintingBinding, SemanticsBinding, RendererBinding, WidgetsBinding {
     // ...
     static WidgetsBinding ensureInitialized() {

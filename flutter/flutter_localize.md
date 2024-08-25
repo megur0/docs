@@ -13,7 +13,7 @@
         * 自動生成ファイルは「.dart_tool/flutter_gen/get_l10n」に生成される。
         * 自動生成されたファイルをアプリケーションコード側でimportすることで利用可能
             * (IME)自動生成されたファイルはVSCodeのエディタで入力してもサジェストに出てこない
-        ```
+        ```dart
         import 'package:flutter_gen/gen_l10n/app_localizations.dart';
         import 'package:flutter_localizations/flutter_localizations.dart';
 

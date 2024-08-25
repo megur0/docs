@@ -18,7 +18,7 @@
         * スタックが空では無い状態では、NavigatorState.canPop()がtrueとなる。
         * AppBar.leadingではこのスタック状態を確認して戻るボタンの表示を制御している。
 * スタック情報はNavigator.pagesとなる。
-    ```
+    ```dart
     class Navigator extends StatefulWidget {
         // ...
         final List<Page<dynamic>> pages;
@@ -43,7 +43,7 @@
     
 * Navigator.of(context) はBuildContextからNavigatorStateを取得する
 * サンプルコード
-    ```
+    ```dart
     main() => runApp(MaterialApp(
             home: Navigator(
         pages: const [
@@ -101,7 +101,7 @@
         }
     }
     ```
-    ```
+    ```dart
     import 'package:flutter/material.dart';
     import 'package:flutter/cupertino.dart';
 
@@ -167,7 +167,7 @@
 * 引数はNavigator.pushNamedメソッドのargumentsで渡す。
 * 動作は、常にNavigatorへのpushのみで、カスタマイズは不可。
     * シンプルな機能のため、公式ドキュメントでは"We don't recommend using named routes for most applications." と記載されている。
-```
+```dart
 // 公式サンプル
 MaterialApp(
     routes: {
@@ -191,7 +191,7 @@ onPressed: () {
     * Deep linkの処理
 * Router自体はStatefulWidget派生クラス
 * Routerウィジェットを直接利用するのではなく、MaterialApp.routerコンストラクタ等へRouterConfigオブジェクトを渡すことで利用する。            
-    ```
+    ```dart
     MaterialApp.router(
         // ...
         routerConfig: RouterConfig(//...),
@@ -203,7 +203,7 @@ onPressed: () {
     * 自前でRouterConfigを実装するサンプルコードとして下記のサイトが参考となった。
         * https://medium.com/flutter/learning-flutters-new-navigation-and-routing-system-7c9068155ade
 * アプリケーション開発で一般的なルーティング処理を目的とするのであれば、go_router等のパッケージを利用することで通常は問題ない。
-    ```
+    ```dart
     MaterialApp.router(
         // ...
         routerConfig: GoRouter(//...),
@@ -246,7 +246,7 @@ onPressed: () {
 * _WidgetsAppStateでは下記のようにRouter または Navigatorを 内部で生成している。
     * ※ MaterialApp, CupertinoAppもWidgetsAppを利用している。
     * 例えば MaterialApp(home:Text("test")) といった指定方法の場合はRouterウィジェットは使われず内部でNavigatorウィジェットが生成される。
-```
+```dart
 class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
     // ...
     bool get _usesRouterWithDelegates => widget.routerDelegate != null;
@@ -287,14 +287,14 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
         * なお、自身のbuildメソッド内でもNotificationListener<NavigationNotification>を使っていて、少し処理を挟んで子孫へ伝播させている。
     * 各命令実行時には、_flushHistoryUpdatesが実行され、_historyの中の_RouteEntry.currentState（enum値）に応じて処理を行う。
     * _flushHistoryUpdatesの最後にOverlay(buildメソッドで作成するウィジェット。GlobalKey経由で参照)のメソッドを実行して、状態をdirtyにする。
-```
+```dart
 class Navigator extends StatefulWidget {
     // ...
     final List<Page<dynamic>> pages;
     // ...
 }
 ```
-```
+```dart
 class NavigatorState extends State<Navigator> with TickerProviderStateMixin, RestorationMixin {
     //...
     _History _history = _History();
@@ -369,7 +369,7 @@ class NavigatorState extends State<Navigator> with TickerProviderStateMixin, Res
     }
 }
 ```
-```
+```dart
 enum _RouteLifecycle {
   staging,
   add,
@@ -389,12 +389,12 @@ enum _RouteLifecycle {
   disposed,
 }
 ```
-```
+```dart
 class _History extends Iterable<_RouteEntry> with ChangeNotifier {
     //...
 }
 ```
-```
+```dart
 class _RouteEntry extends RouteTransitionRecord {
     // ...
     final Route<dynamic> route;
@@ -402,7 +402,7 @@ class _RouteEntry extends RouteTransitionRecord {
     _RouteLifecycle currentState;
 }
 ```
-```
+```dart
 abstract class Route<T> extends _RoutePlaceholder {
     //...
     NavigatorState? get navigator => _navigator;
@@ -411,14 +411,14 @@ abstract class Route<T> extends _RoutePlaceholder {
     List<OverlayEntry> get overlayEntries => const <OverlayEntry>[];
 }
 ```
-```
+```dart
 class OverlayEntry implements Listenable {
     //...
     final WidgetBuilder builder;
     //...
 }
 ```
-```
+```dart
 class OverlayState extends State<Overlay> with TickerProviderStateMixin {
   final List<OverlayEntry> _entries = <OverlayEntry>[];
 
@@ -446,7 +446,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 
 # (参考)Routerについて
 * WidgetsApp.routerに渡すRouterConfigは４つの抽象で構成される。
-    ```
+    ```dart
     class RouterConfig<T> {
         const RouterConfig({
             this.routeInformationProvider,
@@ -473,7 +473,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
     * Listenable派生クラス
     * https://api.flutter.dev/flutter/widgets/Router/routerDelegate.html
         > The router delegate for the router. This delegate consumes the configuration from routeInformationParser and builds a navigating widget for the Router. It is also the primary respondent for the backButtonDispatcher. The Router relies on RouterDelegate.popRoute to handle the back button.If the RouterDelegate.currentConfiguration returns a non-null object, this Router will opt for URL updates.
-    ```
+    ```dart
     abstract class RouterDelegate<T> extends Listenable {
         //...
 
@@ -490,7 +490,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 * RouteInformationParser
     * https://api.flutter.dev/flutter/widgets/Router/routeInformationParser.html
         > The route information parser for the router.When the Router gets a new route information from the routeInformationProvider, the Router uses this delegate to parse the route information and produce a configuration. The configuration will be used by routerDelegate and eventually rebuilds the Router widget. Since this delegate is the primary consumer of the routeInformationProvider, it must not be null if routeInformationProvider is not null.
-    ```
+    ```dart
     abstract class RouteInformationParser<T> {
         //...
 
@@ -513,7 +513,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 * RouteInformatioProvider
     * https://api.flutter.dev/flutter/widgets/Router/routeInformationProvider.html
         > The route information provider for the router. The value at the time of first build will be used as the initial route. The Router listens to this provider and rebuilds with new names when it notifies.This can be null if this router does not rely on the route information to build its content. In such case, the routeInformationParser must also be null.
-    ```
+    ```dart
     abstract class RouteInformationProvider extends ValueListenable<RouteInformation> {
         // 利用方法として、ValueListenable.valueにRouteInformationを持たせ、ChangeNotifierをwithしてnotifyListenerすることにより、リスナーであるRouterが
         // RouterInformationをパーサー、デリゲーターへハンドリングする、といった流れになると考えられる。
@@ -524,7 +524,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
     * routeInformationProviderはValueListenable派生クラス
     * routeInformationProviderをセットした場合はrouteInformationParserも必須となる。
     * なお、PlatformRouteInformationProviderという具象クラスがあり、これは_WidgetsAppStateによってデフォルトとして利用されている。
-        ```
+        ```dart
         if (widget.routeInformationProvider == null && widget.routeInformationParser != null) {
             _defaultRouteInformationProvider ??= PlatformRouteInformationProvider(
             initialRouteInformation: RouteInformation(
@@ -538,7 +538,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 
 * (IMO) なぜこのような構成となっているのか?
     * 各プラットフォームのOSやFlutterエンジンを起点としたルーティング（ブラウザのロケーションバーからの入力やiOSアプリやAndroidのディープリンク）および通常のルーティング処理を、RouterInformation(メンバーとしてURIを保持)として統一的に扱うため?
-        ```
+        ```dart
         class RouteInformation {
             //...
 
@@ -572,7 +572,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 * routerDelegateのリスナーのコールバックとして、setStateを行っている。
 * buildメソッド内ではrouterDelegate.buildを呼び出している。
 
-```
+```dart
 class _RouterState<T> extends State<Router<T>> with RestorationMixin {
     //...
     void initState() {

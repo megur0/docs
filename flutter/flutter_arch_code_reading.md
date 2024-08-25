@@ -149,7 +149,7 @@
         * markNeedsBuildはStateのsetState()関数等から呼ばれる。<span style="color: green; ">緑文字</span>にしている。
 
 * 以下はrunAppの実行順番を確認するサンプルコードである。
-```
+```dart
 import "package:flutter/widgets.dart";
 
 main() {
@@ -290,7 +290,7 @@ flutter: future after runApp
         ```
 * Element.performRebuild()
     * https://api.flutter.dev/flutter/widgets/Element/performRebuild.html
-    ```
+    ```dart
     void performRebuild() {
         _dirty = false;
     }
@@ -306,7 +306,7 @@ flutter: future after runApp
         * 対象のウィジェットのWidget.createElement()を実行してElementを生成する。
         * Element.mount()を実行する。
     * コード概要
-        ```
+        ```dart
         inflateWidget(Widget newWidget, Object? newSlot)
             Key? key = newWidget.key;
             if (key is GlobalKey) 
@@ -319,7 +319,7 @@ flutter: future after runApp
             newChild.mount(this, newSlot);
             return newChild;
         ```
-        ```
+        ```dart
         _retakeInactiveElement(GlobalKey key, Widget newWidget) 
             //...
             final Element? element = key._currentElement;
@@ -338,7 +338,7 @@ flutter: future after runApp
     * ウィジェット自身がリビルドされた際には呼ばれるわけではなく、updateChild()を通して呼ばれる点に注意。
         * 例えばStateがsetStateを呼んでリビルドされても、rebuild()は呼ばれて子のupdate()は呼ばれる可能性があるが、自身のupdate()は呼ばれない。
     * コードの概要
-        ```
+        ```dart
         void update(covariant Widget newWidget)
             // ...
             _widget = newWidget;
@@ -364,7 +364,7 @@ flutter: future after runApp
                 * 両者のkeyがnullの場合も一致する。
                 * したがってkeyがnullで、constでない場合は常にupdate()が実行される
     * なお、Widgetクラスの==メソッドはObjectの==を利用(同一のオブジェクトである場合のみtrue)していて、サブクラスでオーバーライドすると@nonVirtualによるエラーが表示される。
-        ```
+        ```dart
         abstract class Widget extends DiagnosticableTree {
             // ...
             @override
@@ -374,7 +374,7 @@ flutter: future after runApp
         }
         ```
     * コードの概要
-        ```
+        ```dart
         updateChild(Element? child, Widget? newWidget, Object? newSlot)
             if newWidget == null
                 if (child != null)  deactivateChild(child);
@@ -418,7 +418,7 @@ flutter: future after runApp
 
 * Element.unmount()
     * コードの概要
-        ```
+        ```dart
         unmount()
             assert(_lifecycleState == _ElementLifecycle.inactive);
             //...
@@ -534,7 +534,7 @@ flutter: future after runApp
         * リスト内のどこに位置するかインデックスに加えて任意の値の
         * MultiChildRenderObjectElementにて利用されている。
         * 以下のように==がオーバーライドされている。
-            ```
+            ```dart
             bool operator ==(Object other) {
                 if (other.runtimeType != runtimeType) {
                     return false;
@@ -545,7 +545,7 @@ flutter: future after runApp
             }
             ```
         * この比較はupdateChild内でslotの更新を判定する際に使われている。単にオブジェクト比較ではなく構成の変化(位置関係が変わった時)を判定するため。
-            ```
+            ```dart
             Element? updateChild(Element? child, Widget? newWidget, Object? newSlot) {
                 // ...
                     if (child.slot != newSlot) {
@@ -646,7 +646,7 @@ flutter: future after runApp
         * FlexはsetupParentData()によってFlexParentDataを子のRenderObject.parentDataへセットしている。
         * これによってFlexibleウィジェットがapplyParentData()によってFlexParentDataを扱うことが出来るようになっている。
         * Flexの子孫ではない場合は下記のようにassertエラーとなる。
-        ```
+        ```dart
         main() => testWidgets("", (tester) async {
             await tester.pumpWidget(Flexible(child: Container()));
             });
@@ -661,7 +661,7 @@ flutter: future after runApp
 * ParentDataWidget.applyParentData()
     * このメソッドはParentDataWidgetに最も近い子孫のRenderObjectのmount()内のRenderObjectElement.attachRenderObject()によって呼ばれる。
     * それによってそのRendeObjectのparentDataを上書きすることが出来る。
-```
+```dart
 main() {
   testWidgets("", (tester) async {
     await tester.pumpWidget(Directionality(
@@ -682,7 +682,7 @@ main() {
 
 # GlobalKey
 * 内部の実装としてはWidgetsBindingのシングルトンが持つマップを参照している。
-    ```
+    ```dart
     abstract class GlobalKey<T extends State<StatefulWidget>> extends Key {
         //...
         Element? get _currentElement => WidgetsBinding.instance.buildOwner!._globalKeyRegistry[this];
@@ -691,7 +691,7 @@ main() {
     }
     ```
 * 上記の_globalKeyRegistryは以下のようにGlobalKeyとElementのマップで保存されている。
-    ```
+    ```dart
     class BuildOwner {
         // ..
         final Map<GlobalKey, Element> _globalKeyRegistry = <GlobalKey, Element>{};
@@ -710,7 +710,7 @@ main() {
 * (参考)(IME)GlobalKeyクラスとWidgetsBindingインスタンスの密結合について
     * この結合が筆者にとって問題となったシーンがある。
     * 通常のアプリケーション開発で行うことはまず無いが、FlutterではWidget.createElement()やElement.mount()のAPIを利用すれば自前でElementツリーやRenderObjectのツリーを作成することが可能である。
-        ```
+        ```dart
         // 例: ウィジェットのSizeを仮計算するコード
 
         final widget = .....
@@ -739,7 +739,7 @@ main() {
         * 全コード: https://gist.github.com/megur0/81edb7a49216b8998fe0802f63da4cd9#file-precompile_listview_extent-dart-L265
     * ただ、GlobalKey.currentContextのAPIは、直接 `WidgetsBinding.instance.buildOwner!._globalKeyRegistry[this];` を参照しており、runApp()が実行されている時のみ利用可能と成る。
     * runApp()が実行されていない場合は、WidgetsBinding.instanceの未初期化としてエラーとなってしまう。
-        ```
+        ```dart
         main() {
             GlobalKey().currentContext;
             // assert error: Binding has not yet been initialized.
@@ -780,7 +780,7 @@ main() {
     * このオブジェクトはRendererBinding.addRenderView()やremoveRenderView()によって追加・削除されるようになっている。
     * 具体的には、_RawView.createRenderObject()にてRenderViewが生成されるようになり、_RawViewElement.mount()内でaddRenderView()が呼ばれている。
     * ただし、現在(下位互換性を維持する間)は下記のようにrenderViewはRendererBinding.pipelineOwnerで生成されるものが使われている。
-        ```
+        ```dart
         class _RawView extends RenderObjectWidget {
         //...
             @override
@@ -792,7 +792,7 @@ main() {
         //...
         }
         ```
-        ```
+        ```dart
         void runApp(Widget app) {
             // ...
             binding
@@ -800,7 +800,7 @@ main() {
                 ..scheduleWarmUpFrame();
         }
         ```
-        ```
+        ```dart
         mixin WidgetsBinding on BindingBase, ServicesBinding, SchedulerBinding, GestureBinding, RendererBinding, SemanticsBinding {
             //...
             Widget wrapWithDefaultView(Widget rootWidget) {
@@ -814,7 +814,7 @@ main() {
             // ...
         }
         ```
-        ```
+        ```dart
         @Deprecated(/* ... */)
         late final PipelineOwner pipelineOwner = PipelineOwner(/* ... */);
 
@@ -827,7 +827,7 @@ main() {
 * _RawViewElementごとにPipelineOwnerを保持するようになっている。
     * したがって複数の_RawViewElementすなわち複数のViewオブジェクト、RenderViewオブジェクトが存在すれば、それぞれにPipelineOwnerが存在することになる。
     * ただし、下位互換性を保証する間はrenderViewと同様にRendererBinding.pipelineOwnerを使いまわしするようになっている。
-    ```
+    ```dart
     class _RawViewElement extends RenderTreeRootElement {
         //...
         late final PipelineOwner _pipelineOwner = PipelineOwner(

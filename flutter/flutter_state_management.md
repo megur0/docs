@@ -119,7 +119,7 @@
     * ┗ ChildWidget (またはChildWidget2)
 * 結果の確認はdebugPrintをしているのみ。(特にexpect等で検証してはいない。)
 * 簡便な方法として、flutter_testを利用して直接setStateを呼んでいる。
-```
+```dart
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -306,7 +306,7 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
 * void setState(VoidCallback fn)
 * 内部でmarkNeedsBuild()を実行している。（dirtyであるリストへ追加され、次回のフレームでリビルドされる。)
 * 下記のようにBuildContextを非同期処理の後に参照するとFlutterのリンターによって警告が表示される。
-  ```
+  ```dart
   @override
   Widget build(BuildContext context) {
     return TextButton(
@@ -324,11 +324,11 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
   * これは1行目は非同期処理(別のイベントとして)を待つため、完了までにdisposeされてBuildContextの中身であるElementが破棄されてしまう可能性に対する警告となる。
   * この場合は`if (mounted) ScaffoldMessenger.〜〜` のように mountedが真の場合のみ実行するようにすれば良い。
   * mountedは下記のように定義されており、これはStatefulWidgetクラスのElementが生成されていればtrueとなる。
-    ```
+    ```dart
     bool get mounted => _element != null;
     ```
 * (参考)Flutter framework内の処理は下記のようになっている
-  ```
+  ```dart
     @protected
     void setState(VoidCallback fn) {
       assert(() {
@@ -361,7 +361,7 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
   * アプリケーション開発で頻繁に利用するものではないが、BuildContextのAPIを使うとすべてのツリー構造にアクセスが可能である。
   * BuildContext.findRenderObject
   * BuildContext.findAncestorWidgetOfExactType()
-    ```
+    ```dart
     print((context as Element).findAncestorWidgetOfExactType<MaterialApp>());
     print((context).findAncestorWidgetOfExactType<CupertinoApp>());
     ```
@@ -372,7 +372,7 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
   * etc
 * State.context
   * build()では引数でBuildContextが与えられるが、それ以外でも参照することが可能である。
-    ```
+    ```dart
     @override
     void initState() {
       super.initState();
@@ -381,7 +381,7 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
     ```
   * ただ、build()メソッド以外でcontextを使って具体的な処理を書くことは通常はないだろう。
 * サンプルコード
-```
+```dart
 import 'package:flutter/widgets.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -517,7 +517,7 @@ class MyWidgetState extends State<MyWidget> with DebugMixin {}
     3. 非同期の処理の結果に基づいて処理を行う
     4. 画面を描画する。
 * サンプルコード
-```
+```dart
 import 'package:flutter/material.dart';
 
 main() => runApp(const MaterialApp(
@@ -561,7 +561,7 @@ class _MyWidgetState extends State<MyWidget> {
 ```
 * 以下のような記述に対してFlutterはassertエラーを出す。
   * これは、フレームワーク内の一連の initState() -> ... -> build() -> ... の流れは非同期処理を待つこと(awaitすること)なく行われるため、asyncをつけることはこの設計意図に反しているため、となる。
-  ```
+  ```dart
     @override
     void initState() async {// asyncをつけるとassertエラーとなる。
       super.initState();
@@ -579,7 +579,7 @@ class _MyWidgetState extends State<MyWidget> {
 * https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html
 * FutureBuilderは 渡したFutureの状態に応じて内部でリビルドを行うStatefulWidget派生クラスである。
 * 前節の例では非同期処理の結果を変数に格納したり、非同期処理が完了したタイミングでsetState()を実行していたが、例えば下記のようにFutureBuilderで記述する場合はそれらの記述は不要となる。
-```
+```dart
 import 'package:flutter/material.dart';
 
 main() => runApp(const MaterialApp(
@@ -656,7 +656,7 @@ class _MyWidgetState extends State<MyWidget> {
 
 * ソースコードは下記のようになる。
 
-```
+```dart
 // lib/logo.dart
 import 'package:flutter/material.dart';
 
@@ -783,7 +783,7 @@ class _Text extends StatelessWidget {
   }
 }
 ```
-```
+```dart
 // lib/main.dart
 import 'package:flutter/material.dart';
 import './logo.dart';
@@ -855,7 +855,7 @@ class MyWidget extends StatelessWidget {
   > The listeners are typically used to notify clients that the object has been updated.
 * Listenableは変更を知らせるために使う。
 
-```
+```dart
 abstract class Listenable {
   const Listenable();
   //...
@@ -869,7 +869,7 @@ abstract class Listenable {
 * ChangeNotifierは mixin classであり extendsやwithすることができる。
   * (IMO)新たなnotifier系の機能を開発したい場合はextendsするが、通常はwithでChangeNotifierの機能を使えば十分だろう。
 * BuildContext(Element)を経由して依存やデータ取得をビルドサイクルの中で行うInheritedWidget(ProxyWidget)とは異なり、Listenableはウィジェットから完全に独立した機能となる。
-```
+```dart
 import 'package:flutter/material.dart';
 main () {
   final notifier = MyNotifier();
@@ -890,7 +890,7 @@ class MyNotifier with ChangeNotifier {
 ## ListenableBuilder
 * https://api.flutter.dev/flutter/widgets/ListenableBuilder-class.html
 * Listenableの更新の度にリビルドされるウィジェット
-```
+```dart
 main() {
   testWidgets("", (tester) async {
     final notifier = MyNotifier();
@@ -952,7 +952,7 @@ MyWidget
 * https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html
 * 単一の値を保持するChangeNotifier。
 * value が等価演算子 == によって評価された古い値と等しくないものに置き換えられるとリスナーに通知する。
-```
+```dart
 void main() {
   test('valueNotifier test', () async {
     final notifier = ValueNotifier<int>(1);

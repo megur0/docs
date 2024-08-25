@@ -11,7 +11,7 @@
 # var, final, const
 * constは、Dart独特の機能
   * const は それ以降で同じ引数で別の変数でオブジェクトを代入しても、両者はまったく同じオブジェクトが使われる。
-  ```
+  ```dart
   void main() {
     var a = const A(1);
     var b = const A(1);
@@ -29,7 +29,7 @@
 * finalとconstの違い
   * constはコンパイル時点で定数の必要がある。
   * たとえばDateTime.now()のような値は実行時点で決定するためconstとして代入することは不可。
-```
+```dart
 void main() {
   const test = "333";
   //test = "444"; // error
@@ -52,7 +52,7 @@ void main() {
   print(constantList);// [1,2,3]
 }
 ```
-```
+```dart
 class A {
   A(this._test);
   int _test;
@@ -63,7 +63,7 @@ void main() {
   //const aaa = const A(5);// Aは定数constructorではないためcompile error.
 }
 ```
-```
+```dart
 void main() {
   const b = B(3);// 定数constructorのためconstとして作成できる。
   var bb = B(3);// constと書かなくてもconst扱いになる。
@@ -77,14 +77,14 @@ class B {
 }
 ```
 ## constの省略
-```
+```dart
 const pointAndLine = const {
   'point': const [const ImmutablePoint(0, 0)],
   'line': const [const ImmutablePoint(1, 10), const ImmutablePoint(-2, 11)],
 };
 ```
 * 上記は下記のように省略できる。
-```
+```dart
 const pointAndLine = {
   'point': [ImmutablePoint(0, 0)],
   'line': [ImmutablePoint(1, 10), ImmutablePoint(-2, 11)],
@@ -94,7 +94,7 @@ const pointAndLine = {
 # (参考)関数リテラルはconstではない
 * 関数リテラル（例えば、(){}）は、定数ではなく都度、新しいインスタンスを作成する。
 * したがって以下のようにconst値に代入するとエラーとなる。
-```
+```dart
 void example1() {
   // const Function bar = () {}; // error.
   const Function bar = a; // ok.
@@ -109,13 +109,13 @@ void a() {} // トップレベルの関数はconstとなる
 
 # (参考)引数のデフォルト値のconstは省略ができない。
 * 下記はエラーとなる。
-  ```
+  ```dart
   void f([List<int> a = []]) {} // エラー: The default value of an optional parameter must be constant.
   ```
 * エラーは`void f([List<int> a = const []]) {}` とすると解消する。
 * `[]`の時点でconstになると筆者は考えてしまったが、constをつけなければconstとはならない。
 * なお下記は右辺がconstと推論されるためエラーにならない。
-  ```
+  ```dart
   const List<int> a = []; // エラーにならない
   ```
 
@@ -124,7 +124,7 @@ void a() {} // トップレベルの関数はconstとなる
 * 変数は使われるときまでに初期化されていれば良いが、それをコンパイラが上手く検出できないときがあり、その場合にlateを利用する
 * lateをつけると初期化処理を使用直前にするため、使用する場合だけ初期化処理をさせたい場合などに使える。
 * なお、イミュータブルなクラス（const コンストラクタ）の場合は lateのフィールドは使えない。lateが使えるフィールドはミュータブルなクラスのフィールドのみとなる。
-```
+```dart
 Future<String> fetch(Future<(String, int)> Function() f) async {
     late (String, int) result;
     // int result; // lateを使わない場合は return文で未初期化としてエラーになる。

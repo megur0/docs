@@ -61,7 +61,7 @@
         * ※ colorScheme: ColorScheme.fromSeed〜と、colorSchemeSeed:〜を同時に指定するとエラーになる。
     * (参考)シードカラーと生成されるColorSchemeは以下のサイトで確認すると便利
         * https://colorscheme.enoiu.com/
-```
+```dart
 import 'package:flutter/material.dart';
 
 const seedColor = Color.fromARGB(255, 164, 206, 255);
@@ -180,7 +180,7 @@ main() => runApp(MaterialApp(
 # Material系のウィジェットは先祖にMaterialウィジェットを必要とする
 * したがって先祖にMaterialウィジェットを置くか、Materialウィジェットを生成する(かつ先祖にMaterialウィジェットを必要としない)ウィジェットが必要となる   
     * 例えば、Card, Dialog, Drawer, or Scaffoldウィジェットなど
-```
+```dart
 testWidgets("", (widgetTester) async {
     await widgetTester.pumpWidget(MaterialApp(
       // home: ListTile(),// assert error
@@ -190,7 +190,7 @@ testWidgets("", (widgetTester) async {
 ```
 * https://stackoverflow.com/questions/43947552/no-material-widget-found
 * (参考) 実装
-```
+```dart
 // lib/src/material/list_tile.dart
 class ListTile extends StatelessWidget {
     // ...
@@ -207,7 +207,7 @@ class ListTile extends StatelessWidget {
 # その他
 ## (参考)Scaffoldウィジェットを親とするかどうかでテキストの表示が異なるのはなぜか？
 * 例えば下記で標準出力へ出力されるスタイルや画面に表示されるテキストはScaffoldで囲むかどうかによって異なる。
-```
+```dart
 main() => runApp(const MaterialApp(
         //theme: theme,
         home: Scaffold(

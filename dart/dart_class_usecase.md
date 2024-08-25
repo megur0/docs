@@ -34,17 +34,17 @@
 
 ## too muchな継承の利用方法
 * 極端な例ではあるが、下記のような継承の利用は冗長となる。
-```
-class ScreenA {void checkAuth(){〜};}
+```dart
+class ScreenA {void checkAuth(){/**/};}
 class ScreenB extends ScreenA { someFunc(){ super.checkAuth(); } }
 ```
 * デメリットとして
     * 本来再利用したい機能以外の依存関係ができてしまう
     * 認証機能の責務を分離する機会を逃している
 * 例えば別クラスとして外出しする方が良いだろう
-```
-class ScreenA(Auth auth) {〜}
-class ScreenB(Auth auth) {〜}
+```dart
+class ScreenA(Auth auth) {/**/}
+class ScreenB(Auth auth) {/**/}
 ```
 
 

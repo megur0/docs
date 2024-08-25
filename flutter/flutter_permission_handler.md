@@ -78,7 +78,7 @@
 ## (参考)iOS上ではどの項目に対応するのか？
 * 一覧の中でいくつかの項目について、iOSでどの項目に対応するのかわからなかったため、コードを直接確認した。
 * 各Permissionごとの分岐
-    ```
+    ```objectivec
     // ios/.symlinks/plugins/permission_handler_apple/ios/Classes/PermissionManager.m
     + (id)createPermissionStrategy:(PermissionGroup)permission {
         switch (permission) {
@@ -93,7 +93,7 @@
     * したがって、そのクラスを確認すれば実装内容が分かる。
 * PermissionGroupBackgroundRefresh
     * UIApplication.sharedApplication.backgroundRefreshStatus(Appのバックグラウンド更新)を参照しているようだ。
-    ```
+    ```objectivec
     // ios/.symlinks/plugins/permission_handler_apple/ios/Classes/strategies/BackgroundRefreshStrategy.m
     + (PermissionStatus) permissionStatus {
         UIBackgroundRefreshStatus status = UIApplication.sharedApplication.backgroundRefreshStatus;
@@ -111,7 +111,7 @@
     ```
 * PermissionGroupStorage
     * 常にGrantedを返しているようである。
-    ```
+    ```objectivec
     // ios/.symlinks/plugins/permission_handler_apple/ios/Classes/strategies/StoragePermissionStrategy.m
     + (PermissionStatus)permissionStatus {
         return PermissionStatusGranted;

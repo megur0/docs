@@ -2,7 +2,7 @@
 
 
 # 前置、後置
-```
+```dart
 void main() {
   int a = 0;
   final test = (int a) => print;
@@ -31,14 +31,14 @@ void main() {
 * if statement
     * The statement conditions must be expressions that evaluate to boolean values, nothing else. 
 * for
-    ```
+    ```dart
     for(int i = 0; i<10; i++) 
       print('Hello World');
     }
     ```
     * for in
       * Iterableを実装するクラスのオブジェクトは inが使える。
-      ```
+      ```dart
       for(final value in [1,2,3]){
           print(value);
       }
@@ -68,7 +68,7 @@ void main() {
 * ??= 演算子
   * b ??= value;
 ## spread operator（スプレッド演算子）
-```
+```dart
 var arrayInt = [1, 2, 3];
 var arrayString = ['a', 'b', 'c'];
 var addArray = [...arrayInt, ...arrayString];
@@ -76,7 +76,7 @@ print(addArray); // [1, 2, 3, a, b, c]
 ```
 ## カスケード（Cascade notation）
 * https://dart.dev/language/operators#cascade-notation
-```
+```dart
 List<String> test = ['a'];
 test.add('b');
 test.add('c');
@@ -85,7 +85,7 @@ List<String> test = ['a']..add('b')..add('c');
 ```
 ## 算術演算子
 * https://dart.dev/language/operators#arithmetic-operators
-```
+```dart
 assert(2 + 3 == 5);
 assert(2 - 3 == -1);
 assert(2 * 3 == 6);
@@ -102,7 +102,7 @@ assert('5/2 = ${5 ~/ 2} r ${5 % 2}' == '5/2 = 2 r 1');
 * breakがなくても、次のcase を実行することがなくなった。
 * enumが網羅されていない場合はエラーを返す
 * 一つのcaseの中に複数の項目を設定することができる
-```
+```dart
 enum Test{
   a,
   b,
@@ -130,7 +130,7 @@ void main() {
 * IMO
   * switchによる網羅性のメリットは無いため、この場合はswitchで書くメリットはあまり無さそうと考える。
   * 値の関係性がもう少し複雑でif文のネストが深くなる場合などはswitch文でフラットに書ける場合はありそうだが、好みの範疇かもしれない。
-```
+```dart
 int compare(int a, int b) {
   return switch ((a, b)) {
     (int c1, int c2) when c1 == c2 => -1,

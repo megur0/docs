@@ -4,7 +4,7 @@
 # fake_async
 * https://pub.dev/packages/fake_async
 * 明示的に経過時間を制御することで実際の経過時間を待たずに動作確認等を行うことができる。
-```
+```dart
 // README.md記載のコード
 void main() {
   test("Future.timeout() throws an error once the timeout is up", () {
@@ -18,7 +18,7 @@ void main() {
 }
 ```
 * 経過時間と紐づけたClockオブジェクトを取得することもできる。このClockは経過時間と紐づいているため、elpase()を実行すると経過時間が反映される。
-```
+```dart
 void main() {
   final fakeAsync = FakeAsync();
   final clock = fakeAsync.getClock(DateTime.utc(2023));
@@ -29,7 +29,7 @@ void main() {
 ```
 * なお、fakeAsyncのコールバック内ではClockパッケージのclockを通して経過時間が反映された日時を取得できる。
   * FackeAsyncオブジェクトの中では_clockを持っており、これはコールバックの文脈においてclockへインジェクションされるため。
-```
+```dart
 void main() {
   fakeAsync((async) {
     print(clock.now());
@@ -46,7 +46,7 @@ void main() {
 */
 ```
 * マイクロタスクやTimerのフラッシュ
-```
+```dart
 void main() {
   final fakeAsync = FakeAsync();
   fakeAsync.run((self) {
@@ -72,7 +72,7 @@ future
 ```
 ## (参考)FakeAsyncの実装
 * FakeAsyncは内部的にClockオブジェクトを保持している。(デフォルト値はclock.now()のため現在日時となる)
-```
+```dart
 class FakeAsync {
   late final Clock _clock;
   Duration get elapsed => _elapsed;
@@ -89,11 +89,11 @@ class FakeAsync {
 }
 ```
 * FakeAsync.run()ではClockパッケージのwithClockを利用して上記の_clockをインジェクションしている。またZoneを利用してFakeTimerを返すcreateTimer()などをインジェクションしている。
-```
+```dart
 T fakeAsync<T>(T Function(FakeAsync async) callback, {DateTime? initialTime}) =>
     FakeAsync(initialTime: initialTime).run(callback);
 ```
-```
+```dart
 class FakeAsync {
   //...
   T run<T>(T Function(FakeAsync self) callback) =>
@@ -108,7 +108,7 @@ class FakeAsync {
   //...
 ```
 * createTimerはTimerクラスが利用している。
-```
+```dart
 // flutter/bin/cache/pkg/sky_engine/lib/async/timer.dart
 abstract interface class Timer {
     //...
@@ -125,7 +125,7 @@ abstract interface class Timer {
 }
 ```
 * Timerクラスは例えばTimer.runやFuture.timeout()の実装、Future.delayed()が利用する
-```
+```dart
 abstract interface class Timer {
   // ...
   static void run(void Function() callback) {
@@ -134,7 +134,7 @@ abstract interface class Timer {
   // ...
 }
 ```
-```
+```dart
 // flutter/bin/cache/pkg/sky_engine/lib/async/future_impl.dart
 class _Future<T> implements Future<T> {
   //...
@@ -146,7 +146,7 @@ class _Future<T> implements Future<T> {
   //...
 }
 ```
-```
+```dart
 // flutter/bin/cache/pkg/sky_engine/lib/async/future.dart
 abstract interface class Future<T> {
   //...
@@ -168,7 +168,7 @@ abstract interface class Future<T> {
 # clock
 * https://pub.dev/packages/clock
 * トップレベルのgetterであるclockはZoneによってインジェクションされる。withClock()を利用することでZoneへ指定のClockをもたせた文脈でコールバックを実行することができる。
-```
+```dart
 // clock-1.1.1/lib/src/default.dart
 Clock get clock => Zone.current[_clockKey] as Clock? ?? const Clock();
 
@@ -181,7 +181,7 @@ T withClock<T>(
 }
 ```
 * デフォルトではclock.now()にはDateTime.now()が利用される。
-```
+```dart
 // clock-1.1.1/lib/src/clock.dart
 class Clock {
   final DateTime Function() _time;
@@ -193,7 +193,7 @@ class Clock {
 }
 ```
 * withClockの例
-```
+```dart
 void main() {
   withClock(Clock.fixed(DateTime.utc(2023)), () => print(clock.now()));
 }
@@ -204,7 +204,7 @@ void main() {
 */
 ```
 * fakeAsyncは内部でwithClockを利用してFakeAsync._clockをclockへインジェクションしている。
-```
+```dart
 import 'package:clock/clock.dart';
 import 'package:fake_async/fake_async.dart';
 

@@ -2,7 +2,7 @@
 
 
 # 共変と反変のサンプルコード
-```
+```dart
 // ignore_for_file:unused_local_variable
 
 class A {}

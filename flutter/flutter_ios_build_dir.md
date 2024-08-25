@@ -187,7 +187,7 @@
     * このGeneratedPluginRegistrant.registerはAppDelegate.swiftからコールされる。
     * 各プラグインのios側のコード中にregisterWithRegistrarを記載しておくと、flutter pub addした際にこのregisterメソッドから呼び出しされるようにコードがジェネレートされると考えられる。registerWithRegistrarの中で例えばメソッドチャネル等の初期化設定など実行する。
     * 例(integration_testプラグインの場合)
-        ```
+        ```objectivec
         // ios/.symlinks/plugins/integration_test/ios/Classes/IntegrationTestPlugin.m
         static NSString *const kIntegrationTestPluginChannel = @"plugins.flutter.io/integration_test";
         static NSString *const kMethodTestFinished = @"allTestsFinished";
@@ -216,19 +216,7 @@
             }
         }
         ```
-        ```
-        // ios/Runner/GeneratedPluginRegistrant.m
-        + (void)registerWithRegistry:(NSObject<FlutterPluginRegistry>*)registry {
-            //...
-            [IntegrationTestPlugin registerWithRegistrar:[registry registrarForPlugin:@"IntegrationTestPlugin"]];
-            //...
-        }
-        ```
-        ```
-        // ios/.symlinks/plugins/integration_test/lib/src/channel.dart
-        // Dartコードからは'plugins.flutter.io/integration_test' という名前空間でIntegrationTestPlugin.mの各メソッドを呼ぶ事ができる。
-        const MethodChannel integrationTestChannel = MethodChannel('plugins.flutter.io/integration_test');
-        ```
+       
 * Runner-Bridging-Header.h
     * 上記のGeneratedPluginRegistrantのファイルを読み込み。
     * このファイルは本体やプラグインのproject.pbxprojから読み込まれている。

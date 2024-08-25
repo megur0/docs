@@ -20,7 +20,7 @@
 
 # ウィジェットは@immutable
 * Widgetクラスは@immutableになっている
-    ```
+    ```dart
     @immutable
     abstract class Widget extends DiagnosticableTree {
         //...
@@ -29,7 +29,7 @@
 * したがってconstコンストラクタではない場合はアナライザによって警告が表示される。
     * https://dart.dev/tools/diagnostic-messages#must_be_immutable
 
-    ```
+    ```dart
     class A extends StatelessWidget {
     A({super.key, this.a = true});
     bool a;
@@ -153,7 +153,7 @@
             * crossAxisAlignment はデフォルトでcenter
         * Colomnの幅は子のうち、最大の幅となったものの幅となる。
         * Columnの高さはmainAxisSizeによって決まり、デフォルトは取りうる最大の大きさになろうとする。
-    ```
+    ```dart
     Center getCenterlingColumn(List<Widget> children, [double padding = 32.0]) {
         return Center(
             child: Padding(
@@ -177,7 +177,7 @@
 ## Stack, Positioned
 * https://api.flutter.dev/flutter/widgets/Positioned-class.html
 * 例えば、Stack内で「右下」に配置したい場合に、下記のようにAlignを利用しても期待した動作とはならない。
-    ```
+    ```dart
     Stack
         Container
             ...
@@ -189,7 +189,7 @@
 ## 制約
 * ConstrainedBox
     * 子に追加の制約を課すウィジェット
-    ```
+    ```dart
     ConstrainedBox(
         constraints: BoxConstraints.tight(const Size(200.0, 150.0)),
         //constraints: const BoxConstraints.expand(),
@@ -233,7 +233,7 @@
 * CupertinoDialog
 ## スナックバー
 * Snackbar
-    ```
+    ```dart
     ScaffoldMessenger.of(context)
     ..hideCurrentSnackBar()
     ..showSnackBar(
@@ -361,7 +361,7 @@
     * アウトラインボタン
 * スタイル
     * styleで指定する
-    ```
+    ```dart
     ElevatedButton(
         // サイズ指定: minimumSize, fixedSize, maximumSize,
         style: ElevatedButton.styleFrom(
@@ -394,7 +394,7 @@
     * https://api.flutter.dev/flutter/painting/ImageProvider-class.html
     * Flutterの画像関連のウィジェットでは内部でImageProviderを利用して画像を読み込みしている。
     * 派生する具象クラスとして、FileImage, ResizeImage, AssetImageやMemoryImage等がある。
-    ```
+    ```dart
     const assetImage = AssetImage('assets/Dash.png');
     final 1pixeldot = MemoryImage(base64Decode("R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=="));
 
@@ -442,7 +442,7 @@
         * 下記のサンプルコードで、AutomaticKeepAliveClientMixinを利用している箇所があったため、こちらを参考にした。
             * https://api.flutter.dev/flutter/widgets/PageView/PageView.custom.html
     * サンプルコード
-        ```
+        ```dart
         PageView(
                 children: [
                     KeepAliveItem(child: ChildWidget()),
@@ -451,7 +451,7 @@
                 ],
             ),
         ```
-        ```
+        ```dart
         class KeepAliveItem extends StatefulWidget {
             const KeepAliveItem({super.key, required this.child});
 
@@ -483,7 +483,7 @@
 # その他
 * flutter/lib/src/material/constants.dart
     * AppBarのデフォルトの高さ等のconst値が定義されている
-    ```
+    ```dart
     //...
 
     /// The height of the toolbar component of the [AppBar].

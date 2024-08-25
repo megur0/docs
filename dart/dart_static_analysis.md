@@ -41,7 +41,7 @@
     * 関連
         * https://github.com/dart-lang/sdk/issues/51800
 * analysis_options.yaml をカスタマイズすることで、リンターパッケージの指定、リンターやアナライザのカスタマイズが可能。
-    ```
+    ```yaml
     # 公式サンプルコード
     include: package:lints/recommended.yaml
 

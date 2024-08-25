@@ -18,7 +18,7 @@
 * .nameによって名前を取得できる。
 * extensionをEnum(すべてのenumが継承する抽象クラス)に適用できる
 * ※ 上記の機能はDart2.17以降(Enhanced Enumsによってenumの機能が拡張された)の前提となる。
-```
+```dart
 void main () {
   print(E1.values);
   print(E1.values.byName("A"));
@@ -46,13 +46,13 @@ enum E2 {
 # enumの判定はswitchを使う
 * https://dart.dev/language/branches#exhaustiveness-checking
 * enumやsealed classは取りうる値が完全に列挙可能であるため、switchを利用することで漏れを静的に検出可能。
-```
+```dart
 enum FriendStatus {
   notFriend,
   friend,
 }
 ```
-```
+```dart
 if (status ==  FriendStatus.notFriend) {
  // ...
 } else {
@@ -70,7 +70,7 @@ switch (status) {
 
 
 # byXXXの実装
-```
+```dart
 enum MyEnum {
   a(10),
   b(20);

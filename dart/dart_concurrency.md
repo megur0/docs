@@ -33,7 +33,7 @@
 
 # 並行処理の順番を検証したサンプルコード
 * IMO: 以下の処理の結果を予測できるのであれば、FutureやStreamがどのように動作しているかは大方理解できていると考えられる。
-```
+```dart
 import 'dart:async';
 
 void main() async{
@@ -85,7 +85,7 @@ Future<void> test() async{
     * Futureオブジェクト生成時に即時受け取る。
   * Completed
     * コールバック処理が完了した状態。このとき、値もしくはエラーを伴う。
-  ```
+  ```dart
   void main() {
     print(Future((){print("a");}));// イベントキューの末尾に追加。
     print("b"); // この処理はすでにイベントキューに入っているため、上記のコールバックよりも先に実行される。
@@ -97,7 +97,7 @@ Future<void> test() async{
   ```
 ## Future.microtask
 * マイクロタスクキューへ追加する。
-```
+```dart
 Future((){print("a");});
 Future.microtask((){print("b");});
 // b
@@ -115,7 +115,7 @@ Future.microtask((){print("b");});
 * Futureのイベントが終了した直後にコールバックを実行する。
   * すでにFutureがCompletedの場合は、コールバックは即時実行はされず、マイクロタスクとして登録される。
 * thenの戻り値はFutureオブジェクトとなる。
-```
+```dart
 void main() {
  print(Future(() => 1).then((a) => a).then((a)=> print(a))); 
  print(2);
@@ -132,7 +132,7 @@ void main() {
   * そうでない場合は、Futute.valueでラップされる。また、警告が表示される。
 * 対象の関数は、awaitを付与したFutureのイベントが完了するまでは動作が止まる。
   * ドキュメントの記載は見つからなかったが、下記の結果から、thenと同様にFutureがすでにcompletedであればマイクロタスクへ後続の処理を登録すると思われる。
-    ```
+    ```dart
     import 'dart:async';
     void main() async{
       Future((){print(1);});
@@ -147,7 +147,7 @@ void main() {
     // 1
     ```
 * asyncをつけた関数は、voidやdynamic以外の戻り値の場合は、戻り値をFutureのサブタイプにする必要がある。
-  ```
+  ```dart
   void main() async {
     print(await f1());
     print(await f2());
@@ -166,7 +166,7 @@ void main() {
 * Futureではない値のawaitは、Future.valueでラップされるため即時completedとなる。
 * イベントループの末尾に登録されるため、通常の処理よりは後に処理されるが、Uncompletedから始まるFutureオブジェクトのawaitよりも早く処理される。
 * なお、asyncをつけたのみの関数内の処理は通常の処理と同様の実行順となる。
-```
+```dart
 import 'dart:async';
 
 void main() async{ 
@@ -194,7 +194,7 @@ Future<void> f5() async => print(5);// 単なるasync関数は通常の処理と
 ```
 
 # 複数のawait
-```
+```dart
   await Future.wait(
     [
       Future.delayed(const Duration(milliseconds: 100), () => print(1)),
@@ -214,7 +214,7 @@ Future<void> f5() async => print(5);// 単なるasync関数は通常の処理と
   * Flutterのブートストラップ処理の随所で使われている。
   * Timer.run((){print("aaa")}) と Future((){print("aaa")})) は 結果は等価
     * Future()の中で内部でTime.run()が呼ばれている。
-    ```
+    ```dart
     factory Future(FutureOr<T> computation()) {
       _Future<T> result = new _Future<T>();
       Timer.run(() {
@@ -230,7 +230,7 @@ Future<void> f5() async => print(5);// 単なるasync関数は通常の処理と
 
 # Future.sync
 * Future.value(値) と Future.sync(()=>値) は等価
-```
+```dart
 Future.sync((){print("1");}).then((_){print("2");});
 print("3");
 // 1

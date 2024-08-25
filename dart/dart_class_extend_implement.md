@@ -47,7 +47,7 @@
     * IMO enumでは出来ないextendsやconstではない値を含めたい時に使う?
     * enumのように.valuesメソッドで羅列することはできない。
 ## サンプルコード
-```
+```dart
 base class A {}
 base class AA implements A{}// 同じライブラリ内であればimplementsできる
 
@@ -70,7 +70,7 @@ final class R {}
 base class S extends R{}// 同じライブラリ内であればextendsできる
 base class SS implements R{} // 同じライブラリ内であればimplementsできる。
 ```
-```
+```dart
 // ライブラリ外
 
 // class X extends F {} // error: sealed classはライブラリ外でextendsできない。
@@ -95,7 +95,7 @@ base class Z extends S{}// final classのサブクラスであればextendsで�
 * https://dart.dev/language/classes#implicit-interfaces
 > Every class implicitly defines an interface containing all the instance members of the class and of any interfaces it implements. If you want to create a class A that supports class B's API without inheriting B's implementation, class A should implement the B interface.
 * Dartではクラスの定義は、暗黙的なインターフェースの定義が含まれる。
-```
+```dart
 class A {
   final String _v;
   A(this._v);
@@ -116,7 +116,7 @@ class B implements A {
 * implementsは複数に対して指定することができるが、extendsは１つのみ指定可能。
 * implementsはすべてのメソッドをオーバーライドする必要があるが、extendsは抽象メソッドのみオーバーライドすれば良い。
     * なお、サブクラス側がabstract classの場合はいずれの場合もオーバーライドは任意となる。
-        ```
+        ```dart
         class A {
             String f() => '';
         }
@@ -140,7 +140,7 @@ class B implements A {
 ## (参考) flutterの RenderObject
 * extendsもwithもimplements も全てを活用している。
 * https://github.com/flutter/flutter/blob/21797cbb034f48a384378efff0ee0b520e160072/packages/flutter/lib/src/rendering/object.dart#L1237
-```
+```dart
 abstract class RenderObject extends AbstractNode with DiagnosticableTreeMixin implements HitTestTarget {
   // ...
 }
@@ -163,7 +163,7 @@ abstract class RenderObject extends AbstractNode with DiagnosticableTreeMixin im
     * オーバーライドされたメソッドがN個の位置パラメータを受け入れる場合、オーバーライドするメソッドもnN個の位置パラメータを受け入れる必要がある。
     * ジェネリックメソッドは非ジェネリック メソッドをオーバーライドできない。逆も同様。
 * voidのメソッドはオーバーライド時に戻り値の設定が可能。
-```
+```dart
 abstract class A {
   void a() {
     print('a called');
@@ -215,7 +215,7 @@ class B extends A {
 
 
 # 具体例
-```
+```dart
 void main() {
   // final a = A(); // エラー。抽象クラスはインスタンス化ができない。
   final b = B("test");

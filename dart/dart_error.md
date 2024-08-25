@@ -11,7 +11,7 @@
 * 例外の有無に関わらず最終的に実行したい処理をfinallyとして記述できる
     * catchが存在しない場合はfinallyを実行後にエラーがpropagateされる。
 
-```
+```dart
 try {
   breedMoreLlamas();
 } on OutOfLlamasException {
@@ -25,7 +25,7 @@ try {
   print('Something really unknown: $e');
 }
 ```
-```
+```dart
 try {
   // ···
 } on Exception catch (e) {
@@ -35,7 +35,7 @@ try {
   print('Stack trace:\n $s');
 }
 ```
-```
+```dart
 void main() {
  a(); 
 }
@@ -61,7 +61,7 @@ void a() {
 * https://dart.dev/language/error-handling#assert
 * assertはリリースビルドでは処理されず残しておいても問題ないため、コードテストに適している。
 * Flutter はデバッグ モードでアサーションを有効にする。
-```
+```dart
 // Make sure the variable has a non-null value.
 assert(text != null);
 
@@ -73,7 +73,7 @@ assert(urlString.startsWith('https'));
 ```
 * 例1
   * コンストラクタの引数について複雑な条件をチェック
-    ```
+    ```dart
     const ScrollView({
         ...
         this.controller,
@@ -89,7 +89,7 @@ assert(urlString.startsWith('https'));
 * 例2
   * 以下はFlutter内部のホットリロードを考慮したチェックとなる。
   * 変数のhasSameSuperclassのデフォルトがtrueとなるためassertの実行有無によって処理結果に影響が発生することはない。
-  ```
+  ```dart
   bool hasSameSuperclass = true;
   assert(() {
       final int oldElementClass = Element._debugConcreteSubtype(child);

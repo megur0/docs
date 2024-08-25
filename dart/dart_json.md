@@ -5,7 +5,7 @@
 * https://dart.dev/guides/json
 * https://dart.dev/libraries/dart-convert
 * 標準ライブラリのdart:convertでは、Jsonテキストのマッピングに Map<String, dynamic> が使われる。
-```
+```dart
 var scores = [
   {'score': 40},
   {'score': 80},
@@ -17,7 +17,7 @@ assert(jsonText ==
         '{"score":100,"overtime":true,'
         '"special_guest":null}]');
 ```
-```
+```dart
 var jsonString = '''
   [
     {"score": 40},
@@ -43,7 +43,7 @@ assert(firstScore['score'] == 40);
 # Flutter
 * https://docs.flutter.dev/development/data-and-backend/json
 * flutterでのjsonの一般的な取り扱いは2種類あり、dart:convertパッケージをつかった方法とコードジェネーションを使った方法がある。
-```
+```dart
 import 'dart:convert';
 Map<String, dynamic> userMap = jsonDecode(jsonString);
 var user = User.fromJson(userMap);

@@ -40,7 +40,7 @@
     * 基本的には開発者はTickerProviderStateMixinやSingleTickerProviderStateMixinを利用してTickerを生成して、そのTickerにコールバックを実行させることが多いだろう。
 * サンプルコード
     * 下記のようにTickerにコールバックを渡して値を毎フレーム更新することで、アニメーションを実現できる。
-    ```
+    ```dart
     import 'package:flutter/material.dart';
     import 'package:flutter/scheduler.dart';
 
@@ -150,7 +150,7 @@
         * リスナーとしてコールバックを設定すると(addListener)、Tickerのコールバックが実行されるたび(毎フレーム)呼び出される。
     * その他、reset, repeat, fling, stopなどのAPIを提供
 * 以下はデモのコードとなる
-  ```
+  ```dart
   import 'package:flutter/material.dart';
   import 'package:flutter/physics.dart';
 
@@ -305,7 +305,7 @@
     * 複数のTweenによる変換を組み合わせることができる。
     * 例えば AnimationControllerのvalue(0.0〜1.0) -> CurveTweenで値の変化にカーブをつける -> Tweenで変換 
 * 以下はデモコード
-```
+```dart
 import 'dart:math';
 
 import 'package:flutter/material.dart';
@@ -415,7 +415,7 @@ class _TweenTestState extends State<TweenTest>
 ## 内部処理
 * valueをオーバーライドしてtransformで返しており、このtransfromをTweenが実装している。
     * AnimatableやTweenのサブクラスを定義する事で独自のTweenを定義できる。
-```
+```dart
 abstract class Animatable<T> {
     //...
     T transform(double t);
@@ -440,7 +440,7 @@ class _AnimatedEvaluation<T> extends Animation<T> with AnimationWithParentMixin<
 }
 ```
 * Tweenの場合は下記のような実装となっている。
-```
+```dart
 class Tween<T extends Object?> extends Animatable<T> {
   //...
   @protected
@@ -508,7 +508,7 @@ class Tween<T extends Object?> extends Animatable<T> {
 * 対策としては、下記が考えられる。
   * フレーム毎にsetStateを行う処理を別のウィジェットに分ける。
   * TextField部分をクラス化してconstにする。
-```
+```dart
 import 'package:flutter/material.dart';
 
 void main() {

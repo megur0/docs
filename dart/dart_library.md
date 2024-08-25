@@ -40,7 +40,7 @@
 * ビルトインのライブラリのURIはdart:からはじまる。
 * identifiersが衝突する場合はprefixを使うためにasを使う。
 * ライブラリの一部のみ使う
-  ```
+  ```dart
   // Import only foo.
   import 'package:lib1/lib1.dart' show foo;
   // Import all names EXCEPT foo.
@@ -49,7 +49,7 @@
 
 # export
 * 外部に公開するライブラリを指定するために使用する。メインのライブラリにexportを記述することで、メインのライブラリを読み込むだけでexportで指定されたライブラリにもアクセスできる。
-```
+```dart
 lib/my_library.dart
   export 'src/foo.dart';
   export 'src/bar.dart';
@@ -58,7 +58,7 @@ lib/my_library.dart
 # プライベート
 * _をつけることでファイル（ライブラリ）単位でプライベートになる。
   * クラス内のオブジェクトがプライベートでも、同じライブラリ内であればアクセスできるので注意。
-  ```
+  ```dart
   void main() => print(Y()._private);
   class X {
     final int _private = 4;

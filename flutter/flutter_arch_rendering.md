@@ -46,7 +46,7 @@
     * 実際の内部処理はもう少し細かいフェーズに分かれている。
     * https://api.flutter.dev/flutter/widgets/WidgetsBinding/drawFrame.html
 * たとえば、下記のようにスクロールイベントごとにprint()を実行しつつ、末端に移動したらローディング表示をする実装をしたとする。
-    ```
+    ```dart
     final controller = ScrollController();
     controller.addListener(() {
         print("${controller.position.pixels}, ${controller.position.maxScrollExtent}");

@@ -15,7 +15,7 @@
 * .xxxが内部的に変数なのかgetterなのかは関係ない。
 
 # インスタンス変数（instance variables）
-```
+```dart
 class A {
   A(this._test, this._test2, this._test3);
   int _test;
@@ -85,7 +85,7 @@ void main() {
 # (参考)Dartでのprivateフィールドの実現
 * Dartでは同じライブラリ内であればPrivateの変数にもアクセスすることができる。
 * Libraryの最小単位は１ファイルである。
-```
+```dart
 void main() {
   var b2 = B2(4);
   print(b2._test);// 
@@ -98,7 +98,7 @@ class B2 {
 * したがって、あるクラスにおいてそれらのフィールドを完全にカプセル化することはできない。
   * フィールドをプライベートにしても、同じライブラリ内からはアクセスが可能。
   * デフォルトのsetterをオーバーライドして自由に設定できないようにしてみる? -> できない
-    ```
+    ```dart
     int _privateVariable = 10;
     set _privateVariable(int val) {// このような定義はできない。（既に定義されている、というエラーが生じる）
       throw "do not change this field";
@@ -110,7 +110,7 @@ class B2 {
     * 下記のようにクロージャを使うと内部構造を同じライブラリ内でも隠蔽することはできる。
       * 筆者はアプリケーションのコードでこういった書き方をしたことはない。
     * プライベートクラス
-    ```
+    ```dart
     class _Page {
       int _val_ = 1;// 同じライブラリ内の場合はアクセス可能。
       get val => _val;
@@ -120,7 +120,7 @@ class B2 {
     final _page_ = _Page();
     ```
     * クロージャ
-    ```
+    ```dart
     final _page_ = () {
         int val = 1;// 外のスコープからはアクセスできない。
         int inc() => ++val;
@@ -133,7 +133,7 @@ class B2 {
 
 # (参考) Dartのsetter
 * 呼び出し側からは、setterの内部処理はブラックボックスとなる。
-    ```
+    ```dart
     main() {
         final a = A(1);
         print(a.f);// 1

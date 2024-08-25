@@ -4,7 +4,7 @@
 # Generics
 * https://dart.dev/language/generics
 > Why use generics? Generics are often required for type safety, but they have more benefits than just allowing your code to run:
-```
+```dart
 // サブタイプによって制限
 class Foo<T extends Object> {
   // Any type provided to Foo for T must be non-nullable.
@@ -19,7 +19,7 @@ T first<T>(List<T> ts) {
 ```
 
 # サンプル
-```
+```dart
 import 'dart:convert';
 import 'dart:io';
 
@@ -49,7 +49,7 @@ Future<Response<T>> request<T>(Uri url, T Function(Map<String, dynamic> json) co
 
 # Genericsの型に対してnewはできない
 * 例えば下記のような処理は不可
-  ```
+  ```dart
   import 'package:flutter/material.dart';
 
   mixin CreateElement<T extends State> on StatefulWidget {
@@ -73,7 +73,7 @@ Future<Response<T>> request<T>(Uri url, T Function(Map<String, dynamic> json) co
 # 派生クラスの親のジェネリクスの型
 * 派生クラスは親のジェネリクスの型を明示的に指定しない場合はdynamicとなる
 * mixinがonで指定したクラスのジェネリクスの型は明示的に指定しなくてもwithの際に決定される。
-```
+```dart
 import 'package:flutter_test/flutter_test.dart';
 
 void main() {

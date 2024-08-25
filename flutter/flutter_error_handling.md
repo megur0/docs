@@ -18,7 +18,7 @@
 |3|レンダリング失敗時<br/>※デフォルトの挙動をカスタマイズ|ErrorWidget.builderで 挙動をカスタマイズ|
 * ErrorWidget.builderのデフォルトの挙動
     * リリースモードの場合はエラーメッセージは出力されないようになっている。
-    ```
+    ```dart
     // flutter/lib/src/widgets/framework.dart
     static ErrorWidgetBuilder builder = _defaultErrorWidgetBuilder;
     //...
@@ -34,7 +34,7 @@
     ```
 * ErrorWidget.builder の実行時には、FlutterError.onErrorも呼び出しされる。
 * サンプルコード
-```
+```dart
 void main() {
     // ErrorWidget.builderの実行時にはFlutterError.onErrorも呼ばれるため、この中でエラーレポートは不要。
     ErrorWidget.builder = (FlutterErrorDetails details) {
@@ -69,7 +69,7 @@ void main() {
 
 # (参考)ErrorWidget.builderの内部処理
 * 内部ではdart:uiのParagraphを使ってpaintされていた。
-```
+```dart
 class ErrorWidget extends LeafRenderObjectWidget {
     // ...
     RenderBox createRenderObject(BuildContext context) => RenderErrorBox(message);
@@ -83,7 +83,7 @@ class ErrorWidget extends LeafRenderObjectWidget {
     // ...
 }
 ```
-```
+```dart
 class RenderErrorBox extends RenderBox {
     // ...
     late final ui.Paragraph? _paragraph;

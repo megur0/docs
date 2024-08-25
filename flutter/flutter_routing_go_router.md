@@ -107,7 +107,7 @@ GoRouter
 |push|GoRouter.pop(...) または BuildContext.pop(...)|スタックの先頭要素をpopする|
 
 * BuildContextから呼ぶことができるのは、以下のようにextensionによって拡張が行われているため。
-    ```
+    ```dart
     extension GoRouterHelper on BuildContext {
         //...
         void go(String location, {Object? extra}) =>
@@ -137,7 +137,7 @@ GoRouter
     * Scaffold.bottomNavigationBar
         * https://api.flutter.dev/flutter/material/BottomNavigationBar-class.html
 * サンプルコード
-    ```
+    ```dart
     final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
     final GlobalKey<ScaffoldState> rootScaffoldKey = GlobalKey<ScaffoldState>();
@@ -280,7 +280,7 @@ GoRouter
         * profileだけではなくeditにも、parentNavigatorKeyの設定が必要となる。
         * 設定しない場合は、/profile -> /profile/editへのpushを実行しても何もアクションが発生しない。
 * サンプルコード
-    ```
+    ```dart
     final GlobalKey<NavigatorState> rootNavigatorKey = GlobalKey<NavigatorState>();
 
     void main() => runApp(MaterialApp.router(routerConfig: router));
@@ -381,7 +381,7 @@ GoRouter
 |-|-|-|
 | GoError/AssertionError|GoRouterが正しく使用されていない(ソースコードの修正が必要)| main関数でキャッチしてスタックトレース|
 | GoException|ルートが存在しない場合| GoRouter.onExceptionでハンドリングしてエラー画面を表示|
-```
+```dart
 void main() {
   testWidgets('', (WidgetTester tester) async {
     // Build our app and trigger a frame.
@@ -419,7 +419,7 @@ void main() {
 * GoRouter.go()の場合は親ページもスタックに追加されるが、pushの場合は親ページは追加されない。
 * 複数のルートのビルダーが実行される際、各ビルダーの実行順番のルールや法則はわからなかった。
 * (参考コード)
-    ```
+    ```dart
     import 'package:flutter/material.dart';
     import 'package:flutter_test/flutter_test.dart';
     import 'package:go_router/go_router.dart';
@@ -635,7 +635,7 @@ void main() {
     ...
     ```
     * エラーとしては、GoRouteInformationParserが内部でUriライブラリのget originを呼び出す際にhttp形式ではない場合に例外となる。
-        ```
+        ```dart
         String get origin {
             // ...
             if (scheme != "http" && scheme != "https") {
@@ -649,7 +649,7 @@ void main() {
 * 一方、「myApp://hoge/details」とした場合は動作する。
     * この場合、パスは"/details"となり"hoge"はドメイン部分として扱われる。
     * ただ、このURLもhttpではないため、Uri.originではエラーとなる。
-        ```
+        ```dart
         void main() {
             final uri = Uri.parse("http://test.com/aaaa");
             print("scheme: ${uri.scheme}, origin: ${uri.origin}, host: ${uri.host}");
@@ -677,7 +677,7 @@ void main() {
 ![](./svg/go_router/go_router_class.svg)
 ## GoRouter.redirect()内でGoRouter.of(context)はエラーとなる
 * 下記はエラーとなる。
-```
+```dart
 void main() {
   testWidgets("GoRouter", (tester) async {
     await tester.pumpWidget(MaterialApp.router(

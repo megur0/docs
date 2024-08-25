@@ -86,7 +86,7 @@
     * `flutter test tests/xxx_test.dart`
 * descriptionの文字列を部分検索(ファイル名は検索しない)
     * `flutter test --plain-name 'widget'`
-    ```
+    ```dart
         test("widget test", () async {}); // 実行される
         test("my widget", () async {}); // 実行される
         test("test", () async {}); // 実行されない
@@ -134,7 +134,7 @@
 * テスト同士の依存について
   * testやtestWidgetsの外のスコープのイミュータブルを利用する場合はテスト同士の依存関係が発生する可能性があるため注意したい。
     * 例えば下記のテストは `flutter test` では成功するが --test-randomize-ordering-seed=シード値 によって順番をシャッフルすると失敗することが確認できる。
-    ```
+    ```dart
     int var1 = 0;
     void main() {
       for (int i = 0; i < 3; i++) {
@@ -209,7 +209,7 @@
     * flutter testのカバレッジはテストファイルがimportしたファイルしか出力されない。
     * すべてのアプリケーションコードをカバレッジ対象とする間接的な手段として、mainのファイルをインポートするダミーテストファイルを用意しておくと良い。
     * https://github.com/flutter/flutter/issues/27997#issuecomment-1644224366
-    ```
+    ```dart
     // test/coverage_dummy_test.dart
     // ignore: unused_import
     import 'package:sample/main.dart';
@@ -222,7 +222,7 @@
       * 例えば、coverage:ignore-start 〜 endですべてのコードを囲んでいるファイルはカバレッジ対象であっても出力されない。
 
 # setUpAll, setUp, tearDown, tearDownAll
-```
+```dart
 int var1 = 0;
 int var2 = 0;
 
@@ -296,7 +296,7 @@ tearDownAll
     * No.1 ~ 4においてIntegrationTestWidgetsFlutterBinding.ensureInitialized()は実行していない前提とする
     * IntegrationTestWidgetsFlutterBindingはLiveTestWidgetsFlutterBindingの派生クラスである。
 * サンプルコード
-  ```
+  ```dart
   import 'package:flutter/material.dart';
   import 'package:flutter_test/flutter_test.dart';
 
@@ -318,7 +318,7 @@ tearDownAll
 ## HttpClientのモック化
 * AutomatedTestWidgetsFlutterBindingとLiveTestWidgetsFlutterBindingでは、HttpClientは自動的にモック化される。
 * 処理自体でエラーは発生しないが、ステータスコードは400となりデータは空となる。
-```
+```dart
 import 'dart:convert';
 import 'dart:io';
 
@@ -337,7 +337,7 @@ void main() {
 }
 ```
 * NetworkImageウィジェット等の内部でHttpClientを利用している場合、400によってエラーとなってしまう場合があるため注意
-```
+```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -405,7 +405,7 @@ HTTP request failed, statusCode: 400, https://docs.flutter.dev/assets/images/das
 
 
 # Finder
-```
+```dart
 main() {
   testWidgets("", (widgetTester) async {
     await widgetTester.pumpWidget(MaterialApp(
@@ -444,7 +444,7 @@ main() {
   });
 }
 ```
-```
+```dart
 ScrollController? getScrollController() {
   final finder = find.byType(ListView);
   if (finder.evaluate().isEmpty) return null;
@@ -459,13 +459,13 @@ ScrollController? getScrollController() {
 * 例えば下記のようにScrollableを含むウィジェットが子に存在するPageViewをスクロールしたいケースがあるとする。
 * この場合、scrollUntilVisibleに指定するscrollableは、単に「PageViewの子孫のScrollable」と指定すると一意に定まらずエラーとなってしまう。
 * この場合、筆者は以下のようにbyWidgetPredicateで属性を絞り込むことで PageView自身のScrollableを取得している。
-```
+```dart
 PageView(children: [
   PageA(),// Scrollableを含む
   PageB()
 ])
 ```
-```
+```dart
 final pageViewScrollable = find.descendant(
     of: find.byType(PageView),
     matching: find.byWidgetPredicate((widget) =>
@@ -492,7 +492,7 @@ final pageViewScrollable = find.descendant(
             * handleDrawFrame
             * マイクロタスクのフラッシュ
     * pump()を実行することでマイクロタスクがフラッシュされていること、Futureが実行されている事がわかる。
-        ```
+        ```dart
         void main() {
             testWidgets("", (widgetTester) async {
                 Future.microtask(() => print("microtask1"));
@@ -513,7 +513,7 @@ final pageViewScrollable = find.descendant(
         }
         ```
 * スタブ化した非同期処理の例
-  ```
+  ```dart
   import 'dart:convert';
   import 'dart:io';
 
@@ -526,10 +526,10 @@ final pageViewScrollable = find.descendant(
     }
   }
   ```
-  ```
+  ```dart
   import 'package:flutter/material.dart';
   import 'package:flutter_test/flutter_test.dart';
-  import 'package:sample/original.dart
+  import 'package:sample/original.dart';
 
   void main() {
     testWidgets('', (tester) async {
@@ -589,7 +589,7 @@ final pageViewScrollable = find.descendant(
 ## 拡張: 特定の要素が確認できるまでフレームを進める
 * 例えば、結合テストでは外部のリソース等の応答時間が一定ではないため、特定の要素を確認するまでフレームを進める、といった処理を行いたいケースが多い。
 * 以下の拡張は指定のFinderを確認できるまでpump()をし続ける。
-```
+```dart
 // 参照元:
 // https://github.com/flutter/flutter/issues/73355#issuecomment-805736745
 // 元のコードはintegration_testではない`flutter test`で利用した場合にExceptionは出るがwhileが終了しなかったため、少し改変をしている。
@@ -621,7 +621,7 @@ extension WidgetTesterExtension on WidgetTester {
 
 # UIの操作・他
 ## WidgetTester.tap, enter
-```
+```dart
 main() {
   testWidgets("", (widgetTester) async {
     final textFieldController = TextEditingController();
@@ -652,14 +652,14 @@ main() {
 }
 ```
 ## WidgetTester.element
-```
+```dart
 BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
   return widgetTester.element(find.byType(type ?? Scaffold));
 }
 ```
 ## アニメーションを含むウィジェットのテストは個別ウィジェットの実装に依存する。
 * 例: go_routerの遷移
-```
+```dart
   testWidgets("", (widgetTester) async {
     final navigatorKey = GlobalKey<NavigatorState>();
     await widgetTester.pumpWidget(MaterialApp.router(
@@ -698,7 +698,7 @@ BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
         * https://github.com/flutter/flutter/blob/master/packages/flutter/test/material/snack_bar_test.dart
     * 表示のアニメーションのスケジュール、開始、進行 -> 表示 -> 非表示のアニメーションのスケジュール、開始、進行 といった流れと成る。
     * 試行錯誤してみると、下記のコードが動作した。コメントは推測も混じっている。
-    ```
+    ```dart
     testWidgets('SnackBar control test', (WidgetTester tester) async {
         const String helloSnackBar = 'Hello SnackBar';
         GlobalKey key = GlobalKey();
@@ -724,7 +724,7 @@ BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
     });
     ```
 ## WidgetTester.takeException()
-```
+```dart
 testWidgets("", (tester) async {
     await tester.pumpWidget(MaterialApp(
         home: IconButton(
@@ -738,7 +738,7 @@ testWidgets("", (tester) async {
 * WidgetTester.pageBack()はlocaleが'en'の場合しか動作しない。
     * https://github.com/flutter/flutter/issues/51121
 * 筆者は代替策として下記のように実装した。
-```
+```dart
 Future<void> pageBack(WidgetTester tester) async {
     // 現在のlocaleに対応するページバックボタンのツールチップの文字列を取得する方法が分からなかったため、
     // flutter_localizationsの設定ファイル(app_en.arb)にハードコードしてそれを参照する。
@@ -750,20 +750,20 @@ Future<void> pageBack(WidgetTester tester) async {
     await tester.pumpAndSettle();
 }
 ```
-```
+```json
 //lib/l10n/app_en.arb
 {
   "@@locale":"en",
  
   "appbarBackTooltip": "Back",
-  〜〜
+  //〜〜
 }
 ```
 
 # スクロール
 * 末端へ移動
     * スクロールポジションを移動して、pumpをした時点で画面へ反映（レンダリング）される。
-    ```
+    ```dart
     Future<void> scrollJumpToEndAndPump(WidgetTester widgetTester) async {
         final finder = find.byType(ListView);
         final listViewWidget = finder.evaluate().first.widget as ListView;
@@ -792,7 +792,7 @@ Future<void> pageBack(WidgetTester tester) async {
         * https://github.com/flutter/flutter/issues/143921
     
 * refresyIndicatorのアクションを発生させる
-    ```
+    ```dart
     Future<void> refreshActionOnScrollable(WidgetTester tester,
         {FinderBase<Element>? scrollable,
         Offset delta = const Offset(0, 400),
@@ -814,7 +814,7 @@ Future<void> pageBack(WidgetTester tester) async {
 * AutomatedTestWidgetsFlutterBindingの場合はフェイクのクロックを進める。
 * LiveTestWidgetsFlutterBindingの場合はFuture.delayed()と同じ。
 * Future.delayed()がペンディングのまま testWidgetsが終了すると assertエラーが発生する。
-    ```
+    ```dart
     void main() {
         testWidgets('', (tester) async {
             Future.delayed(const Duration(milliseconds: 500));
@@ -828,7 +828,7 @@ Future<void> pageBack(WidgetTester tester) async {
     */
     ```
 * これはflutter testの場合(AutomatedTestWidgetsFlutterBindingの場合)は必要であれば TestWidgetsFlutterBinding.delayed()によって下記のようにassertエラーを回避することができる。
-  ```
+  ```dart
   void main() {
       testWidgets('', (tester) async {
       Future.delayed(const Duration(milliseconds: 500));
@@ -843,7 +843,7 @@ Future<void> pageBack(WidgetTester tester) async {
 * (参考)
     * https://github.com/flutter/flutter/wiki/Writing-a-golden-file-test-for-package:flutter 
 * コード例
-    ```
+    ```dart
     expect(find.byType(Scaffold), matchesGoldenFile('./golden/xxx.png'));
     ```
 * --update-goldens
@@ -871,7 +871,7 @@ Future<void> pageBack(WidgetTester tester) async {
   * runAsync()は非同期処理自体を進めるAPIであり、各画像ウィジェットはもともと画像読み込みの非同期処理自体は進行するもののその完了をウィジェットが待たないため上記の問題が発生する。
     * https://github.com/flutter/flutter/issues/38997#issuecomment-524103154
     * https://github.com/flutter/flutter/issues/38997#issuecomment-524992589    
-```
+```dart
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -919,8 +919,7 @@ Future<void> cacheCircleAvatorImage(WidgetTester widgetTester) async {
 }
 ```
 * また、画像が変更された場合に変更後の画像が画面に反映されるまでに複数フレームが必要であることが確認できた。下記のコードではゴールデンファイルの生成を実行する前にpumpを実行するかpumpAndSettleを実行するかによって結果のゴールデンファイルが異なる内容となる。
-```
-
+```dart
 void main() {
   group("asset test", () {
     testWidgets("test", (tester) async {
@@ -973,7 +972,7 @@ class _MyWidgetState extends State<MyWidget> {
 # スタブ・モック化
 ## ラッパーをスタブ化する
 * 例えば下記のようにhttpClient.getUrl()のラッパー関数と、その関数をインジェクションするクラスがあるとする。
-```
+```dart
 class Backend {
   Backend({
     required this.httpGet,
@@ -998,7 +997,7 @@ class Backend {
   }
 }
 ```
-```
+```dart
 Future<(int statusCode, String body)> get(
     Uri url, Map<String, dynamic>? body) async {
   late String responseBody;
@@ -1013,7 +1012,7 @@ Future<(int statusCode, String body)> get(
 }
 ```
 * 上記のようにインジェクションされている場合は、例えばテストの際に下記のようにスタブ化させることができる。
-```
+```dart
 test("", () async{
     final backend = Backend(
         httpGet: (_) async {
@@ -1034,7 +1033,7 @@ test("", () async{
 * アプリケーションコードであれば、共通で利用するクラスをグローバル変数として扱う事が多いだろう。
 * グローバル変数として定義しておくメリットは、APIを置換可能にするためにインジェクションを利用する必要がないため、コード量を減らすことができる。
 * 下記のように各画面で利用するbackendという変数をトップレベルに定義しておけば、テストでは直接サブクラスで置き換えれることでスタブ化できる。
-```
+```dart
 Backend backend = Backend(/* 省略 */);
 
 class Backend {
@@ -1042,14 +1041,14 @@ class Backend {
 }
 ```
 * テストでは以下のようにサブクラスを作成して変数を置き換える。
-```
+```dart
 backend = BackendStub(/* 省略 */);
 class BackendStub extends Backend {
     // 省略
 }
 ```
 * テストファイル内で共通で初期化したいのであればsetUpAllを利用する。
-```
+```dart
 setUpAll(() {
   backend = ackendStub(/* 省略 */);
 });
@@ -1067,7 +1066,7 @@ setUpAll(() {
 * 下記のコードの場合、元のクラスをカバレッジ対象外としている。
     * この箇所についても動作確認をしておきたい場合はintegration_testで対応すればよいだろう。
 * 例
-  ```
+  ```dart
   import 'dart:io';
   import 'package:firebase_storage/firebase_storage.dart';
 
@@ -1083,7 +1082,7 @@ setUpAll(() {
     // coverage:ignore-end
   }
   ```
-  ```
+  ```dart
   import 'dart:io';
   import 'package:sample/storage.dart';
 
@@ -1145,7 +1144,7 @@ setUpAll(() {
 # その他
 ## @visibleForTesting
 * @visibleForTestingを付与したメンバーは外部のライブラリからはテスト以外で使用できないようにする。
-```
+```dart
 // lib/some_library.dart
 //...
 
@@ -1154,7 +1153,7 @@ void innerLogic() {
     //...
 }
 ```
-```
+```dart
 // lib/another_library.dart
 //...
 // アナライザーによって警告が表示される
@@ -1162,7 +1161,7 @@ void innerLogic() {
 innerLogic();
 
 ```
-```
+```dart
 // test/some_library_test.dart
 //...
 innerLogic();//警告は発生しない
@@ -1171,7 +1170,7 @@ innerLogic();//警告は発生しない
 * ErrorWidget.builderは testWidgets()のコールバック内で変更するとアサートエラーとなってしまうため、testWidgets()の外に書く。
     * `The value of ErrorWidget.builder was changed by the test`
 * 一方、FlutterError.onErrorはtestWidgets()処理の中で上書きされているため、もしテストの為に上書きしたいのであればtestWidgetsのコールバック内で書く。
-```
+```dart
 void main() {
   // testWidgetsの外に書いても上書きされてしまうため適用されない。
   // FlutterError.onError = (errorDetails) {};
@@ -1203,7 +1202,7 @@ class _MyApp extends StatelessWidget {
 * https://api.flutter.dev/flutter/flutter_test/TestAsyncUtils-class.html
 * awaitをせずにWidgetTester.pump()等を実行するとアサートエラーとなるが、これはWidgetTester.pumpが内部でTestAsyncUtils.guardを呼び出しているためである。
 * 例えば、自前の処理でも下記のようにTestAsyncUtils.guardを呼び出すことでawait漏れを検出することができる。
-```
+```dart
 import 'package:flutter_test/flutter_test.dart';
 
 main() {
@@ -1278,7 +1277,7 @@ Future<String> f() async {
 * なお、createViewConfigurationFor()は下記のようにオーバーライドされており、LiveTestWidgetsFlutterBindingの場合は _kDefaultTestViewportSizeが、IntegrationTestWidgetsFlutterBindingの場合はFlutterView.physicalSizeが利用されている事がわかる。
     * このメソッドはRendererBinding.addRenderView()内で呼ばれる。
     * なお、surfaceSizeの値がTestWidgetsFlutterBinding.setSurfaceSize()によってセットされている場合はそのSizeが利用される。
-```
+```dart
 const Size _kDefaultTestViewportSize = Size(800.0, 600.0);
 //...
 class LiveTestWidgetsFlutterBinding extends TestWidgetsFlutterBinding {
@@ -1296,7 +1295,7 @@ class LiveTestWidgetsFlutterBinding extends TestWidgetsFlutterBinding {
     }
     //...
 ```
-```
+```dart
 class IntegrationTestWidgetsFlutterBinding extends LiveTestWidgetsFlutterBinding implements IntegrationTestResults {
     //...
     @override

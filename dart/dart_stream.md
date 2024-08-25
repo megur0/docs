@@ -25,29 +25,29 @@
 * Streamオブジェクトを返す。
 * async*をつける。
 * returnの代わりにyieldを使い値を何度も返す。
-```
+```dart
 Stream<int> countStream(int to) async* {
   int k = 0;
   while (k < n) yield k++;
 }
 ```
 * Stream.fromIterable()
-  ```
+  ```dart
   final stream = Stream.fromIterable([1, 2, 3]);
   final subscription = stream.listen((n) => print(n));
   ```
 * Stream.periodic()
-  ```
+  ```dart
   final stream1 = Stream<int>.periodic(const Duration(seconds: 1), (i) {
     return i;
   }).take(5);
   ```
 * Stream.value()
-  ```
+  ```dart
   Stream.value(1).listen(print);
   ```
 * Stream.error()
-  ```
+  ```dart
   expect(Stream.error(Exception()), emitsError(isException));
   ```
 ## (参考)Iterableの作成
@@ -55,7 +55,7 @@ Stream<int> countStream(int to) async* {
 * Iterableオブジェクトを返す。
 * sync*をつける。
 * returnの代わりにyieldを使い値を何度も返す。
-```
+```dart
 Iterable<int> naturalsTo(int n) sync* {
   int k = 0;
   while (k < n) yield k++;
@@ -67,7 +67,7 @@ Iterable<int> naturalsTo(int n) sync* {
   * ジェネレーターから非同期または同期のいずれかで値を出力するために使用
 * yield*
   * 呼び出しを別のジェネレーターに委任し、そのジェネレーターが値の生成を停止した後、独自の値の生成を再開
-```
+```dart
 Iterable<int> r(int n) sync* {
   if (n > 0) {
     yield n;
@@ -84,7 +84,7 @@ Iterable<int> r(int n) sync* {
 * StreamSubscriptionオブジェクトが返却される。
 * Streamのイベントは非同期に発生する。
 * 下記の結果を確認するとマイクロタスクよりは遅く、Futureよりも早いタイミングで受け取る。
-```
+```dart
 void main() {
   Future(() => print(5));
   countStream(1, 3).listen(print);
@@ -114,7 +114,7 @@ Stream<int> countStream(int from, int to) async* {
 * listenとは異なる点として、await for の場合は後続のステートメントには進まない。
   * awaitと同様に後続処理はawait forの完了後に即時実行される
 * await forを使う関数はasyncである必要がある。
-```
+```dart
 Future<void> main() async {
   await for (final value in Stream.fromIterable([1, 2, 3])) {
     print(value);
@@ -131,7 +131,7 @@ Future<void> main() async {
 * listenの際にonErrorでエラーを受け取ることができる
 ## Stream.error
 * エラー後もイベントは継続する
-```
+```dart
 void main() {
   countStream(6).listen(print, onError:print);
 }
@@ -153,7 +153,7 @@ Stream<int> countStream(int to) async* {
 ```
 ## Exception
 * throwするとイベントは停止する。
-```
+```dart
 void main() {
   countStream(6).listen(print, onError:print);
 }
@@ -171,7 +171,7 @@ Stream<int> countStream(int to) async* {
 // Exception: error
 ```
 * (参考)Stream.periodicのコールバックで例外をthrowしても、その後のyieldは続いた
-```
+```dart
 void main() {
   Stream<int>.periodic(const Duration(milliseconds: 1), (i) {
     if (i == 3) {
@@ -189,7 +189,7 @@ void main() {
 ```
 ## await for
 * try〜catchでハンドリング可能
-  ```
+  ```dart
   try {
     await for (final value in countStream(6)) {
       print(value);
@@ -202,7 +202,7 @@ void main() {
   // Exception: error
   ```
 * await forの内部でtry〜catchで囲んでもエラーを受け取ることができない
-  ```
+  ```dart
   await for (final value in countStream(6)) {
     try {
       print(value);
@@ -215,7 +215,7 @@ void main() {
   // Uncaught Error: Exception: error
   ```
 * handleErrorを使うことでもハンドリング可能。
-  ```
+  ```dart
   void main() async{
     await for (final value in countStream(6).handleError(print)) {
       print(value);
@@ -228,7 +228,7 @@ void main() {
 
 # Streamから他のStreamの値を使う
 * yield* や await forを使う。
-```
+```dart
 void main() {
   stream2().listen(print);
 }
@@ -255,7 +255,7 @@ Stream<int> stream2() async* {
 ```
 ## (参考) エラー後も引き続き値を受け取る
 * 下記の場合は、エラーハンドリング後は値を受け取ることができない。
-  ```
+  ```dart
   void main() {
     stream2().listen(print, onError:print);
   }
@@ -274,7 +274,7 @@ Stream<int> stream2() async* {
   // error
   ```
 * 下記のようにhandleErrorを利用して対応できるが、エラーハンドリングがstream2の関心事となってしまう
-  ```
+  ```dart
   void main() {
     stream2(print).listen(print);
   }
@@ -300,7 +300,7 @@ Stream<int> stream2() async* {
 
 # Single/Broadcast
 * シングルサブスクリプションストリーム
-  ```
+  ```dart
   main() {
     final sbsc = stream.listen(print);
     sbsc.pause();
@@ -317,7 +317,7 @@ Stream<int> stream2() async* {
   ```
   * なお、Stream.fromIterable()の場合は_MultiStreamクラスを内部で生成していて、_MultiStreamクラスはlistenの度に新しいStreamControllerを生成して.streamを返している。
     * したがって何度でもlistenが可能である。
-    ```
+    ```dart
     main() {
       final stream = Stream.fromIterable([1,2,3]);
       stream.listen(print).cancel();
@@ -325,7 +325,7 @@ Stream<int> stream2() async* {
     }
     ```
 * ブロードキャストストリーム
-  ```
+  ```dart
   main() async{
     stream.listen(print);
     stream.listen(print);
@@ -345,7 +345,7 @@ Stream<int> stream2() async* {
   // 4
   ```
 * ブロードキャストストリームは一度購読されるとキャンセルされて購読が0件となってもイベントが発生する
-  ```
+  ```dart
   main() {
   final sbsc = countStream(5).asBroadcastStream().listen((e)=>print("$e at listener"));
     sbsc.cancel();
@@ -382,7 +382,7 @@ Stream<int> stream2() async* {
 * async* 〜 yieldを使ったStreamの作成は、Streamオブジェクトの宣言時にイベント自体を定義する必要がある。
   * もしStreamControllerを使わずにこれらを切り離すには仲介用のキューを自前で実装する必要がある?（未検証）
 * StreamControllerを使うことで、手続的にイベント生成を行うことができる。
-```
+```dart
 import 'dart:async';
 
 main() async{

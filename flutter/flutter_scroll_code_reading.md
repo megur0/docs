@@ -76,7 +76,7 @@
     * スクロールのオフセット情報を参照する標準の方法は、ScrollControllerを利用することである。
     * ただ、ScrollContoller.positionの参照にあたっては注意しなければならない点として、ScrollPositionがアタッチされる前に参照するとエラーとなってしまう事がある。
         * アタッチ：ScrollController._postionsのリストに生成されたScrollPositionがaddされること。
-        ```
+        ```dart
         // packages/flutter/lib/src/widgets/scroll_controller.dart
         ScrollPosition get position {
             assert(_positions.isNotEmpty, 'ScrollController not attached to any scroll views.');
@@ -230,7 +230,7 @@
         1. このAPIは、RenderViewport.performLayout()から呼ばれている。（再レイアウトのたびに実行）
         2. レイアウトフェーズ（performLayoutの実行中）で呼ばないとエラーとなる関数を内部で呼んでいる。
             * ScrollPosition.applyContentDimensions ->  ScrollPositionWithSingleContext.applyNewDimensions -> context.setCanDrag -> replaceGestureRecognizers
-            ```
+            ```dart
             void replaceGestureRecognizers(Map<Type, GestureRecognizerFactory> gestures) {
                 assert(() {
                 if (!context.findRenderObject()!.owner!.debugDoingLayout) {
@@ -256,7 +256,7 @@
 ## (参考)最大スクロールオフセットの算出の実装
 * ScrollViewで利用しているSliverListのRenderObjectであるRenderSliverListは、キャッシュ領域にある子の寸法から１つあたりの平均値を算出し、スクロールの最大のオフセットを「現在のキャッシュ領域の末端 + 領域外の子数 * 平均値」にて算出する。
 * キャッシュ領域(cacheExtent)は、RenderViewport.performLayout()において下記のように算出されている。
-    ```
+    ```dart
     switch (cacheExtentStyle) {
       case CacheExtentStyle.pixel:// デフォルト値
         _calculatedCacheExtent = cacheExtent;
@@ -268,7 +268,7 @@
     ```
 * この値は加工をした上で、子であるRenderSliver.layout()を実行する際に制約としてSliverConstraintsオブジェクトにして渡される。
 * RenderSliverList.performLayout()の最後では SliverGeometry を決定している。
-    ```
+    ```dart
     geometry = SliverGeometry(
       scrollExtent: estimatedMaxScrollOffset,
       paintExtent: paintExtent,
@@ -280,7 +280,7 @@
     );
     ```
 * このSliverGeometryはRenderViewport側（正確にはRenderPaddingを間に経由する）で_maxScrollExtent（この値はビューポート自体の高さも含む）を算出するために使われている。
-    ```
+    ```dart
     final SliverGeometry childLayoutGeometry = child.geometry!;
     // ...
     updateOutOfBandData(growthDirection, childLayoutGeometry);
@@ -316,7 +316,7 @@
             * アイテム数が不明の場合: double.infinity
             * アイテム数が明らかな場合: 範囲の高さを項目数で割って項目の高さの平均値を算出し、trailingScrollOffset + 範囲外の項目数 * 平均高さ として算出。
         * コードは下記となる。
-            ```
+            ```dart
             // ...
             if (reachedEnd) { // 終端にリーチしている場合
                 estimatedMaxScrollOffset = endScrollOffset;
@@ -386,7 +386,7 @@
 
 * CupertinoApp, MaterialAppでは、実行環境がlinux, macOS, windowsの場合は明示的に宣言しなくてもスクロールバーが表示される。
     * 下記ではScrollbarウィジェットを指定していないが、上記のOS上で実行するとスクロールバーが表示される事が確認できる。(上記以外は表示されない。)
-        ```
+        ```dart
         main() => runApp(MaterialApp(
         home: ListView.builder(
             itemCount: 100, itemBuilder: (_, int i) => Text("$i")),
@@ -394,7 +394,7 @@
         ```
     * これはMaterialScrollBehavior, CupertinoScrollBehaviorのbuildScrollbar()によってScrollBarウィジェットが挿入されているためである。
     * もちろん、上記以外のOSでScrollbarのchildにListViewを置くことで、Scrollbarを表示することができる。
-        ```
+        ```dart
             main() => runApp(MaterialApp(
             home: Scrollbar(
                 child: ListView.builder(
@@ -405,7 +405,7 @@
  
 * maxScrollExtentがisInfiniteの場合は、スクロールバーは非表示となる。
     * ソースコード上では下記のように分岐処理されている。
-    ```
+    ```dart
     class ScrollbarPainter extends ChangeNotifier implements CustomPainter {
         //...
         @override
@@ -462,7 +462,7 @@
 * ListViewでスクロールするたびに ScrollPosition.maxScrollExtent（スクロールのオフセットの最大値）が変化する理由
     * 例えば下記のようなコードのprint出力でmaxScrollExtentを確認すると、スクロールするたびに値が変動することがわかる。
         * 動作するコード: https://gist.github.com/megur0/27a6d1cd69fa79c79738846f8fe96298 
-        ```
+        ```dart
         ScrollController? _scrollController;
         @override
         void initState() {
@@ -490,7 +490,7 @@
 
 * maxScrollExtentが変動することによるスクロールバーへの影響
     * 下記のコードでは、スクロールバーを動かすたびにスクロールバーが上下に揺れて不安定となることが確認できる。
-    ```
+    ```dart
     @override
     Widget build(BuildContext context) {
         return Scaffold(
