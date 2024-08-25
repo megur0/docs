@@ -51,10 +51,10 @@
 
 ## ドラッグ操作によるアニメーションとレンダリング
 * 流れとしては以下のようになる
-    * 1. ホールド・ドラッグスタート(ドラッグ操作のために画面へタッチ)
-    * 2. ドラッグアップデート(ドラッグ操作)
-    * 3. ドラッグ終了/キャンセル（ドラッグが終了）
-    * 4. スクロールアニメーション
+    1. ホールド・ドラッグスタート(ドラッグ操作のために画面へタッチ)
+    2. ドラッグアップデート(ドラッグ操作)
+    3. ドラッグ終了/キャンセル（ドラッグが終了）
+    4. スクロールアニメーション
 * ScrollState内の子ウィジェットであるRawGestureDetectorによってドラッグなどの操作を検出され、ScrollPosition(ScrollPositionWithSingleContext)からDragContollerオブジェクトが生成される。
 * ドラッグ中はDragContoller -> 委譲クラスのScrollActivityDelegate(具象はScrollPositionWithSingleContext).applyUserOffset()によってオフセットが更新されて再レイアウト・レンダリングされる。
 * ドラッグを終了した時点で下記が行われる。
@@ -188,14 +188,14 @@
         * ScrollableStateがScrollPostionの情報を保有しており、ViewportはそれをViewportOffsetクラスという抽象として生成時に受け取る。
         * RenderViewportは、RenderSliverを保持している。
     * レンダリングフェーズにおいて、RenderViewport.performLayout()は以下を実行する
-        1. ViewportOffset.applyViewportDimension()にてViewport自身のサイズを確立する。
+        1.ViewportOffset.applyViewportDimension()にてViewport自身のサイズを確立する。
             * https://api.flutter.dev/flutter/widgets/ScrollPosition/applyViewportDimension.html
-        2. レイアウト処理を行う(_attemptLayout())
+        2.レイアウト処理を行う(_attemptLayout())
             * この処理の中で子のレイアウト処理を行う（RenderViewportBase.layoutChildSequence())
             * 子のRenderSliver.layout()を実行する。
             * ListViewの場合はRenderSliverの具象はRenderSliverListであり、ここでRenderSliverList.performLayoutが実行される。
-        3. 上記のレイアウト処理によってオフセットの修正が発生した場合は補正を行う。
-        4. レイアウト処理で取得した寸法情報からmaxScrollExtent, minScrollExtentを算出して、ViewportOffset.applyContentDimensions()にてコンテンツの表示領域のサイズを確立する。
+        3.上記のレイアウト処理によってオフセットの修正が発生した場合は補正を行う。
+        4.レイアウト処理で取得した寸法情報からmaxScrollExtent, minScrollExtentを算出して、ViewportOffset.applyContentDimensions()にてコンテンツの表示領域のサイズを確立する。
             * https://api.flutter.dev/flutter/widgets/ScrollPosition/applyContentDimensions.html
             * この際、オフセットの補正が必要となる場合があり、その場合は1.に戻る。(補正が不要になるか回数制限を超過するまで繰り返し実行される)
 
@@ -227,8 +227,8 @@
 * (参考)ScrollPosition.applyContentDimensions()
     * https://api.flutter.dev/flutter/rendering/ViewportOffset/applyContentDimensions.html
     * スクロールの表示領域のextentを設定することができるものの、以下のような仕様を理解して使う必要がある。
-        1. このAPIは、RenderViewport.performLayout()から呼ばれている。（再レイアウトのたびに実行）
-        2. レイアウトフェーズ（performLayoutの実行中）で呼ばないとエラーとなる関数を内部で呼んでいる。
+        1.このAPIは、RenderViewport.performLayout()から呼ばれている。（再レイアウトのたびに実行）
+        2.レイアウトフェーズ（performLayoutの実行中）で呼ばないとエラーとなる関数を内部で呼んでいる。
             * ScrollPosition.applyContentDimensions ->  ScrollPositionWithSingleContext.applyNewDimensions -> context.setCanDrag -> replaceGestureRecognizers
             ```dart
             void replaceGestureRecognizers(Map<Type, GestureRecognizerFactory> gestures) {
@@ -244,7 +244,7 @@
                 // ...
             }
             ```
-        3. applyContentDimensionsの結果によってスクロール オフセットが変更が必要となる場合は再度レイアウトが必要になる。
+        3.applyContentDimensionsの結果によってスクロール オフセットが変更が必要となる場合は再度レイアウトが必要になる。
     * 上記の仕様のため、build関数内（ビルドフェーズ）で呼ぶことは通常無い。
     * ScrollPositionを拡張したクラスを作成する場合等は、利用する可能性がある。したがって通常のアプリケーション開発ではほとんど無いと考えられる。
 
