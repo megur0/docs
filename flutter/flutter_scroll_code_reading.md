@@ -51,10 +51,10 @@
 
 ## ドラッグ操作によるアニメーションとレンダリング
 * 流れとしては以下のようになる
-    1. ホールド・ドラッグスタート(ドラッグ操作のために画面へタッチ)
-    2. ドラッグアップデート(ドラッグ操作)
-    3. ドラッグ終了/キャンセル（ドラッグが終了）
-    4. スクロールアニメーション
+    * 1. ホールド・ドラッグスタート(ドラッグ操作のために画面へタッチ)
+    * 2. ドラッグアップデート(ドラッグ操作)
+    * 3. ドラッグ終了/キャンセル（ドラッグが終了）
+    * 4. スクロールアニメーション
 * ScrollState内の子ウィジェットであるRawGestureDetectorによってドラッグなどの操作を検出され、ScrollPosition(ScrollPositionWithSingleContext)からDragContollerオブジェクトが生成される。
 * ドラッグ中はDragContoller -> 委譲クラスのScrollActivityDelegate(具象はScrollPositionWithSingleContext).applyUserOffset()によってオフセットが更新されて再レイアウト・レンダリングされる。
 * ドラッグを終了した時点で下記が行われる。

@@ -101,13 +101,13 @@
         * fuchsia
             * https://github.com/flutter/engine/tree/main/shell/platform/fuchsia
 * runAppによって以下が順に実行される。（これらの処理は同期的に行われる）
-    1. ensureInitialized()
+    * 1. ensureInitialized()
         * 各***BindingのinitInstances()が実行される。
-    2. scheduleAttachRootWidget()
+    * 2. scheduleAttachRootWidget()
         * Timer.run(() {attachRootWidget()})
             * attachRootWidgetによって初回のツリー構築が行われる。
         * attachRootWidget()にはrunApp()で渡されたウィジェットをViewウィジェットでラップしたものを渡す
-    3. scheduleWarmUpFrame()
+    * 3. scheduleWarmUpFrame()
         * https://api.flutter.dev/flutter/scheduler/SchedulerBinding/scheduleWarmUpFrame.html
             * Flutter エンジンは、OSからリクエストを受信すると、Flutterframeworkにフレームを生成するよう促す。
             * ただし、アプリの起動後 (またはホットリロード後) 数ミリ秒はこれが発生しない場合がある。

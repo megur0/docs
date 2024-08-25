@@ -483,9 +483,9 @@ final pageViewScrollable = find.descendant(
 * 内部ではTestWidgetsFlutterBinding.pump()を実行する。
 * AutomatedTestWidgetsFlutterBinding.pump()の場合
     * 処理
-        1. Durationが指定されている場合はタイムスタンプを進める 
+        * 1. Durationが指定されている場合はタイムスタンプを進める 
             * 内部ではFakeAsync.elapse(duration)が実行されている。
-        2. フレームがスケジューリングされている場合(例えばsetState()の実行後など)は下記を実行され、ビルドからレンダリングまでの一連の処理が実行される。
+        * 2. フレームがスケジューリングされている場合(例えばsetState()の実行後など)は下記を実行され、ビルドからレンダリングまでの一連の処理が実行される。
             * マイクロタスクのフラッシュ
             * handleBeginFrame
             * マイクロタスクのフラッシュ
