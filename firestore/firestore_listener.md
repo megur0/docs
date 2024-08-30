@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧](./README.md) >
+[TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > リアルアップデート（リスナー）
 
 # Cloud Firestore でリアルタイム アップデート
 * https://firebase.google.com/docs/firestore/query-data/listen?hl=ja

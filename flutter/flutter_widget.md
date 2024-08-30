@@ -1,6 +1,4 @@
-- [TOP](./README.md)
-- [このメモ・独自表記について](../README.md)
-
+[TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 主なウィジェット
 
 # WIP: 随時更新
 * このメモは執筆中のため随時更新 

@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧](./README.md) >
+[TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > プロビジョニング
 
 # Apple IDの設定
 * Xcodeプロジェクトの設定からApple IDを設定できる

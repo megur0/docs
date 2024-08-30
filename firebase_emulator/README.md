@@ -1,7 +1,8 @@
-[TOP(About this memo))](../README.md) > 
+[TOP(About this memo))](../README.md) > Firebase Local Emulator Suite
 
 
-# Firebase emulator
+
+# Firebase Local Emulator Suite
 
 [導入](./firebase_emulator_introduction.md)
 

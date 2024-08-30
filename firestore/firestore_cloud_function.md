@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧](./README.md) >
+[TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > Cloud Functionsとの連携
 
 
 # Cloud Functions for FirebaseはNode.jsのみ対応

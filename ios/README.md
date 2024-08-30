@@ -1,7 +1,7 @@
-- [このメモ・独自表記について](../README.md)
+- [このメモ・独自表記について](../README.md) > iOSアプリ開発
 
 
-# iOS develop(執筆中)
+# iOSアプリ開発(WIP)
 
 [導入](./ios_introduction.md)
 
@@ -19,10 +19,11 @@
 
 [App Store Connect/リリース](./ios_appstore_connect.md)
 
-[レビュー](./ios_review.md)
+[App Store レビュー](./ios_review.md)
 
 [クラッシュレポート](./ios_clash_report.md)
 
-
 * その他
-    [iOSシミュレーターの操作](./ios_simulator.md)
+   * [iOSシミュレーターの操作](./ios_simulator.md)
+
+   * [その他(未整理)](./ios_etc.md)

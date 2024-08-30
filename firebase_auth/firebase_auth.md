@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > 
+[TOP(About this memo))](../README.md) > Firebase Authentication
 
 # IDトークン と 更新トークン
 * Firebase Authenticationの認証時にはIDトークンと更新トークン(refresh token)を受け取る。

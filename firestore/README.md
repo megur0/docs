@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > 
+[TOP(About this memo))](../README.md) > Firestore
 
 
 # Firestore
@@ -23,6 +23,6 @@
 
 [制限と課金](./firestore_limit_and_price.md)
 
-[Cloud funcitons](./firestore_cloud_function.md)
+[Cloud Funcitonsとの連携](./firestore_cloud_function.md)
 
 [その他のソリューション](./firestore_solutions.md)

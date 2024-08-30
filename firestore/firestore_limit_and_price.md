@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧](./README.md) >
+[TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > 制限と課金
 
 # 使用量と上限
 * 無料の割当て

@@ -1,5 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧](./README.md) >
-
+[TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 静的解析
 
 # 静的解析(static analysis)
 * https://dart.dev/tools/analysis

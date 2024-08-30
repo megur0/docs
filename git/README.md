@@ -1,6 +1,6 @@
-[TOP(About this memo))](../README.md) > 
+[TOP(About this memo))](../README.md) > Git
 
 
-# Git(執筆中)
+# Git(WIP)
 
 * [Github Pages](./git_github_pages.md)

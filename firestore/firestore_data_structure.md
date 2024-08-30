@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧](./README.md) >
+[TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > データ構造
 
 # 構成要素
 * https://firebase.google.com/docs/firestore/data-model?hl=ja

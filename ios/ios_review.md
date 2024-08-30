@@ -1,5 +1,4 @@
-- [TOP](./README.md)
-- [このメモ・独自表記について](../README.md)
+[TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > App Store レビュー
 
 
 # 公式

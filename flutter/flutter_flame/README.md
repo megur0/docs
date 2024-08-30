@@ -1,4 +1,4 @@
-[TOP(About this memo))](../../README.md) >  [Flutter](../README.md) > 
+[TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > Flameを使ったゲーム作成
 
 # WIP: 随時更新
 * このメモは執筆中のため随時更新 
@@ -12,7 +12,7 @@
 
 * [GameWidget/Game/Component](./flutter_flame_basic.md)
 
-* [カメラ](./flutter_flame_camera.md)
+* [カメラ・ワールド](./flutter_flame_camera.md)
 
 * [PositionComponent](./flutter_flame_position_component.md)
 

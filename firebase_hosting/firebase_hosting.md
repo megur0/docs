@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > 
+[TOP(About this memo))](../README.md) > Firebase Hosting
 
 # 既存のプロジェクトへhostingを追加する
 * `firebase logout && firebase login`
