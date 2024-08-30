@@ -82,4 +82,4 @@
 
     * [フォント](./flutter_font.md)
 
-    * [Flameを使ったゲーム作成](./flutter_game.md)
+    * [Flameを使ったゲーム作成](./flutter_flame/README.md)

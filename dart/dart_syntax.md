@@ -62,10 +62,18 @@ void main() {
 
 # オペレーター
 * https://dart.dev/language/operators
-## Null-aware operators
-* ?? 演算子
-  * ?? 演算子は左項がnullの場合に右項、左項がnullでない場合に左項の式を返す
-* ??= 演算子
+## Bitwise and shift operators
+* https://dart.dev/language/operators#bitwise-and-shift-operators
+* and
+  * &
+* or
+  * |
+* xor
+  * ^
+## assignment-operators
+* https://dart.dev/language/operators#assignment-operators
+* Null-aware operators
+  * ??= 演算子
   * b ??= value;
 ## spread operator（スプレッド演算子）
 ```dart

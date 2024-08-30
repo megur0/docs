@@ -132,6 +132,9 @@
 * 現在のXcodeと、実機のバージョンが合わない。
     * `This operation can fail if the version of the OS on the device is incompatible with the installed version of Xcode.`
     * MacのOS、Xcodeのバージョンを上げる必要がある。
+* 信頼されていないデベロッパ のダイアログが表示される
+    * 設定 > 一般 > VPNとデバイス管理 で 対象のデベロッパを信頼
+
 
 # 参考
 * 公式
