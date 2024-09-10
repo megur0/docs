@@ -12,6 +12,17 @@
 * ウィジェット内のbuildで、GameWidgetを生成するとそのウィジェットがリビルドされる度にGameWidgetもリビルドされる。
     * これを回避するためにはGameWidget.controlledを利用するか、ウィジェットの外で生成したGameWidgetを利用する
     * https://docs.flame-engine.org/latest/flame/game.html#flamegame
+* (IME)GameWidgetの先祖のGestureDetectorは反応しない。(なぜそのようになるのか実装を少し見たが分からなかった)
+  ```dart
+      GestureDetector(
+        onTap: () {
+          print("GestureDetector called");//こちらの処理は反応しない
+        },
+        child: GameWidget<_MyGame>(
+          //...
+        ),
+      );
+  ```
 
 # Game
 * https://docs.flame-engine.org/latest/flame/game.html
@@ -238,18 +249,18 @@
         * マウント中に呼ばれる
     * void onRemove
         * ツリー上にから削除（アンマウント）されたときに呼ばれる
-* ライフサイクルメソッド(update, updateTree, render)
-    * void update(double dt)
-        * ゲームのTickごとに呼ばれる
-        * 前回のupdateからの経過時間(microseconds)を受け取る
+* ライフサイクルメソッド(update, updateTree, render, renderTree)
     * void updateTree(double dt)
-        * 子に対して再帰的にupdateを実行する?
+        * ゲームのTickごとにFlameGame.updateTreeを開始地点として呼び出される
+        * updateを呼び、childrenのupdateTreeを呼ぶ
+    * void update(double dt)
+        * 前回のupdateからの経過時間(microseconds)を受け取る
+    * void renderTree
+        * ゲームのTickごとに、RenderGameWidget.markNeedsPaint()が呼ばれることでRenderGameWidget.paintが実行されて、そこからFlameGame.renderTreeを開始地点として呼び出される
+        * renderを呼び、childrenのrenderTreeを呼ぶ
     * void render(Canvas canvas)
-        * ゲームのTickごとに呼ばれる
         * すべてのコンポーネントのアップデートが完了後に呼ばれる
         * FlutterのCustomPainter.paintのようにCanvasを受取り、Canvasに対して描画処理を行う
-    * void renderTree
-        * 子に対して再帰的にrenderを実行する?
 * デバッグ
     * debugModeをtrueとすることでコンポーネントの座標やHitBoxの境界を表示することができる
     * https://docs.flame-engine.org/latest/flame/other/debug.html
@@ -258,8 +269,6 @@
     * Component.childrenはQueryableOrderedSetのサブクラスとなる。(QueryableOrderedSet<Component>)
         * QueryableOrderedSetは、bluefireteam/ordered_setという外部パッケージのクラスとなる。
         * bluefireteamはFlutterやFlame関連に貢献しているコミュニティのようだ
-        * https://github.com/orgs/bluefireteam/repositories?type=all
-            * 例えばflutter-gh-pagesはGithub Pages上でFlutterのwebアプリを構築するGithubワークフローのモジュール等を開発している。
     * QueryableOrderedSetはTypeをキーとしたMapを保持していて、registerメソッドによってComponentのリストを登録できる。
     * queryによってこれらを取得できる。
         * queryは結果が取得できなければ、regsiterで登録をする。
@@ -302,14 +311,15 @@
     }
     ```
 * RenderGameWidget
-    * 実際にゲームのレンダリングを担うウィジェット
+    * 実際にゲームのレンダリングを担うウィジェット。
+    * RenderObjectWidgetの派生クラスでレンダリング（RenderObjectの生成）を担う
     ```dart
     void gameLoopCallback(double dt) {// これはattach時のGameLoop生成時にcallbackとして渡される
         assert(attached);
         if (!attached) {
             return;
         }
-        game.update(dt);
+        game.update(dt);//FlameGame.updateはchildrenのupdateTreeを呼び出す
         markNeedsPaint();
     }
 
@@ -317,7 +327,7 @@
     void paint(PaintingContext context, Offset offset) {
         context.canvas.save();
         context.canvas.translate(offset.dx, offset.dy);
-        game.render(context.canvas);//FlameGame.renderはchildrenのrenderを呼び出す
+        game.render(context.canvas);//FlameGame.renderはchildrenのrenderTreeを呼び出す
         context.canvas.restore();
     }
     ```
@@ -349,6 +359,24 @@
 ```dart
   @override
   @mustCallSuper
+  void render(Canvas canvas) {
+    if (parent == null) {
+      renderTree(canvas);
+    }
+  }
+
+  @override
+  void renderTree(Canvas canvas) {
+    if (parent != null) {
+      render(canvas);
+    }
+    for (final component in children) {
+      component.renderTree(canvas);// Component.renderTreeはrenderを呼び、子のrenderTreeを呼ぶ
+    }
+  }
+
+  @override
+  @mustCallSuper
   void update(double dt) {
     if (parent == null) {
       updateTree(dt);
@@ -362,7 +390,7 @@
       update(dt);
     }
     for (final component in children) {
-      component.updateTree(dt);
+      component.updateTree(dt);// Component.updateTreeはupdateを呼び、子のupdateTreeを呼ぶ
     }
     processRebalanceEvents();
   }

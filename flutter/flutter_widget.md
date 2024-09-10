@@ -51,19 +51,23 @@
 
 # Key
 * https://api.flutter.dev/flutter/foundation/Key-class.html
-* Keyはフレームワーク内部ではElementのアップデートの判定に利用されている
-    * 同一オブジェクトの場合はElementはそのまま利用される。（アップデートもされない）
-    * 旧ウィジェットと新ウィジェットを比較して同じruntimeTypeでkeyが同じ場合にElementはアップデートされる。(異なる場合はElementは再生成 or GlobalKeyならグローバルマップから再利用を試みる)
-        * なお、keyはnullである場合も同一と判定される。
-* Key自体は抽象クラスであり、factoryコンストラクタのKey(String value)によってValueKey<String>が生成される。
-* また、ウィジェットによっては独自の処理によってKeyを利用して子の再利用や識別をしている。
+* Keyの用途
+    * Keyはフレームワーク内部ではElementのアップデートの判定に利用されている
+        * 同一オブジェクトの場合はElementはそのまま利用される。（アップデートもされない）
+        * 旧ウィジェットと新ウィジェットを比較して同じruntimeTypeでkeyが同じ場合にElementはアップデートされる。(異なる場合はElementは再生成 or GlobalKeyならグローバルマップから再利用を試みる)
+            * なお、keyはnullである場合も同一と判定される。
+    * Key自体は抽象クラスであり、Key()で生成した場合は、factoryコンストラクタのKey(String value)によってValueKey<String>が生成される。
+    * また、ウィジェットによっては独自の処理によってKeyを利用して子の再利用や識別をしている。
 * GlobalKey
+    * Keyの派生クラス
     * フレームワーク内部では、Elementの再利用のために利用されている
-    * グローバルなマップで管理されており、任意のウィジェットからGlobalKey.currentContextやcurrentStateによって直接BuildContextやStateを参照できる
+    * グローバルなマップで管理されており、任意のウィジェットからGlobalKey.currentContextやcurrentStateによって直接BuildContextやStateを参照できる。
+        * GlobalKeyを利用するとO(1)でそのElementやStateおよびそのメソッド等にアクセス可能である。
     * GlobalKey自体は抽象クラスであり、factoryコンストラクタでは LabeledGlobalKeyが生成される。
 * LocalKey(abstract class)
+    * Keyの派生クラス
     * https://api.flutter.dev/flutter/foundation/LocalKey-class.html
-    * GlobalKeyではないキー
+    * GlobalKeyではないキー。GlobalKeyのようにキーに紐づくElementやStateを取得するリッチな機能はない。
     * GlobalKeyはアプリ全体で一意だが、LocalKeyは同じ親に対しては一意である必要がある。
     * ObjectKey
         * ==において、ObjectKey.valueのidenticalで比較される
@@ -201,8 +205,6 @@
 ## その他(TODO)
 
 
-
-
 # material
 * Scaffold
     * Scaffoldはよく使われるhelpfulなwidget
@@ -241,8 +243,32 @@
         ),
     );
     ```
-
-
+* ビルド中に実行するとアサートエラーとなる
+    * showSnackBarは内部でsetStateを実行するため、ビルド中以外に実行する必要がある。
+    * ビルド中に実行すると下記のようなアサートエラーが発生する
+    ```
+    FlutterError (The showSnackBar() method cannot be called during build.
+    〜〜)
+    ```
+    * 例えばグローバルキーで任意の箇所・タイミングでスナックバーを表示する場合などは、注意したい
+    * ビルド中の実行を回避したい場合は下記のようにポストフレームのフェーズで実行すればよい。
+    ```dart
+    final GlobalKey<ScaffoldState> rootScaffoldKey = GlobalKey<ScaffoldState>();
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+        ScaffoldMessenger.of(rootScaffoldKey.currentContext!)
+        ..showSnackBar(
+            //...
+        );
+    }); 
+    //...
+    Widget build(BuildContext context) {
+        return Scaffold(
+            key: rootScaffoldKey,
+            //...
+        );
+    }
+    //...
+    ```
 
 # Builder
 * Builder
@@ -284,8 +310,6 @@
     * TextSpan
     * WidgetSpan
 
-
-
 # フォーム関連
 * https://docs.flutter.dev/cookbook/forms/validation
 * Form/FormState
@@ -302,7 +326,6 @@
 * TextFormField(FormField派生クラス)
     * Formと連携させる場合はこのクラスを利用する。
     * 内部でTextFieldを生成している
-
 
 # radio, checkbox, switch
 * Radio
@@ -322,7 +345,6 @@
 * (IME)子要素の幅が長くオーバーフローするケース
     * DropdownButtonの場合はisExpandedによって解決する。
     * DropdownMenuはwidthを指定することで解決するが、ダイアログなどの内側で利用している場合は幅の取得が難しいケースがある。(この場合は筆者はDropdownButtonを利用している)
-
 
 # カラー
 * ColoredBox

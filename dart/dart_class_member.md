@@ -28,7 +28,6 @@ class A {
   final int? _test3; // finalはnullableでも初期化が必要
   //set test3(int test){_test2 = 5;}// finalなプロパティを変えることはできない。
 
-
   int? x;// nullとして初期化される。
   late int z;// lateはコンストラクタによる初期化は不要。
   late final int l;// finalをつけた場合も同様。
@@ -49,12 +48,20 @@ void main() {
   print(a.z); // 初期化未済のため実行時エラー
 }
 ```
-* lateではないインスタンス変数の値はインスタンスの作成時に設定される
-* lateではないインスタンス変数を宣言時に初期化している場合、その初期化はコンストラクターやそのInitializerが実行される前に実行される。
-  > If you initialize a non-late instance variable where it’s declared, the value is set when the instance is created, which is before the constructor and its initializer list execute.
-* 全てのインスタンスには暗黙のgetterが生成される。
-* finalではない変数、initializerのないlate finalの変数は暗黙のsetterが作成される。
-* このgetter/setterの仕様はJavaやC#とは異なるので注意。
+* lateではないインスタンス変数の初期化
+  * 宣言時に初期化(initialize)している場合、その初期化はコンストラクターやInitializer Listが実行される前に実行される。
+    > If you initialize a non-late instance variable where it’s declared, the value is set when the instance is created, which is before the constructor and its initializer list execute.
+  * 他のインスタンス変数を参照できない。
+    ```dart
+    double speed = 5.0;
+    //double speed2 = speed * 2;// NG: The instance member 'speed' can't be accessed in an initializer.
+    late double speed2 = speed * 2;
+    double get speed3 => speed * 2;
+    ```
+* 暗黙のgetter/setter
+  * 全てのインスタンスには暗黙のgetterが生成される。
+  * finalではない変数、initializerのないlate finalの変数は暗黙のsetterが作成される。
+  * このgetter/setterの仕様はJavaやC#とは異なるので注意。
 
 # instance method
 * instance methodの名前にはoperatorsを使うことができる。

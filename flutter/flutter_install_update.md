@@ -99,6 +99,9 @@
     * アイコンからスローアニメーションの切り替え、ベースラインの表示などを行える。
 * Inspector
     * https://docs.flutter.dev/tools/devtools/inspector
+    * Select Widget Mode
+        * 矢印ボタンを押すと、対象のウィジェットを画面から直接選択してレイアウトを確認することができる。
+        * 一度選択したウィジェットを解除して別のウィジェットを選択したい場合、画面内の左下の検索アイコンを押す。
 * ブレークポイント、ステップ実行 等の操作
     * https://docs.flutter.dev/tools/vs-code#run-app-with-breakpoints
     * 「Run and Debug」パネルからDevtoolsのブレークポイントやログの設定ができる。

@@ -164,7 +164,7 @@ class Child extends SpriteComponent with TapCallbacks {
 # オーバーレイ
 * https://docs.flame-engine.org/latest/flame/overlays.html
 * GameWidget.overlayBuilderMapでFlutterのウィジェットをMap形式で渡すことができる。
-* game.overlays.removeやaddでMapのキーを渡すことでComponentのように追加、削除ができる。
+* Game.overlays.removeやaddでMapのキーを渡すことでComponentのように追加、削除ができる。
 
 
 # AlignComponent

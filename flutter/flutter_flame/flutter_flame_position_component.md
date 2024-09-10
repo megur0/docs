@@ -1,14 +1,19 @@
 [TOP(About this memo))](../../README.md) >  [Flutter](../README.md) > [一覧(Flame)](./README.md) > PositionComponent
 
-
 # PositionComponent
 * https://pub.dev/documentation/flame/latest/components/PositionComponent-class.html
     > A Component implementation that represents an object that can be freely moved around the screen, rotated, and scaled.
 * Transform2Dクラス
     * position, scale, angleは内部ではこのクラスを利用している。
     * https://pub.dev/documentation/flame/latest/game/Transform2D-class.html
+* ローカル座標(local coordinate)とグローバル座標(global coordinate)
+    * グローバル座標はビューポートの左上を原点(0,0)とした座標
+    * ローカル座標は相対的な座標であり、例えば親Aと子Bに対して、子Bにおけるローカル座標は、原点を親Aの左上とした座標となる。
 * position
-    * 親に対する相対位置。親がFlameGameの場合はビューポートに対する相対位置となる。
+    * 親に対する相対位置（ローカル座標）として指定する。
+        * 親がFlameGameの場合はビューポートに対する相対位置（グローバル座標）と同じとなる。
+    * コンポーネントは、ローカルの原点(親の左上)を基準としたpositionの場所にそのコンポーネントの「論理的な中心」が位置するように配置される。
+        * この論理的な中心は、デフォルトが自身の左上だが、anchorプロパティによって変更できる。
 * size
     * カメラのズームが1.0の際の大きさ。親とは関係のない値となる。
     * 指定がない場合はゼロのサイズとなる。
@@ -22,6 +27,8 @@
 * anchor
     * anchorで指定した位置が、コンポーネントの論理的な「中心」となる。
     * postionは、このanchorで指定されたコンポーネントの中心が、どの座標に位置するかを表す
+    * 注意点として、親や子のanchorの値に関わらず、子のpositionの基準となる原点(※)は親の左上となる。
+        * local origin。ローカル原点。子から見た0,0の位置。
     ```dart
     // ~/.pub-cache/hosted/pub.dev/flame-1.18.0/lib/src/anchor.dart
     class Anchor {
@@ -48,13 +55,22 @@
     );
 
     // Returns (0,0)
+    // 生成時にアンカーをAnchor.centerとしているため、図形の真ん中が親のローカル原点の位置(この場合は親はGameサイズと同じだとして(0,0))になる。
     final p1 = component.position;
 
     // Returns (10, 10)
-    // 生成時にアンカーをAnchor.centerとしているため、Anchor.centerが中心となり(0, 0)の位置になる。
-    // したがって右下の座標は(10, 10)となる
+    // 図形の真ん中が(0,0)のため、図形の右下の座標は(10, 10)となる
     final p2 = component.positionOfAnchor(Anchor.bottomRight);
     ```
+
+# ShapeComponents
+* PolygonComponent, RectangleComponent, CircleComponent
+```dart
+@override
+Future<void> onLoad() async {
+    add(RectangleComponent(size: Vector2(10, 10)));
+}
+```
 
 # ParallaxComponent
 * https://github.com/flame-engine/flame/tree/main/examples/lib/stories/parallax
@@ -90,6 +106,12 @@
     * Images.load
     * static Flame.images
     * static Game.images
+* イメージのパス
+    * デフォルトでプレフィクスが"assets/images/"となっている。
+    * 下記のように変更可能
+    ```dart
+    Flame.images.prefix = "assets/";
+    ```
 * ネットワーク画像
     * Flameでは特定のhttpパッケージに依存しないために、直接ネットワーク画像を取得するAPIは提供していない
     * Flameで扱うイメージはdart.ui.Imageのため、いずれのパッケージでもバイト列から変換すれば問題ない。
@@ -248,14 +270,11 @@ class Child extends SpriteComponent {
 
 ```
 
-
 # その他のPositionComponent派生クラス
 * SpriteAnimationGroupComponent
 * SpriteGroupComponent
 * SpawnComponent
     * 親の内部に他のコンポーネントを生成する非ビジュアル コンポーネント
-* ShapeComponents
-    * PolygonComponent, RectangleComponent, CircleComponent
 * IsometricTileMapComponent
 * NineTileBoxComponent
 * CustomPainterComponent
