@@ -188,6 +188,54 @@
             child: ...
     ```
 * Stack内部で指定の位置に配置したい場合はPositionedを利用する。
+    ```dart
+    @override
+  Widget build(BuildContext context) {
+    return SizedBox(
+        width: 800,
+        height: 400,
+        child: Stack(
+        children: [
+          FlutterLogo(size: 120),
+          Center(child: FlutterLogo(size: 10)),
+          Positioned(bottom: 0.0, left: 0.0, child: FlutterLogo(size: 30)),
+          Positioned(bottom: 100.0, right: 0.0, child: FlutterLogo(size: 60)),
+          Positioned(top: 100.0, left: 50.0, child: FlutterLogo(size: 90)),
+        ],
+      ),);
+  }
+    ```
+    * PositionedウィジェットはStackの子孫である必要がある。
+    * Positionedウィジェットからそれを囲むStackへのパスにはStatelessWidgetまたはStatefulWidgetのみが含まれている必要がある。
+## Transform
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+        body: Column(
+      mainAxisSize: MainAxisSize.max,
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const FlutterLogo(size: 100),
+        Transform(transform: Matrix4.identity()..rotateY(pi/8)..translate(250, 0, 0)..scale(1.2, 2.5, 1.0), child: const FlutterLogo(size: 100),),
+        Transform.translate(
+            offset: const Offset(100.0, 20.0),
+            child: Transform.scale(
+              scale: 1.3,
+              child: const FlutterLogo(size: 100),
+            )),
+        Transform.rotate(angle: pi, child: const FlutterLogo(size: 100))
+      ],
+    ));
+  }
+```
+* (TODO)Matrix4
+    * https://api.flutter.dev/flutter/vector_math/Matrix4-class.html
+    * 4x4の行列
+    * setEntry(int row, int col, double v)
+    * 参考
+        * https://zenn.dev/s134/articles/20231208matrix4transform
+        * https://shogoisaji.github.io/matrix4_transform_demo/
 ## 制約
 * ConstrainedBox
     * 子に追加の制約を課すウィジェット
@@ -202,8 +250,6 @@
 * OverflowBox
 * LimitedBox
 * FittedBox
-## その他(TODO)
-
 
 # material
 * Scaffold
@@ -397,7 +443,6 @@
     * 内部ではInkResponseを利用
     * 一般的にAppBar.actionsなどで利用されるが、他の多くの箇所にも利用できる。
 
-
 # 画像関連
 * Image
 * Image.asset
@@ -494,11 +539,8 @@
         }
         ```
 
-
-
 # ライセンス
 * LicensePage
-
 
 # その他
 * flutter/lib/src/material/constants.dart

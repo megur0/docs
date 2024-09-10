@@ -160,4 +160,13 @@ int compare2(int a, int b) {
       throw "unexpected"; // defaultを入れないとエラー
   }
 }
+
+// 以下より抜粋
+// https://api.flutter.dev/flutter/widgets/Overlay-class.html
+final (String label, Color? color) = switch (currentPageIndex) {
+  0 => ('Explore page', Colors.red),
+  1 => ('Commute page', Colors.green),
+  2 => ('Saved page', Colors.orange),
+  _ => ('No page selected.', null),
+};
 ```

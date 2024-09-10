@@ -133,7 +133,7 @@
     * 内部で１つのvalue(double)を持っており、時間の経過(Tickerのコールバックが渡されるDuration)とともに値を毎フレーム更新する。
     * valueの値は上限、下限(lowerBound, upperBound)を設定できる。
          * デフォルト値は0.0, 1.0
-         * valueの値は下限から条件の範囲にclampDouble関数によって丸められる
+         * valueの値は下限から上限の範囲にclampDouble関数によって丸められる
          * AnimationController.unboundedコンストラクタ ではdouble.infinity, double.negativeInfinityが設定される
     * valueの値はコンストラクタ生成時にを設定、setterで変更できる。
          * デフォルト値は下限値となる。
@@ -474,16 +474,6 @@ class Tween<T extends Object?> extends Animatable<T> {
 * https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html
 * 与えられたListenableの値が変わった際にリビルドされる。
 * AnimatiedBuilderとの違いはこちらはabstract classで、拡張して利用する。
-## コントローラやアニメーションオブジェクトを利用せずアニメーションを実現する
-* 下記のウィジェットは、直接アニメーションのオブジェクトを操作せずに各目的を実現する。
-* AnimatedContainer
-* AnimatedAlign
-* AnimatedCrossFade
-* AnimatedDefaultTextStyle
-* AnimatedOpacity
-* AnimatedPhysicalModel
-* AnimatedPositioned
-* AnimatedSize
 ## アニメーションオブジェクトを直接渡すウィジェット
 * トランジション系
     * Animation.valueを基に算出した値をTransform等のウィジェットに渡して画面に反映しても良いが、下記のウィジェットを利用すると直接Animationオブジェクトを渡して目的を達成できる。
@@ -498,6 +488,16 @@ class Tween<T extends Object?> extends Animatable<T> {
 * 他
     * AnimatedModalBarrier
     * AnimatedList
+## コントローラやアニメーションオブジェクトを利用せずアニメーションを実現する
+* 下記のウィジェットは、直接アニメーションのオブジェクトを操作せずに各目的を実現する。
+* AnimatedContainer
+* AnimatedAlign
+* AnimatedCrossFade
+* AnimatedDefaultTextStyle
+* AnimatedOpacity
+* AnimatedPhysicalModel
+* AnimatedPositioned
+* AnimatedSize
 
 
 
