@@ -80,7 +80,7 @@
         * ValueKey<T> は、==においてValueKey.valueの値で比較される
 
 
-# レイアウトの基本的なウィジェット
+# レイアウトに関するウィジェット
 * Align
 * Center
 * SizedBox
@@ -250,6 +250,11 @@
 * OverflowBox
 * LimitedBox
 * FittedBox
+## Overlay
+* https://api.flutter.dev/flutter/widgets/Overlay-class.html
+* 他のウィジェットの上に「浮かべる」
+* Overlayに加えるには、OverlayEntryを作成して加える。
+* 直接Overlayを作成することも可能だが、先祖のNavigatorが作成したOverlayをOverlay.ofで取得して使用する事が一般的。
 
 # material
 * Scaffold

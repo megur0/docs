@@ -81,26 +81,15 @@
 * 例えば下記のクラスはFlutter Flamework のウィジェットやdartのクラスと衝突する。
     * flame-1.19.0/lib/src/timer.dartのTimerクラス
     * forge2d/src/common/transform.dartのTransFormクラス
-* 下記のように名前付きインポートを併用すれば良い。
+* 下記のようにimport時に対象クラスを隠すと良い
 ```dart
-import 'dart:async';
-import 'dart:async' as dart;
-import 'package:flame_forge2d/flame_forge2d.dart' as forge2d;
-import 'package:flame_forge2d/flame_forge2d.dart';
-import 'package:flutter/material.dart' as material;
-import 'package:flutter/material.dart';
-// あるいは下記のように特定のクラスを隠す方法もある
-// import 'package:flame_forge2d/flame_forge2d.dart' hide Transform;
-
-//...
-dart.Timer bubbleTimer;
-
-//...
-@override
-Widget build(BuildContext context) {
-      //...
-      child: material.Transform.rotate(
-        //...
-      );
-}
+import 'package:flame/components.dart' hide Timer;
+import 'package:flame_forge2d/flame_forge2d.dart' hide Transform;
+// あるいは下記のように名前付きインポートを併用する方法もある
+// import 'dart:async';
+// import 'dart:async' as dart;
+// import 'package:flame_forge2d/flame_forge2d.dart' as forge2d;
+// import 'package:flame_forge2d/flame_forge2d.dart';
+// import 'package:flutter/material.dart' as material;
+// import 'package:flutter/material.dart';
 ```
