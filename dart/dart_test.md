@@ -20,12 +20,19 @@ test('', () {
 ```
 * equal
 ```dart
-test('', () async {
-    expect(1, equals(1));
-    expect(1, lessThanOrEqualTo(2));
-    expect([1, 2, 3], orderedEquals([1, 2, 3]));
-    expect([1, 2, 3], unorderedEquals([1, 3, 2]));
-  });
+test('', () {
+  expect(true, isTrue);
+  expect(false, isFalse);
+  expect([1], isNotEmpty);
+  expect([], isEmpty);
+  expect(1, isNonZero);
+  expect(0, isZero);
+  expect(null, isNull);
+  expect(1, equals(1));
+  expect(1, lessThanOrEqualTo(2));
+  expect([1, 2, 3], orderedEquals([1, 2, 3]));
+  expect([1, 2, 3], unorderedEquals([1, 3, 2]));
+});
 ```
 * エラー
 ```dart

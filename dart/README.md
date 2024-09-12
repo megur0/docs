@@ -15,7 +15,7 @@
 
 * [オブジェクト](./dart_object.md)
 
-* [型](./dart_types.md)
+* [型システム・組み込み型](./dart_types.md)
 
 * [Null](./dart_nullable.md)
 

@@ -12,17 +12,85 @@
 * Java や C# の型システムと同様にDartも健全な型システムである。
 
 
-# 型
+# 組み込み型(Built-in types)
+* https://dart.dev/language/built-in-types
 * num
 * int, double
   * numのサブタイプ
-* bool
 * String
-* Map
+* bool
+* runes
+* Symbol
+* Records
 * List
 * Set
-* dynamic
-* Object
+* Map
+* その他のDart 言語で特別な役割を持つ型
+  * Object
+  * Enum
+  * Future, Stream
+  * Iterable
+  * Never
+  * dynamic
+  * void
+## Dart のすべての変数はオブジェクト (クラスのインスタンス) を参照する
+> ... every variable in Dart refers to an object—an instance of a class ...
+* したがって、通常はコンストラクタを使用して初期化する。
+## リテラル
+* 組み込み型にはリテラルの提供が含まれる。
+* リテラルを利用することで、コンストラクタを利用せずにオブジェクトを生成することができる
+* 例えば、'this is a string'は Stringのリテラル、trueはブール値のリテラル、1はintのリテラル、1.1はdoubleのリテラル
+
+# (IMO)シャロコピー・ディープコピーについて
+* Dartの変数はオブジェクトを参照するため、基本的に他の変数から代入を行うと、その変数の参照を保持することになる。
+* したがって、いわゆるコレクションのディープコピーの目的を達成するためには、明示的にオブジェクトを生成する必要がある。
+* ただし、下記のようにhashCodeを見てみると、Stringはコピー前のhashCodeと変わっていないことが分かる。
+* Stringやintなど、リテラルからのみ新規オブジェクトが生成される型(新規オブジェクトを生成するコンストラクタが用意されていない型)は、ディープコピーは実質できないと考えられる。
+  * ただし、Stringやintなどはイミュータブルなため、問題になることは無いだろう。
+```dart
+class A {
+  String name;
+  
+  @override
+  String toString() {
+    return name;
+  }
+  
+  A(this.name);
+}
+
+void main() {
+  final a = [A("initial name")];
+  
+  final b = a;
+  final c = [...a];
+  final d = [...a.map((a)=>A(a.name)).toList()];
+  final e = [...a.map((a)=>A("dummy name")).toList()];
+  e[0].name = a[0].name;
+  final f = [...a.map((a)=>A(String.fromCharCodes(a.name.codeUnits))).toList()];
+  
+  a[0].name = "changed name";
+  
+  print("a: $a, a.hashCode:${a.hashCode}, a.name.hashCode: ${a[0].name.hashCode}");
+  print("b: $b, b.hashCode:${b.hashCode}, b.name.hashCode: ${b[0].name.hashCode}");
+  print("c: $c, c.hashCode:${c.hashCode}, c.name.hashCode: ${c[0].name.hashCode}");
+  print("d: $d, d.hashCode:${d.hashCode}, d.name.hashCode: ${d[0].name.hashCode}");
+  print("e: $e, e.hashCode:${e.hashCode}, e.name.hashCode: ${e[0].name.hashCode}");
+  print("f: $f, f.hashCode:${f.hashCode}, f.name.hashCode: ${f[0].name.hashCode}");
+}
+
+/*
+出力例: 
+a: [changed name], a.hashCode:189698827, a.name.hashCode: 321055206
+b: [changed name], b.hashCode:189698827, b.name.hashCode: 321055206 // リストも中身もシャローコピー(変更前)
+c: [changed name], c.hashCode:4799202, c.name.hashCode: 321055206  // リスト自体はディープコピー、中身はシャローコピー(変更前)
+d: [initial name], d.hashCode:115071515, d.name.hashCode: 1892746 // リスト自体はディープコピー、中身はシャローコピー(変更後)
+e: [initial name], d.hashCode:718419543, e.name.hashCode: 1892746 // リスト自体はディープコピー、中身はシャローコピー(変更後)
+f: [initial name], f.hashCode:896788831, f.name.hashCode: 1892746 //  リスト自体はディープコピー、中身はシャローコピー(変更後) ※ String.hasCodeはcode unitsを参照するため、String.fromCharCodesから作成しても別hash（別オブジェクト)とはならない。
+
+*/
+
+```
 
 # Object?とdynamic
 * https://dart.dev/effective-dart/design#avoid-using-dynamic-unless-you-want-to-disable-static-checking
@@ -212,3 +280,4 @@ void main() {
 * https://dart.dev/language/typedefs
 * パブリックAPIにおいてはプライベートのtypedefはできない
   * https://github.com/dart-lang/linter/issues/4658
+
