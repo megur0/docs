@@ -621,3 +621,78 @@ class GrandChild extends PositionComponent {
   }
 }
 ```
+
+
+# 非同期処理をまたがるgameの参照の注意
+* FlutterのBuildContextの似ているが、非同期処理の完了後にgameを参照できるとは限らない。
+* これは、(Flutterのdisposeのように)コンポーネントがremoveされることでツリー上に存在しなくなり、gameを参照できなくなるためである。
+```dart
+void main() {
+  runApp(
+    SafeArea(child: GameWidget(game: Example())),
+  );
+}
+
+class Example extends FlameGame {
+  @override
+  Future<void> onLoad() async {
+    late Component component;
+    add(
+      component = MyComponent(),
+    );
+    remove(component);
+  }
+
+  // 上記の例では、一つの関数内で同じコンポーネントをadd/removeしているが、
+  // 例えば下記のように別のコンポーネントのremoveとaddを行っているケースも注意が必要である。
+  // この関数が、次回のゲームループまでに2回以上呼ばれると、同一の処理内(イベントループ内)で同一コンポーネントが
+  // add/removeされるため、同じ問題が発生する。
+  // void resetChildren() {
+  //   removeAll(children);
+  //   add(
+  //     MyComponent(),
+  //   );
+  // }
+}
+
+class MyComponent extends Component with HasGameRef {
+  MyComponent();
+
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();// awaitが完了する頃には、removeの処理まで完了している。
+    print(game);// assert error: Could not find Game instance ...
+  }
+}
+```
+* 非同期処理をまたがってgameを参照する必要がある場合
+  * 例えば、下記のようにisMountedをチェックするとよいだろう。
+  ```dart
+  await /* ... */
+  if (!isMounted) return;
+  print(game);
+  ```
+## flame_forge2dのBodyComponent
+* flame_forge2dのBodyComponentの実装では下記のように、awaitの後にgameを参照している
+  * したがって１回のゲームループ内でBodyComponentをadd/removeしないように注意する必要がある。
+  ```dart
+  // flame_forge2d-0.18.2/lib/body_component.dart
+  Body createBody() {
+    assert(
+      bodyDef != null,
+      'Ensure this.bodyDef is not null or override createBody',
+    );
+    final body = world.createBody(bodyDef!);
+    fixtureDefs?.forEach(body.createFixture);
+    return body;
+  }
+
+  @mustCallSuper
+  @override
+  Future<void> onLoad() async {
+    await super.onLoad();
+    body = createBody();
+  }
+
+  Forge2DWorld get world => game.world;
+  ```

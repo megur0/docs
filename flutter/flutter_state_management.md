@@ -18,9 +18,9 @@
   * [アーキテクチャ(コードリーディング)](./flutter_arch_code_reading.md)
 
 
-# Ephemeral state（ローカルな状態) vs app state（共有状態）
+# Ephemeral state（ローカルな状態） vs app state（共有状態）
 * https://docs.flutter.dev/data-and-backend/state-mgmt/ephemeral-vs-app
-* Ephemeral state（ローカルな状態)
+* Ephemeral state（ローカルな状態）
   * 現在のページで扱っている情報や、アニメーションの進行状況 などのローカル、局所的に利用する状態
   * これらはStatefulWidgetを利用する事で達成できる。
     > In other words, there is no need to use state management techniques (ScopedModel, Redux, etc.) on this kind of state. All you need is a StatefulWidget.

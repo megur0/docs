@@ -130,6 +130,9 @@
   * また、world, cameraプロパティがあり、 game.world, cameraを参照する
 * 座標
   * BodyComponentはアンカー指定がなく、常に自身の真ん中が、論理的な中心となる。
+* postion
+  * body.positionを指す
+  * bodyの生成時にBodyDefの引数として渡すことで初期値を設定する。body.positionのデフォルト値はVector2.zero()
 * 子コンポーネント
   * 他のコンポーネントと同様に子コンポーネント(SpriteComponentなど)を持たせることができる。
 * 以下のどちらかの実装を行う必要がある。
@@ -222,6 +225,8 @@
 # forge2d.Body
 * https://pub.dev/documentation/forge2d/latest/forge2d/Body-class.html
   > A rigid body. These are created via World.createBody.
+* postion
+  * デフォルト値はVector2.zero()となる
 * setActive
   * フラグ(Body.flags)のアクティブ状態を変更する
   * 非アクティブの場合、シミュレーションが止まりその場で停止する。(他のBodyとの衝突が発生せず、速度による移動も発生しない)

@@ -55,7 +55,7 @@
     );
 
     // Returns (0,0)
-    // 生成時にアンカーをAnchor.centerとしているため、図形の真ん中が親のローカル原点の位置(この場合は親はGameサイズと同じだとして(0,0))になる。
+    // 生成時にアンカーをAnchor.centerとしているため、図形の真ん中が親のローカル原点の位置(この場合は親はGameサイズと同じ場合として(0,0))になる。
     final p1 = component.position;
 
     // Returns (10, 10)
@@ -103,9 +103,33 @@ Future<void> onLoad() async {
 # イメージ、Sprite、Animation
 * https://docs.flame-engine.org/latest/flame/rendering/images.html
 * Loading images
-    * Images.load
+    * Imagesクラス
+        * 内部でdart.ui.Imageのキャッシュを保持する。
+            ```dart
+            // flame-1.19.0/lib/src/cache/images.dart
+            final Map<String, _ImageAsset> _assets = {};
+            ```
+        * load
+            * 下記のようにキャッシュに存在すればキャッシュから返し、なければロードする。
+            ```dart
+            Future<Image> load(String fileName, {String? key}) {
+                return (_assets[key ?? fileName] ??=
+                        _ImageAsset.future(_fetchToMemory(fileName)))
+                    .retrieveAsync();
+            }
+            //...
+            Future<Image> _fetchToMemory(String name) async {
+                final data = await bundle.load('$_prefix$name');
+                final bytes = Uint8List.view(data.buffer);
+                return decodeImageFromList(bytes);
+            }
+            ```
+        * clearCache
+        * fromCache
     * static Flame.images
+        * ゲーム全体で共有するImagesオブジェクト
     * static Game.images
+        * Flame.imagesにアクセスする。
 * イメージのパス
     * デフォルトでプレフィクスが"assets/images/"となっている。
     * 下記のように変更可能
@@ -113,21 +137,28 @@ Future<void> onLoad() async {
     Flame.images.prefix = "assets/";
     ```
 * ネットワーク画像
+    * https://docs.flame-engine.org/latest/flame/rendering/images.html#loading-images-over-the-network
     * Flameでは特定のhttpパッケージに依存しないために、直接ネットワーク画像を取得するAPIは提供していない
     * Flameで扱うイメージはdart.ui.Imageのため、いずれのパッケージでもバイト列から変換すれば問題ない。
-* Sprite
-* SpriteBatch
-* ImageComposition
-* Animation
-* SpriteSheet    
+    * キャッシュを利用したい場合はFlame.images.fetchOrGenerateを利用するとよいだろう。
+        ```dart
+        import 'package:http/http.dart';
+        //...
+        image = await Flame.images
+            .fetchOrGenerate("キャッシュ用の名前", () async {
+            final response = await get(Uri.parse("https://docs.flutter.dev/assets/images/dash/Dash.png"));
+            return decodeImageFromList(response.bodyBytes);
+        });
+        ```
 ## SpriteComponent
 * https://pub.dev/documentation/flame/latest/components/SpriteComponent-class.html
 * https://docs.flame-engine.org/latest/flame/components.html#spritecomponent
 * Sprite
     * Canvas上へレンダリングできるImageの領域
-    * Game.loadSprite
+    * static Game.loadSprite
         * 内部ではSprite.loadを呼んでいる
-    * Sprite.load
+    * static Sprite.load
+        * Flame.images.load から awaitして Image を取得して、Spriteにセットして返す。
 ```dart
 @override
 Future<void> onLoad() async {
@@ -164,7 +195,11 @@ Future<void> onLoad() async {
         * spriteAnimation.frames[currentIndex].sprite で現在のSpriteを取り出して、Sprite.renderを実行
     * なお、SpriteAnimation.createTicker()によってSpriteAnimationTickerを取得することもできる
         * Tickerの終了を待ったり、開始時や終了時の処理を記述できる。
-
+## TODO 
+* SpriteBatch
+* SpriteSheet  
+* ImageComposition
+* Animation  
 
 # TextComponent
 * TextComponentは生成時にsizeが自動で計算されて設定される。
