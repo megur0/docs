@@ -32,9 +32,6 @@
         * `useMaterial3: true` 
     * アプリケーションコード
         * `import 'package:flutter/material.dart';`
-    
-    
-    
     * colorSchemeSeedを指定することで、colorSchemeが自動的に設定される。
         * 設定されたcolorSchemeはマテリアルデザインのダイナミックカラーに基づいた色が設定される。
 
@@ -203,6 +200,18 @@ class ListTile extends StatelessWidget {
 }
 ```
 
+# テーマの上書き
+```dart
+// 下記から抜粋
+// https://stackoverflow.com/a/63777364/22090329
+Theme(
+    data: Theme.of(context).copyWith(
+      splashColor: Colors.transparent,
+      highlightColor: Colors.transparent,
+    ),
+    child: bottomNavigationBar(/* ... */)
+)
+```
 
 # その他
 ## (参考)Scaffoldウィジェットを親とするかどうかでテキストの表示が異なるのはなぜか？
