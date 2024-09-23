@@ -170,8 +170,15 @@ main() => runApp(MaterialApp(
         ],
       ),
     )));
-
 ```
+
+# TextTheme
+* https://api.flutter.dev/flutter/material/TextTheme-class.html
+* 各プロパティがnullableである事由
+  * Theme.of(context).textThemeの各プロパティはnullableとなっている。
+  * これは経緯上、nullableにする必要があったようだが、現在はnullableである必要はないようだ
+  * issueとして挙げられているが、特にアップデートされていない。
+    * https://github.com/flutter/flutter/issues/86807
 
 
 # Material系のウィジェットは先祖にMaterialウィジェットを必要とする
