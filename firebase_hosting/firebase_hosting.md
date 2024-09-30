@@ -18,6 +18,7 @@
 * アップロードしたファイルのエクスプローラーのような機能は公式には提供されていない。
 
 # Firebase hostingへのドメイン設定
+* https://firebase.google.com/docs/hosting/custom-domain?hl=ja
 * 参考
     * https://chaika.hatenablog.com/entry/2022/06/09/083000
 * IME

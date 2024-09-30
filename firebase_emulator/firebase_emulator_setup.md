@@ -23,7 +23,11 @@
 * 手動でアップデートする例
     * ~/.cache/firebase/emulators　を削除
     * 適当なプロジェクトフォルダを作ってfirebase initを実行。
-    * 質問で emulatorを選択しておき、「Would you like to download the emulators now? 」の質問でYesとする。
+    * 質問で emulatorを選択しておき、利用するEmulatorを選択後、「Would you like to download the emulators now? 」の質問でYesとする。
+* Release Nots
+    * CLIのリリースノートの中に記載される。
+    * 例えば、firebase cli v13.16.0で、emulator v1.19.8がリリースされている。
+    * https://firebase.google.com/support/release-notes/cli
 
 # コマンド
 * `emulators:start`
@@ -73,3 +77,14 @@
         * https://zenn.dev/tkow/scraps/8160da23277fb8
 
 
+# REST API
+* https://firebase.google.com/docs/reference/rest/database?hl=ja
+* https://firebase.google.com/docs/reference/rest/auth?hl=ja
+* https://firebase.google.com/docs/firestore/reference/rest?hl=ja
+## 例
+```
+curl "http://localhost:8081/v1/projects/(プロジェクトID)/databases/(default)/documents/users
+curl "http://localhost:8081/v1/projects/(プロジェクトID)/databases/(default)/documents/users/(UID)"
+curl http://localhost:8081/emulator/v1/projects/(プロジェクトID):ruleCoverage.html
+curl -H "Content-Type: application/json" -d '{"email":"test@example.com", "password":"testtest"}' "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=aa" 
+```
