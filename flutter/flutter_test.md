@@ -578,6 +578,11 @@ final pageViewScrollable = find.descendant(
   * durationを0とするとアサートエラーとなる。
 * タイムアウトがデフォルトで10分に設定されている。
     * したがって開始時点のタイムスタンプから10分進んだ時点でエラーとなる。
+* フレームのスケジューリングがエンドレスに行われる処理が同士している場合はタイムアウトしてしまうため注意。
+  * 具体例としては以下
+  * エンドレスのアニメーション
+  * ゲームエンジンのFlameのTicker
+  * AdMobの広告
 ## WidgetTester.runAsync()
 * https://api.flutter.dev/flutter/flutter_test/WidgetTester/runAsync.html
 * 偽装されたTimerのみでは進行できない非同期メソッドを実行するために利用する。

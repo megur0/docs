@@ -5,6 +5,22 @@
 * https://docs.flutter.dev/ui/assets/assets-and-images
 
 
+# dart:ui.Image
+* FlutterのImageとdart:ui.Imageは名前が衝突するため、通常は名前付きimportをする。
+```dart
+import 'dart:ui' as ui;
+import 'package:flutter/services.dart';
+
+Future<ui.Image> loadImage(String name) async {
+    final data = await rootBundle.load(name);
+    return decodeImageFromList(data.buffer.asUint8List());
+    // or
+    // return decodeImageFromList(Uint8List.view(data.buffer));
+}
+```
+
+# FlutterのImage, AssetImage
+* https://docs.flutter.dev/ui/assets/assets-and-images#loading-images
 
 # 解像度を考慮した画像アセット
 * https://docs.flutter.dev/ui/assets/assets-and-images#resolution-aware

@@ -50,6 +50,29 @@ list.map((item) {
   return item.toUpperCase();
 }).forEach((item) => print('$item: ${item.length}'));
 ```
+* 無名関数内の処理は宣言時点では実行されない。
+```dart
+void main() async{
+  final a = () {
+    f1("second:");
+  };
+  f2(a);
+  f1("first:");
+}
+
+int i = 0;
+
+void f1(String pre) {
+  print(pre+"${i++}");
+}
+
+void f2(Function() f) async {
+  await(Future((){}));
+  f();
+}
+// first:0
+// second:1
+```
 
 # アロー関数
 * ショートハンドとしてアローのシンタックスが書ける。

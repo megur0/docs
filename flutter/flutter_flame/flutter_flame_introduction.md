@@ -7,6 +7,13 @@
 * https://docs.flutter.dev/resources/games-toolkit
 * https://flutter.dev/games
 
+# Flameとは?
+* https://docs.flame-engine.org/latest/
+> Flame is a modular Flutter game engine that provides a complete set of out-of-the-way solutions for games.  
+> It takes advantage of the powerful infrastructure provided by Flutter but simplifies the code you need to build your projects.
+* Flame Component System (FCS)
+    * Flameはコンポーネントという単位のオブジェクトによってゲームを構成する。
+
 # API
 * https://pub.dev/documentation/flame/latest/
 
