@@ -434,9 +434,9 @@ void main() {
         builder: (_, __) {
             debugPrint(path);
             return Scaffold(
-            appBar: AppBar(
-                title: Text(path),
-            ),
+                appBar: AppBar(
+                    title: Text(path),
+                ),
             );
         });
 
@@ -446,15 +446,15 @@ void main() {
             navigatorKey: rootNavigatorKey,
             debugLogDiagnostics: true,
             routes: [
-            getGoRouter("/"),
-            getGoRouter("/a", [getGoRouter("b")]),
-            getGoRouter("/c", [
-                getGoRouter("d", [getGoRouter("e")])
-            ]),
+                getGoRouter("/"),
+                getGoRouter("/a", [getGoRouter("b")]),
+                getGoRouter("/c", [
+                    getGoRouter("d", [getGoRouter("e")])
+                ]),
             ],
             redirect: (BuildContext context, GoRouterState state) {
-            debugPrint("redirect");
-            return null;
+                debugPrint("redirect");
+                return null;
             },
         ),
         ));

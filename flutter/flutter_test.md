@@ -585,12 +585,15 @@ final pageViewScrollable = find.descendant(
   * AdMobの広告
 ## WidgetTester.runAsync()
 * https://api.flutter.dev/flutter/flutter_test/WidgetTester/runAsync.html
-* 偽装されたTimerのみでは進行できない非同期メソッドを実行するために利用する。
-* 例えば画像のキャッシュを行うprecacheImage()などはtestWidgets()内で直接実行してawaitしてもCompletedとはならず、処理が止まってしまう。
-    * 参考
-      * precacheImage()内部でImageProviderからImageStreamを生成しているが、偽装されたTimer環境下ではこのImageStreamからの受信が進まないため、と考えられる。
-      * なお、pumpWidgets()で渡される画像ウィジェットはflutter test内でも処理が止まらずに非同期に読み込みが進行する。
-      * 前者は処理が進まず、後者は処理が進む理由についてはコードリーディングできていない。(TODO)
+* 偽装されたTimerのみでは進行できない非同期処理は、Timerを進めてもCompletedとはならない。
+* これらの非同期処理を実行するために利用する。
+* 例
+  * 画像のキャッシュを行うprecacheImage()
+    * precacheImage()内部でImageProviderからImageStreamを生成しているが、偽装されたTimer環境下ではこのImageStreamからの受信が進まないため、と考えられる。
+    * なお、pumpWidgets()で渡される画像ウィジェットはflutter test内でも処理が止まらずに非同期に読み込みが進行する。
+    * 前者は処理が進まず、後者は処理が進む理由についてはコードリーディングできていない。(TODO)
+  * File関連の処理
+    * Fileオブジェクト自体は即時取得できるが、ファイル内容やサイズ等を参照する処理は偽装Timerでは進められない。
 ## 拡張: 特定の要素が確認できるまでフレームを進める
 * 例えば、結合テストでは外部のリソース等の応答時間が一定ではないため、特定の要素を確認するまでフレームを進める、といった処理を行いたいケースが多い。
 * 以下の拡張は指定のFinderを確認できるまでpump()をし続ける。
@@ -708,7 +711,7 @@ BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
         const String helloSnackBar = 'Hello SnackBar';
         GlobalKey key = GlobalKey();
         await tester.pumpWidget(MaterialApp(
-        home: Scaffold(key: key),
+          home: Scaffold(key: key),
         ));
 
         expect(find.text(helloSnackBar), findsNothing);
@@ -728,6 +731,13 @@ BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
         expect(find.text(helloSnackBar), findsNothing);
     });
     ```
+    * showSnackBarは、ナビゲーションスタック上のすべてのルートのScaffoldへ適用される。
+      * 注意点として、showSnackBarは(実装を見てみると)「ルートであるScaffoldのスナックバーについて、すべてアップデート」となる。
+      * これはScaffoldをネストしている場合は、そのルートのみに適用してくれる。
+      * 一方で、ナビゲーションスタックに複数の画面が存在する場合は、そのすべての画面の、ルートととなるScaffoldへ適用される。
+      * これは視認上は問題はないが、テストの際には注意が必要である。
+      * たとえば、`expect(find.text("スナックバー表示テキスト"), findsOneWidget);` とした際にScaffoldを含む画面がスタックに複数存在する場合は、`findsOneWidget`ではなく画面数分設定する必要がある。
+
 ## WidgetTester.takeException()
 ```dart
 testWidgets("", (tester) async {
