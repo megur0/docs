@@ -826,6 +826,7 @@ Future<void> pageBack(WidgetTester tester) async {
 
 # TestWidgetsFlutterBinding.delayed()
 * https://api.flutter.dev/flutter/flutter_test/TestWidgetsFlutterBinding/delayed.html
+* WidgetTester.binding.delayed()から呼び出すことができる。
 * AutomatedTestWidgetsFlutterBindingの場合はフェイクのクロックを進める。
 * LiveTestWidgetsFlutterBindingの場合はFuture.delayed()と同じ。
 * Future.delayed()がペンディングのまま testWidgetsが終了すると assertエラーが発生する。

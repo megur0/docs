@@ -668,9 +668,26 @@ void main() {
     * https://github.com/flutter/flutter/issues/100624
 
 
-# (参考)その他Issue
-* 同じフレームで更新メソッドを使用すると、pop メソッドがルートをポップしない
-    * https://github.com/flutter/flutter/issues/142394
+# (参考)Issue
+## refreshとpopが同じフレームで実行されるとpopが実行されない
+* https://github.com/flutter/flutter/issues/142394
+* 同じフレームでrefreshメソッドを使用(あるいはrefreshListenableが発火)すると、pop メソッドがルートをポップしない
+```
+GoRouter.of(context).pop();// このpopが実行されない。
+GoRouter.of(context).refresh();
+```
+* 下記のように別フレームで実行するとpopが動作する
+```
+GoRouter.of(context).pop();
+await tester.pumpAndSettle(); //別のフレームで実行するとpopが動作する
+GoRouter.of(context).refresh();
+```
+* 検証してみると、0.6secを超えると1フレームより長くなった。（環境によって違いがあるかもしれない。）
+```
+GoRouter.of(context).pop();
+await Future.delayed(const Duration(milliseconds: 601));
+GoRouter.of(context).refresh();
+```
 
 
 # (参考) GoRouterのクラスの構成
