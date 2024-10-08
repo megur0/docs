@@ -733,7 +733,7 @@ BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
     ```
     * showSnackBarは、ナビゲーションスタック上のすべてのルートのScaffoldへ適用される。
       * 注意点として、showSnackBarは(実装を見てみると)「ルートであるScaffoldのスナックバーについて、すべてアップデート」となる。
-      * これはScaffoldをネストしている場合は、そのルートのみに適用してくれる。
+      * これはScaffoldをネストしている場合は、そのルートのみに適用される。
       * 一方で、ナビゲーションスタックに複数の画面が存在する場合は、そのすべての画面の、ルートととなるScaffoldへ適用される。
       * これは視認上は問題はないが、テストの際には注意が必要である。
       * たとえば、`expect(find.text("スナックバー表示テキスト"), findsOneWidget);` とした際にScaffoldを含む画面がスタックに複数存在する場合は、`findsOneWidget`ではなく画面数分設定する必要がある。
