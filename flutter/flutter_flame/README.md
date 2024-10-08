@@ -1,4 +1,4 @@
-[TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > Flameを使ったゲーム作成
+[TOP(About this memo))](../../README.md) > [一覧(Flutter)](../README.md) > Flameを使ったゲーム作成
 
 # WIP: 随時更新
 * このメモは執筆中のため随時更新 

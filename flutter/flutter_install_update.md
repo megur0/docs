@@ -315,6 +315,13 @@
 * analysis_options.yamlに設定が記述される。
 * flutter createで作成したプロジェクトはリンターとして、flutter_lintsパッケージがデフォルトで設定されている。
     
+
+# 依存関係のツリーを確認する
+* `flutter pub deps`
+* 参考
+    * deprecatedとなったパッケージのバージョンに依存するパッケージを探す例
+    * https://github.com/jonataslaw/get_cli/issues/263#issuecomment-2318341054
+
 # Flutter本体のアップグレード
 * バージョンを確認
     * `flutter --version`
@@ -353,6 +360,9 @@
         * 以下でどの箇所が変更されてしまったか確認できる。
             * `cd /Users/〜〜〜/flutter`
             * `git diff --stat` 
+* ゴールデンテストが失敗する
+    * Flutterのバージョンアップはウィジェットのデフォルトの表示に影響を与える変更も含まれる。
+    * したがってアップデートに伴い、ゴールデンテストのファイルは上書き(--update-goldens)して各ファイルの変更内容を確認することが望ましいだろう。
 
 # パッケージのアップデート
 * https://docs.flutter.dev/release/upgrade#upgrading-packages
