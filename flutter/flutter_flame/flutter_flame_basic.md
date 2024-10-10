@@ -292,18 +292,24 @@
 
 
 # (参考)GameWidgetState内部の実装
-* 下記のようにFutureBuilderでgame.load()をawaitしている。
+* build内でRenderGameWidgetを生成している
+* game.load()をawaitしている。
     ```dart
-    @override
-    Widget build(BuildContext context) {
-        Future<void> get loaderFuture => _loaderFuture ??= (() async {
+    // flame-1.19.0/lib/src/game/game_widget/game_widget.dart
+    Future<void> get loaderFuture => _loaderFuture ??= (() async {
             //...
             await game.load();
             game.mount();
         //...
         })();
+    //...
+    @override
+    Widget build(BuildContext context) {
+        Widget? internalGameWidget = RenderGameWidget(
+          //...
+        );
         // ...
-        retrun FutureBuilder(
+        return FutureBuilder(
                         future: loaderFuture,
                         //...
         );

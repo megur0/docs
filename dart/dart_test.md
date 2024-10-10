@@ -8,7 +8,18 @@
 # Flutterのテスト
 * [../flutter/flutter_test.md](../flutter/flutter_test.md)
 
+# expect
+* https://api.flutter.dev/flutter/package-matcher_expect/expect.html
+* dynamic型として渡した値actualが、 同じくdynamic型のmatcherにマッチすることをassertする。
+* matcherにはMatcher派生型を指定する。
+  * Matcher派生型以外を指定した場合、equalsでラップされる
+* assertに失敗した場合はTestFailureを返す。
+* Future型を渡すと、Futureが値を返すまでテストが完了しない。
+  * 完了を待ってからテストを続けたい場合は、代わりに expectLater を利用する
+
 # Matcher
+* https://api.flutter.dev/flutter/package-matcher_matcher/Matcher-class.html
+* expectで指定するmatcherの基本クラス。
 * DartおよびFlutterには様々なMatcherが用意されている。以下は一例。
 * prints
 ```dart
@@ -21,7 +32,10 @@ test('', () {
 * equal
 ```dart
 test('', () {
+  expect(true, true);
+  expect(true, equals(true));//上記と同じ
   expect(true, isTrue);
+  expect(false, isNot(isTrue));
   expect(false, isFalse);
   expect([1], isNotEmpty);
   expect([], isEmpty);

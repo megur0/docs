@@ -405,6 +405,8 @@ HTTP request failed, statusCode: 400, https://docs.flutter.dev/assets/images/das
 
 
 # Finder
+* Elementツリー上で Widgetを検索するファインダーを作成するための基本クラス
+* https://api.flutter.dev/flutter/flutter_test/Finder-class.html
 ```dart
 main() {
   testWidgets("", (widgetTester) async {
@@ -472,6 +474,54 @@ final pageViewScrollable = find.descendant(
         widget is Scrollable &&
         widget.axisDirection == AxisDirection.right));
 ```
+
+# Canvasの検査
+* PaintPattern
+  * https://api.flutter.dev/flutter/flutter_test/PaintPattern-class.html
+* トップレベルのプロパティのpaintsが用意されているため、これを利用する
+  * https://api.flutter.dev/flutter/flutter_test/paints.html
+* RenderObject、単一のRenderObjectに対応するFinder、特定のシグネチャ((PaintingContext context, Offset offset) { }, (Canvas canvas) { })を持つ関数に適用できる
+  * FinderはRenderObjectWidgetではなく、その先祖でも良い。(単一のRenderObjectに対応、という条件が満たされていれば良い)
+* 以下は参考となるflutter内のテストコードの抜粋
+```dart
+// flutter(3.24.3): packages/flutter/test/material/outlined_button_test.dart
+final Finder outlinedButton = find.byType(OutlinedButton);
+//...
+expect(outlinedButton, paints..drrect(color: defaultColor));
+```
+```dart
+// flutter(3.24.3): packages/flutter/test/material/range_slider_test.dart
+final RenderBox sliderBox = tester.firstRenderObject<RenderBox>(find.byType(RangeSlider));
+//...
+expect(sliderBox, isNot(paints..circle(color: sliderTheme.disabledThumbColor)));
+```
+```dart
+// flutter(3.24.3): packages/flutter/test/material/app_bar_test.dart
+final RenderObject painter = tester.renderObject(
+  find.descendant(
+    of: find.descendant(
+      of: find.byType(AppBar),
+      matching: find.byType(Stack),
+    ),
+    matching: find.byType(Material),
+  ),
+);
+//...
+expect(painter, paints..save()..translate()..save()..translate()..circle(x: 24.0, y: 28.0));
+```
+```dart
+// flutter(3.24.3): packages/flutter/test/painting/circle_border_test.dart
+const CircleBorder c10 = CircleBorder(side: BorderSide(width: 10.0));
+//...
+expect(
+  (Canvas canvas) => c10.paint(canvas, const Rect.fromLTWH(10.0, 20.0, 30.0, 40.0)),
+  paints
+    ..circle(x: 25.0, y: 40.0, radius: 10.0, strokeWidth: 10.0),
+);
+```
+* (TODO)TestRecordingCanvas
+  * https://api.flutter.dev/flutter/flutter_test/TestRecordingCanvas-class.html
+
 
 
 # WidgetTester
@@ -664,6 +714,12 @@ main() {
 BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
   return widgetTester.element(find.byType(type ?? Scaffold));
 }
+```
+```dart
+// flutter(3.24.3) examples/api/test/material/theme/theme_extension.1_test.dart
+final ThemeData theme = Theme.of(
+  tester.element(find.byType(example.Home)),
+);
 ```
 ## アニメーションを含むウィジェットのテストは個別ウィジェットの実装に依存する。
 * 例: go_routerの遷移
