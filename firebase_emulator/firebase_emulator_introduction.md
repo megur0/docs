@@ -38,3 +38,10 @@
 * 環境変数に設定する必要がある。
     * export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
 * Cloud Functions エミュレータは Authentication エミュレータを自動的に認識するため、Cloud Functions エミュレータと Authentication エミュレータの統合をテストする場合はこの手順を省略できる。
+
+
+# firebase-tools
+* Firebaseのエミュレータの機能(API)はインストールしているfirease(firebase-tools)に依存する
+    * ソースコード
+        * https://github.com/firebase/firebase-tools/tree/master/src/emulator
+* 一方で、UI部分は(~/.cache/firebase/emulatorsを見ると)JavaやJSで書かれているようだ。

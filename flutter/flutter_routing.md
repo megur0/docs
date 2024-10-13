@@ -158,6 +158,15 @@
     ```
 
 
+# Navigatorの不具合(24/10/11時点)
+* https://github.com/flutter/flutter/issues/148768#issuecomment-2346863484
+* Issue自体はGoRouterのIssueとして報告されているが、リンク先のコメントに記載のようにFlutterの不具合の可能性が高いだろう。
+* 具体的には、ルーティングによる遷移によってグローバルキーを持つウィジェットが複数個、ツリー上に存在してしまう事があり、結果としてエラーとなってしまう不具合となる。
+* 現状の回避策としては下記が考えられる。
+    * 同画面(グローバルキーを持つウィジェット)が複数個、存在しうるような遷移を避ける
+    * 不具合が発生する画面でグローバルキーの利用を回避する
+
+
 # MaterialApp.routes(公式では推奨されていない)
 * https://docs.flutter.dev/ui/navigation#using-named-routes
 * https://docs.flutter.dev/cookbook/navigation/named-routes

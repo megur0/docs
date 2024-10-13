@@ -33,6 +33,11 @@
 * cloud taskのような他のGCPサービスやAlgoliaのような外部サービスはモックする必要がある
     * 参考
         * https://zenn.dev/tkow/scraps/8160da23277fb8
+## verifyBeforeUpdateEmailのAPI
+* v13.17.0 からサポートされるようになった
+* https://github.com/firebase/firebase-tools/issues/3424#issuecomment-2345732192
+
+
 
 
 # Firestore エミュレータ

@@ -377,6 +377,10 @@
 * TextFormField(FormField派生クラス)
     * Formと連携させる場合はこのクラスを利用する。
     * 内部でTextFieldを生成している
+## グローバルキーを利用せずにメソッドを実行する方法
+* Form.of(context)を利用する。
+* ただし、先祖にFormを含むBuildContextである必要があるため、Builderを経由するといった工夫が必要となる。
+* https://www.reddit.com/r/FlutterDev/comments/1d6p47x/friendly_reminder_you_dont_need_and_probably/
 
 # radio, checkbox, switch
 * Radio

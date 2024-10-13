@@ -116,7 +116,7 @@
                 <key>CFBundleTypeRole</key>
                 <string>Editor</string>
                 <key>CFBundleURLName</key>
-                <string>カスタムURL</string>
+                <string>抽象名を設定</string>
                 <key>CFBundleURLSchemes</key>
                 <array>
                     <string>カスタムURL</string>
@@ -126,6 +126,14 @@
         </dict>
         </plist>
         ```
+        * CFBundleURLSchemes
+            * この値がカスタムURLスキームとなる
+        * CFBundleURLName
+            * https://developer.apple.com/documentation/bundleresources/information_property_list/cfbundleurltypes/cfbundleurlname
+            * Appleドキュメントによると抽象名とのこと。
+            * CFBundleIdentifierと同じ値にしておくと分かりやすいだろう。
+                * 同一の値にする必要は無い。
+                * (参考)https://stackoverflow.com/questions/13040175/must-cfbundleurlname-match-cfbundleidentifier
 ## Apple developerの設定
 * identifierの設定のAssociated Domainsにチェックを入れる
 * 現在使っているProvisioning Profileは無効になるので注意。
