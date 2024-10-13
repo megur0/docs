@@ -541,7 +541,7 @@ void main() {
     * GoRouter.go()と同様の処理となる。
 * ディープリンクをGoRouter.push()でハンドリングするには?
     * 方法1
-        * WidgetsBindingObserver.didPushRouteInformation()を利用したStatefulWidgetでラップすることでこの動作はカスタマイズ可能だが、分かりづらいかもしれない。
+        * WidgetsBindingObserver.didPushRouteInformation()を利用することで、GoRouterへ伝搬させずに独自の処理を行う回避策。
         * https://github.com/flutter/flutter/issues/138632#issuecomment-1985629802
     * 方法2
         * ディープリンクの処理はFlutter Framework(go_router)ではなく、別パッケージで行う。

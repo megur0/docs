@@ -81,10 +81,12 @@
 ## plugin_platform_interface
 * https://pub.dev/packages/plugin_platform_interface
 * implementsではなくextendsを強制させる仕組みを提供
-    * 該当のクラスは、interfaceをextendsすることでこの仕組みを利用できる。
+    * 該当のクラスは、PlatformInterfaceというinterfaceをextendsすることでこの仕組みを利用できる。
 * パッケージベンダーが新しいAPIを既存のクラスに導入した際、利用者がそのクラスをimplementsしているとコンパイルエラーとなってしまうため。
 * それを回避するためにパッケージベンダーは該当のクラスにplugin_platform_interfaceを継承させることで、もし開発者がimplementを使用した場合に動的にエラーを出力することができる。
     * 仕組みとしてはtokenを使っている。
+* ただし、Dartのbaseキーワードの導入されたため、このパッケージは今後非推奨となる可能性がある。
+    * https://pub.dev/packages/plugin_platform_interface#a-note-about-base
 * 例えば permission_handlerパッケージ　PermissionHandlerPlatformクラスが利用していた。
 ## (参考)Semantic Versioning 2.0.0-rc.1
 * https://semver.org/spec/v2.0.0-rc.1.html

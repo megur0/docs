@@ -68,6 +68,8 @@ void main() {
 
 # static variable
 > Static variables aren’t initialized until they’re used.
+* static変数やトップレベルの変数で参照されるオブジェクトは、プログラムの存続期間中は生存する。
+  * https://stackoverflow.com/questions/74642826/flutter-static-usage-and-performance
 
 # static method
 * staticメソッドよりもトップレベルメソッドを使ったほうがよいとのこと。（コンパイル時に定数として使える為）
