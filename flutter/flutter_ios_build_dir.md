@@ -159,6 +159,10 @@
     * FlutterViewControllerを生成し、 FlutterViewControllerはエンジンに接続する。
         * UIKitの 入力イベントを エンジンへ渡す
         * エンジンは Impeller を使用してレンダリングされたフレームを表示する。
+* Info.plist
+    * UIStatusBarHidden
+        * デフォルトでtrueとなっている。そのため、最上部のステータスバー(iOSのデフォルトの日時や電波アイコン等の表示があるバー)が非表示となっている。
+        * ステータスバーを表示したい場合はtrueとする。
 * Base.lproj/LaunchScreen.storyboard, Main.storyboard
     * FlutterViewControllerが指定されている。        
 * AppDelegate.swift
