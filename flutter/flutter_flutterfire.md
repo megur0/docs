@@ -32,6 +32,8 @@
 * flutterfire_cliをインストール
     * `dart pub global activate flutterfire_cli`
     * ~/.zshrc等のPATHに、`$HOME/.pub-cache/bin` を追加。
+* 確認
+    * `dart pub global list`
 * firebaseプロジェクトをflutterへconfigureする。(以下はiOSのみの場合)
     * `firebase login`
     * `flutterfire configure --project=プロジェクトID --platforms=ios --ios-bundle-id=バンドルID`

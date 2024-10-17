@@ -78,13 +78,42 @@
 
 
 # REST API
-* https://firebase.google.com/docs/reference/rest/database?hl=ja
-* https://firebase.google.com/docs/reference/rest/auth?hl=ja
 * https://firebase.google.com/docs/firestore/reference/rest?hl=ja
-## 例
+## Firestoreの情報取得
+* https://firebase.google.com/docs/reference/rest/database?hl=ja
 ```
 curl "http://localhost:8081/v1/projects/(プロジェクトID)/databases/(default)/documents/users
 curl "http://localhost:8081/v1/projects/(プロジェクトID)/databases/(default)/documents/users/(UID)"
-curl http://localhost:8081/emulator/v1/projects/(プロジェクトID):ruleCoverage.html
+```
+## サインイン
+* https://firebase.google.com/docs/reference/rest/auth?hl=ja
+```
 curl -H "Content-Type: application/json" -d '{"email":"test@example.com", "password":"testtest"}' "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=aa" 
 ```
+## ユーザーアカウントの全クリア
+* https://firebase.google.com/docs/reference/rest/auth?hl=ja#section-auth-emulator-clearaccounts
+```
+# アカウント全削除
+curl -H 'Authorization: Bearer owner' -X DELETE http://localhost:9099/emulator/v1/projects/(プロジェクトID)/accounts
+```
+## Firestoreのクリア
+* https://firebase.google.com/docs/emulator-suite/connect_firestore?hl=ja#clear_your_database_between_tests
+```
+# Firestoreデータクリア
+curl -v -X DELETE "http://localhost:8080/emulator/v1/projects/(プロジェクトID)/databases/(default)/documents"
+```
+## Cloud Storageのファイルの全削除
+* おそらく、まとめて削除する手段は無く、ファイル１つ１つを取得して削除する方法となるだろう。
+* 以下のように実行可能と思われるが、ファイルの削除の方でエラーとなってしまった。
+    ```
+    # バケット一覧表示
+    curl http://localhost:9199/b | jq
+
+    # バケットのファイル一覧表示
+    curl -H 'Authorization: Bearer owner' http://localhost:9199/v0/b/(プロジェクトID).appspot.com/o/ | jq
+
+    # ファイルの削除: 501 Not Implementedとなってしまった
+    curl -v -X DELETE -H 'Authorization: Bearer owner' http://localhost:9199/v0/b/(プロジェクトID).appspot.com/(ファイルパス)
+    ```
+* 参考
+    * https://stackoverflow.com/a/75649190/22090329

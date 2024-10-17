@@ -44,4 +44,4 @@
 * Firebaseのエミュレータの機能(API)はインストールしているfirease(firebase-tools)に依存する
     * ソースコード
         * https://github.com/firebase/firebase-tools/tree/master/src/emulator
-* 一方で、UI部分は(~/.cache/firebase/emulatorsを見ると)JavaやJSで書かれているようだ。
+* 一方で、UI部分は(~/.cache/firebase/emulatorsを確認すると)JavaやJSで書かれているようだ。
