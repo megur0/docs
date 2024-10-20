@@ -13,6 +13,19 @@
 # シンボル
 * クラス名、グローバル変数、およびメソッドと関数名
 
+# DWARF と DWARF with dSYM の違い
+* DWARF(Debugging With Arbitrary Record Formats)
+    * https://ja.wikipedia.org/wiki/DWARF
+        > DWARF（ドワーフ）とは、広く使われているデバッグ用データフォーマットの規格である。当初ELFと共に設計されたが、オブジェクトファイルのフォーマットとは独立している
+* XcodeにおけるDWARF と DWARF with dSYM の違い
+    * https://stackoverflow.com/questions/22539691/whats-the-difference-between-dwarf-and-dwarf-with-dsym-file
+    > 違いは、dSYMファイル付きDWARFの場合、アーカイブapp.xcarchiveには、クラッシュレポートでのコードの逆シンボリケーションに必要なdSYMファイルも含まれていることです。  
+    > 一般的に、.xcarchive には以下が含まれています。   
+        > dSyms  
+        > Products  
+        > info.plist  
+    > したがって、配布用にアプリをアーカイブする際にクラッシュ レポートの外部分析が必要な場合は、dSYM ファイルで DWARF を使用する必要があります。  
+
 # dSYM(デバッグシンボル)
 * Xcodeがコードをマシン語へ変換する際にアプリのシンボルのリストを作成する
 > この関連付けは、デバッグシンボルを作成するので、Xcode でデバッガを使用したり、クラッシュレポートによって報告された行番号を参照することができます。

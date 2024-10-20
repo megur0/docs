@@ -48,6 +48,11 @@
 * 参考
     * https://stackoverflow.com/questions/21631313/xcode-project-vs-xcode-workspace-differences
     
+
+# xc
+* https://stackoverflow.com/questions/8591004/difference-between-ipa-and-xcarchive
+    >  "xc"は、ユーザー用ではなく Xcode 用であることを示すヒントです。(例: Xcode 用の他のファイル: .xcodeproj、.xcworkspace)
+
 # project.pbxproj
 * 各ファイルや設定項目には一意に識別するためのuuidが割り当てされている。
     * https://stackoverflow.com/questions/22648347/project-pbxproj-hashing-for-files-what-hash-is-used-and-how

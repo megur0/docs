@@ -17,10 +17,54 @@
 * Xcodeで、Product > Archive でアーカイブが生成される。
     * ビルドとアーカイブが行われる。
     * これによって.xcarchiveファイルが作成される
-        * 参考: https://stackoverflow.com/questions/8591004/difference-between-ipa-and-xcarchive
-            > IPA は、YourApp.app バンドルを含む、圧縮された Payload フォルダーです。.app には、イメージ、plist ファイル、圧縮された nib と実行可能ファイル、CodeSigning リソースなどのすべてのアプリケーション リソースが含まれます。
-            > xcarchive にはアプリと dsym ファイルが含まれています。クラッシュ ログを非シンボリック化するには .DSYM が必要です。保存した .xcarchive を右クリックし、パッケージの内容を表示を選択して、その内容を確認します。
 * アーカイブをすると、Organizerの画面へ遷移する。
+
+# 参考: IPAファイルと.xcarchiveファイル
+* https://stackoverflow.com/questions/8591004/difference-between-ipa-and-xcarchive
+> IPA は、YourApp.app バンドルを含む、圧縮された Payload フォルダーです。.app には、イメージ、plist ファイル、圧縮された nib と実行可能ファイル、CodeSigning リソースなどのすべてのアプリケーション リソースが含まれます。
+> xcarchive にはアプリと dsym ファイルが含まれています。クラッシュ ログを非シンボリック化するには .DSYM が必要です。保存した .xcarchive を右クリックし、パッケージの内容を表示を選択して、その内容を確認します。
+> TLDR: .xcarchiveはあなたのための仲介ステップであり、.ipaはApp Storeへのアップロードに使用できます。
+> ipaの中身を調べるには、.ipaファイルを.zipにリネームして解凍します。 
+## IPAファイルの内容
+* zipに変更して中身を開くことが出来る
+* 例えば下記のような構成となっている。
+```sh
+tree
+.
+├── Payload
+│   └── XXXXX.app
+│       ├── XXXXX.plist
+│       ├── ...
+│       ├── Base.lproj
+│       │   ├── LaunchScreen.storyboardc
+│       │   │   ├── ...
+│       │   └── Main.storyboardc
+│       │       ├── ...
+│       ├── xxxx.bundle
+│       │   ├── Info.plist
+│       │   └── PrivacyInfo.xcprivacy
+│       ├── xxxx.bundle
+│       │   ├── Info.plist
+│       │   └── PrivacyInfo.xcprivacy
+│       ├── ...
+│       ├── Info.plist
+│       ├── ...
+│       ...
+└── Symbols
+    ├── (UUID).symbols
+    ...
+```
+* SymbolsはdSYMを元にして生成されたシンボルファイルであり、UUIDは.xcarchiveの各.dSYMのUUIDと一致する
+## SymbolsファイルがIPAに含まれているとセキュリティ上問題はある？
+* https://forums.developer.apple.com/forums/thread/130061
+    > .symbols ファイルは、App Store にビットコードではなくマシンコードを送信すると生成されます。これらは、シンボル化されたクラッシュ レポートを Xcode Organizer に配信するメカニズムの一部として使用されます。これらは、はるかに多くのデバッグ情報を含む完全な .dSYM ファイルよりも軽量です。
+* https://developer.apple.com/forums/thread/680599
+    > App Store にアップロードする.ipa ファイルは、App Store を通じて顧客のデバイスにインストールされる.ipaファイルとほとんど似ていません。アセット カタログは対象デバイスの種類別に削減され、ビットコードは再コンパイルされ、オンデマンド リソースは Apple のサーバーからダウンロード用に抽出されて配置されるなどです。シンボル ファイルもその一部であり、App Store を通じてダウンロードされるアプリには含まれていません。
+* https://stackoverflow.com/a/19820211/22090329
+* (IMO)
+    * シンボルファイルはdSYMよりも保持情報が少ない。
+    * 顧客に配布されるIPAファイルにはシンボルファイルは含まれない。
+    * ただし、クラッシュレポートの送信のために、シンボルのUUID等の情報はApp Storeへ送信して紐づけ等は行ってる事が推測される?
 
 
 # App Store Connectへアップロード

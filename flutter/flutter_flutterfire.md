@@ -26,7 +26,6 @@
 * https://firebase.google.com/docs/flutter/setup
 * https://github.com/invertase/flutterfire_cli
 * なお、firebaseのコンソールの「Flutterアプリ追加」を開くと手順が書いてある。以下は初めて実行するときにM1 Macでエラーになった内容も含めて記載している。
-
 * (未インストールの場合)firebase をインストール
     * `npm install -g firebase-tools`
 * flutterfire_cliをインストール
@@ -34,6 +33,11 @@
     * ~/.zshrc等のPATHに、`$HOME/.pub-cache/bin` を追加。
 * 確認
     * `dart pub global list`
+* アップデート(インストールと同じコマンド)
+    * `dart pub global activate flutterfire_cli` 
+    * `flutterfire --version`
+    * (IMO)ローカルに保存されるファイルはシェルスクリプトと実行ファイルで、out-of-dateを検出する処理をしている様に見える?ものの、CHANGELOGではやや重要な更新(デバッグシンボルのアップロードスクリプト等)も行っているため、定期的にアップデートしておくことが確実だろう。
+        * https://github.com/invertase/flutterfire_cli/blob/main/CHANGELOG.md
 * firebaseプロジェクトをflutterへconfigureする。(以下はiOSのみの場合)
     * `firebase login`
     * `flutterfire configure --project=プロジェクトID --platforms=ios --ios-bundle-id=バンドルID`
@@ -80,6 +84,40 @@
     * コンソール上、デフォルトで非表示になっていたが、Firbaseコンソールのトップの「2個のアプリ」から表示をONにすることができた。
     * アプリのニックネーム、バンドルIDは  適当な名前が設定されている。
     * iOSのApp Store ID、チームIDは空。
+## (参考)flutterfireのスクリプト
+* `which flutterfire`
+~/.pub-cache/bin/flutterfire
+* `cat ~/.pub-cache/bin/flutterfire`
+```sh
+#!/usr/bin/env sh
+# This file was created by pub v3.5.3.
+# Package: flutterfire_cli
+# Version: 1.0.0
+# Executable: flutterfire
+# Script: flutterfire
+if [ -f ~/.pub-cache/global_packages/flutterfire_cli/bin/flutterfire.dart-3.5.3.snapshot ]; then
+  dart "~/.pub-cache/global_packages/flutterfire_cli/bin/flutterfire.dart-3.5.3.snapshot" "$@"
+  # The VM exits with code 253 if the snapshot version is out-of-date.
+  # If it is, we need to delete it and run "pub global" manually.
+  exit_code=$?
+  if [ $exit_code != 253 ]; then
+    exit $exit_code
+  fi
+  dart pub -v global run flutterfire_cli:flutterfire "$@"
+else
+  dart pub global run flutterfire_cli:flutterfire "$@"
+fi
+```
+* コードの解説(ChatGPT)
+```
+このコードは、flutterfire コマンドラインツールを実行するためのBashスクリプトです。
+主に、特定のスナップショット（.snapshot）ファイルの有無と状態を確認し、適切にツールを実行する役割を果たしています。
+このファイル(（.snapshot）ファイル)は、flutterfire CLI の Dart スナップショット版（高速に実行するために事前コンパイルされた形式）です。
+スナップショットファイルが存在する場合、それを Dart VM で実行します。
+"$@" はスクリプトに渡された全ての引数をそのまま Dart コマンドに渡します。
+スナップショットのバージョンが古い場合、Dart VM は終了コード 253 で終了します。
+古いスナップショットが見つかった場合、スナップショットを再生成せずに、dart pub 経由で直接 flutterfire コマンドを実行します。
+```
 
 # (参考)(IME)Firebaseプロジェクトを入れ替え可能とする。
 * 複数のFirebaseのテストプロジェクトを扱う場合は、ローカル環境のFirebaseプロジェクトをスイッチしたい時がある。
