@@ -21,7 +21,7 @@
 
 [App Store レビュー](./ios_review.md)
 
-[クラッシュレポート](./ios_clash_report.md)
+[クラッシュレポート](./ios_crash_report.md)
 
 * その他
    * [iOSシミュレーターの操作](./ios_simulator.md)

@@ -44,7 +44,7 @@
 * SK: AppleのStoreKit（ストアキット）
     * Apppleがデベロッパー向けに定めた規格
 * 広告に関するデータをデバイスからサードパーティへ送信するためのAPIとなる。
-* SKAdNetworkはATTによるユーザーの許可がなくとも利用可能となる。もちろんATTが承認されていない場合にIDFD
+* SKAdNetworkはATTによるユーザーの許可がなくとも利用可能となる。もちろんATTが承認されていない場合にIDFA
     > Apple は、ユーザーのプライバシーを維持するように SKAdNetwork API を設計しています。アプリは、SKAdNetwork API を呼び出す前にApp Tracking Transparencyを使用する必要はなく、追跡承認ステータスに関係なくこれらの API を呼び出すことができます。
 * 利用にするにはInfo.plistへAppleから広告主に発行された広告ネットワークID を設定する必要がある。
 * Googleの説明

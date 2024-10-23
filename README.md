@@ -43,7 +43,7 @@
 
     * [Firestore](./firestore/README.md)
 
-    * [Firebase Clashlytics](./firebase_clashlytics/firebase_clashlytics.md)
+    * [Firebase Crashlytics](./firebase_crashlytics/firebase_crashlytics.md)
 
 * [iOSアプリ開発](./ios/README.md)
 

@@ -92,7 +92,7 @@
         * .symbolsファイルが出力される。
     * 詳細は`flutter build (ios/apk等) -h`
 * なお、dSYMファイルでは難読化は解除されるため、これらを扱うツールへシンボルファイルをアップロードする必要はない。
-    * [参照](./flutter_firebase_clashlytics.md)
+    * [参照](./flutter_firebase_crashlytics.md)
 * 参考
     * 現在はiOSも対応しているため、以下の公式ドキュメントは情報が古いようだ。
     * https://firebase.google.com/docs/crashlytics/get-started?platform=flutter&hl=ja#add-sdk

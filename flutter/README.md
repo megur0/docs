@@ -23,7 +23,7 @@
 
         * [Authentication](./flutter_firebase_auth.md)
 
-        * [Clashlytics](./flutter_firebase_clashlytics.md)
+        * [Crashlytics](./flutter_firebase_crashlytics.md)
 
     * [iOSでビルドされる構成](./flutter_ios_build_dir.md)
 
