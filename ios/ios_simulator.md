@@ -20,7 +20,9 @@
 * ソフトウェアキーボード
     * I/O > keyboard > Toggle Software keyboard
     * キーボードから入力するとソフトウェアキーボードは自動的にOFFとなるため注意
-
+* _と@の入力
+    * _は shift+ハイフン
+    * @は shift+2
 
 # トラブルシュート(IME)
 * File > Open Simulator に Simulatorが表示されない。
