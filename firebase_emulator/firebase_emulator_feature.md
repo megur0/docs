@@ -1,6 +1,11 @@
 [TOP(About this memo))](../README.md) > [一覧(Firebase Local Emulator Suite)](./README.md) > 各種エミュレータ
 
 
+# FCM
+* FCMはEmulatorではサポートされていない。 
+* https://github.com/firebase/firebase-tools/issues/4222
+
+
 # Authentication エミュレータ
 * セキュリティ上の理由から、署名なしの ID トークンを発行
     * このトークンは他の Firebase エミュレータ、または構成されている場合は Firebase Admin SDK によってのみ受け入れられる。

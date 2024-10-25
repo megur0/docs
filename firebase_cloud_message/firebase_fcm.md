@@ -104,3 +104,13 @@
 * Firebase Cloud Messaging Data API が提供する集計済みの Android SDK 配信指標
 * Google BigQuery への包括的なデータ エクスポート
 
+
+
+# メールテンプレート中の「%APP_NAME%」
+* こちらはプロジェクト設定 > 公開名から設定できる。
+* しかし、プロジェクトのOAuthクライアントが有効にならないとこの項目は表示されない仕様となっている。
+* 以下の設定によって設定できるようになる。
+    * Authentication > ログイン方法 > 新しいプロバイダの追加 > Google から有効化
+    * もしGoogleによる認証を利用しない場合は無効化する。
+    * これによってプロジェクトのOAuthクライアントが有効となるため、公開名の設定が可能となる。
+* https://stackoverflow.com/questions/77188427/where-did-the-public-settings-of-a-firebase-project-go

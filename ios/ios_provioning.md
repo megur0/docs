@@ -63,8 +63,8 @@
         * 参考
             * https://i-app-tec.com/ios/apply-application.html
     * 現在は、XcodeのPreference から作成できる。
-        * Accounts > Apple IDsで対象のアカウントを選択（登録してなければ、「+」から追加）
-        * 右下で、対象のチームを選択して「Manage Certificates」>「+」>「Apple Development」にて作成できる。
+        * Xcode > Setting > Accounts > Apple IDsで対象のアカウントを選択（登録してなければ、「+」から追加）
+        * 右下で、対象のチームを選択して「Manage Certificates」>「+」>「Apple Development」にて作成できる。（App Store への配布の場合は「Apple Distribution」）
         * 参考
             * https://xyk.hatenablog.com/entry/2020/10/29/171732
 * 仕様上、同じ証明書が２つ存在するとエラーとなる?
