@@ -31,15 +31,23 @@
             > FEAT: automatically add debug symbols script by detecting crashlytics dependency. 
         * https://github.com/invertase/flutterfire_cli/blob/main/CHANGELOG.md#flutterfire_cli---v030-dev15
             > FEAT: upload debug symbols script. 
-## デバッグビルド時にdSYMを送信する
-* デフォルトでは、デバッグビルドでdSYMを生成しない点に注意。
-    * この場合、Crashlytics上でdSYMの欠損エラーが表示される。
-        * ※ ただし、クラッシュが発生した際に何度かFlutterアプリをリスタートをしているとdSYMの欠損エラーが解消してCrashlyticsでレポートを見ることができた。
-            * (IMO)もしかするとデバッグモードでも「クラッシュが発生した時はdSYMを送る」といった処理が内部で行われているかもしれない
+## デバッグビルド時のdSYMの欠損(TODO)
+* デバッグ時にCrashlyticsへレポートを送信すると、Crashlytics上でdSYMの欠損エラーが表示される。
+    ```
+    このアプリには未処理のクラッシュが x 件あります。これらを処理するには、x 個の dSYM ファイルをアップロードしてください。
+    ```
+* 「dwarf」を「dwarf-with-dsym」に変更する対応
     * XCodeで Runner > Build Setting > Debug Information Format で確認すると、デバッグビルドにおいては「dwarf」となっている。
-* デバッグビルドも出力したい場合は、こちらを`dwarf-with-dsym`へ変更する。
-* 参考: https://github.com/flutter/flutter/issues/116493#issuecomment-1340259052
-    * ※ このissue自体は別の内容。(Flutter Framwork自体のdSYMが不足してCrashlyticsの詳細が確認できない、というissue)
+    * こちらを`dwarf-with-dsym`へ変更してみる。
+    * 参考: https://github.com/flutter/flutter/issues/116493#issuecomment-1340259052
+        * ※ このissue自体は別の内容。(Flutter Framwork自体のdSYMが不足してCrashlyticsの詳細が確認できない、というissue)
+* しかしCrashlytis上での欠損エラーは解消されない。
+    * `find ./ -name "*.dSYM" | xargs -I \{\} dwarfdump -u \{\}`によってローカルのdSYMのUUIDの一覧を探しても、コンソール上で欠損として表示されるUUIDが見つからないこともある。
+        * ただし、`build/ios/Debug-iphoneos/Runner.app.dSYM/Contents/Resources/DWARF/Runner.debug.dylib` というファイルのUUIDにはヒットする。
+        * しかしこのファイル自体はアップロードできず、`build/ios/Debug-iphoneos/Runner.app.dSYM`をアップロードすると別のUUIDとして扱われる。
+    * 一度ビルドを作成したうえで全ての.dSYMを手動で送信しても、事象は解消されない。
+    * (?)クラッシュが発生した際に何度かFlutterアプリをリスタートをしているとdSYMの欠損エラーが解消してCrashlyticsでレポートを見ることができることもある。
+* 現状、デバッグ時のdSYMの正しい対応については分かっていない。
 ## (注意) Crashlyticsのアップロードスクリプトが、ios/Runner.xcodeproj/project.pbxprojに含まれている場合
 * Crashlyticsの方で、ビルドフェーズに以下の名前の実行スクリプトを追加されている場合は、削除する。(XCodeを開いて Runner > Build Phases でゴミ箱アイコンから削除する。 )
     * `[firebase_crashlytics] Crashlytics Upload Symbols`
