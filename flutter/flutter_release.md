@@ -1,9 +1,6 @@
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > リリース
 
 
-# WIP: 随時更新
-* このメモは執筆中のため随時更新 
-
 # 注意
 * このメモは対象環境はiOS/Xcodeとなる。
 
@@ -66,9 +63,28 @@
 ## App Store Connect（TestFlight）へアップロード
 * 上記の手順で初回はXCodeからTestFlightへアップロードして、ExportOptions.plistをエクスポートしておく
 * そのExportOptions.plistで上記のflutter build ipaを実行することで、App Store Connect（Test Flight）へのアップロードも同時に行われる。
-## （未検証）App Store Connect（配信）へアップロード
+* IME
+    * 完了後に下記のエラーが発生するときが、筆者の環境では今のところ、正常にアップロードができている。
+    ```sh
+    Oops; flutter has exited unexpectedly: "PathNotFoundException: Directory listing failed, path 〜
+    ```
+## App Store Connect（配信）へアップロード
 * 上記の手順で、初回はXCodeからApp Store Connectへアップロードして、ExportOptions.plistをエクスポートしておく
 * そのExportOptions.plistで上記のflutter build ipaを実行することで、App Store Connect（配信）へのアップロードも同時に行われる。
+
+
+# (参考)xcrun altoolを利用してIPAファイルをApp Store Connectへアップロードする方法
+* Flutter公式で紹介されている方法として`flutter build ipa`でIPAファイルを作成して、xcrunコマンドでアップロードする方法となる。
+    * https://docs.flutter.dev/deployment/ios#upload-the-app-bundle-to-app-store-connect
+* 筆者の場合は`flutter build ipa`でExportOptions.plistを指定することでApp Store Connectへのアップロードも同時に実施されるため、この方法は利用していないが記録として残しておく。
+## 手順
+* App Store Connectで APIキーを作成する。
+    * App Store Connect > ユーザとアクセス > 統合 > App Store Connect API から作成
+    * 作成したAPIキーのファイルをダウンロードして~/.private_keysに配置する。('~/private_keys'、'~/.appstoreconnect/private_keys'でも良い)
+        * ダウンロードは1回のみのため注意。
+* コマンドでApp Store Connectへアップロード
+    * (キーID)と(Issuer ID)はApp Store ConnectのAPIの画面でコピーできる。
+    * `xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey (キーID) --apiIssuer (Issuer ID)`
 
 # 難読化
 ## バイナリは逆コンパイル可能
