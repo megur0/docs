@@ -51,7 +51,7 @@
 
 * [Git](./git/README.md)
 
-* [AdMob(WIP)](./google_admob/google_admob.md)
+* [AdMob](./google_admob/google_admob.md)
 
 * 表記などについて
     * [クラス図の表記](./common/about_class_diagram.md)
