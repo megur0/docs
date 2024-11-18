@@ -32,3 +32,10 @@
     * それでも解決しない場合は、システム設定>一般>ストレージ>デベロッパ で以下のデータを削除する。
     * Xcode Caches
     * Project Build Data and Indexes
+* 最新のiOSを利用したい
+    * XCodeが古い場合はApp Storeで最新のXCodeにアップデート
+        * https://developer.apple.com/jp/support/xcode/
+        * OSが古いとアップデートできないため注意。
+    * 最新のiOSをダウンロード
+        * XCode上で画面上部のツールバーのデバイス選択の箇所で「iOSXX.XX Not Installed」と表示される。
+        * 押下して表示されるダイアログからダウンロードを行う。
