@@ -108,6 +108,14 @@
 * ffi
     * rubyから C言語などを呼び出すライブラリ
     * CocoaPodsが依存している。
+* 本体アップデート
+    * Homebrew
+        * `brew upgrade cocoapods`
+        * `pod --version`
+    * その他: 参考
+        * https://qiita.com/nak435/items/d8a58dec599108fd8f51
+* リポジトリアップデート
+    * `pod repo update`
 
 
 # Xcodeproj 
