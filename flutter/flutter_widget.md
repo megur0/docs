@@ -89,6 +89,9 @@
         * 親が許す限り限りなく小さくなる
 * Spacer
 * Divider
+    * ThemeData.dividerThemeでテーマを指定できる。
+    * 何も指定しない場合、ColorScheme.outlineVariantにフォールバックする
+        * IME: APIにはThemeData.dividerColorにフォールバックと書いてあるが実際に確認するとColorScheme.outlineVariantにフォールバックしていた。
 * Padding
 * Border
 * TabBar, TabBarView
