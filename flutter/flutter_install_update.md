@@ -22,6 +22,8 @@
 * インストール状態の確認
     * `flutter doctor`
     * 各種ツールチェインが正常にインストールされていることを確認
+## アンインストール
+* https://docs.flutter.dev/get-started/uninstall
 ## (参考)Flutter SDK と dart-sdk
 * 参考
     * https://qiita.com/kurun_pan/items/520d91b4f5da6f14345b
@@ -60,6 +62,13 @@
 * `which flutter`
     * 筆者の環境(Mac)では /Users/xxx/flutter/bin/flutter
 
+
+# FVM(WIP)
+* 複数のバージョンを管理・切り替えすることができる。
+* `fvm install`
+    * プロジェクト内に適宜、.fvmrcのファイルが作成される
+* `fvm list`
+    * 現在インストールされているバージョンを確認
 
 
 # Channel
