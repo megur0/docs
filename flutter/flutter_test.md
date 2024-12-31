@@ -1040,6 +1040,141 @@ class _MyWidgetState extends State<MyWidget> {
   }
 }
 ```
+## 画像をスタブにする
+* イメージの内容自体がゴールデンテストの対象ではない場合は、ImageProviderを取得する箇所をスタブ化させてしまう方法がシンプルである。
+```dart
+//...
+CircleAvatar(
+  backgroundImage: MyImage.getImage(url),
+)
+//...
+class MyImageStub extends MyImage {
+  ImageProvider<Object> getImage(String url) {
+    return MemoryImage(base64Decode('R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='));
+  }
+}
+```
+* コードが増えるが、HttpOverrides.globalを上書きする方法もある。
+```dart
+import 'dart:async';
+import 'dart:convert';
+import 'dart:io';
+import 'dart:typed_data';
+
+import 'package:flutter/material.dart';
+import 'package:flutter_test/flutter_test.dart';
+
+// 参考
+// flutter/test/painting/image_provider_network_image_test.dart
+// flutter_test/lib/src/_binding_io.dart
+
+class _FakeHttpOverrides extends HttpOverrides {
+  @override
+  HttpClient createHttpClient(SecurityContext? context) {
+    return _MockHttpClient();
+  }
+}
+
+class _MockHttpClient extends Fake implements HttpClient {
+  @override
+  bool autoUncompress = true;
+
+  @override
+  Future<HttpClientRequest> get(String host, int port, String path) {
+    return Future<HttpClientRequest>.value(_FakeHttpClientRequest());
+  }
+
+  @override
+  Future<HttpClientRequest> getUrl(Uri url) {
+    return Future<HttpClientRequest>.value(_FakeHttpClientRequest());
+  }
+}
+
+class _FakeHttpClientRequest extends Fake implements HttpClientRequest {
+  final _FakeHttpClientResponse response = _FakeHttpClientResponse();
+
+  @override
+  Future<HttpClientResponse> close() async {
+    return response;
+  }
+}
+
+class _FakeHttpClientResponse extends Fake implements HttpClientResponse {
+  bool drained = false;
+
+  @override
+  int statusCode = HttpStatus.ok;
+
+  @override
+  int contentLength = 1;
+
+  @override
+  HttpClientResponseCompressionState get compressionState =>
+      HttpClientResponseCompressionState.notCompressed;
+
+  @override
+  StreamSubscription<List<int>> listen(
+    void Function(List<int> event)? onData, {
+    Function? onError,
+    void Function()? onDone,
+    bool? cancelOnError,
+  }) {
+    return Stream<List<int>>.fromIterable(<Uint8List>[
+      // 透明な1pixelドット
+      base64Decode('R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='),
+    ]).listen(
+      onData,
+      onDone: onDone,
+      onError: onError,
+      cancelOnError: cancelOnError,
+    );
+  }
+
+  @override
+  Future<E> drain<E>([E? futureValue]) async {
+    drained = true;
+    return futureValue ??
+        futureValue as E; // Mirrors the implementation in Stream.
+  }
+}
+
+void main() {
+  group('', () {
+    setUpAll(() {
+      HttpOverrides.global = _FakeHttpOverrides();
+
+      // HttpOverrides.globalをnullにすると、モックによるhttpリクエスト自体の失敗は発生しないが、
+      // 通常のHttpClientが利用されてしまう為、推奨しない。
+      // このコードの場合は、実行してみるとペンディングのtimerが残っているというエラーになる
+      //(詳細は確認していないが、AutomatedTestWidgetsFlutterBindingのテスト内でHttpClientをテストで実行することは避けた方が良いだろう。)
+      // HttpOverrides.global = null;
+
+      // debugNetworkImageHttpClientProviderを上書きする方法でも動作する。
+      // ただし、テストの終了時にdebugNetworkImageHttpClientProvider = nullを実行する必要があり、実行しない場合はassertエラーとなる。
+      // （仕様上、tearDownではなく都度テストの最後に記述する必要がある。)
+      // debugNetworkImageHttpClientProvider = _FakeHttpClient.new;
+    });
+
+    testWidgets('', (tester) async {
+      await tester.pumpWidget(
+        MaterialApp(
+          home: CircleAvatar(
+            backgroundImage: NetworkImage('https://example.com/dummy.svg'),
+          ),
+        ),
+      );
+
+      await expectLater(
+        find.byType(MaterialApp),
+        matchesGoldenFile(
+          './test1.png',
+        ),
+      );
+    });
+  });
+}
+```
+
 
 # スタブ・モック化
 ## ラッパーをスタブ化する
@@ -1342,6 +1477,22 @@ Future<String> f() async {
 
 * IntegrationTestWidgetsFlutterBinding.overrideHttpClient
     * falseとなっているため、HttpClient処理はモック化されない。
+
+* HttpOverrides.global
+  * HttpClientのオーバーライドはHttpOverrides.globalにモックをセットすることで行われている。
+  * 参考: HttpClientの処理
+    ```dart
+    // flutter/bin/cache/pkg/sky_engine/lib/_http/http.dart
+    factory HttpClient({SecurityContext? context}) {
+        HttpOverrides? overrides = HttpOverrides.current;
+        if (overrides == null) {
+          return _HttpClient(context);
+        }
+        return overrides.createHttpClient(context);
+      }
+    ```
+
+
 ## FlutterView
 * WidgetsBinding.wrapWithDefaultView()を呼ぶため、ツリーにはView(RenderView)が存在し、View.view(dart:ui.FlutterView)にはPlatformDispatcher.implicitViewが設定されることになる。
 * PlatformDispatcher.implicitViewはWidgetsBinding.wrapWithDefaultView()でnull assertionされているため、flutter testにおいても何らかの値が設定される必要がある。
