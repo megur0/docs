@@ -35,6 +35,8 @@
     * IDEでDartのExtensionやプラグインを利用している場合は、このコマンドと同様の処理を実行している。
     * `dart fix`で自動修正されるものは、この結果のうちリンターの自動修正可能なもの(クイックフィックス)に対して行われる。
         * https://dart.dev/tools/linter-rules#quick-fixes
+    * 参考
+        * VSCodeの"editor.formatOnSave"では`dart fix --apply`が実行される
 * (?)静的解析（`dart analyze`）は `dart compile` や `dart run` 実行時の 解析と同じ?
     * 基本的には同じ?
     * 関連
@@ -57,3 +59,13 @@
     * 全体でカスタマイズせずに、ソースコード内に直接記述してファイルや行単位で例外扱いにすることも可能。
         * `// ignore: name_of_lint` 
         * `// ignore_for_file: name_of_lint`
+
+
+# dart format
+* https://dart.dev/tools/dart-format
+* [Dart フォーマット ガイドライン](https://dart.dev/effective-dart/style#formatting)に従ったフォーマット
+* `dart format`で実行
+* dart formatで修正される内容は、静的解析(Static analysis)とは別のもの
+* 参考
+    * VSCodeの"editor.formatOnSave"では`dart format`が実行される
+    

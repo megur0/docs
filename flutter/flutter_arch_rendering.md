@@ -21,7 +21,7 @@
 * Impeller
     * https://docs.flutter.dev/perf/impeller
     * Flutterはバージョン3.0.0でImpellerというUIレンダリングエンジン導入した。
-    * iOSではデフォルトで有効になっているが、Androidではプレビュー版であり3.19リリース時点ではデフォルトでは無効となっている。
+    * iOS、AndroidではデフォルトでImpellerが有効になっている。
 
 # 描画（レンダリング）の流れ
 * 参考

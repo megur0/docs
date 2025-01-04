@@ -44,6 +44,7 @@ void main() {
 
 
 # (参考) DartPad や Flutter Web 上ではparseの際にマイクロ秒の情報がロストする
+* (追記 2025/1/3) 本件は修正済
 ```dart
 print(DateTime.parse('2023-09-04T15:54:04.274164+09:00').toIso8601String());
 // Flutter モバイルの環境で実行すると 　2023-09-04T06:54:04.274164Z

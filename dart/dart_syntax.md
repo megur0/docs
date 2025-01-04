@@ -5,9 +5,8 @@
 ```dart
 void main() {
   int a = 0;
-  final test = (int a) => print;
-  test(a++);//0
-  test(++a);//2
+  print(a++);//0
+  print(++a);//2
 }
 ```
 
@@ -123,16 +122,26 @@ void main() {
       case Test.a:
       case Test.b:
       case Test.c:
-        print("c");
+        print("1");
+  }
+  
+  switch(t) {
+      case Test.a:
+        print("2-a");
+      case Test.b:
+        print("2-b");
+      case Test.c:
+        print("2-c");
   }
   
   switch(t) {
       case Test.a || Test.b || Test.c:
-        print("c");
+        print("3");
   }
 }
-// c
-// c
+// 1
+// 2-a
+// 3
 ```
 ## (参考) enum以外にswitch構文を使ってみる
 * IMO

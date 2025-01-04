@@ -151,7 +151,11 @@ class MyWidget extends StatelessWidget {
 
 
 # パフォーマンス測定(未読)
-* https://docs.flutter.dev/testing/code-debugging#trace-dart-code-performance
+* https://docs.flutter.dev/perf#diagnosing-performance-problems
+* Performance Overlayを有効にする
+    * https://docs.flutter.dev/testing/code-debugging#trace-dart-code-performance
+* パフォーマンス計測の具体例
+    * https://future-architect.github.io/articles/20220317a/
 * TODO
 
 # アニメーションのデバッグ(未読)
