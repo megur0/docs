@@ -20,7 +20,7 @@
 * 以下はフレーム処理とレンダリングパイプラインの概要を表した図となる。
     * 本コードリーディングでは、Build phaseとLayout phaseを中心に扱っている。
 
-<img src="./svg/arch_code_reading/flutter_pipeline_abst.drawio.svg" width="70%"><br/><br/>  
+<img src="./svg/arch_code_reading/flutter_pipeline_abst.drawio.svg" width="90%"><br/><br/>  
 
 * WidgetsBinding.drawFrame
     * https://api.flutter.dev/flutter/widgets/WidgetsBinding/drawFrame.html
@@ -279,7 +279,7 @@ flutter: future after runApp
     * 画面への表示が必要なくなったウィジェットのElementはdeactivate()が実行されてElementLifecycle.inactiveに変更される。
     * グローバルキーによって共通のウィジェットを使用している場合、ElementLifecycle.inactiveなElementも、同ビルドフェーズ内であればツリー上の別の箇所で再利用される可能性があり、そのときはactivate()が実行されてinactiveからactiveへ変更される。 
     * _ElementLifecycle.inactiveであるElementはそのビルドフェーズの最後にまとめてunmountされる。
-        * したがって一度deactivateされたElementのGlobalKeyによる再利用は、同一のフレーム内のビルドフェーズの中行われる必要があり、ビルドフェーズが終わるとunmountされて再利用はされない。
+        * したがって一度deactivateされたElementのGlobalKeyによる再利用は、同一のフレーム内のビルドフェーズの中で行われる必要があり、レンダリングパイプライン(persistent callbackのフェーズ)の最後にunmountされて再利用はされない。
 * Element.rebuild()
     * リビルドの起点。
     * コード概要
