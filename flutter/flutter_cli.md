@@ -124,6 +124,9 @@
 * `dart format`
 * ※ `flutter format` は `dart format`をラップするコマンドだったが削除された。
     * https://github.com/flutter/flutter/pull/129360
+## (参考) Github Actionsにdart formatを追加する
+* https://starhoshi.hatenablog.com/entry/2023/05/19/172447
+
 
 # その他
 * `flutter screenshot --out 出力先ファイル`  
