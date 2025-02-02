@@ -59,7 +59,15 @@
     * 全体でカスタマイズせずに、ソースコード内に直接記述してファイルや行単位で例外扱いにすることも可能。
         * `// ignore: name_of_lint` 
         * `// ignore_for_file: name_of_lint`
-
+    * コンストラクタ呼び出しの際のconst可能なものはconstを優先させる
+        * `prefer_const_constructors: true` 
+        * こちらは以前のFlutterではデフォルトでtrueとなっていたが、オプトインに変更されていたようだ。
+        * (参考)関連issue
+            * https://github.com/dart-lang/core/issues/833
+            * https://github.com/dart-lang/core/issues/833#issuecomment-2556952070
+            * IMO
+                * https://github.com/dart-lang/core/issues/833#issuecomment-2556951886
+                * 現状は「constをlinterで開発者に強制させる」ほどの「一般的なプロジェクトにおけるconstの測定可能なメリット」が十分にないためこの選択に至ったと考えられる。
 
 # dart format
 * https://dart.dev/tools/dart-format
