@@ -321,13 +321,22 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
         });
   }
   ```
-  * これは1行目は非同期処理(別のイベントとして)を待つため、完了までにdisposeされてBuildContextの中身であるElementが破棄されてしまう可能性に対する警告となる。
-  * この場合は`if (mounted) ScaffoldMessenger.〜〜` のように mountedが真の場合のみ実行するようにすれば良い。
-  * mountedは下記のように定義されており、これはStatefulWidgetクラスのElementが生成されていればtrueとなる。
+  - これは 1 行目は非同期処理(別のイベントとして)を待つため、完了までに dispose されて BuildContext の中身である Element が破棄されてしまう可能性に対する警告となる。
+  - この場合は`if (mounted) ScaffoldMessenger.〜〜` のように mounted が真の場合のみ実行するようにすれば良い。
+    - (追記 25/7/21)
+      - 現状、if (mounted)だとリンターの警告が消えないが、下記のように context.mounted を指定すると消える。
+      ```dart
+      if (!context.mounted) return;
+      // or
+      if (context.mounted) {
+        //...
+      }
+      ```
+  - mounted は下記のように定義されており、これは StatefulWidget クラスの Element が生成されていれば true となる。
     ```dart
     bool get mounted => _element != null;
     ```
-* (参考)Flutter framework内の処理は下記のようになっている
+- (参考)Flutter framework 内の処理は下記のようになっている
   ```dart
     @protected
     void setState(VoidCallback fn) {
