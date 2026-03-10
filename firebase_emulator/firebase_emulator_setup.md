@@ -19,14 +19,17 @@
 * エミュレータがインストールされると、Firebase CLI のバージョンを更新するまでアップデートのチェックは行われない。
     * 追加の自動ダウンロードも行われない。
     * https://firebase.google.com/docs/emulator-suite/install_and_configure?hl=ja#install_the_local_emulator_suite
-* したがってfirebase自体をアップデートした後は、emulatorも個別にアップデートする必要がある。
-* 手動でアップデートする例
-    * ~/.cache/firebase/emulators　を削除
-    * 適当なプロジェクトフォルダを作ってfirebase initを実行。
-    * 質問で emulatorを選択しておき、利用するEmulatorを選択後、「Would you like to download the emulators now? 」の質問でYesとする。
-* Release Nots
+* Firebase CLI自体をアップデートした後にEmulatorを起動すると自動的にダウンロード・古いファイルが削除される
+```sh
+i  firestore: downloading cloud-firestore-emulator-v1.20.2.jar...
+Progress: ===================================================================================================================================================================================================================> (100% of 124MB
+i  firestore: Removing outdated emulator files: cloud-firestore-emulator-v1.19.8.jar
+i  firestore: Firestore Emulator logging to firestore-debug.log
+✔  firestore: Firestore Emulator UI websocket is running on 9150.
+```
+* Release Notes
     * CLIのリリースノートの中に記載される。
-    * 例えば、firebase cli v13.16.0で、emulator v1.19.8がリリースされている。
+    * 例えば、firebase cli v13.16.0で、firestore emulator v1.19.8がリリースされている。
     * https://firebase.google.com/support/release-notes/cli
 
 # コマンド

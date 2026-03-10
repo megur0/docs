@@ -14,6 +14,7 @@
                 * l10n.yamlの設定には`synthetic-package: false`が必要
                 * マイグレーション対応の方を参照
                 * 合わせて`output-dir:`にて出力先も設定する。
+            * (26/2/12) 最新版で上記の対応は不要。
 
         * ~~自動生成ファイルは「.dart_tool/flutter_gen/get_l10n」に生成される。~~
             * `output-dir:`で指定したディレクトリへ出力
