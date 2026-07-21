@@ -1,3 +1,7 @@
+---
+updated: 2024-12-12
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 主なウィジェット
 
 # WIP: 随時更新

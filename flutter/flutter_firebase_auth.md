@@ -1,3 +1,7 @@
+---
+updated: 2024-10-21
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > Firebase Authentication
 
 # Admin SDKの変更はストリームで検知できない

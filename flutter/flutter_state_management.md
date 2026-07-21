@@ -1,3 +1,7 @@
+---
+updated: 2025-12-07
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 状態管理
 
 

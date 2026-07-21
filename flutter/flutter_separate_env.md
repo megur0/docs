@@ -1,3 +1,7 @@
+---
+updated: 2024-08-30
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 環境を入れ替え可能とする
 
 

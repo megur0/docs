@@ -1,3 +1,7 @@
+---
+updated: 2024-11-05
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > リリース
 
 

@@ -1,3 +1,7 @@
+---
+updated: 2025-01-01
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 環境構築・アップデート
 
 

@@ -1,3 +1,7 @@
+---
+updated: 2024-10-08
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > フォント
 
 

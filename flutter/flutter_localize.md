@@ -1,3 +1,7 @@
+---
+updated: 2026-03-11
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > ローカライズ
 
 

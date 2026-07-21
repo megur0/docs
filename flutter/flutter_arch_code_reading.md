@@ -1,3 +1,7 @@
+---
+updated: 2025-01-05
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > (参考)内部処理の理解(コードリーディング)
 
 

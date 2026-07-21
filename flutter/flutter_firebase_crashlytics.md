@@ -1,3 +1,7 @@
+---
+updated: 2024-11-01
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > Firebase Crashlytics
 
 

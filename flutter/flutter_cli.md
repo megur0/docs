@@ -1,3 +1,7 @@
+---
+updated: 2025-01-08
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > CLI
 
 

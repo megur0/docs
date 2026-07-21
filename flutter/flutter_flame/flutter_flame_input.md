@@ -1,3 +1,7 @@
+---
+updated: 2024-08-30
+---
+
 [TOP(About this memo))](../../README.md) >  [Flutter](../README.md) > [一覧(Flame)](./README.md) > 入力
 
 # 入力系
