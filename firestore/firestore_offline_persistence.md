@@ -1,3 +1,7 @@
+---
+title: "オフラインでのデータの永続性"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > オフラインでのデータの永続性
 
 

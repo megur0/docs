@@ -1,3 +1,7 @@
+---
+title: "その他のソリューション"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > その他のソリューション
 
 # TTLポリシー（未読）

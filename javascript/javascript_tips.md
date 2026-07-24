@@ -1,4 +1,5 @@
 ---
+title: "TIPS"
 updated: 2026-07-24
 ---
 

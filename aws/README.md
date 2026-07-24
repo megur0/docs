@@ -1,4 +1,5 @@
 ---
+title: "AWS"
 updated: 2026-07-24
 ---
 

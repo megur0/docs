@@ -1,4 +1,5 @@
 ---
+title: "PositionComponent"
 updated: 2024-09-18
 ---
 

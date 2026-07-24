@@ -1,4 +1,5 @@
 ---
+title: "モジュール(import/export)"
 updated: 2026-07-24
 ---
 

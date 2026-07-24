@@ -1,3 +1,7 @@
+---
+title: "クラス（拡張・実装）"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > クラス（拡張・実装）
 
 

@@ -1,4 +1,5 @@
 ---
+title: "EC2・EBS"
 updated: 2026-07-24
 ---
 

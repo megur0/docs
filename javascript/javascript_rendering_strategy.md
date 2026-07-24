@@ -1,4 +1,5 @@
 ---
+title: "レンダリング手法(SPA/SSR/SSG)"
 updated: 2026-07-24
 ---
 

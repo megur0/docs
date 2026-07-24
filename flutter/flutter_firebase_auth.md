@@ -1,4 +1,5 @@
 ---
+title: "Firebase Authentication"
 updated: 2024-10-21
 ---
 

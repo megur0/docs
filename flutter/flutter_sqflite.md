@@ -1,4 +1,5 @@
 ---
+title: "ローカルデータ(SqfListe)"
 updated: 2024-08-30
 ---
 

@@ -1,4 +1,5 @@
 ---
+title: "GameWidget/Game/Component"
 updated: 2024-10-10
 ---
 

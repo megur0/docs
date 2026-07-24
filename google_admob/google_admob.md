@@ -1,3 +1,7 @@
+---
+title: "Google AdMob"
+---
+
 [TOP(About this memo))](../README.md) > Google AdMob
 
 

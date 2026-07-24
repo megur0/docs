@@ -1,3 +1,7 @@
+---
+title: "文法"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 文法
 
 

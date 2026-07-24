@@ -1,3 +1,7 @@
+---
+title: "ディープリンク"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > ディープリンク
 
 

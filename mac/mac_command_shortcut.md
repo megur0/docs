@@ -1,3 +1,7 @@
+---
+title: "コマンド・ショートカット"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Mac)](./README.md) > コマンド・ショートカット
 
 

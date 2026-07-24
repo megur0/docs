@@ -1,4 +1,5 @@
 ---
+title: "this・プロトタイプ・class"
 updated: 2026-07-24
 ---
 

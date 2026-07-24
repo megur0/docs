@@ -1,3 +1,7 @@
+---
+title: "宣言"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 宣言
 
 

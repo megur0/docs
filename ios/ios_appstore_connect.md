@@ -1,3 +1,7 @@
+---
+title: "App Store Connect/リリース"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > App Store Connect/リリース
 
 

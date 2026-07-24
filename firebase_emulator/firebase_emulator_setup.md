@@ -1,3 +1,7 @@
+---
+title: "セットアップ"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Firebase Local Emulator Suite)](./README.md) > セットアップ
 
 

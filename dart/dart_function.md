@@ -1,3 +1,7 @@
+---
+title: "関数"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 関数
 
 

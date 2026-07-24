@@ -1,3 +1,7 @@
+---
+title: "リアルアップデート（リスナー）"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > リアルアップデート（リスナー）
 
 # Cloud Firestore でリアルタイム アップデート

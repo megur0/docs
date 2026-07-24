@@ -1,4 +1,5 @@
 ---
+title: "go_router"
 updated: 2024-10-14
 ---
 

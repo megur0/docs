@@ -1,3 +1,7 @@
+---
+title: "制限と課金"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > 制限と課金
 
 # 使用量と上限

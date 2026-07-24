@@ -1,3 +1,7 @@
+---
+title: "データ構造"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > データ構造
 
 # 構成要素

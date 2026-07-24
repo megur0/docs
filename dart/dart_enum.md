@@ -1,3 +1,7 @@
+---
+title: "列挙型"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 列挙型
 
 

@@ -1,3 +1,7 @@
+---
+title: "App Store レビュー"
+---
+
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > App Store レビュー
 
 
