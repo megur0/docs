@@ -27,6 +27,8 @@ updated: 2026-07-24
 
 * [Route53・SSL証明書・CloudFront](./aws_route53.md)
 
+* [CloudFrontの構成パターン](./aws_cloud_front.md)
+
 * [ECS・ECR・EKS・Fargate](./aws_ecs.md)
 
 * [AWS CLI・CloudFormation](./aws_cli_iac.md)
