@@ -1,5 +1,5 @@
 ---
-title: "CLI"
+title: "CLI - Flutter"
 updated: 2025-01-08
 ---
 

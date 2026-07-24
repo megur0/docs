@@ -1,5 +1,5 @@
 ---
-title: "TIPS"
+title: "TIPS - JavaScript"
 updated: 2026-07-24
 ---
 

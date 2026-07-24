@@ -1,5 +1,5 @@
 ---
-title: "トランザクション"
+title: "トランザクション - Firestore"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > トランザクション

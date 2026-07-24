@@ -1,5 +1,5 @@
 ---
-title: "WAF・Shield"
+title: "WAF・Shield - AWS"
 updated: 2026-07-24
 ---
 

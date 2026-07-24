@@ -1,5 +1,5 @@
 ---
-title: "GameWidget/Game/Component"
+title: "GameWidget/Game/Component - Flame"
 updated: 2024-10-10
 ---
 

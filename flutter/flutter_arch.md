@@ -1,5 +1,5 @@
 ---
-title: "アーキテクチャ"
+title: "アーキテクチャ - Flutter"
 updated: 2024-08-30
 ---
 

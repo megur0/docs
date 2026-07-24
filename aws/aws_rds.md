@@ -1,5 +1,5 @@
 ---
-title: "RDS・Aurora"
+title: "RDS・Aurora - AWS"
 updated: 2026-07-24
 ---
 

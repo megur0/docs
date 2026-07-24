@@ -1,5 +1,5 @@
 ---
-title: "Secrets Manager・SSM(Systems Manager)"
+title: "Secrets Manager・SSM(Systems Manager) - AWS"
 updated: 2026-07-24
 ---
 

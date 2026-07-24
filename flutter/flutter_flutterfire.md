@@ -1,5 +1,5 @@
 ---
-title: "FlutterFire"
+title: "FlutterFire - Flutter"
 updated: 2024-10-20
 ---
 

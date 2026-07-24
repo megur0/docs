@@ -1,5 +1,5 @@
 ---
-title: "Firebase Authentication"
+title: "Firebase Authentication - Flutter"
 updated: 2024-10-21
 ---
 

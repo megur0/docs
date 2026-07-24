@@ -1,5 +1,5 @@
 ---
-title: "this・プロトタイプ・class"
+title: "this・プロトタイプ・class - JavaScript"
 updated: 2026-07-24
 ---
 

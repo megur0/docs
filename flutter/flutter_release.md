@@ -1,5 +1,5 @@
 ---
-title: "リリース"
+title: "リリース - Flutter"
 updated: 2024-11-05
 ---
 

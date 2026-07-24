@@ -1,5 +1,5 @@
 ---
-title: "仮想DOM・フレームワーク比較"
+title: "仮想DOM・フレームワーク比較 - JavaScript"
 updated: 2026-07-24
 ---
 

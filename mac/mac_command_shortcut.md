@@ -1,5 +1,5 @@
 ---
-title: "コマンド・ショートカット"
+title: "コマンド・ショートカット - Mac"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Mac)](./README.md) > コマンド・ショートカット

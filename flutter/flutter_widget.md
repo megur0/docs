@@ -1,5 +1,5 @@
 ---
-title: "主なウィジェット"
+title: "主なウィジェット - Flutter"
 updated: 2024-12-12
 ---
 

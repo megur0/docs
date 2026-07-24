@@ -1,5 +1,5 @@
 ---
-title: "ミックスイン"
+title: "ミックスイン - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > ミックスイン

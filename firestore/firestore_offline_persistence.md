@@ -1,5 +1,5 @@
 ---
-title: "オフラインでのデータの永続性"
+title: "オフラインでのデータの永続性 - Firestore"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > オフラインでのデータの永続性

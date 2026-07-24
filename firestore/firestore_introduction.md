@@ -1,5 +1,5 @@
 ---
-title: "導入"
+title: "導入 - Firestore"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > 導入

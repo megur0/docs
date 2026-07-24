@@ -1,5 +1,5 @@
 ---
-title: "セットアップ"
+title: "セットアップ - Firebase Local Emulator Suite"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firebase Local Emulator Suite)](./README.md) > セットアップ

@@ -1,5 +1,5 @@
 ---
-title: "S3"
+title: "S3 - AWS"
 updated: 2026-07-24
 ---
 

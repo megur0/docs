@@ -1,5 +1,5 @@
 ---
-title: "ECS・ECR・EKS・Fargate"
+title: "ECS・ECR・EKS・Fargate - AWS"
 updated: 2026-07-24
 ---
 

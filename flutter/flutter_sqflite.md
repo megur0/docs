@@ -1,5 +1,5 @@
 ---
-title: "ローカルデータ(SqfListe)"
+title: "ローカルデータ(SqfListe) - Flutter"
 updated: 2024-08-30
 ---
 

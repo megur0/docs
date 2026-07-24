@@ -1,5 +1,5 @@
 ---
-title: "CloudFrontの構成パターン"
+title: "CloudFrontの構成パターン - AWS"
 updated: 2026-07-24
 ---
 

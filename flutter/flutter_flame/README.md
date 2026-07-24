@@ -1,5 +1,5 @@
 ---
-title: "Flameを使ったゲーム作成"
+title: "Flameを使ったゲーム作成 - Flutter"
 updated: 2024-10-08
 ---
 

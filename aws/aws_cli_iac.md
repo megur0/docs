@@ -1,5 +1,5 @@
 ---
-title: "AWS CLI・CloudFormation"
+title: "AWS CLI・CloudFormation - AWS"
 updated: 2026-07-24
 ---
 

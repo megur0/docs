@@ -1,5 +1,5 @@
 ---
-title: "Cloud Functionsとの連携"
+title: "Cloud Functionsとの連携 - Firestore"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > Cloud Functionsとの連携

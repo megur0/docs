@@ -1,5 +1,5 @@
 ---
-title: "fake_async/clockパッケージ"
+title: "fake_async/clockパッケージ - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > fake_async/clockパッケージ

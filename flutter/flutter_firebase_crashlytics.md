@@ -1,5 +1,5 @@
 ---
-title: "Firebase Crashlytics"
+title: "Firebase Crashlytics - Flutter"
 updated: 2024-11-01
 ---
 

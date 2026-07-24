@@ -1,5 +1,5 @@
 ---
-title: "パッケージ開発"
+title: "パッケージ開発 - Flutter"
 updated: 2024-10-14
 ---
 

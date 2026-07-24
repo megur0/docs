@@ -1,5 +1,5 @@
 ---
-title: "SQS"
+title: "SQS - AWS"
 updated: 2026-07-24
 ---
 

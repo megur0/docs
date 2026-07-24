@@ -1,5 +1,5 @@
 ---
-title: "VPC・ネットワーク基礎"
+title: "VPC・ネットワーク基礎 - AWS"
 updated: 2026-07-24
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "ルーティング"
+title: "ルーティング - Flutter"
 updated: 2024-10-13
 ---
 

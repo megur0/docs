@@ -1,5 +1,5 @@
 ---
-title: "iOSでビルドされる構成"
+title: "iOSでビルドされる構成 - Flutter"
 updated: 2024-10-17
 ---
 

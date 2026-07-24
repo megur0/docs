@@ -1,5 +1,5 @@
 ---
-title: "状態管理"
+title: "状態管理 - Flutter"
 updated: 2025-12-07
 ---
 

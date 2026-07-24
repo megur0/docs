@@ -1,5 +1,5 @@
 ---
-title: "リアルアップデート（リスナー）"
+title: "リアルアップデート（リスナー） - Firestore"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > リアルアップデート（リスナー）

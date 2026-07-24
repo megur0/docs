@@ -1,5 +1,5 @@
 ---
-title: "permission_handler"
+title: "permission_handler - Flutter"
 updated: 2024-08-30
 ---
 

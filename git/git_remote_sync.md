@@ -1,5 +1,5 @@
 ---
-title: "push・pull・fetch"
+title: "push・pull・fetch - Git"
 updated: 2026-07-24
 ---
 

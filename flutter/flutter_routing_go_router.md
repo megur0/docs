@@ -1,5 +1,5 @@
 ---
-title: "go_router"
+title: "go_router - Flutter"
 updated: 2024-10-14
 ---
 

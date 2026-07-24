@@ -1,5 +1,5 @@
 ---
-title: "Rosseta"
+title: "Rosseta - Mac"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Mac)](./README.md) > Rosseta

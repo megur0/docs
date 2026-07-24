@@ -1,5 +1,5 @@
 ---
-title: "拡張"
+title: "拡張 - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 拡張

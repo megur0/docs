@@ -1,5 +1,5 @@
 ---
-title: "データ構造"
+title: "データ構造 - JavaScript"
 updated: 2026-07-24
 ---
 

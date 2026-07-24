@@ -1,5 +1,5 @@
 ---
-title: "制限と課金"
+title: "制限と課金 - Firestore"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > 制限と課金

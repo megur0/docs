@@ -1,5 +1,5 @@
 ---
-title: "NoSQL(DynamoDB・Redis・ElastiCache)"
+title: "NoSQL(DynamoDB・Redis・ElastiCache) - AWS"
 updated: 2026-07-24
 ---
 

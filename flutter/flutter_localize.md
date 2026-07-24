@@ -1,5 +1,5 @@
 ---
-title: "ローカライズ"
+title: "ローカライズ - Flutter"
 updated: 2026-03-11
 ---
 

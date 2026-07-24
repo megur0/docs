@@ -1,5 +1,5 @@
 ---
-title: "Babel・webpack"
+title: "Babel・webpack - JavaScript"
 updated: 2026-07-24
 ---
 

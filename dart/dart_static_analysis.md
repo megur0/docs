@@ -1,5 +1,5 @@
 ---
-title: "静的解析"
+title: "静的解析 - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 静的解析

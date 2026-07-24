@@ -1,5 +1,5 @@
 ---
-title: "レンダリング手法(SPA/SSR/SSG)"
+title: "レンダリング手法(SPA/SSR/SSG) - JavaScript"
 updated: 2026-07-24
 ---
 

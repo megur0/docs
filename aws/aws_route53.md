@@ -1,5 +1,5 @@
 ---
-title: "Route53・SSL証明書・CloudFront"
+title: "Route53・SSL証明書・CloudFront - AWS"
 updated: 2026-07-24
 ---
 

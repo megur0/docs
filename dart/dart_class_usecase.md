@@ -1,5 +1,5 @@
 ---
-title: "(IMO)拡張や実装やclass修飾子の使い分"
+title: "(IMO)拡張や実装やclass修飾子の使い分 - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > (IMO)拡張や実装やclass修飾子の使い分

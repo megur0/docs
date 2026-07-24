@@ -1,5 +1,5 @@
 ---
-title: "iOSシミュレータの操作"
+title: "iOSシミュレータの操作 - iOSアプリ開発"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > iOSシミュレータの操作

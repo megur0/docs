@@ -1,5 +1,5 @@
 ---
-title: "型"
+title: "型 - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 型

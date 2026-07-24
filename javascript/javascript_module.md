@@ -1,5 +1,5 @@
 ---
-title: "モジュール(import/export)"
+title: "モジュール(import/export) - JavaScript"
 updated: 2026-07-24
 ---
 

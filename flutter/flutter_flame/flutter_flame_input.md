@@ -1,5 +1,5 @@
 ---
-title: "入力"
+title: "入力 - Flame"
 updated: 2024-08-30
 ---
 

@@ -1,5 +1,5 @@
 ---
-title: "並行処理"
+title: "並行処理 - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 並行処理

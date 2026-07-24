@@ -1,5 +1,5 @@
 ---
-title: "料金・SLA・障害"
+title: "料金・SLA・障害 - AWS"
 updated: 2026-07-24
 ---
 

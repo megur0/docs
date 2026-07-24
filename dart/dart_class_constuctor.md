@@ -1,5 +1,5 @@
 ---
-title: "クラス(コンストラクタ)"
+title: "クラス(コンストラクタ) - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > クラス(コンストラクタ)

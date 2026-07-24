@@ -1,5 +1,5 @@
 ---
-title: "クラス（メンバー）"
+title: "クラス（メンバー） - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > クラス（メンバー）

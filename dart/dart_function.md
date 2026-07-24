@@ -1,5 +1,5 @@
 ---
-title: "関数"
+title: "関数 - Dart"
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 関数

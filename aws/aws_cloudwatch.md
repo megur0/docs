@@ -1,5 +1,5 @@
 ---
-title: "CloudWatch・CloudTrail"
+title: "CloudWatch・CloudTrail - AWS"
 updated: 2026-07-24
 ---
 

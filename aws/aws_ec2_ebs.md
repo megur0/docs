@@ -1,5 +1,5 @@
 ---
-title: "EC2・EBS"
+title: "EC2・EBS - AWS"
 updated: 2026-07-24
 ---
 
