@@ -53,6 +53,8 @@
 
 * [Git](./git/README.md)
 
+* [AWS](./aws/README.md)
+
 * [AdMob](./google_admob/google_admob.md)
 
 * 表記などについて
