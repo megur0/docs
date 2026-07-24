@@ -2,3 +2,7 @@
 db.ini
 .DS_Store
 .vscode
+
+# Claude Code local workflow notes (private, not for the public repo)
+CLAUDE.md
+.claude/

@@ -28,6 +28,8 @@
 
 * [Flutter](./flutter/README.md)
 
+* [JavaScript](./javascript/README.md)
+
 * Firebase
     * [Firebase Authentication](./firebase_auth/firebase_auth.md) 
 
