@@ -58,6 +58,8 @@ permalink: /
 
 * [AWS](./aws/README.md)
 
+* [ネットワーク](./network/README.md)
+
 * [Claude](./claude/README.md)
 
 * [セキュリティ](./security/README.md)
