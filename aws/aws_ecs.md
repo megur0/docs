@@ -28,9 +28,12 @@ Amazon ECS(Elastic Container Service)は、クラスタ上でDockerコンテナ�
     ```
 
 ## クラスター
-* Cluster: TaskはEC2(またはFargate)上で動作する。ClusterはそのTaskを稼働させる1つ以上のEC2の集合を指す。AutoScalingグループを想像しがちだが、単一のEC2や、AutoScalingしない複数EC2でもClusterとして成立する。
-* EC2をClusterに参加させるには、Dockerコンテナとして動く`ecs-agent`をEC2上で起動しておく必要がある。ecs-agentがEC2の情報をECS側に送り、ECSはその情報をもとにTaskをどのインスタンスで起動するか決定する。
-* AWSはDockerとecs-agentを事前設定済みのECS-Optimized AMIを提供しており、これを使うのが最も手軽。他のOS/ディストリビューションでも、ecs-agentさえインストールすればCluster Instanceとして利用できる。
+* Cluster: Service/Taskをまとめて管理する論理的な単位(名前空間)。ServiceやTaskは必ずどこか1つのClusterに所属し、`aws_ecs_service`などはこのClusterを指定して作成する。
+* EC2起動タイプの場合: TaskはEC2上で動作し、ClusterはそのTaskを稼働させる1つ以上のEC2の集合を指す。AutoScalingグループを想像しがちだが、単一のEC2や、AutoScalingしない複数EC2でもClusterとして成立する。
+    * EC2をClusterに参加させるには、Dockerコンテナとして動く`ecs-agent`をEC2上で起動しておく必要がある。ecs-agentがEC2の情報をECS側に送り、ECSはその情報をもとにTaskをどのインスタンスで起動するか決定する。
+    * AWSはDockerとecs-agentを事前設定済みのECS-Optimized AMIを提供しており、これを使うのが最も手軽。他のOS/ディストリビューションでも、ecs-agentさえインストールすればCluster Instanceとして利用できる。
+* Fargate起動タイプの場合: EC2インスタンスを自前で用意・管理する必要がないため、Clusterは物理的なサーバー集合を持たず、単に「どのService/Taskがこのグループに属するか」を管理するだけの箱になる。実行基盤(データプレーン)はAWS側が管理する。
+* Terraformでは`aws_ecs_cluster`で1つのClusterを作成し、`setting { name = "containerInsights", value = "enabled" }`を指定するとCloudWatch Container Insightsが有効化され、Cluster/Service/Task単位のCPU・メモリ使用率などのメトリクスを自動収集できる(追加コストあり)。
 
 ## 用語整理
 * タスク定義(Task Definition): コンテナの設計図(JSON)。あくまで設計図であり、これだけではコンテナは起動しない。
@@ -47,9 +50,12 @@ Amazon ECS(Elastic Container Service)は、クラスタ上でDockerコンテナ�
 
 * サービス(Service): タスク定義をもとにTaskを起動・維持する設定
 * タスク(Task): サービスによって実際に起動されたコンテナ(群)
+* クラスター(Cluster): Service/Taskをまとめて管理する論理的な単位。Serviceは必ずいずれかのClusterに所属する。
 * (参考) https://qiita.com/VA_nakatsu/items/2e9235fd98b3c7eab507
-* 3者の関係:
+* 4者の関係:
     ```
+    Cluster(Service/Taskの管理単位)
+          ↓ (所属)
     Task Definition(設計図)
           ↓
     ECS Service(起動・維持)
