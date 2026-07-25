@@ -60,6 +60,8 @@ permalink: /
 
 * [Claude](./claude/README.md)
 
+* [セキュリティ](./security/README.md)
+
 * [AdMob](./google_admob/google_admob.md)
 
 * [draw.io](./drawio/drawio.md)
