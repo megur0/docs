@@ -1,48 +1,79 @@
 ---
 title: "ECS・ECR・EKS・Fargate - AWS"
-updated: 2026-07-24
+updated: 2026-07-25
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > ECS・ECR・EKS・Fargate
 
 
 # ECS(Amazon Elastic Container Service)
-Amazon ECS(Elastic Container Service)は、クラスタ上でのDockerコンテナの実行・停止・管理をおこなえる、スケーラブルで高速なコンテナ管理サービス。
+Amazon ECS(Elastic Container Service)は、クラスタ上でDockerコンテナの実行・停止・管理を行うフルマネージドのコンテナオーケストレーションサービス。
 
 ## タスク
 * (参考) https://dev.classmethod.jp/articles/amazon-ecs-datamodel/
-* 例えばWeb+APサーバーの構成で、WebサーバーにNginx、APサーバーにSpring Bootを採用した場合、サービスが2つ存在することになるため、それぞれを分離したコンテナとして起動すべきである。それぞれのコンテナは協調して動作することになり、どちらかが欠けていても動くものではなく、1つの塊として稼働するものになる。そういった1つ以上の協調して動作するコンテナ群を、ECSではTaskと呼ぶ。
-* 一般的に、1コンテナにつき1サービスとして関心事を分離することが推奨されている。
+* Task: 1つ以上の、協調して動作するコンテナ群のまとまり。例えばWeb(Nginx)+AP(Spring Boot)のように互いに依存し合う構成は、1つのTaskとしてまとめて起動・停止する。
+* 基本は1コンテナ=1関心事。疎結合な処理(別のTaskとして独立できるもの)は分離するのが一般的。
 
 ## サービス
-* Taskは、Task Definitionを元に実際に起動されたコンテナ群一式を指す。このコンテナ群を起動する数を調整したり、ELB/ALBとの連携を行ってくれるのがServiceという概念。Serviceは作成時に起動するタスクの数や紐付けるロードバランサーの指定を行う。Service内で起動すべきTaskの数はDesired Countという名前で管理されている。そのため、例えばTaskが何らかの理由で異常終了した場合、Serviceが新たにTaskを起動してTaskの数をDesired Countに保つ。AutoScalingで例えると、ServiceはAutoScalingGroupに該当するもの。
+* Service: Task Definitionをもとに起動したコンテナ群(Task)の数を維持し、ELB/ALBとの連携も担う概念。維持すべきTask数は`desired_count`で管理され、Taskが異常終了しても自動で補充される。AutoScalingでいうAutoScalingGroupに相当するもの。
+* ローリングアップデートに対応しており、新Task起動→ヘルスチェック成功→旧Task停止の順に入れ替えるため、無停止でデプロイできる。
+    ```
+    旧Task 2台
+        ↓
+    新Task 2台起動
+        ↓
+    ヘルスチェック成功
+        ↓
+    旧Task停止
+    ```
 
 ## クラスター
-* コンテナを起動するにはOSが必要で、AWSにおけるOSとはEC2のこと。Clusterというのは、ECSのTaskを稼働させるための1つ以上のEC2の塊を指す。AutoScalingのEC2を想像しがちだが、AutoScalingではない複数のEC2インスタンスでも、単独のEC2インスタンスでもClusterとして成立する。
-* EC2をClusterに参加させるには、ecs-agentがEC2上で起動されている必要がある。ecs-agentはDocker containerとしてEC2上で起動され、EC2の様々な情報をECS側に送る役割を持つ。ECS側ではecs-agentから送信される情報を基に、TaskをCluster上のどのEC2インスタンスで起動するか決定する。
-* AWSはECS-Optimized AMIというAMIを提供している。Amazon Linux上にDockerやecs-agentといった、ECS Cluster用のEC2として稼働するための最小限の設定があらかじめ実施されているベースAMI。このAMIを利用するのが最も障壁が低いが、用途に応じてUbuntuなどのAmazon Linux以外のディストリビューションや、Container Linuxなどの軽量OS上にecs-agentをインストールしてCluster Instanceとして稼働させることも可能。
+* Cluster: TaskはEC2(またはFargate)上で動作する。ClusterはそのTaskを稼働させる1つ以上のEC2の集合を指す。AutoScalingグループを想像しがちだが、単一のEC2や、AutoScalingしない複数EC2でもClusterとして成立する。
+* EC2をClusterに参加させるには、Dockerコンテナとして動く`ecs-agent`をEC2上で起動しておく必要がある。ecs-agentがEC2の情報をECS側に送り、ECSはその情報をもとにTaskをどのインスタンスで起動するか決定する。
+* AWSはDockerとecs-agentを事前設定済みのECS-Optimized AMIを提供しており、これを使うのが最も手軽。他のOS/ディストリビューションでも、ecs-agentさえインストールすればCluster Instanceとして利用できる。
 
 ## 用語整理
-* タスク定義(Task Definition): 1つ以上のコンテナ設定が記述されたJSONファイル
-* サービス(Service): 定義されたタスクをECSクラスターで動作させるための設定
-* タスク(Task): サービスによって実際に実行されたコンテナ(群)
+* タスク定義(Task Definition): コンテナの設計図(JSON)。あくまで設計図であり、これだけではコンテナは起動しない。
+
+    | 項目 | 内容 |
+    |------|------|
+    | CPU / Memory | コンテナへ割り当てるリソース |
+    | Container Image | 利用するDockerイメージ |
+    | Port Mapping | コンテナが待ち受けるポート |
+    | Environment | 環境変数 |
+    | Secrets | Secrets Managerから取得する機密情報 |
+    | IAM Role | AWSサービスへアクセスするための権限 |
+    | Log Configuration | ログ出力先 |
+
+* サービス(Service): タスク定義をもとにTaskを起動・維持する設定
+* タスク(Task): サービスによって実際に起動されたコンテナ(群)
 * (参考) https://qiita.com/VA_nakatsu/items/2e9235fd98b3c7eab507
+* 3者の関係:
+    ```
+    Task Definition(設計図)
+          ↓
+    ECS Service(起動・維持)
+          ↓
+    Task(コンテナ)
+          ↑
+    Application Auto Scaling(Task数の自動調整)
+    ```
 
 コンテナサービスの種類として、それぞれ以下を選択可能。
 * コントロールプレーン(=コンテナ管理をする場所): ECS、EKS
 * データプレーン(=実際にコンテナが稼働する場所): EC2、Fargate
-    * EKSとFargateの組み合わせは長らく"coming soon"のままだったため(?)、選択可能な組み合わせは3通りだった(執筆時点)。
+    * EKS+Fargateの組み合わせは2019年末にGAしており、現在は上記2×2の組み合わせすべてが選択可能。
 
 ## 構築の流れ
 1. Dockerイメージをビルドして、ECRにpush
 2. VPC、セキュリティグループ、サブネット、インスタンス用ロール(ECS)、キーペア、ELBを作成
-3. ECSクラスターを作成(Auto Scaling Groupも兼ねる(?))
+3. ECSクラスターを作成(EC2起動タイプの場合、キャパシティ用にAuto Scaling Groupを別途用意し、Capacity Providerとして紐付けることが多い)
 4. タスク用のロールを作成しておく
 5. タスク定義(イメージ、コンテナ設定、ポートマップ)
-6. サービス定義(タスクとの紐付け、ELBとの連携など。ここに出てくるAuto Scaling設定はサービスのオートスケールを指す(?))
+6. サービス定義(タスクとの紐付け、ELBとの連携、Application Auto Scalingの設定など)
 7. ELBのDNS名:`<port>`でブラウザからアクセスして確認
 
-新しいイメージを作成した場合は、イメージを作成してECRにpushし、ECR側でタスク定義の「新しいリビジョンの作成」で「イメージ」を変更する。
+新しいイメージを作成した場合は、イメージをECRにpushし、タスク定義側で「新しいリビジョンの作成」を行ってイメージを差し替える。
 
 ## 異常系の挙動確認(検証メモ)
 * EC2にログインしてコンテナを削除すると、自動でもう1つ作成される。
@@ -52,33 +83,34 @@ Amazon ECS(Elastic Container Service)は、クラスタ上でのDockerコンテ�
 
 ## ログ
 * デフォルトではコンテナ/インスタンスの再起動や停止でログが消えてしまうため、外部へ送る必要がある。いくつか方法があるが、CloudWatchに送るのが確実(IME)。
+* `awslogs`ログドライバーを使うと、コンテナの標準出力(stdout/stderr)がそのままCloudWatch Logsへ送信される。アプリケーション側は`console.log()`などに出力するだけでよい。
+    ```
+    アプリケーション → 標準出力(stdout) → awslogs → CloudWatch Logs
+    ```
 
 ## Fargateとの違い
 * (参考) https://www.acrovision.jp/service/aws/?p=2599
-* AWS FargateはAmazon ECSの起動時に選択できるサービス(EC2かFargateかを選択)。Fargateの場合、サーバーやクラスターを一切管理することなくコンテナを実行できる。
+* AWS FargateはAmazon ECSの起動時に選択できるデータプレーン(EC2かFargateかを選択)。Fargateの場合、サーバーやクラスターを一切管理することなくコンテナを実行できる。
 
 ## Fargateとlambdaの違い
-* (IME) LambdaはFirebaseでいうCloud Functionsに近いイメージ。
-* AWS Fargateとよく比較検討されるのがAWS Lambda。Lambdaを用いるとサーバーを使用せずにプログラムを実行できる。OSの構築やセキュリティ設定を行う必要はない。また、Lambdaの動作をLambda関数に登録することで、イベント発生時にそれをトリガーとしてプログラムを実行する、といった挙動も設定できる。
-* FargateとLambdaの共通点は、過程は大きく異なるが「インフラの構築・管理を削減し、アプリケーションの開発・運用に集中できる」点。
-* (IME) 大規模なアプリケーションを構築する場合はAWS Fargate、小規模の場合はAWS Lambdaを用いることが多いとされる。Fargateの料金は1時間に利用されたCPUとメモリの使用量、Lambdaの料金はリクエスト数とプログラムの実行時間で決まる。どちらがコストを削減できるかはシステムの用途によって変わるため一概には言えない。
-* Lambdaは制約が多く、大規模アプリケーションでは特にデプロイ時に問題が発生することがあるため、運用・リリースをスムーズにする観点からFargateを用い、状況によってEC2と組み合わせることも多い(IME)。
+* (IME) LambdaはFirebaseでいうCloud Functionsに近いイメージ。サーバー管理不要で、イベントをトリガーにプログラムを実行できる。
+* FargateとLambdaの共通点は「インフラの構築・管理を削減し、アプリケーションの開発・運用に集中できる」点。料金体系はFargateがCPU/メモリの利用時間、Lambdaがリクエスト数と実行時間で決まるため、どちらが安いかは用途次第。
+* (IME) 大規模なアプリケーションはFargate、小規模・イベント駆動な処理はLambdaを使うことが多い。Lambdaは実行時間などの制約が多く、大規模アプリではデプロイ時に問題が出やすいため、運用のしやすさの観点からFargate(状況に応じてEC2併用)を選ぶことが多い。
 
 ## EKS(Amazon Elastic Kubernetes Service)との違い
-* Amazon Elastic Kubernetes Service(Amazon EKS)は、フルマネージド型のKubernetesサービス。セキュリティ、信頼性、スケーラビリティを求める、機密性が高くミッションクリティカルなアプリケーションで利用されることが多い(?)。
-* Kubernetes(クバネティス、クーベネティスと読む)は、複数のDockerなどのコンテナを管理できるオープンソースのプラットフォーム。
-    * 自動デプロイ、稼働中のスケーリング(コンテナ数の変更)、新機能のシームレスな提供開始(ロールアウト)、ハードウェア利用率の最適化(コンテナの共存による稼働率向上)などを目的とする。
-    * ゴールは、アプリの運用負担を軽減するエコシステムのコンポーネントとツールを整備すること。
-        * 可搬性: パブリッククラウド、プライベートクラウド、ハイブリッドクラウド、マルチクラウド
-        * 拡張可能: モジュール化、追加可能、接続可能、構成可能
-        * 自動修復: 自動配置、自動再起動、自動複製、自動スケーリング
-    * 2014年にプロジェクトが開始され、本番のワークロードを大規模に運用してきた経験とコミュニティのベストプラクティスを組み合わせて発展してきた。
-    * (参考) https://kubernetes.io/case-studies/
-    * (参考) https://qiita.com/MahoTakara/items/85096f8b2632c802ab22
+* Amazon EKSは、フルマネージド型のKubernetesサービス。セキュリティ・信頼性・スケーラビリティの要件が高いアプリケーションで選ばれることが多い(IME)。
+* Kubernetesは、複数のDockerなどのコンテナを管理できるOSSのコンテナオーケストレーションツール。自動デプロイ、稼働中のスケーリング、自動修復(異常なコンテナの再起動・複製)などが特徴。
+* (参考) https://kubernetes.io/case-studies/
+* (参考) https://qiita.com/MahoTakara/items/85096f8b2632c802ab22
 * (参考) [Amazon EKSによるスケーリング事例](https://employment.en-japan.com/engineerhub/entry/2019/12/12/103000)
 
 ## オートスケールについて(TODO)
-* サービス・タスクのAuto Scale(Amazon ECSサービスの必要数を調整する仕組み)と、クラスターのオートスケール(通常のAuto Scale Groupと同じもの)の2つが存在するが、これらがどう連動するのかを理解しきれていない(TODO)。
+* サービス・タスクのAuto Scale(Amazon ECSサービスの必要数を調整する仕組み)と、クラスターのオートスケール(通常のAuto Scale Groupと同じもの)の2つが存在する。
+* サービス側のAuto Scaling(Application Auto Scaling)は、CPU使用率などのメトリクスを監視し、Serviceの`desired_count`を自動で書き換えることでTask数を増減させる仕組み。Taskを直接操作するのではなく、あくまでServiceが維持すべきTask数を変更しているだけ、という点がポイント。
+    ```
+    CPU使用率上昇 → desired_count: 2→4 → ServiceがTaskを4台まで起動
+    ```
+* 一方、クラスター側のオートスケールとどう連動するのか(EC2起動タイプの場合、Task数が増えてもインスタンスのキャパシティが足りなければ結局起動できないはずで、その連携がどう制御されているか)は理解しきれていない(TODO)。
 
 ## 参考リンク
 * (参考) [動いているゲームでの活用例・構成](https://pages.awscloud.com/rs/112-TZM-766/images/I3-04.pdf)
@@ -98,20 +130,12 @@ Amazon ECS(Elastic Container Service)は、クラスタ上でのDockerコンテ�
 * (参考) https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/ec2-run-command.html#run_command_iam_policy
 
 # ENI(Elastic Network Interface)とFargate
-* AWS EC2はEC2インスタンスを用いて仮想マシンを用意し、そのインスタンス上にサーバーを構築する必要があったのに対し、AWS FargateではEC2インスタンスや仮想マシンを用意する必要がなく、コンテナを用いることでメモリ使用率を抑えつつアプリケーションサーバーの構築を迅速に行える。
-* 仮想マシンは、ホストとなるマシンの上に複数台の仮想OSを立て、それぞれのユーザーが使用できるOSを提供するのに対し、コンテナは同じホストマシンの上にそれぞれのユーザーが使用できるリソースと空間を提供する。コンテナはコンテナエンジンをベースに動作するため、コンテナエンジンさえあればどんな状況でも動作させられ、可搬性が高いというメリットがある。
-* 一方でコンテナにはデメリットもある。1つのホストマシン上で動作するため、仮想マシンのように個別に異なるOSを選ぶことはできない。OSを構築する手間を省いているぶんメモリ使用率の節約や構築時間の低減に成功しているが、複数種類のOSを開発で利用する必要がある場合は無駄が多くコストがかさむ可能性がある。
-* また、同じマシン上で動作する関係上、仮想マシンと比べてコンテナ同士の分離性が低い。分離性が低いと、セキュリティレベルが低い場合に1つのコンテナが外部から攻撃を受けた際、他のコンテナも脅威にさらされる可能性がある。そのためセキュリティ面でも十分な対策が必要になる(追加料金を払うことで分離性の強化にある程度対応できる場合もある)。
-* コンテナの管理ツールであるAWS ECSをシステムの基盤として利用しており、AWS EC2の場合はインスタンスの利用数やそれぞれの管理、クラスターの管理などが必要だったのに対し、AWS Fargateではそういったインスタンス管理は不要で、コンテナイメージを構築しCPUやメモリといったリソースを指定するだけですぐに利用できる。CPUなどのリソースのスケーリングも自動で行われ最適化される。
-* AWS ENIはElastic Network Interfaceの略称。AWS VPC(Amazon Web Services Virtual Private Cloud)と呼ばれる、ユーザーごとに個別に提供されるプライベートなクラウドにおいて、IPアドレスなどのネットワーク情報をENIに付与することで、より柔軟なネットワーク構成を実現する仮想ネットワークインターフェース。
-* 物理的な環境でサーバーの役割に応じて複数のIPアドレスを持たせるなど、ネットワークインターフェースを増やすにはサーバーにNIC(Network Interface Card)を追加で挿す必要があるが、AWS ENIを用いればクラウド上でIPアドレスの登録やセキュリティグループの登録を行うだけで簡単にネットワークインターフェースを追加できる。
-* Fargateでコンテナを用いてECSタスクを実行する場合、ECSはネットワークとしてawsvpcネットワークモードを必要とする。このネットワークモードでは各タスクにENIとプライマリプライベートIPアドレスが付与される。awsvpcネットワークが各タスクにENIを付与するため、タスクの種別ごとにセキュリティグループを分けて通信制御を行える、というメリットがある。awsvpcネットワークはAWS Fargate固有の機能というわけではないが、AWS Fargateのネットワークの裏側ではENIが用いられている。
-* (参考) https://www.acrovision.jp/service/aws/?p=2504
-* Fargateはネットワークモードがawsvpcモードのみ(EC2などはデフォルトがbridgeモード)。
-    * Fargateだと、awsvpcネットワークモードで、VPC内の他のリソースへプライベートIPで通信が可能になる(?)。
+* AWS Fargateを使うと、EC2インスタンスや仮想マシンを用意せずにコンテナを実行できる。コンテナは同一ホスト上でリソース・空間を共有して動くため可搬性は高いが、仮想マシンに比べて分離性は低く、セキュリティ対策は別途必要になる(追加料金で分離性を強化できる場合もある)。
+* ENI(Elastic Network Interface): VPC内でIPアドレスなどのネットワーク情報を払い出す仮想ネットワークインターフェース。物理サーバーでNIC(Network Interface Card)を増設する代わりに、コンソール操作だけでネットワークインターフェースを追加できる。
+* Fargateでコンテナを実行する場合、ネットワークモードは`awsvpc`が必須(EC2起動タイプのデフォルトは`bridge`)。`awsvpc`モードでは各TaskにENIとプライベートIPアドレスが付与されるため、Task単位でセキュリティグループを分けて通信制御できる。
+    * (参考) https://www.acrovision.jp/service/aws/?p=2504
     * (参考) https://d1.awsstatic.com/webinars/jp/pdf/services/20190925_AWS-BlackBelt_AWSFargate.pdf
-* Fargate内のコンテナ間通信は`127.0.0.1`での通信になる。そのため、`docker-compose.yml`などで`depends_on`や`links`にして、`〜.conf`ファイルなどでサービス名を参照している部分はそのままだと動かないので注意。
-    * 例:
+* Fargate内のコンテナ間通信は`127.0.0.1`宛てになる。そのため`docker-compose.yml`の`depends_on`/`links`を前提にサービス名で参照していた設定(`〜.conf`の`fastcgi_pass`など)は、そのままでは動かない点に注意。
     ```
     # 変更前(EC2の場合。Dockerのdepends_onやlinkで繋ぐイメージ)
     fastcgi_pass php-fpm:9000;
