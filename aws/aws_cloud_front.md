@@ -1,6 +1,6 @@
 ---
 title: "CloudFrontの構成パターン - AWS"
-updated: 2026-07-24
+updated: 2026-07-26
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > CloudFrontの構成パターン
@@ -38,6 +38,12 @@ CloudFrontは「画像だからキャッシュする」のではなく、Behavio
 
 **OriginがALBでもS3でもキャッシュ可能**。CloudFrontはOriginの種類ではなく、BehaviorとCache Policyによってキャッシュを制御する。
 
+### Cache PolicyとOrigin Request Policyの違い
+- **Cache Policy**：「何をキャッシュキーに含めるか」「TTLをどうするか」を決める。同じキャッシュキーのリクエストはOriginへ転送されずCloudFrontから直接返される。
+- **Origin Request Policy**：キャッシュの有無に関わらず、Originへリクエストを転送する際に「どのヘッダー/Cookie/クエリ文字列を転送するか」を決める。
+
+例えばAPIのようにキャッシュ自体はしない（CachingDisabled）が、認証ヘッダーやCookieはOriginへそのまま転送したい、というケースではOrigin Request Policy側で転送対象を指定する。AWSは両方について代表的な設定をマネージドポリシーとして用意しており、自前で作らずそれらを選ぶだけで利用できることが多い。
+
 ## OAC（Origin Access Control）
 CloudFrontからのみS3へアクセスできるようにする仕組み。
 
@@ -50,6 +56,8 @@ S3
 ```
 
 S3への直接アクセスを防ぎ、安全にコンテンツを配信できる。
+
+S3側のバケットポリシーでOACを許可する際は、許可対象を特定のCloudFront Distributionに限定する条件（そのDistributionのARNと一致するかどうか）を付けておくと安全。単にCloudFrontのサービスプリンシパルを許可するだけだと、同じアカウント内の別のDistributionからも誤ってアクセスできてしまう。
 
 ## CloudFrontの代表的な構成
 

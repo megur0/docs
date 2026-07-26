@@ -1,6 +1,6 @@
 ---
 title: "S3 - AWS"
-updated: 2026-07-24
+updated: 2026-07-26
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > S3
@@ -55,3 +55,16 @@ updated: 2026-07-24
     * (参考) https://dev.classmethod.jp/cloud/aws/s3-acl-wakewakame/
     * (参考) https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/acl-overview.html
 * S3はCloudFrontを経由させ、Origin Access Identity(CloudFrontのみ許可)を使うことで閲覧制限ができる(?)。
+
+## CORS設定
+* ブラウザから直接S3へアップロード/ダウンロードさせる構成(署名付きURLでのPUTなど)では、S3バケット側にCORS設定が必要。オリジン(ドメイン)ごとに許可するHTTPメソッドやヘッダーを指定する。
+* マルチパートアップロードなどでレスポンスヘッダー`ETag`をJavaScript側で読み取りたい場合は、公開ヘッダーに`ETag`を含める必要がある(ブラウザはデフォルトでカスタムレスポンスヘッダーをJS側に公開しないため)。
+
+## ライフサイクルルール
+* 一時的にしか使わないファイル(CSVアップロードの一時置き場、ログなど)は、ライフサイクルルールで一定日数後に自動削除する設定をしておくと、消し忘れによるストレージ課金の積み上がりを防げる。
+
+## ログ配信の許可設定(バケットポリシー)
+* ALBのアクセスログやCloudFrontのアクセスログをS3に送る場合、それぞれログを配信するAWS側の主体(Principal)が異なるため、バケットポリシーの書き方も変わる。
+    * ALB: リージョンごとに固定された「ELBサービスアカウント」のAWSアカウントIDをPrincipalに指定する。
+    * CloudFront: `cloudfront.amazonaws.com`のサービスプリンシパルを指定し、意図しない他アカウントのCloudFrontから書き込まれないよう送信元アカウントの条件で自アカウントに絞る。
+* サービスによって許可の与え方(アカウントベースか、サービスプリンシパル+条件か)が異なる点に注意。

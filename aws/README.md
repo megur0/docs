@@ -1,6 +1,6 @@
 ---
 title: "AWS"
-updated: 2026-07-24
+updated: 2026-07-26
 ---
 
 [TOP(About this memo))](../README.md) > AWS
@@ -13,6 +13,8 @@ updated: 2026-07-24
 * [VPC・ネットワーク基礎](./aws_networking.md)
 
 * [IAM・アクセス管理](./aws_iam.md)
+
+* [セキュリティグループ](./aws_security_group.md)
 
 * コンピューティング
     * [EC2・EBS](./aws_ec2_ebs.md)
