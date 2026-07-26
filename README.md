@@ -33,6 +33,8 @@ permalink: /
 
 * [JavaScript](./javascript/README.md)
 
+* [Go](./golang/README.md)
+
 * Firebase
     * [Firebase Authentication](./firebase_auth/firebase_auth.md) 
 
