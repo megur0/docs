@@ -35,6 +35,10 @@ permalink: /
 
 * [Go](./golang/README.md)
 
+* [Swift](./swift/README.md)
+
+* [Objective-C](./objective-c/obj_c_basic.md)
+
 * Firebase
     * [Firebase Authentication](./firebase_auth/firebase_auth.md) 
 
