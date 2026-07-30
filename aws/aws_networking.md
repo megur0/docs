@@ -1,6 +1,6 @@
 ---
 title: "VPC・ネットワーク基礎 - AWS"
-updated: 2026-07-26
+updated: 2026-07-30
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > VPC・ネットワーク基礎
@@ -123,23 +123,8 @@ VPC(10.0.0.0/16)
 ```
 
 # ロードバランサー
-* ELBにはALB、NLB、クラシックロードバランサー(CLB)の3種類がある。それぞれの詳細な違いはTODO。
-    * (参考) https://docs.aws.amazon.com/ja_jp/AmazonECS/latest/developerguide/load-balancer-types.html
-* ロードバランサーのパブリックDNS名
-    * 基本のパブリックDNS名はIPv4レコードのみを返す。
-    * `ipv6`というプレフィックスを付けるとIPv6レコードを返す。
-    * `dualstack`というプレフィックスの付いたパブリックDNS名は、IPv4レコードとIPv6レコードの両方を返す(基本的にこちらを使うのがよい)。
-    * クライアントとロードバランサーの通信方法に関係なく、ロードバランサーとインスタンス間の通信はIPv4で行われる。
-    * (参考) https://docs.aws.amazon.com/ja_jp/elasticloadbalancing/latest/classic/elb-internet-facing-load-balancers.html
-
-## ALBのパスベースルーティング
-* 1つのALBに複数のターゲットグループを紐付け、リスナールールの優先度とパスパターン(例: `/api/*`)によって振り分け先を変えられる。デフォルトルールに当てはまらないパスだけ別サービスへ転送する、という使い方がよくある。
-* HTTP(80)は基本的にリダイレクト専用のリスナーにし、HTTPS(443)へ301リダイレクトする構成が一般的。
-* ターゲットグループの`target_type`
-    * `instance`: EC2インスタンスIDを直接登録。
-    * `ip`: プライベートIPアドレスを登録。Fargate(awsvpcネットワークモード)では`ip`指定が必須。
-* ヘルスチェックの主な設定項目: パス、成功とみなすステータスコード範囲、間隔、タイムアウト、正常/異常判定に必要な連続回数。ヘルスチェックに失敗し続けるとターゲットがUnhealthyとしてALBから切り離される。
-* Connection Draining(登録解除の遅延時間): ターゲットを登録解除する際、既存の接続を一定時間待ってから切断する設定。デプロイ時に処理中のリクエストを強制切断しないために使う。
+* ELB(ALB/NLB/CLB)の種類の違いや設定項目は[ELB(Elastic Load Balancing)](./aws_elb.md)にまとめている。
+* ここでは前述の3層構成の通り、ALBは基本的にパブリックサブネット(インターネットからの入口)に配置する、という点だけ押さえておく。
 
 # TODO
 * ネットワークACL(インバウンド/アウトバウンド) (概要は[セキュリティグループ](./aws_security_group.md)も参照)

@@ -1,6 +1,6 @@
 ---
 title: "AWS"
-updated: 2026-07-26
+updated: 2026-07-30
 ---
 
 [TOP(About this memo))](../README.md) > AWS
@@ -11,6 +11,8 @@ updated: 2026-07-26
 * [料金・SLA・障害](./aws_pricing_sla.md)
 
 * [VPC・ネットワーク基礎](./aws_networking.md)
+
+* [ELB(Elastic Load Balancing)](./aws_elb.md)
 
 * [IAM・アクセス管理](./aws_iam.md)
 
@@ -28,9 +30,13 @@ updated: 2026-07-26
 
 * [CloudWatch・CloudTrail](./aws_cloudwatch.md)
 
-* [Route53・SSL証明書・CloudFront](./aws_route53.md)
+* [Route53](./aws_route53.md)
+
+* [SSL証明書・ACM](./aws_acm.md)
 
 * [CloudFrontの構成パターン](./aws_cloud_front.md)
+
+* [SES(Simple Email Service)](./aws_ses.md)
 
 * [ECS・ECR・EKS・Fargate](./aws_ecs.md)
 
