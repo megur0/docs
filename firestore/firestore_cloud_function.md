@@ -5,7 +5,7 @@ title: "Cloud Functionsとの連携 - Firestore"
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > Cloud Functionsとの連携
 
 
-# Cloud Functions for FirebaseはNode.jsのみ対応
+## Cloud Functions for FirebaseはNode.jsのみ対応
 * 他の言語で使う手段もある
     * 参考
         * https://qiita.com/norami_dream/items/b6bf6d5a472d0a1acccc
@@ -13,7 +13,7 @@ title: "Cloud Functionsとの連携 - Firestore"
         * ドキュメントもNode.jsのため、Node.jsを利用して実装することが無難と考えている
     
 
-# Cloud Functions による Cloud Firestore の拡張
+## Cloud Functions による Cloud Firestore の拡張
 * https://firebase.google.com/docs/firestore/extend-with-functions?hl=ja
 * イベント
     * onCreate、onUpdate、onDelete、onWrite
@@ -51,7 +51,7 @@ title: "Cloud Functionsとの連携 - Firestore"
         * IMO したがって冪等性の設計が必要
     * Cloud Functions 用 Cloud Firestore トリガーは、ネイティブ モードの Cloud Firestore でのみ使用可能。
 
-# (参考)Google Cloud Platform 向けの Cloud Functions と Cloud Functions for Firebase
+## (参考)Google Cloud Platform 向けの Cloud Functions と Cloud Functions for Firebase
 * https://firebase.google.com/docs/functions/functions-and-firebase?hl=ja
 * モバイルアプリまたはモバイル ウェブアプリを構築するデベロッパーは、Cloud Functions for Firebase を使ったほうが便利
 * Google Cloud Platform 向けの Cloud Functions

@@ -6,7 +6,7 @@ updated: 2024-09-10
 [TOP(About this memo))](../../README.md) >  [Flutter](../README.md) > [一覧(Flame)](./README.md) > 各種ユーティリティ（未整理）
 
 
-# mixin XXX on Component
+## mixin XXX on Component
 * TapCallbacks
     ```dart
     class Rock extends SpriteComponent with TapCallbacks {
@@ -52,7 +52,7 @@ updated: 2024-09-10
 * KeyboardHandler
 * 他
 
-# mixin XXX on Game
+## mixin XXX on Game
 * TapDetector
 * DoubleTapDetector
 * LongPressDetector
@@ -63,7 +63,7 @@ updated: 2024-09-10
 * KeyboardEvents
 * 他
 
-# エフェクト
+## エフェクト
 * https://docs.flame-engine.org/latest/flame/effects.html
 * Flameには内蔵のエフェクトが用意されている。
 * 独自に作成することもできる。
@@ -85,12 +85,12 @@ updated: 2024-09-10
   }
 ```
 
-# 色とパレット
+## 色とパレット
 * flameが提供するBasicPalette、PaletteEntry は dart.uiのColor, Paintをラップしているユーティリティクラス
     * https://docs.flame-engine.org/latest/flame/rendering/palette.html
 
 
-# デコレータ
+## デコレータ
 * https://docs.flame-engine.org/latest/flame/rendering/decorators.html
 * HasDecoratorをwithすることで利用できる
 * PositionComponentは既にdecoratorを保持しており、既に内部で利用しているため、PositionComponent.decorator.addLast によってデコレータを加える。
@@ -166,13 +166,13 @@ class Child extends SpriteComponent with TapCallbacks {
 }
 ```
 
-# オーバーレイ
+## オーバーレイ
 * https://docs.flame-engine.org/latest/flame/overlays.html
 * GameWidget.overlayBuilderMapでFlutterのウィジェットをMap形式で渡すことができる。
 * Game.overlays.removeやaddでMapのキーを渡すことでComponentのように追加、削除ができる。
 
 
-# AlignComponent
+## AlignComponent
 ```dart
 void main() {
   runApp(
@@ -195,20 +195,20 @@ class DecoratorExample extends FlameGame with DragCallbacks, ScaleDetector {
 }
 ```
 
-# Notifiler
+## Notifiler
 * ChangeNotifierの派生クラス
 * ComponentsNotifier, ComponentsNotifierBuilder
 * https://github.com/flame-engine/flame/blob/main/examples/lib/stories/components/components_notifier_example.dart
 
-# (未読)パーティクル
+## (未読)パーティクル
 * https://github.com/flame-engine/flame/blob/main/examples/lib/stories/rendering/particles_example.dart
 * https://docs.flame-engine.org/latest/flame/rendering/particles.html
 
-# (未読)ルーティング
+## (未読)ルーティング
 * https://docs.flame-engine.org/latest/flame/router.html
 
-# (未読)レイヤーとスナップショット
+## (未読)レイヤーとスナップショット
 * https://docs.flame-engine.org/latest/flame/rendering/layers.html
 
-# (未読)デバッグ、Util、ウィジェット
+## (未読)デバッグ、Util、ウィジェット
 * https://docs.flame-engine.org/latest/flame/other/other.html

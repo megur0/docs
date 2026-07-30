@@ -4,10 +4,10 @@ title: "プロビジョニング - iOSアプリ開発"
 
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > プロビジョニング
 
-# Apple IDの設定
+## Apple IDの設定
 * Xcodeプロジェクトの設定からApple IDを設定できる
 
-# App ID、バンドルID
+## App ID、バンドルID
 * Team IDとBundle IDの2つの文字からなるID。
     * {team_id}.{bundle_id}
 * 同じIDは世界中の他の誰も使えない。
@@ -19,19 +19,19 @@ title: "プロビジョニング - iOSアプリ開発"
             * チームにApple IDを設定していない場合は、任意のバンドルIDが使うことが可能。
                 * この場合は ID が グローバルな空間から切り離されている?
 
-## 端末内のアプリのID 
+### 端末内のアプリのID 
 * 同じ端末（iphoneやsimulator）には同じApp IDのアプリはインストールできない
     * IME 開発と本番別でインストールして使いたい場合などは、App IDを分ける必要がある。
 * 参考
     * https://qiita.com/ko2ic/items/1926de0895e9f277871b
 
-# 実機の確認 
+## 実機の確認 
 * 実機確認するにはApple IDが必要。
 * ADP未加入でも実機確認までは可能。
 * push通知やuniversal linksといった機能を利用するにはADP加入が必要。
     * Provisioning ProfileやApp IDを手動でApple Developerサイト上で登録する必要があり、未加入の場合は登録ができない。
 
-# Identifier（App ID, Bundle ID）の登録
+## Identifier（App ID, Bundle ID）の登録
 * Apple Developerにて 「Identifier」からApp IDを登録ができる。
 * Bundle IDは「Explicit」「Wildcard」から選択する。
 * Wildcardによって1つ以上のアプリを表すことができる。
@@ -42,7 +42,7 @@ title: "プロビジョニング - iOSアプリ開発"
     * 複数のアプリに一度に設定を反映させたい時などに便利?
 
 
-# Certificate（証明書）
+## Certificate（証明書）
 * Certificate（証明書）はアプリの開発元を電子的に確認・証明するためのファイル
 * 種類
     * Development: ストアへリリースはできない
@@ -58,7 +58,7 @@ title: "プロビジョニング - iOSアプリ開発"
 * 参考
     * https://zenn.dev/mhackit/scraps/355fe56dc7b4c8
     * https://www.musen-connect.co.jp/blog/course/product/ios-ble-dev-provisioning-profile/
-## Certificate（証明書）の作成と削除
+### Certificate（証明書）の作成と削除
 * 証明書は以前より簡単に作成できるようになった
     * いくつかネット上のサイトを調べると以前は以下のような手順で行なっていたと考えられる
         * Keychain Access.app から Certificate Signing Request (CSR) を作成
@@ -83,7 +83,7 @@ title: "プロビジョニング - iOSアプリ開発"
     * 参考
         * https://qiita.com/warapuri/items/2a32cb2201ce75aa5f4b
 
-# Provisioning Profile
+## Provisioning Profile
 * 作成したアプリに対してアプリ開発者が署名するために必要なデータ
 * 以下が紐づいている
     * App ID（バンドルIDと紐づくもの）
@@ -99,14 +99,14 @@ title: "プロビジョニング - iOSアプリ開発"
 * 参考
     * https://hirokuma.blog/?p=2783
     * https://tanihiro.hatenablog.com/entry/2016/07/26/194944
-## Provisioning Profileの生成・設定
+### Provisioning Profileの生成・設定
 * Apple IDが必要となる。
 * Provisioning Profileは、以下のいずれかの方法で取得したものを使う。
     * 自分でApple Developerサイトで作成したものをダウンロード（import）して使う 
     * 「Automatically manage signing」でローカル上で生成したものを使う
         * ADPに登録していない場合でもこの方法となる。
 
-# Automatically manage signing
+## Automatically manage signing
 * Provisioning Profile, App ID, Certificatesを自動で作成・更新する機能。
 * 自動的にcertificatesを自身のMac上で生成し、それをApple Developerに登録。
 * 自動的にMac上のcertificatesを使ってProvisioning Profileを生成する。
@@ -119,13 +119,13 @@ title: "プロビジョニング - iOSアプリ開発"
     * https://halzoblog.com/apple-developer-app-id/
     * https://zenn.dev/usamaru/articles/725b759d6a9561
 
-# 実機確認
+## 実機確認
 * 実機にインストールするためには、対象のApp ID、対象のデバイス（UDID）、チームに対する開発者の本人確認が必要で、それが含まれるProvisioning Profileが必要。
 * ADPに登録していない場合でも実機確認までは可能
     * Automatically manage signing で作成されたProvisioning Profileを利用
     * 既に自動生成されたプロファイルに対して対象の実機を追加するには、Xcode上で実機を接続した状態で対象の実機を選択すると、プロファイルが自動アップデートされる。
 
-# 実機のトラブルシュート
+## 実機のトラブルシュート
 * 実機接続時に発生するエラーメッセージ
     * `codesignは、キーチェーンに含まれるキーへアクセスしようとしています。許可するにはキーチェーン”ログイン”のパスワードを入力してください。`
         * Macのログインパスワードを入力して「常に許可」を押す。
@@ -140,7 +140,7 @@ title: "プロビジョニング - iOSアプリ開発"
     * 設定 > 一般 > VPNとデバイス管理 で 対象のデベロッパを信頼
 
 
-# 参考
+## 参考
 * 公式
     * https://developer.apple.com/jp/help/
 * 参考サイト 

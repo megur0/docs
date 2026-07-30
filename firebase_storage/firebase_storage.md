@@ -5,14 +5,14 @@ title: "Firebase Storage"
 [TOP(About this memo))](../README.md) > Firebase Storage
 
 
-# Cloud Storageをはじめる
+## Cloud Storageをはじめる
 * デフォルトバケットの作成：
     * セキュリティルールのモードの選択
         * デフォルトではすべてのアクセスが拒否されるようになっているため、適宜変更する。
     * リージョンの選択
         * このリージョンは、firebaseプロジェクト全体へ適用される？
 
-# アップロード処理の実装
+## アップロード処理の実装
 * ※ リンクはFlutterの場合
 * アップロード
     * https://firebase.google.com/docs/storage/flutter/upload-files?hl=ja#error_handling
@@ -26,15 +26,15 @@ title: "Firebase Storage"
     * カスタム バケットを使用する場合は明示的にAPIで指定する。
 
 
-# Cloud Storageのセキュリティ
+## Cloud Storageのセキュリティ
 * https://firebase.google.com/docs/storage/security?hl=ja
 * https://firebase.google.com/docs/rules/basics?hl=ja#default_rules_locked_mode
-## ２つのモード
+### ２つのモード
 * ロックモード
     * 認証されたユーザーのみが Storage バケットにアクセス
 * テストモード
     * すべてのユーザーにアクセスを許可
-## セキュリティルールによるアクセス制限の例
+### セキュリティルールによるアクセス制限の例
 * https://firebase.google.com/docs/rules/basics?hl=ja#cloud-storage
 * 書き込みは'image/png'、5MB以下、/users/(uid)/profile.pngのパスのみ許可。読み込みは認証されている場合。
 ```
@@ -46,7 +46,7 @@ match /users/{userId}/profile.png {
 〜
 ```
 
-# 一覧表示の禁止
+## 一覧表示の禁止
 * Firebase上でCloud Storageを有効化した場合はデフォルトで対象のバケットの一覧表示は禁止になっている。
 * GCPコンソールのCloud Storageから確認すると `projectViewer:PROJECT_ID` のプリンシパルに対して「Storage レガシー バケット読み取り」の権限が付与されている。
     * (参考)
@@ -56,7 +56,7 @@ match /users/{userId}/profile.png {
 * `https://storage.googleapis.com/(バケット名)`へアクセスしてもdeniedとなる。
 
 
-# Admin SDK
+## Admin SDK
 * https://firebase.google.com/docs/storage/admin/start?hl=ja
 * デフォルトバケットのAPIは、初期化の際の設定したバケットを使用する。
     * 自動でデフォルトバケットを取得するAPIではない点に注意。設定していない場合は実行時エラーとなる。

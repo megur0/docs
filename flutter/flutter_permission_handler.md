@@ -6,11 +6,11 @@ updated: 2024-08-30
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > permission_handler
 
 
-# 注記
+## 注記
 * メモにはiOSの内容のみ記載する
 * 扱っているpermission_handlerのバージョンは11.3.1となる。
 
-# permissino_handlerは権限の設定状況の確認とそれに応じたハンドリングを行うために利用
+## permissino_handlerは権限の設定状況の確認とそれに応じたハンドリングを行うために利用
 * 実行時にユーザーに対して権限のリクエストを行うプラグインは多い。
 * しかし、これらのプラグインはユーザーが許可をすれば、正常に動作するが、拒否した状態の場合はエラーを返したり、何も実行しないといったそれぞれの振る舞いをする。
 * 一度拒否した場合は、ユーザーが端末の設定から対象のアプリに対しての許可設定をユーザー自身で行う必要がある。
@@ -18,7 +18,7 @@ updated: 2024-08-30
 * そのためには各プラグインを実行する手前で権限状態を確認してハンドリングする必要がある。この用途でpermissino_handlerが有用となる。
 * permissino_handlerは権限のリクエストを行う機能も備えているため、リクエストもまとめて行なってしまっても良いだろう。
 
-# ドキュメント
+## ドキュメント
 * https://pub.dev/packages/permission_handler
 * セットアップ
     * https://pub.dev/packages/permission_handler#setup
@@ -27,7 +27,7 @@ updated: 2024-08-30
             * 不要な項目はコメントアウトする
         * Info.plist(ios/Runner/Info.plist)
 
-# (参考)マクロをコメントアウトすると常に拒否、無効が返される。
+## (参考)マクロをコメントアウトすると常に拒否、無効が返される。
 * 例えばPERMISSION_APP_TRACKING_TRANSPARENCYであれば、下記のように値が定義されていない場合は0が設定される。
 ```
 //ios/.symlinks/plugins/permission_handler_apple/ios/Classes/PermissionHandlerEnums.h
@@ -56,7 +56,7 @@ updated: 2024-08-30
 #endif
 ```
 
-# Info.plist（全項目について載せた雛形）
+## Info.plist（全項目について載せた雛形）
 * https://github.com/Baseflow/flutter-permission-handler/blob/main/permission_handler/example/ios/Runner/Info.plist
 * (参考)PermissionGroupNotificationが無いが無視して良い。
     * セットアップ手順を確認すると、PermissionGroup.notificationについて、Info.plistに該当するものが"PermissionGroupNotification"ということが表に記載されている。
@@ -68,7 +68,7 @@ updated: 2024-08-30
         * また、"PermissionGroupNotification"というキーワード自体が検索してもFlutterのpermission_handlerのトピックでのみヒットするため、iOS自体のkeyではないと考えられる。
 
 
-# コードで確認する
+## コードで確認する
 * 下記のサンプルコードのPermissionHandlerWidgetをコピーして、自身のアプリケーションで出力すると権限の状況が把握できる。
 * https://pub.dev/packages/permission_handler/example
 * 許可した覚えのない項目でgrantedとなっている箇所は、デフォルトで有効になっている項目や、iOSの場合はpermisssion_handlerが常にgrantedを返している項目になる。
@@ -79,7 +79,7 @@ updated: 2024-08-30
     * Permission.locationなどはこのクラスとなっている。
     * これは例えばロケーションの場合は、アプリに対しての許可とは別に、位置情報サービス自体が設定で有効化されている必要があり、そういったサービスを利用する項目がこのクラスに該当するようだ。
     * なおマクロ上でコメントアウトした項目は、有効化状態の確認の際は常にdisabledが返る
-## (参考)iOS上ではどの項目に対応するのか？
+### (参考)iOS上ではどの項目に対応するのか？
 * 一覧の中でいくつかの項目について、iOSでどの項目に対応するのかわからなかったため、コードを直接確認した。
 * 各Permissionごとの分岐
     ```objectivec

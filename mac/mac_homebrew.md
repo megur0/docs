@@ -5,7 +5,7 @@ title: "Homebrew - Mac"
 [TOP(About this memo))](../README.md) > [一覧(Mac)](./README.md) > Homebrew
 
 
-# Homebrewの用語
+## Homebrewの用語
 * formula
     * パッケージ定義を指す
     * ソースのURL、依存パッケージ、インストールスクリプト、テストスクリプト
@@ -34,7 +34,7 @@ title: "Homebrew - Mac"
     * https://blog.ottijp.com/2020/05/23/homebrew/
 
 
-# (参考)インストール先
+## (参考)インストール先
 ```
 $cat ~/.zprofile
 eval "$(/opt/homebrew/bin/brew shellenv)" # $PATHに opt/homebrew/bin を追加する処理もここに含まれている?
@@ -51,14 +51,14 @@ lrwxr-xr-x  1 xxxx  admin    29 11 21 13:22 tree -> ../Cellar/tree/2.1.1/bin/tre
 ...
 ```
 
-# インストール
+## インストール
 * インストール
     * https://brew.sh/
     * Next steps〜で表示されるコマンドの実行を忘れないようにする。
 * アンインストール
     * https://github.com/homebrew/install#uninstall-homebrew
 
-# update
+## update
 * brew update
     * Homebrew自体のアップデート
     * 最新のパッケージ情報がアップデートされる
@@ -67,7 +67,7 @@ lrwxr-xr-x  1 xxxx  admin    29 11 21 13:22 tree -> ../Cellar/tree/2.1.1/bin/tre
 * 参考
     * https://blog.ottijp.com/2020/05/23/homebrew/
 
-# upgrade
+## upgrade
 * パッケージをアップデートする。
 * `brew upgrade`で全てのパッケージ、Homebrew本体をアップデートする。
 * brew upgradeで upgradeさせたくないパッケージを設定することができる。
@@ -76,7 +76,7 @@ lrwxr-xr-x  1 xxxx  admin    29 11 21 13:22 tree -> ../Cellar/tree/2.1.1/bin/tre
     $ brew unpin <formula>
     ```
 
-# 各種コマンド
+## 各種コマンド
 * `brew doctor`
     * Homebrewによってインストールしているパッケージ内で異常がないか診断
     * 〜ready to brewと出力されれば問題ない。
@@ -97,14 +97,14 @@ lrwxr-xr-x  1 xxxx  admin    29 11 21 13:22 tree -> ../Cellar/tree/2.1.1/bin/tre
 * `brew deps`
     * `brew deps --tree cocoapods`
 
-# homebrew-cask  
+## homebrew-cask  
 * caskをインストールするためのコマンド。  
 * インストール
     * 2.7.0以降は `brew install --cask パッケージ名`
     * 2.6.0より前は `brew cask install パッケージ名`
 
 
-# (参考)Homebrewとアーキテクチャ
+## (参考)Homebrewとアーキテクチャ
 * arm64のhomebrewにてインストールされる個々のパッケージについては、基本的に /opt/homebrew/bin 配下にインストールされる。
     * arm64に対応していないものは、/usr/local/binにインストールされる
         * /usr/local/binにインストールされているものを実行する際は`arch -x86_64 コマンド` で明示的にアーキテクチャを指定する。

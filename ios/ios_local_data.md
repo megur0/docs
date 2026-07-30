@@ -5,18 +5,18 @@ title: "ローカルデータ - iOSアプリ開発"
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > ローカルデータ
 
 
-# 公式・参考サイト
+## 公式・参考サイト
 * https://developer.apple.com/library/archive/documentation/FileManagement/Conceptual/FileSystemProgrammingGuide/FileSystemOverview/FileSystemOverview.html
 * https://developer.apple.com/tutorials/swiftui/creating-and-combining-views
 * https://gist.github.com/y-takagi/9f2cea659fb3f55b56aa04530bf0af39
 
-# 実機やシュミレーターにインストールした際の構成
+## 実機やシュミレーターにインストールした際の構成
 * iOSでインストールされたアプリケーションはサンドボックス(Sandbox)構造で保存される
     * サンドボックスとは、アプリケーションを保護された領域で動作させることによって、システム(iOS)が不正に操作されるのを防ぐセキュリティシステム
 * アプリがファイルにアクセスできる場所はサンドボックス内のフォルダに限られる。
 * 他のアプリからファイルを受け取ったり、他のアプリのファイルにアクセスする方法もあるが、Appleが用意した手順(機能)に従う必要がある。
 
-# サンドボックス内の構成
+## サンドボックス内の構成
 * Bundle Container
     * アプリ本体そのもの
     * アプリの実行ファイルや画像などのリソースファイル
@@ -48,7 +48,7 @@ title: "ローカルデータ - iOSアプリ開発"
     * https://qiita.com/inuha/items/171b7e1a858864c91c3a
     * https://gist.github.com/y-takagi/9f2cea659fb3f55b56aa04530bf0af39
 
-# Data Managing Services
+## Data Managing Services
 * iOSのSDKにはデフォルトでデータを管理する仕組みが用意されている。
 * NSUserDefaults
     * Key/Value方式で任意のオブジェクトの保存・読み込みが可能。
@@ -76,7 +76,7 @@ title: "ローカルデータ - iOSアプリ開発"
     * https://qiita.com/inuha/items/171b7e1a858864c91c3a
 
 
-# アプリを削除すると消去されるデータ
+## アプリを削除すると消去されるデータ
 * 「アプリを削除」
     * サンドボックス全体を除去
 * 「アプリを取り除く」

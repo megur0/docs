@@ -6,7 +6,7 @@ title: "クエリ - Firestore"
 
 
 
-# 等価演算子（equality operators）
+## 等価演算子（equality operators）
 * ==、array-contains
 * in、array-contains-any　はORクエリに変換される
     * in
@@ -22,7 +22,7 @@ title: "クエリ - Firestore"
     * 同一フィールドで複数の array-contains 句を論理 OR で結合
     * array-contains-any の結果では重複が排除。（同一のドキュメントに対して、array-contains-anyで指定した値の複数にひっかかっても同一のドキュメントが重複して結果に入ることはない）
 
-# 不等価演算子（inequality operators）、範囲比較
+## 不等価演算子（inequality operators）、範囲比較
 * !=, <, <=, >, >=
 * not-inは　複合クエリ(AND)に変換される
     * (フィールド != 値) AND (フィールド != 値)...に変換される。
@@ -43,24 +43,24 @@ title: "クエリ - Firestore"
     * https://firebase.google.com/docs/firestore/query-data/order-limit-data?hl=ja#limitations
 * 等価演算子と不等価演算子・範囲比較を複合（AND）クエリで連結する場合は、複合インデックスが必要。
 
-# 論理ORクエリ
+## 論理ORクエリ
 * or
     * プレビュー版
     * https://firebase.google.com/docs/firestore/query-data/queries?hl=ja#or_queries
     * (参考)Dart、GoのSDKでは、ORクエリを直接使う機能はサポートされていなかった。
 * in, array-contains-any
 
-# 分離句の通常の形式、制限
+## 分離句の通常の形式、制限
 * https://firebase.google.com/docs/firestore/query-data/queries?hl=ja#limits_on_or_queries
 * Cloud Firestore は、2 つのルール（平坦化、分配法）を適用して、クエリを分離句の通常の形式に変換
 * Cloud Firestore では、クエリの分離句の通常の形式に基づいて、クエリを最大 30 の分離に制限
 * 変換は乗算的であるため、複数の OR グループの AND を複数回実行した場合、上限に達する可能性が高くなるので注意。
     * 例えば、`and(where("a", "in", [1, 2, 3, 4, 5]), where("b", "in", [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]))`　は分離が50になり、エラーとなる。
 
-# その他制限
+## その他制限
 * クエリ内のフィルタ、並べ替え順指定、親ドキュメント パス（サブコレクションの場合は 1、ルート コレクションの場合は 0）の数の合計は、100 を超えることはできない。
 
-# データの並び替えと制限
+## データの並び替えと制限
 * https://firebase.google.com/docs/firestore/query-data/order-limit-data?hl=ja
 * デフォルトでは、クエリを満たすすべてのドキュメントが、ドキュメント ID の昇順で取得される。
 * order-by
@@ -71,7 +71,7 @@ title: "クエリ - Firestore"
     * order-by フィールドが存在するドキュメントのみを返す。（order-byで指定したフィールドが存在しないドキュメントは除外される）
 * limit
 
-# クエリカーソル
+## クエリカーソル
 * https://firebase.google.com/docs/firestore/query-data/query-cursors?hl=ja
     * 公式ドキュメントの内容だけではカーソルが何を指定できるのか、という点が正確に理解できなかったため以下を参考にした
     * 参考
@@ -98,7 +98,7 @@ title: "クエリ - Firestore"
     * 参考
         * https://mokajima.com/how-to-paginate-data-in-cloud-firestore/
 
-# コレクショングループ クエリ
+## コレクショングループ クエリ
 * デフォルトで、クエリは、データベース内の単一コレクションから結果を取得
 * 単一コレクションからではなく、コレクション グループからドキュメントを取得するには、コレクション グループ クエリを使用
 * コレクション グループ クエリを使用する前に、コレクション グループ クエリをサポートするインデックスを作成する必要がある

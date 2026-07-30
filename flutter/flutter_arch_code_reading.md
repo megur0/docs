@@ -6,13 +6,13 @@ updated: 2025-01-05
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > (参考)内部処理の理解(コードリーディング)
 
 
-# 注意
+## 注意
 * 以下は筆者がFlutterのコードリーディングを2023年の7月頃に行って書いたメモを基に再構成したメモである。
 * あくまでも筆者の理解であり内容に誤りが含まれている可能性もある点に注意。
 * 更新
     * (2024/5) ルートのウィジェットがRenderObjectToWidgetAdapterからRootWidgetに変わっていたためアップデート
 
-# 表記
+## 表記
 * クラス図の表記について
     * [クラス図の表記方法](../common/about_class_diagram.md)
 * クラスの色付け
@@ -21,7 +21,7 @@ updated: 2025-01-05
     * <span style="background-color: #D5E8D4; ">Element</span>
     * <span style="background-color: #F8CECC; ">RenderObject</span>
 
-# 全体像
+## 全体像
 * 以下はフレーム処理とレンダリングパイプラインの概要を表した図となる。
     * 本コードリーディングでは、Build phaseとLayout phaseを中心に扱っている。
 
@@ -46,7 +46,7 @@ updated: 2025-01-05
         * Semantics phase
             * システム内のすべてのダーティRenderObjectのセマンティクスが更新される
 
-# runApp実行時の流れ
+## runApp実行時の流れ
 * 以降の図では、下記のようにプロパティやメソッドの文字色をつけている。(何も色をつけていない図もある。)
     * <span style="background-color: #FFF2CC; ">背景色が薄黄色</span>
         * runAppによる同期的に行われる初期化処理
@@ -212,7 +212,7 @@ flutter: buildScope finished
 flutter: future after runApp
 */
 ```
-## (IMO)フレームについて
+### (IMO)フレームについて
 * イベントキューと、フレームについて（筆者の理解）
     * フレームはエンジンにおいてレンダリングを行う間隔の単位。この間隔はハードウェアのリフレッシュレートに依存する。
     * DartアイソレートのイベントループはDartが単一のスレッドで並行処理をするための仕組み。イベントキュー上の各イベントを処理する速度は処理内容や実行環境の性能、Dart VMに依存する。
@@ -222,9 +222,9 @@ flutter: future after runApp
     * たとえば1フレームより短い時間でエンジンから次々と入力イベントが届いたとしても、リビルド・再レイアウト・レンダリングは次のフレームで1回実行されるのみとなる。
 
 
-# ビルド(ツリーの構築)
+## ビルド(ツリーの構築)
 
-## Widget, Element, RenderObject
+### Widget, Element, RenderObject
 * 以下はWidget, Element, Renderの各クラスを表記した図
     * メソッドは筆者が着目したものだけが表記されている。
 
@@ -260,12 +260,12 @@ flutter: future after runApp
         * 親への参照
 
 
-## 全体像
+### 全体像
 * 以下はWidgetツリー、Elementツリー、RenderObjectツリーが構築される流れである。
 
 <img src="./svg/arch_code_reading/flutter_tree.drawio.svg" width="100%"><br/><br/>  
 
-## Element
+### Element
 * 初回ビルド(マウント)
     * 初回のビルドは、以下のどちらかによって行われる。
     * 親のElementが子のElement.inflateWidget()を実行する
@@ -435,7 +435,7 @@ flutter: future after runApp
         ```
 
 
-## StatefulElement/State
+### StatefulElement/State
 * 以下はStatefulElement/Stateに関連するクラスとメソッド、処理に焦点を当てて表記した図となる。
 
     ![](./svg/arch_code_reading/flutter_flow_state_widget.drawio.svg)
@@ -455,7 +455,7 @@ flutter: future after runApp
 * State.dispose()
     * StatefulElement.unmount()から呼ばれる。
 
-## RootElement
+### RootElement
 * ルートとなるRootElementからの処理は以下のようになる。  
 <img src="./svg/arch_code_reading/flutter_flow_attach_root_widget.drawio.svg" width="85%"><br/><br/>  
 
@@ -488,7 +488,7 @@ flutter: future after runApp
 
     <img src="./svg/arch_code_reading/flutter_pipeline_owner.svg" width="65%"><br/><br/>  
 
-## RenderObject
+### RenderObject
 
 <img src="./svg/arch_code_reading/flutter_class_relate_to_render_object.drawio.svg" width="85%"><br/><br/>  
 
@@ -587,7 +587,7 @@ flutter: future after runApp
         * https://api.flutter.dev/flutter/widgets/RenderObjectElement-class.html
             > Each child Element corresponds to a RenderObject which should be attached to this element's render object as a child.However, the immediate children of the element may not be the ones that eventually produce the actual RenderObject that they correspond to. For example, a StatelessElement (the element of a StatelessWidget) corresponds to whatever RenderObject its child (the element returned by its StatelessWidget.build method) corresponds to. Each child is therefore assigned a slot token. This is an identifier whose meaning is private to this RenderObjectElement node. When the descendant that finally produces the RenderObject is ready to attach it to this node's render object, it passes that slot token back to this node, and that allows this node to cheaply identify where to put the child render object relative to the others in the parent render object.A child's slot is determined when the parent calls updateChild to inflate the child (see the next section). It can be updated by calling updateSlotForChild.
 
-## InheritedElement/didChangedDependencies
+### InheritedElement/didChangedDependencies
 * 先祖のInheritedWidgetのサブクラスは、子孫のウィジェットからAPIを利用して監視・参照することが出来る。
 * 具体的には子孫のウィジェットはBuildConext.dependOnInheritedWidgetOfExactType()で監視したり、BuildConext.getInheritedWidgetOfExactType()によって参照することができる。
 * dependOnInheritedWidgetOfExactType()では監視する側のElementが、監視される側のInheritedElement._dependentsに追加される。
@@ -597,7 +597,7 @@ flutter: future after runApp
 
 
 
-# レイアウト
+## レイアウト
 
 ![](./svg/arch_code_reading/flutter_class_relate_to_layout.drawio.svg)
 
@@ -629,7 +629,7 @@ flutter: future after runApp
     * RenderView.compositeFrame()
         * レンダーオブジェクトのツリーがdart:ui.Sceneオブジェクトへ変換され、dart:ui.FlutterView.render()によってGPUへ送信される。
 
-## (参考) ParentDataWidget
+### (参考) ParentDataWidget
 <img src="./svg/arch_code_reading/flutter_class_relate_to_parent_data_widget.drawio.svg" width="100%"><br/><br/>  
 
 * ColumnやRowウィジェットを利用した際のレイアウトの制約は、RenderFlex.performLayout()の処理によって実現されている。
@@ -685,7 +685,7 @@ main() {
 //     │ parentData: offset=Offset(0.0, 0.0); flex=1; fit=FlexFit.loose
 ```
 
-# GlobalKey
+## GlobalKey
 * 内部の実装としてはWidgetsBindingのシングルトンが持つマップを参照している。
     ```dart
     abstract class GlobalKey<T extends State<StatefulWidget>> extends Key {
@@ -762,8 +762,8 @@ main() {
     * GlobalKeyおよびこれら標準のウィジェットはrunAppありきでビルドされる設計と考えて良いかもしれない。
     
 
-# その他
-## 備忘: コードリーディング未済
+## その他
+### 備忘: コードリーディング未済
 * 下記の内容についてはコードリーディングは未済
     * Paint〜Rendering
         * https://api.flutter.dev/flutter/dart-ui/FlutterView-class.html
@@ -771,7 +771,7 @@ main() {
         * Sceneオブジェクト、GPU 上のビューのレンダリングの更新をするScene.renderメソッド等。
         * ツリー情報がSceneとしてGPUへ送信されて物理デバイスへ描画されるまでの流れ
     * ホットリロード関連(performReassemble)
-## (参考) Stand-alone widget tree with multiple render trees to enable multi-view rendering
+### (参考) Stand-alone widget tree with multiple render trees to enable multi-view rendering
 * 下記の変更によってRenderObjectToWidgetAdapter/RenderObjectToWidgetによってウィジェットからレンダーツリーへ橋渡しをしていた構成が、RootWidget内のViewウィジェット内の_RawViewウィジェットが担うように変更されている。
     * この変更では、元々単一だったRenderObjectのツリーのルートであるRenderViewを複数扱える構成に変更され、あわせてRenderViewオブジェクトに紐づくPipelineOwnerもそれぞれで新規生成されたオブジェクトを扱うことができる厚生となっている。
     * https://github.com/flutter/flutter/commit/6f09064e785b2bb600a390fe6d8be4ac6775b82b#diff-536040af34d7bdac5955bf3692693c96f3a0219c16c8130df4c8d980deb55751

@@ -8,7 +8,7 @@ updated: 2025-01-04
 
 
 
-# Flutterのレンダリングモデル
+## Flutterのレンダリングモデル
 * 一般的なクロスプラットフォーム フレームワークの場合
     * AndroidやiOS等のネイティブのライブラリ上に抽象化レイヤーを作成し、アプリコードと対話することでUIを表示
     * したがって表示するUIはネイティブのライブラリに則したものとなる。
@@ -16,7 +16,7 @@ updated: 2025-01-04
     * Dartコードは機械語にコンパイルされ、VM上で実行して直接デバイスのグラフィックエンジンを使って描画をする。
     * したがってウィジェットが独自のものとなっている。
     
-# レンダリングエンジン
+## レンダリングエンジン
 * Skia
     * Flutterは、モバイルのUIレンダリングエンジンとしてSkiaを採用している。
     * アプリ初回起動時にシェーダーコンパイルが行われるため、初回起動時のパフォーマンスが良くない。(60FPSを下回るなど)
@@ -28,7 +28,7 @@ updated: 2025-01-04
     * Flutterはバージョン3.0.0でImpellerというUIレンダリングエンジン導入した。
     * iOS、AndroidではデフォルトでImpellerが有効になっている。
 
-# 描画（レンダリング）の流れ
+## 描画（レンダリング）の流れ
 * 参考
     * https://zenn.dev/seya/articles/f7ebcd8335eee7
 * Flutter Framework と Engine は繰り返しやり取りをしながら Flutter の描画が行われている。
@@ -37,8 +37,8 @@ updated: 2025-01-04
     * そこから Framework の層ではWidget や RenderObject の更新をし、新しいレイアウトを再計算して最終的にまた Engine に描画のリクエストを行う。
 * このやり取りは Binding と呼ばれるインターフェイスを介して行われる。
 
-# (参考)(IME)フレーム処理の例
-## 具体例：スクロール処理
+## (参考)(IME)フレーム処理の例
+### 具体例：スクロール処理
 |処理|内容|サイクル|
 |-|-|-|
 |スクロールイベントの監視|画面からのスクロールイベントの検知|イベントループ(実行環境のCPU性能依存?)|
@@ -75,7 +75,7 @@ updated: 2025-01-04
         * setState()されることでリビルドの対象となり次のフレームでリビルドされる。その後再レイアウト・レンダリングされて画面にローディング表示が反映される。
 
 
-# Bindingの種類
+## Bindingの種類
 |種類|役割|
 |-|-|
 |SchedulerBinding|Engine と Framework　のやり取りをしている Frame の間隔の管理など|
@@ -86,7 +86,7 @@ updated: 2025-01-04
 |PaintingBinding|画像キャッシュの処理|
 |SemanticsBinding|セマンティクスに関連するすべての後の実装のために予約|
 |TestWidgetsFlutterBinding|ウィジェット テスト ライブラリによって使用される|
-## (参考)WidgetsFlutterBinding.ensureInitialized() 
+### (参考)WidgetsFlutterBinding.ensureInitialized() 
 * runApp()を呼び出す前にFlutter Engineの機能を利用したい場合に使われる初期化処理。
 * "全ての Binding を初期化する" という役割となる。
     * (参考)内部での処理ではmixin を利用して各Binding の　initInstancesメソッドを順に実行している。
@@ -95,7 +95,7 @@ updated: 2025-01-04
     * https://api.flutter.dev/flutter/widgets/WidgetsFlutterBinding-class.html
 
 
-# Widget, Element, RenderObjectの３つの構造
+## Widget, Element, RenderObjectの３つの構造
 * https://docs.flutter.dev/resources/architectural-overview#build-from-widget-to-element
 * 3層構造はパフォーマンスのため。
     * 毎回対象のツリーを再計算するのは非効率となるため。
@@ -109,13 +109,13 @@ updated: 2025-01-04
 * 最終的な画面への描画を担うのはRenderObjectのみであり、それ以外は描画に必要な情報をツリー上で伝搬・集約するための役割となる。
 
 
-# Widget
+## Widget
 * Flutter appはそれ自体がwidgetである。
 * ウィジェットはイミュータブルである
     * 自身のUIの構成情報と子Widgetをfinalなフィールドとして保持する
     * StatefulWidgetもウィジェットクラス自体はイミュータブルである点に注意。
 * 5種類のウィジェットがある
-## RenderObjectWidget    
+### RenderObjectWidget    
 * 描画を行うウィジェットは、このRenderObjectWidgetを継承した何かしらのウィジェットを生成している。
     * (例)Textウィジェット 
         * StatelessWidgetを継承
@@ -136,11 +136,11 @@ updated: 2025-01-04
 * なお、RenderObjectWidgetを継承せずにCustomPainter という Widget をextends（implements）して描画を行っているウィジェットもある。
     * paint(Canvas canvas, Size size) メソッドによってCanvasクラスを使用して描画する。
     * このCustomPainterを使うやり方は、ユーザー自身で独自のウィジェットを使いたい時にも利用できる。
-## StatelessWidget
+### StatelessWidget
 * StatelessWidgetは状態の変更を伴わないウィジェットとなる。
 * これらは内部で変数を更新したりそれをUIに反映することはできない。
 * 例えばCard、DataTable、Container、Text、GestureDetectorなどがこのウィジェットを継承している。
-## StatefulWidget
+### StatefulWidget
 * StatefulWidgetオブジェクト自体は 変更不可（immutable） であり、ステートレスである。
 * createState という State を返す関数を必ず override させる。
 * このStateクラスに開発者は状態をもたせることができる。
@@ -150,26 +150,26 @@ updated: 2025-01-04
         * 内部ではStatefulElement.markNeedsBuildメソッドを呼び出している。
     * dirtyな Element は フレーム毎にてまとめて再ビルドされる。
 * 例えば、Scaffold、TextField 等の 状態を保持するが StatefulWidget を継承している。
-## ProxyWidget
+### ProxyWidget
 * データを伝播するためのもの
 * InheritedWidget、ParentDataWidget など
-## _NullWidget
+### _NullWidget
 * フレームワーク内部で使われている。
 * アプリケーションコードでは使わない。（使えない）
 
 
-# Element
+## Element
 * Mutableなクラス。
     * 状態(State)を保持する
 * widgets/framework.dartで定義されている。
 * 以下の2種類がある
-## ComponentElement
+### ComponentElement
 * RenderObjectは生成せず、Elementを作成・集約する機能をもつ
 * 以下はComponentElementのサブクラスとなる。
     * StatelessElement
     * StatefulElement
     * ProxyElement、InheritedElement
-## RenderObjectElement
+### RenderObjectElement
 * RenderObjectを生成し、その参照を持つ
 * mount()メソッド
     * WidgetクラスのcreateElementメソッドの直後に呼ばれる。
@@ -177,7 +177,7 @@ updated: 2025-01-04
 * attachRenderObject()メソッド
     * Widgetから受け取ったRenderObjectをRenderObjectツリーに挿入
     * これによって、 Widget <-> Element <-> RenderObject という3層の構造が生成される。
-## ElementはBuildContextによって抽象化されている
+### ElementはBuildContextによって抽象化されている
 * Flutterのウィジェットはbuildメソッド等でコンテキスト情報を参照することで、例えば先祖のデータや設定などを参照できる仕組みになっている。
 * BuildContextクラスの実体 は Elementとなる。
 * ElementはBuildContext（抽象クラス）を実装している
@@ -189,7 +189,7 @@ updated: 2025-01-04
     * https://github.com/flutter/flutter/blob/070c4943a732a66c87b3f22ae1569ba66c16d574/packages/flutter/lib/src/widgets/framework.dart#L3195
     * https://github.com/flutter/flutter/blob/070c4943a732a66c87b3f22ae1569ba66c16d574/packages/flutter/lib/src/widgets/framework.dart#L2123
 
-# RenderObject
+## RenderObject
 * Mutableなクラス
 * UIの描画を行う
 * RenderObjectツリーの情報をもとに、スクリーンにUIが描画される
@@ -200,7 +200,7 @@ updated: 2025-01-04
 * paintメソッド
     * 抽象メソッドとして定義され、各ウィジェットクラスでオーバーライドして描画処理を記述する。
     
-# (参考)レンダーツリーの計算
+## (参考)レンダーツリーの計算
 * https://docs.flutter.dev/resources/architectural-overview#layout-and-rendering
 * ボックス制約モデルは、O(n) 時間でオブジェクトをレイアウトする
 * レイアウトを実行するために、Flutter は深さ優先のトラバーサルでレンダー ツリーをたどり、 親から子にサイズ制約を渡す。
@@ -208,7 +208,7 @@ updated: 2025-01-04
 * 子は、親が設定した制約内でサイズを親オブジェクトに渡すことで応答。
 * 最後には、すべてのオブジェクトは親の制約内で定義されたサイズを持ち、メソッドを呼び出してペイントできる状態になる。
 
-# (参考)WidgetsBinding.instance.addPostFrameCallback
+## (参考)WidgetsBinding.instance.addPostFrameCallback
 * 実行にあたってビルドが完了している必要のある処理を行うために利用する。
 * 例としてScrollControllerの操作がある。
     * ScrollControllerは、ListViewウィジェット等へ引数としてオブジェクトを渡すことで、コントローラー経由で様々な操作ができる。

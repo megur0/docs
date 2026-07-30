@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# fmt
+## fmt
 * https://qiita.com/rock619/items/14eb2b32f189514b5c3c
 ```go
 a := 42
@@ -49,9 +49,9 @@ fmt.Printf("%+v\n", a)         // {F1:v1 F2:5}
 fmt.Printf("%#v\n", a)         // struct { F1 string "json:\"f1\""; F2 int "json:\"f2\"" }{F1:"v1", F2:5}
 ```
 * MarshalIndent って関数を使うとインデントとか改行も入れてくれるっぽい。
-## 複数
+### 複数
 * `fmt.Println(“v1=”, v1, “,v2=”, v2) `
 
 
-# fmtに定義されるインターフェース
+## fmtに定義されるインターフェース
 * https://budougumi0617.github.io/2019/10/12/confirm-print-with-fmt-interfaces/

@@ -5,7 +5,7 @@ title: "Rosseta - Mac"
 [TOP(About this memo))](../README.md) > [一覧(Mac)](./README.md) > Rosseta
 
 
-# Rosetta
+## Rosetta
 * Rosetta
     * 特定のアーキテクチャのバイナリを別のアーキテクチャのバイナリに変換することで互換性を維持する Apple の技術
 * 各アプリケーションの「情報」を確認すると、そのバイナリの種類が確認できる。
@@ -18,13 +18,13 @@ title: "Rosseta - Mac"
 * 参考
     * https://zenn.dev/suzuki_hoge/books/2021-07-m1-mac-4ede8ceb81e13aef10cf/viewer/3-rosetta2
 
-# Rosetta2のインストール
+## Rosetta2のインストール
 *  Intelのみに対応したアプリを開くと、ポップアップが表示されインストールされる。
     * https://support.apple.com/ja-jp/HT211861
 * コマンドの場合
     * `sudo softwareupdate --install-rosetta --agree-to-license`
 
-# arm64, arm64e のどちらか確認
+## arm64, arm64e のどちらか確認
 * `uname -m`
 * arm64eがApple Siliconに該当する。
     * `man arch`の説明に書いてある。
@@ -37,12 +37,12 @@ title: "Rosseta - Mac"
     ```
 
 
-# 明示的に アーキテクチャを指定する
+## 明示的に アーキテクチャを指定する
 * `arch -x86_64 〜` のように 明示的に指定することで OSによる選択ではなく明示的に指定する。
     * この例では、内部でRosetta2によってARM64へ変換していると思われる。
 * アプリによっては「情報」を開くと「Rosettaで開く」のチェックボックスがある。
 
-# (IMO)アーキテクチャをどのように使い分ければ良いか?
+## (IMO)アーキテクチャをどのように使い分ければ良いか?
 * 基本的にARM64を使う。
 * 各アプリも「Rosettaで開く」は基本的に使わない。
 * 例外として、例えばx86_64のみ対応しているバイナリ等を使う際に`arch -x86_64 〜` によってx86_64などをARM64環境下で実行する。
@@ -50,6 +50,6 @@ title: "Rosseta - Mac"
         * 以前、iOSアプリ開発で使うCocoapods では 依存するライブラリのffiがx86_64のみ対応していたため、Cocoapods自体もx86_64のバイナリのみインストールしていた。
         * その際は`arch -x86_64 pod install`によって実行していた。
 
-# Terminal 
+## Terminal 
 * Terminalにも「Rosettaで開く」がある。
 * (IME)デフォルトのARM64で開くで良い。

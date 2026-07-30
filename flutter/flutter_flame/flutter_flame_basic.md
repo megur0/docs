@@ -6,7 +6,7 @@ updated: 2024-10-10
 [TOP(About this memo))](../../README.md) >  [Flutter](../README.md) > [一覧(Flame)](./README.md) > GameWidget/Game/Component
 
 
-# GameWidget
+## GameWidget
 * https://docs.flame-engine.org/latest/flame/game_widget.html
 * StatefulWidget派生クラス
 * Game派生クラスを引数として持つ。
@@ -29,7 +29,7 @@ updated: 2024-10-10
       );
   ```
 
-# Game
+## Game
 * https://docs.flame-engine.org/latest/flame/game.html
 * Game
     * abstract mixin class
@@ -49,7 +49,7 @@ updated: 2024-10-10
         * この２つがデフォルトのWorld, CameraComponentとなる。
         * コンストラクタ内でこれらをaddしている。
         
-# Component
+## Component
 * https://docs.flame-engine.org/latest/flame/components.html
     > コンポーネントは、Flutter のウィジェットや Unity の GameObject に非常に似ています。  
     > ゲーム内のあらゆるエンティティは、特にそのエンティティに何らかの視覚的外観がある場合や、時間の経過とともに変化する場合は、コンポーネントとして表すことができます。  
@@ -296,7 +296,7 @@ updated: 2024-10-10
         * removeされるとクリアされる
 
 
-# (参考)GameWidgetState内部の実装
+## (参考)GameWidgetState内部の実装
 * build内でRenderGameWidgetを生成している
 * game.load()をawaitしている。
     ```dart
@@ -484,7 +484,7 @@ updated: 2024-10-10
 ```
 
 
-# 参考: FlameGameのonRemove処理
+## 参考: FlameGameのonRemove処理
 * FlameGameのonRemoveはComponent.onRemoveとは呼び出し元が異なる点について検証したコード
 ```dart
 import 'package:flame/components.dart';
@@ -634,7 +634,7 @@ class GrandChild extends PositionComponent {
 ```
 
 
-# 非同期処理をまたがるgameの参照の注意
+## 非同期処理をまたがるgameの参照の注意
 * FlutterのBuildContextの似ているが、非同期処理の完了後にgameを参照できるとは限らない。
 * これは、(Flutterのdisposeのように)コンポーネントがremoveされることでツリー上に存在しなくなり、gameを参照できなくなるためである。
 ```dart
@@ -683,7 +683,7 @@ class MyComponent extends Component with HasGameRef {
   if (!isMounted) return;
   print(game);
   ```
-## flame_forge2dのBodyComponent
+### flame_forge2dのBodyComponent
 * flame_forge2dのBodyComponentの実装では下記のように、awaitの後にgameを参照している
   * したがって１回のゲームループ内でBodyComponentをadd/removeしないように注意する必要がある。
   ```dart

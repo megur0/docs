@@ -6,7 +6,7 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(JavaScript)](./README.md) > 仮想DOM・フレームワーク比較
 
 
-# 仮想DOM
+## 仮想DOM
 * クライアントサイドレンダリングでは、JavaScriptで多くの画面要素を描画することになる。ここで避けて通れないのがDOM（Document Object Model）である。
 * DOMは、HTMLの各タグ（要素）をノードとみなし、入れ子構造を階層構造で表現するモデルに変換することで、HTMLをJavaScript等で扱えるようにした技術。
 * 素のJavaScriptやjQueryなどでDOM操作を直接行う場合、プログラマがDOM構造を意識する必要があり、コードが長くなりメンテナンス性が悪化しがちである。
@@ -16,14 +16,14 @@ updated: 2026-07-24
 * (参考) https://arakan-pgm-ai.hatenablog.com/entry/2019/04/18/000000
 * (参考: 仮想DOMの詳しい話) https://eh-career.com/engineerhub/entry/2020/02/18/103000
 
-## クリティカル・レンダリング・パス
+### クリティカル・レンダリング・パス
 * (参考) https://entry.anypicks.jp/improve-html-and-css-performance/
 * DOMとCSSOMを作ってからレンダーツリーを構築する。
 * DOMはHTML5以降、ストリーミング（読み込みながら逐次レンダリング）できるようになった。
 * その後、画面サイズに合わせたレイアウト決定と描画が行われる（これは画面サイズを変えるたびに再実行される）。
 
 
-# フレームワーク比較
+## フレームワーク比較
 * (参考: 2018年の記事) http://iwasiman.hatenablog.com/entry/2018/04/23/200000
 * (IMO)(?) 以下は上記の2018年時点の記事をもとにした内容であり、フレームワークの動向はその後も変化し続けている（React Hooks、Vue 3 Composition API、Svelte/SolidJSの登場など）。個別の技術詳細よりも、当時のSPAフレームワークに関する考え方の一例として捉えるのがよさそう。
 * ReactやAngularはDOMをラップ（抽象化）してくれるため、DOMを意識せずアプリのコンポーネントだけを考えれば実装できる（DOMは注意しないとブラウザ差異やパフォーマンス低下が起きることがある）。

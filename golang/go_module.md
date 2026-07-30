@@ -5,12 +5,12 @@ updated: 2026-07-25
 
 [TOP(About this memo))](../README.md) > [一覧(Go)](./README.md) > モジュール・パッケージ
 
-# エクスポート
+## エクスポート
 > In Go, a function whose name starts with a capital letter can be called by a function not in the same package. 
 * Goでは、最初の文字が大文字で始まる名前は、外部のパッケージから参照できるエクスポート（公開）された名前( exported name )
   * 小文字は非公開
   
-# モジュール、パッケージ
+## モジュール、パッケージ
 > Go code is grouped into packages, and packages are grouped into modules
 * 名前空間的なもの？
 * 1つのファイルに複数のパッケージを設定しない
@@ -18,12 +18,12 @@ updated: 2026-07-25
 * package main にある main 関数がプログラムのエントリーポイントとなる（処理の開始点）
 
 
-# Goでの名前空間
+## Goでの名前空間
 * Go言語での名前空間はパッケージ単位であり、パッケージはディレクトリ単位。（すなわち名前空間はディレクトリ単位）
 * なので、同じ命名が同じパッケージ内だとできないので注意。
 * typeを定義して、それに対してレシーバーを定義して、そのtypeの変数をレシーバー経由でしかいじれないようにしたい場合は、パッケージを分ける必要がある。同じパッケージ内だとレシーバーを使わなくてもいくらでも変数をいじることができてしまうので。
 
-# パッケージ、mainの仕様
+## パッケージ、mainの仕様
 * ディレクトリ名 と パッケージ名は一致させる必要はない。ひとつのディレクトリに複数のパッケージがあるとエラーになる。import はパッケージに対してではなく、ディレクトリに対して。
     * aaa/a.go -> package bbb // OK
     * aaa/b.go -> package ccc // エラー
@@ -38,34 +38,34 @@ updated: 2026-07-25
     * aaa.go -> package main、main関数
     * bbb/bbb.go -> package main、main関数
 
-# import
+## import
 * 名前をつけてimport
   * log "github.com/sirupsen/logrus" 
 
 
-# gopls
+## gopls
 * Goの公式の言語サーバー。
 * VSCodeのGoの拡張でも規定の言語サーバーになっている。
 * プロジェクトのトップに go.mod ファイルがないと上手く動作しない。
 
 
 
-# モジュール
+## モジュール
 
 
-## モジュール名はURL
+### モジュール名はURL
 * なぜ?
   * https://github.com/golang/go/issues/30242
     > 独自の中央モジュール パス レジストラを維持する必要がなくなり、衝突の可能性が排除されます。
   * https://stackoverflow.com/questions/70724050/why-we-should-use-a-url-for-the-go-module-name
   * https://groups.google.com/g/golang-nuts/c/hLkhogyFLWI
 
-## VSCodeのimportクリック時の動作
+### VSCodeのimportクリック時の動作
 * デフォルトので動作として、importディレクティブをクリックすると、定義元へのジャンプに加えて、https://pkg.go.dev/(自分のモジュール名)/(パッケージ) へジャンプする。
 * この使用は設定で変更可能
   * https://github.com/golang/vscode-go/issues/3125#issuecomment-1906415251
 
-## アプリコードのモジュール名どうする -> アプリコードでもURLにしたほうが良さそう。
+### アプリコードのモジュール名どうする -> アプリコードでもURLにしたほうが良さそう。
 * アプリコードで非公開であり、モジュールを他から参照しない前提の場合。
 * モジュール名をリポジトリのURLにせずとも利用可能ではある。
   * ほぼ問題なく利用できてはいる。
@@ -75,7 +75,7 @@ updated: 2026-07-25
   * つまり、ツールチェインにおいて「モジュール名はURLの形式でしょう」という前提がある程度ありそう。
 * したがって、アプリコードでもURLにしておいたほうが良さそうではある。
 
-## importでの自己参照時にエイリアスが使えないか？
+### importでの自己参照時にエイリアスが使えないか？
 * つまり、モジュール名はURL形式にしておき、アプリコード内のimport文ではエイリアスで参照するといった機能。
   * これがあると、import時に長いURLを記載する必要がない。
 * まさに下記のような機能だが、Goの設計上不可能なようである。
@@ -85,28 +85,28 @@ updated: 2026-07-25
     * https://github.com/golang/go/issues/25518#issuecomment-393345674
 
 
-## ローカルのモジュールを利用する
+### ローカルのモジュールを利用する
 * https://go.dev/wiki/Modules#can-i-work-entirely-outside-of-vcs-on-my-local-filesystem
 
 
 
 
-# $GO_PATH、モジュール対応モード
+## $GO_PATH、モジュール対応モード
 
-## go env
+### go env
 * go env で確認可能
 * go env -w で上書き可能。
 * go env GOBIN でインストール場所がわかる。（何も設定されて無ければ ~/go/bin）
 
 
-## $GO_PATH
+### $GO_PATH
 * https://zenn.dev/spiegel/articles/20210223-go-module-aware-mode
 * https://zenn.dev/tennashi/articles/3b87a8d924bc9c43573e
 * デフォルトのGoワークスペースはユーザのホームディレクトリの直下
 * GOPATH = $HOME/goとなっている。
 
   
-## モジュール対応モード
+### モジュール対応モード
 * （今はこっちが標準）モジュール対応モード (module-aware mode)
   * 標準ライブラリを除く全てのパッケージをモジュールとして管理する。
   * コード管理とビルドは任意のディレクトリで可能で，モジュールはリポジトリのバージョンタグまたはリビジョン毎に管理される
@@ -117,12 +117,12 @@ updated: 2026-07-25
   * パッケージの管理はリポジトリの最新リビジョンのみが対象
 
 
-## $GOPATH/bin
+### $GOPATH/bin
 * getやinstallなどのGo コマンドによりインストールされた実行ファイルを配置するためのディレクトリ
 * ちなみに、$GOBINを指定すると別のディレクトリにもできる。例）GOBIN=$HOME/bin
 
 
-## $GOPATH/pkg/mod
+### $GOPATH/pkg/mod
 * ダウンロードされたパッケージ(module)が配置。
   * 問い合わせ結果のキャッシュも保持している
     * $GOPATH/pkg/mod/cache/download これかな？
@@ -134,7 +134,7 @@ updated: 2026-07-25
   * 例）GOMODCACHE=$HOME/.cache/go_mod
 
 
-## $GOPATH/pkg/gosum
+### $GOPATH/pkg/gosum
 * Go 1.13 より Go module proxy と Go checksum database という仕組みが導入
   * リポジトリをホスティングしているサービスに依存しているという問題や悪意ある攻撃者により module をすりかえられるかもしれないという問題に対処するために用意
   * module proxy に問い合わせることで module の情報を取得し、checksum database に問い合わせることにより module の完全性を確認。
@@ -143,37 +143,37 @@ updated: 2026-07-25
 * gosumのパスを変える方法は無い？
 
 
-## $GOPATH/src
+### $GOPATH/src
 * モジュール対応モードを使う場合は不要。（なので使うことは無い気がする）
 * GOPATH mode の場合は import された package の探索先として使われる。
 
 
-## $GOCACHE
+### $GOCACHE
 * デフォで ~/.cache/go-build になっている。
 * ビルド時のキャッシュがここに入るようだ。
   * $GOPATH/pkg/modの方は ダウンロードしたモジュールや 問い合わせ結果のキャッシュで、こっちはビルド時のキャッシュって感じ？
 * $GOCACHE を設定することで変えることができる。
 
-## Go 1.13 から廃止
+### Go 1.13 から廃止
 * $GOPATH/pkg/$GOOS_$GOARCH
   * Go コマンドによりインストールされた Binary-Only package（ package のコンパイルに使用したソースコードを含まずバイナリ形式で package を配布する仕組み） が配置
 
 
 
 
-# module-aware mode
+## module-aware mode
 
 
-## Go Modules
+### Go Modules
 * https://go.dev/ref/mod
 * https://qiita.com/eihigh/items/9fe52804610a8c4b7e41
 * Go1.16（2021年2月頃）でかなりModlesの仕様が改善された感じ。
 
-## $GO111MODULE
+### $GO111MODULE
 * Go modulesの有効・無効を制御
 * デフォルトでon（Go1.16）
 
-## go.mod
+### go.mod
 * Goモジュールのパスを書いておくファイル
 * 例）require rsc.io/quote v1.5.2
   * 不明点：　v1.5.2ってtagの指定？？
@@ -181,28 +181,28 @@ updated: 2026-07-25
   * require モジュール v1.5.2のように指定すると、v1.5.2以上、v2.0.0未満となる。
   * https://poyo.hatenablog.jp/entry/2021/12/11/123810#require時のバージョンの指定
 
-## (TODO) toolchain行
+### (TODO) toolchain行
 * https://go.dev/doc/toolchain
 * go mod tidy -go=1.21を実行したら下記行も追加されたけどなんだろう？
 ```
 toolchain go1.21.4
 ```
 
-## go.sum
+### go.sum
 * go.modファイル内のモジュールの依存関係をハッシュ化したものを保存する
 * go.modファイル同様にビルドする際に使用される。
 * go.sumファイルがなくてもビルドすることはできる。
 * go.modとの整合性を図り、一貫性と信頼性を担保する
 
 
-## 共通オプション -mod
+### 共通オプション -mod
 * https://go.dev/ref/mod
-### -mod=readonly （デフォルト）, -mod=vendor
+#### -mod=readonly （デフォルト）, -mod=vendor
 * goコマンドにvendorディレクトリを無視し、go.modを更新する必要がある場合にエラーを報告するように指示。
 * Goではプロジェクト直下にvendorフォルダがある場合は、そっちを優先的に読み込む。
   * go1.14以降では、vendor ディレクトリがある場合は -mod=vendor がデフォルトとなる。ない場合は -mod=readonly がデフォルト。
 * https://qiita.com/haligon/items/3875dee8a4b1480199af
-### vendorディレクトリ
+#### vendorディレクトリ
 * vendorは go getでダウンロードするモジュールをGOPATH/pkg/modではなく、プロジェクトのルートディレクトリに置くことができる仕組み
 * ./vendor ディレクトリは go mod vendor コマンドで生成することができる。
 * 昔は同じモジュールに対して複数バージョンを使うには、venderディレクトリを使う必要だったようだ。（かなり不便だった）
@@ -210,7 +210,7 @@ toolchain go1.21.4
     * あと、自分の場合たまにモジュールの中身を見ているときに誤って中身にタイピングしている時があって、そのあたりリカバリーできるようにvendorを使うって手はあるかも。  
 * https://selfnote.work/20220218/programming/golang-how-to-debug/
 * https://qiita.com/lamp7800/items/5454353ad0f001f10c37  
-### -mod=mod
+#### -mod=mod
 * コマンド実行時に、go.modを更新したいって場合は、-mod=modというフラグを指定する。
 * ※ Go 1.16から、go buildや go test、go runによって自動的にgo.mod の更新およびダウンロードはされることがなくなった。
   * go.modに存在しないものがある場合はこれらのコマンドでエラーになる。
@@ -218,33 +218,33 @@ toolchain go1.21.4
 
 
 
-## ひとつのgo.modファイル下で複数のmain
+### ひとつのgo.modファイル下で複数のmain
 * 複数のコマンドラインツールなど作成する際は、公式でのベストプラクティスがあるわけでないが、普通に複数のディレクトリに分けて複数のmainを作るのが一般的。
 * https://qiita.com/y_shinoda/items/e4a4ffb25d11ccf74221
 * バイナリサイズもそれぞれが依存するファイルのみ含まれる。
 
 
-## go mod init 〜
+### go mod init 〜
 * go.modファイルが生成される
 
 
-## go mod graph
+### go mod graph
 * 依存関係の確認
 go mod graph | grep xii
     これはgo.modに書いてあるものが全部出る感じ。（direct, indirectの両方）
 go mod graph | grep echo 
 
 
-## go mod tidy
+### go mod tidy
 * *.goファイルをみてよしなに必要なパッケージをよしなにダウンロードしてgo.modに追記
   * GOPATH/go/mod/〜　にダウンロードしたものが入っている。
 * go.sumが作成される。（チェックサムが書いてある）
 
-## go mod download 
+### go mod download 
 * 引数にモジュールの指定がない場合は、go.modファイルに記載されたすべてのモジュールをダウンロード。
 * tidyと違う点は、importがあるなしに関わらずgo.modに記載されていればすべてダウンロード。
 
-## go mod edit -replace
+### go mod edit -replace
 * https://golang.org/doc/tutorial/call-module-code
 * 呼び出し側（hello）で`go mod edit -replace example.com/greetings=../greetings`
   * go.modでreplaceディレクティブで  ../greetingｓに向けられる。
@@ -252,7 +252,7 @@ go mod graph | grep echo
 
 
 
-## go run
+### go run
 * `go run .`　や　`go run hello.go`
 * `go help run` 参照
 * 指定された名前の go プログラムから main パッケージをコンパイルして実行。（バイナリは作成されない）
@@ -264,7 +264,7 @@ go mod graph | grep echo
   * -mod=mod 
 
 
-## go build
+### go build
 * `go help build`
 * https://golang.org/doc/tutorial/compile-install
 * go runはバイナリを作らず実行してくれるショートカット的コマンドだが、go buildはバイナリ作成。
@@ -276,7 +276,7 @@ go mod graph | grep echo
   * Golangは、以前にビルドされたパッケージをキャッシュします。 -aはgo buildにキャッシュを無視させるので、ビルドはすべてのステップを出力します
 
 
-## go install
+### go install
 * ツールのグローバルインストール。
 * go.modには影響を与えない。
 * go build で実行ファイルを作成して、go installで binにインストールしてくれるのでコマンドツールなどを作成するのは便利そう。
@@ -299,7 +299,7 @@ go mod graph | grep echo
     * https://qiita.com/eihigh/items/9fe52804610a8c4b7e41
 
 
-## go get
+### go get
 * `go help get`参照
 * go.mod編集とモジュールのダウンロードを行う。
 * バージョンを指定しない場合は最新バージョンをダウンロードする
@@ -311,7 +311,7 @@ go mod graph | grep echo
 * v1.18からは、モジュールのビルドは行わなくなった。
   * インストール機能はgo installと重複するため。
   * v1.16からgo installで モジュールを指定できるようになったため、go getのインストール機能と重複するため。
-### 依存するモジュールのアップデートをする
+#### 依存するモジュールのアップデートをする
 * 全部更新
   * `go get -u ./...` 
     * すべての依存モジュールのマイナーバージョン・パッチバージョンを最新にする。
@@ -328,7 +328,7 @@ go mod graph | grep echo
   * https://daisuzu.hatenablog.com/entry/2021/11/15/142702
 
 
-## go list
+### go list
 * 例
 ```sh
 % pwd
@@ -340,7 +340,7 @@ github.com/〜
 ```
 * -m パッケージではなくモジュールを表示
     * 
-### モジュールの最新バージョンを確認する
+#### モジュールの最新バージョンを確認する
 * https://zenn.dev/yoshii0110/articles/22456ac6761167
 * `go list -m -u all`
     * -u 
@@ -353,16 +353,16 @@ github.com/〜
     * `go help list`
 
 
-## go clean 
+### go clean 
 * ビルドキャッシュや、テストのキャッシュ、ダウンロードしたモジュールの削除
 > The -modcache flag causes clean to remove the entire module download cache, including unpacked source code of versioned dependencies
 * https://kazuhira-r.hatenablog.com/entry/2021/03/14/003314
 
 
 
-# マルチモジュール
+## マルチモジュール
 
-## マルチモジュールについて
+### マルチモジュールについて
 * マルチモジュール
     * 複数のモジュール（＝複数のgo.modファイル）
     * ポイントとして、「複数のリポジトリ」 「単一のリポジトリ（マルチモジュールのリポジトリ）」両方のケースを包含していること。（自分の解釈ではそう考えている。ネットの記事だと一部、マルチモジュール　＝　マルチモジュールのリポジトリ的な解釈で書かれているものもある。）
@@ -373,7 +373,7 @@ github.com/〜
     * 単一のモジュール（単一のgo.modファイル）が含まれるリポジトリ
 * なお、golang固有の話ではなく一般的な「モノレポ」は「複数のプロジェクトを同じリポジトリで管理する」といったことを指す。
 
-## goplsがプロジェクトのトップに go.mod ファイルがないと上手く動作しない。
+### goplsがプロジェクトのトップに go.mod ファイルがないと上手く動作しない。
 * 以下のようにすることで一応、回避可能。トップではない複数のgo.modファイルに対応可能。（しかしこのワークアラウンドは実験的なもので将来的には削除される予定みたい。挙動としても本来のGoコマンドのビルドとは違う挙動のモジュールのバージョン選択がされる。https://poyo.hatenablog.jp/entry/2022/12/05/090000）
 ```
 "gopls": {
@@ -383,7 +383,7 @@ github.com/〜
 * https://text.baldanders.info/remark/2021/02/golang-with-vscode/
 
 
-## 参照モジュールの置き換え
+### 参照モジュールの置き換え
 * マルチモジュールで開発する際に、参照先のモジュールを置き換えたいケースがある。
     * まだpushしていないけど、ローカルのモジュールで試したい。
     * あと、マルチモジュールじゃなくても、外部のモジュールをモック化したいときに使えそう。
@@ -415,7 +415,7 @@ github.com/〜
     * https://zenn.dev/ikawaha/articles/20220701-a053ec54b77435
 
 
-## （IME）マルチモジュールのリポジトリについて
+### （IME）マルチモジュールのリポジトリについて
 * https://poyo.hatenablog.jp/entry/2022/12/05/090000
 * 上記の記事も踏まえて個人的な所感
     * マルチモジュールのリポジトリは出来れば採用しない方が良さそう
@@ -427,7 +427,7 @@ github.com/〜
 * そもそもモノリシックモジュールなリポジトリしか使って無くても、複数のリポジトリをひとつのVSCodeの画面上で作業する際は同様にgoplsの問題が起きる。（go.modがルートではないところにあるので。） なのでその場合もVSCodeのWorkspaceを使う。
 
 
-## (IME) リポジトリを分けたけど、戻した話
+### (IME) リポジトリを分けたけど、戻した話
 * オンライン処理、バッチ処理はdockerのイメージが別で、オンラインのバイナリサイズをなるべく小さくするためにバイナリを分けたいと考えていた。
 * そのため、マルチモジュール にするか複数のリポジトリに分けるか検討して、マルチモジュールだとgopls関連で扱いが面倒そうだったため、リポジトリを分けることを選択。
 * ただ、グローバル変数とか関数は密結合とした。つまり責務の分解が目的でリポジトリを分けたのではなく、バイナリサイズを小さくすることが目的ということに成る。
@@ -437,10 +437,10 @@ github.com/〜
 
 
 
-# その他
+## その他
 
 
-## 外部パッケージ
+### 外部パッケージ
 * 外部パッケージのリポジトリ名にはハイフンを使って良いのか？
   * https://chatgpt.com/share/67dce908-db90-8000-ab11-24289f4c92b6
   * 結論
@@ -448,7 +448,7 @@ github.com/〜
     * 実際、github.com/google/go-cmpとかは使っている。
     * ただし、パッケージ名はハイフンを使えないため、リポジトリ直下には/cmpのディレクトリを作成してパッケージを内部に作成しておく。
       * importする側は`import "github.com/google/go-cmp/cmp"`のようになる。
-### 不明点
+#### 不明点
 * 例えば下記のようにコードをコピペしたとき、コピペ先にはserverやemptycheckはimportされていないため、エラーとなる。
 ```go
 func f(w http.ResponseWriter, r *http.Request) {
@@ -470,12 +470,12 @@ emptycheck "github.com/megur0/empty-check" // エラーになる
   * https://chatgpt.com/share/67dcef85-4e98-8003-bae8-6fb98bf048e3
 
 
-## internalパッケージ
+### internalパッケージ
 * internalというディレクトリに入れることで外部からそのファイル使うことを許容しない。
 * https://zenn.dev/ikawaha/articles/20220701-a053ec54b77435
 
 
-## (IME) プライベートリポジトリを外部モジュールとして利用したい。
+### (IME) プライベートリポジトリを外部モジュールとして利用したい。
 * proxy、チェックサムの問題
     * 下記のgoコマンドのデフォルト動作は、公開されているソースコードでうまく機能する。
         * デフォルトでgoproxy.ioのパブリックGoモジュールミラーからモジュールをダウンロード
@@ -497,7 +497,7 @@ emptycheck "github.com/megur0/empty-check" // エラーになる
             * https://zenn.dev/shootacean/articles/go-get-from-github-private-repository
             * https://pet2cattle.com/2022/09/go-get-private-repository
             * https://kawaken.dev/posts/20220426_goprivate/
-### Dockerfile内でプライベートリポジトリにアクセスする。
+#### Dockerfile内でプライベートリポジトリにアクセスする。
 * Dockerfile内だと、GOPRIVATEをつけても駄目だった。
 * gitのinstead ofによってgithubのurlをPAT（personal access token）を含むものに置換する方法を使った。
     * ただ、DockerfileへARGとして入れると、イメージのhistoryに残ってしまうため、ARGは使わない方法にした。

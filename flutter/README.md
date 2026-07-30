@@ -6,14 +6,14 @@ updated: 2024-10-23
 [TOP(About this memo))](../README.md) > Flutter
 
 
-# 注意
+## 注意
 * 筆者はMac環境で「XCode」「VSCode」にてiOSアプリをFlutterで開発しているため、本メモは以下の内容についてはほぼ触れていない。
     * Android環境
     * Android Studio
     * Windows
 * 内容もMacの環境, VSCode（+コマンド）を使った開発前提としている、
 
-# Flutter
+## Flutter
 
 * [導入(About Flutter)](./flutter_introduction.md)
 

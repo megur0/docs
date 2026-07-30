@@ -5,7 +5,7 @@ title: "Google AdMob"
 [TOP(About this memo))](../README.md) > Google AdMob
 
 
-## 公式
+### 公式
 * 公式のドキュメントはiOS, Android, Unity, C++, Flutterのそれぞれの別のURL体系でドキュメントが用意されている。
     * C++は2024 年 6 月 17 日をもってサポートが終了
 * iOS
@@ -18,19 +18,19 @@ title: "Google AdMob"
     * (IME) 日本語ページの翻訳が正確ではないため、英語ページを翻訳した方が良いかもしれない。
 
 
-# はじめる
+## はじめる
 * AdMobのサイトからログイン（電話番号確認が必要）
     * https://admob.google.com/intl/ja/home/
 * 支払い情報を登録する
 * 審査が行われる
     * 筆者の場合、翌日には承認のメールが届いた
 
-# アプリを登録する
+## アプリを登録する
 * AdMobの管理画面上で登録を行う。
 * 登録して発行されたApp IDは後述のInfo.plistへ設定する必要がある
 * Storeへリリース前でも登録可能。
 
-# テスト広告・テストデバイスの設定
+## テスト広告・テストデバイスの設定
 * デモ広告(テスト広告、サンプル広告とも呼ばれている)
     * 理由は分からないが、それぞれのドキュメントで指定される広告IDが異なっている。
     * Android
@@ -52,10 +52,10 @@ title: "Google AdMob"
         * したがって、対象のテストデバイスでアプリをテストする際にATTの許可をした状態でテストする必要がある。
     
 
-# （任意）AdMobを Firebaseにリンクする
+## （任意）AdMobを Firebaseにリンクする
 * https://firebase.google.com/docs/admob/ios/quick-start?hl=ja
 
-# Info.plistの設定
+## Info.plistの設定
 * https://developers.google.com/admob/ios/quick-start?hl=ja#update_your_infoplist
 * AdMobのApp IDの設定
     * AdMobのApp IDをplistのGADApplicationIdentifierに設定する
@@ -64,7 +64,7 @@ title: "Google AdMob"
         * https://developers.google.com/admob/ios/3p-skadnetworks?hl=ja
     * 筆者はGoogleのもの１つのみInfo.plistへ設定した。(特に動作上問題はなかった)
 
-# コードの実装
+## コードの実装
 * (参考)バナー広告の種類
     * https://support.google.com/admob/answer/9993556?hl=ja
     * 標準
@@ -136,20 +136,20 @@ title: "Google AdMob"
         * インライン アダプティブ バナーは、アンカー アダプティブ バナーに比べて大きくて背の高いバナーとなる。
         * 高さは可変で、デバイスの画面と同じ高さになることもある。(maxHeightを指定することも可能)
 
-# AdMobの禁止事項
+## AdMobの禁止事項
 * https://support.google.com/admob/answer/6275345?hl=ja
 * "偶発的クリック" を招くものは避ける
     * インタラクティブな要素の近くにある広告(非推奨)
     * アプリアイテムの間に挟まれた広告(非推奨)
     * アプリ コンテンツに重なった広告(ポリシー違反)
 
-# (任意)IDFAへのアクセス許可
+## (任意)IDFAへのアクセス許可
 * https://support.google.com/admob/answer/9997589?hl=ja
     > Apple が 2020 年 6 月に発表した更新に伴い、アプリが Apple の広告配信用の識別子（IDFA）にアクセスする際はユーザーに許可を求めることが必須となりました。これには、App Tracking Transparency（ATT）フレームワークと呼ばれるプロンプトを利用します。
 * ユーザーがIDFAへのアクセスを許可しない場合は、広告の単価が低下する。
 * また、テストデバイスはIDFAでGoogleが認識するため、ATTが許可されていない場合はテストデバイスを登録しても実際には機能しない。
 
-# app-ads.txtの配置
+## app-ads.txtの配置
 * https://support.google.com/admob/answer/9363762?hl=ja#step1
 * iOSアプリは、app-ads.txtというテキストファイルをApp Store申請時のマーケティングURLのルートに配置する必要がある。
 * App Store申請時にはこのマーケティングURLに忘れずに設定しておく必要がある。
@@ -158,7 +158,7 @@ title: "Google AdMob"
 * クロール・検証が完了するまで待つ必要がある。
     > AdMobがapp-ads.txtファイルをクロールして検証するまで、最大 24 時間かかることがあります。AdMob では定期的に最新のファイルを確認しますが、早めの確認が必要な場合には AdMob にアプリのクロールをリクエストすることもできます。
 
-# (AppStoreへ公開後)対象のアプリにストア情報を設定する
+## (AppStoreへ公開後)対象のアプリにストア情報を設定する
 * AppStoreへ公開後、AdMobへストア情報を登録する必要がある。
 * ストア情報が登録されていない場合は、テスト端末以外は広告のロードが失敗する点に注意。
     * このため広告を含む新規アプリは、広告の審査が完了するまではロードが失敗した際の表示方法の制御は考慮しておく必要がある。

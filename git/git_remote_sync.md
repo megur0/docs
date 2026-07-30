@@ -6,10 +6,10 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(Git)](./README.md) > push・pull・fetch
 
 
-# push
+## push
 * 上流ブランチを設定しておくため、オプション`-u`をつけておいた方がよい（上流ブランチについては[branch_merge](./git_branch_merge.md)を参照）。
 
-## pushの取り消し
+### pushの取り消し
 ```
 git push -f origin HEAD^:<ブランチ名>
 ```
@@ -20,7 +20,7 @@ git push -f origin HEAD^:<ブランチ名>
     ```
 * 履歴を残す場合はrevertを使う方がよい（基本的にこちらを使う）。
 
-## `push -f`は共同作業ではあまり使わない方がよいかもしれない
+### `push -f`は共同作業ではあまり使わない方がよいかもしれない
 * (参考) https://qiita.com/hnw/items/5ac4416c72dd567b263f
 * 他人もpullしている場合だと、下のような状態になってしまうことがある。
     ```
@@ -39,8 +39,8 @@ git push -f origin HEAD^:<ブランチ名>
 * 解決手段は、`git reset --hard origin/foobar`でリモート側に合わせる。
 
 
-# pull
-## 基本
+## pull
+### 基本
 * リモートリポジトリにpushされた変更をローカルに反映する。
     ```
     git pull <リモートレポジトリ名> <ブランチ名>
@@ -62,7 +62,7 @@ git push -f origin HEAD^:<ブランチ名>
     * 例えば、今のブランチが`feature-xxx`のときに`git pull origin test`とすると、`feature-xxx`に`test`がマージされる（マージのされ方は[branch_merge](./git_branch_merge.md)参照）。
 * 全てのリモート追跡ブランチを更新したい（ローカルにないものも含む）場合は`git fetch`する。
 
-## 衝突時・エラー発生時
+### 衝突時・エラー発生時
 * pullして衝突した場合（`Your local changes to the following〜`と出た場合）
     ```
     git stash -u   # まず作業ファイルを退避する
@@ -89,12 +89,12 @@ git push -f origin HEAD^:<ブランチ名>
         ```
 
 
-# fetch
-## 引数なし`git fetch`
+## fetch
+### 引数なし`git fetch`
 * 全てのリモート追跡ブランチを更新する（ローカルに存在しないブランチも取得する）。
 * `git fetch origin +refs/heads/*:refs/remotes/origin/*`と同じ意味。originの全てのheadsをremotes/origin以下に写すという意味。
 
-## checkoutせずにmergeしたい（その1）→非推奨
+### checkoutせずにmergeしたい（その1）→非推奨
 * 本質的に`git pull`するのと挙動が違うため、使うとしてもよく理解してから使った方がよい(IMO)。
 * (参考) https://stackoverflow.com/questions/36214756/what-does-git-fetch-origin-mastermaster-mean
 * 本質的には、ステージング環境ではstagingにマージしてから、ステージング環境で`git pull`するだけで済む気もするが、複数の作業者が同時に作業する場合は現実的ではない。
@@ -108,14 +108,14 @@ git push -f origin HEAD^:<ブランチ名>
     ```
 * (参考) https://jpcodeqa.com/q/c85eb5377d6bd56171f909bc00f5aba5
 
-## checkoutせずにmergeしたい（その2）→こちらの方がよさそう
+### checkoutせずにmergeしたい（その2）→こちらの方がよさそう
 ```
 git branch -D <ブランチ名>
 git checkout <ブランチ名>
 ```
 * これなら古い内容が反映されることもない。
 
-## `git fetch <リモートレポジトリ名> <ブランチ名>`の動作
+### `git fetch <リモートレポジトリ名> <ブランチ名>`の動作
 * (参考) http://www-creators.com/archives/2295
 * `git fetch`は「リモートブランチの履歴を取り込む」コマンド。ローカルブランチ、インデックスや作業ツリーには変更を加えない。
 * `git fetch`だけの場合（引数がない場合）、全てのリモート追跡ブランチのみが更新される(?)。
@@ -130,7 +130,7 @@ git checkout <ブランチ名>
     git merge origin/test
     ```
 
-## リモート追跡ブランチ（リモートトラッキングブランチ）について
+### リモート追跡ブランチ（リモートトラッキングブランチ）について
 * `git branch -a`で全てのブランチを表示すると、「remotes/origin/feature-a」のようにブランチ名の前にリポジトリ名が表示される。この「remotes/xxxx/xxxx」となっているブランチ名が「リモート追跡ブランチ」である。
     * 出力例
         ```
@@ -144,7 +144,7 @@ git checkout <ブランチ名>
 * `remotes/origin/HEAD -> origin/master`は、リポジトリのデフォルトブランチを表す。例えば`origin/HEAD`が`origin/master`を指しているとき、`git checkout -b test origin`とすると`git checkout -b test origin/master`と同じ意味になる。デフォルトブランチは`git remote set-head`で変更できる。
 * `git push`成功時には（上流ブランチとして設定されていれば）自動的に対応するリモート追跡ブランチの参照が更新される。上流ブランチが設定されていない場合は、`git push -u origin master`などの`-u`オプションで設定できる。
 
-## リモートにあるブランチを更新したいとき
+### リモートにあるブランチを更新したいとき
 * リモートにあるブランチ（ローカルにないブランチ）を更新したいとき、ついローカルブランチのようにチェックアウトして編集したくなるかもしれないが、Gitの仕様上、作業ブランチをリモートブランチに切り替えて直接更新することはできない。ローカル環境からリモートブランチを更新する唯一の手段は「ローカルブランチの履歴をリモートブランチにpushする」ことのみとなる。通常は以下のように、fetchしてから作業する。
     ```
     # リモートのcool-featureブランチに対応する追跡ブランチを作成

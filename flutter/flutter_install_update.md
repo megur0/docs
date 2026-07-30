@@ -6,14 +6,14 @@ updated: 2025-01-01
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 環境構築・アップデート
 
 
-# 注意
+## 注意
 * 筆者はMac環境で「XCode」「VSCode」にてiOSアプリをFlutterで開発しているため、本メモは以下の内容については触れていない。
     * Android環境
     * Android Studio
     * Windows
 * 内容もMac, VSCodeを前提としている、
 
-# インストール
+## インストール
 * 公式の手順に従う
     * https://docs.flutter.dev/get-started/install/macos
 * MacのApple Silicon(M1/M2)の場合、Rosetta 2が必要となる
@@ -27,12 +27,12 @@ updated: 2025-01-01
 * インストール状態の確認
     * `flutter doctor`
     * 各種ツールチェインが正常にインストールされていることを確認
-## アンインストール
+### アンインストール
 * https://docs.flutter.dev/get-started/uninstall
-## (参考)Flutter SDK と dart-sdk
+### (参考)Flutter SDK と dart-sdk
 * 参考
     * https://qiita.com/kurun_pan/items/520d91b4f5da6f14345b
-### Flutter SDK は Dartで書かれている
+#### Flutter SDK は Dartで書かれている
 * Flutter SDKが提供する各種コマンドは基本的に Dart で書かれている。
     * Flutter SDKは、Dart VM (dart-sdk) 上で動作する。
     * Flutter SDKの本体
@@ -46,7 +46,7 @@ updated: 2025-01-01
     * 仮に Flutter SDK (flutter_tools) をローカルで修正し、それを動きに反映させるためには、${install先}/flutter/bin/cache/flutter_tools.snapshotを一度物理的に削除する必要がある
 * ビルドされたDart SDKはDart VM (dart-sdk) 上で動作する。
     * VM経由のため、バイナリコードで実行する場合はよりは遅い？
-### Flutter SDK と dart-sdk の 各種ダウンロード先
+#### Flutter SDK と dart-sdk の 各種ダウンロード先
 * packages
     * Flutterの各種ライブラリ (Framework) 本体
         * ${install先}/packages/flutter
@@ -68,7 +68,7 @@ updated: 2025-01-01
     * 筆者の環境(Mac)では /Users/xxx/flutter/bin/flutter
 
 
-# FVM(WIP)
+## FVM(WIP)
 * 複数のバージョンを管理・切り替えすることができる。
 * `fvm install`
     * プロジェクト内に適宜、.fvmrcのファイルが作成される
@@ -76,7 +76,7 @@ updated: 2025-01-01
     * 現在インストールされているバージョンを確認
 
 
-# Channel
+## Channel
 * https://docs.flutter.dev/release/archive
     > The Stable channel contains the most stable Flutter builds
 * `flutter channel` で確認
@@ -87,13 +87,13 @@ updated: 2025-01-01
     * 参考
         * https://github.com/flutter/flutter/blob/master/docs/releases/Flutter-build-release-channels.md
 
-# VSCode
+## VSCode
 * VSCodeを未インストールであればVSCodeをインストールする
 * 拡張のFlutter extension for VS Codeを入れる
 * 推奨されるeditorの設定を行う
     * コマンドパレットで「Dart: Use Recommended Settings」とするとグローバルな設定ファイルへ設定が行われる。
     * https://dartcode.org/docs/recommended-settings/
-## 基本的な操作方法や設定
+### 基本的な操作方法や設定
 * https://docs.flutter.dev/tools/vs-code
 * 新規プロジェクト
     * cmd + shift + p > Flutter: New Project
@@ -140,7 +140,7 @@ updated: 2025-01-01
     * こちらは"never"とすることでオフにすることが可能。
         * https://dartcode.org/docs/settings/#dartflutterhotreloadonsave
         * https://github.com/Dart-Code/Dart-Code/issues/3110#issuecomment-771561427
-## (参考)設定ファイル
+### (参考)設定ファイル
 * .vscode/settings.jsonの例
     * "explicit"の箇所を "always" とするかは好みに依る
     ```
@@ -196,7 +196,7 @@ updated: 2025-01-01
 
 
 
-# Flutterプロジェクトの作成
+## Flutterプロジェクトの作成
 * 参考
     * https://docs.flutter.dev/get-started/codelab
 * 以下のどちらかの方法で作成できる
@@ -209,7 +209,7 @@ updated: 2025-01-01
         * Flutter: New Project を実行
         * [Application] を選択し、プロジェクトを作成するフォルダを選択、プロジェクト名を入力して、作成。
 
-# ビルド・動作確認
+## ビルド・動作確認
 * 以下のいずれかの方法でビルド・動作確認ができる。
 * VSCode上でビルド・実行
     * `flutter pub get`をしていない場合は実行しておく。
@@ -222,13 +222,13 @@ updated: 2025-01-01
 
 
 
-# ビルドの詳細のトレース
+## ビルドの詳細のトレース
 * 混み合った問題やBuild Phaseのスクリプトの問題など、flutter runの出力のみでは問題解決できない場合は、以下のログを参照すると良いだろう。
     * flutter runにオプション-vをつけて実行する。
     * あるいは、XCode上のレポートナビゲータからビルドログを確認する
 
 
-# プロジェクトフォルダの構成概要
+## プロジェクトフォルダの構成概要
 * lib/
     * アプリケーションコード
     * 作成したDartコードはここに格納していく。
@@ -331,18 +331,18 @@ updated: 2025-01-01
     * Android Studio(IDE)の設定情報などが記載されたファイルが格納されている。
         * VSCodeの場合は特に使われない(はず)
 
-# 静的解析 の設定
+## 静的解析 の設定
 * analysis_options.yamlに設定が記述される。
 * flutter createで作成したプロジェクトはリンターとして、flutter_lintsパッケージがデフォルトで設定されている。
     
 
-# 依存関係のツリーを確認する
+## 依存関係のツリーを確認する
 * `flutter pub deps`
 * 参考
     * deprecatedとなったパッケージのバージョンに依存するパッケージを探す例
     * https://github.com/jonataslaw/get_cli/issues/263#issuecomment-2318341054
 
-# Flutter本体のアップグレード
+## Flutter本体のアップグレード
 * バージョンを確認
     * `flutter --version`
     * `dart --version`
@@ -365,7 +365,7 @@ updated: 2025-01-01
         * これは内部的にdart 2.12.0以上のときに、最大バージョンを3.0.0未満から4.0.0未満に置き換えるため。
         * 参考
             * https://zenn.dev/yumemi_inc/articles/20230518_dart_sdk_3
-## トラブルシューティング
+### トラブルシューティング
 * Flutter本体をアップグレードした結果、利用するパッケージでエラーが発生
     * メジャーアップデートでは互換性が壊れる破壊的変更（Breaking change）を伴うことがある。
     * (例)(IME) qr_flutterパッケージで型エラーとなったケース
@@ -384,9 +384,9 @@ updated: 2025-01-01
     * Flutterのバージョンアップはウィジェットのデフォルトの表示に影響を与える変更も含まれる。
     * したがってアップデートに伴い、ゴールデンテストのファイルは上書き(--update-goldens)して各ファイルの変更内容を確認することが望ましいだろう。
 
-# パッケージのアップデート
+## パッケージのアップデート
 * https://docs.flutter.dev/release/upgrade#upgrading-packages
-## パッケージの状態を確認する
+### パッケージの状態を確認する
 * 新しいパッケージの確認
 * `flutter pub outdated`
 * Current
@@ -402,13 +402,13 @@ updated: 2025-01-01
         * そのパッケージの利用を止める、(プライベートパッケージの場合)依存先を修正する、といった対処が考えられる。
 * Latest 
     * 最新バージョン
-## pubspec.ymlの指定の範囲内で更新する
+### pubspec.ymlの指定の範囲内で更新する
 * 下記コマンドで、互換性のある最新バージョンに更新する
 * `flutter pub upgrade`
 * `flutter pub upgrade パッケージ名`
 * これによってpubspec.lockが更新され、同時にflutter pub getも実行される。
 * セマンティックバージョニングに基づけば、APIの互換性は保たれる変更のみとなる。
-## pubspec.ymlの指定を変更する
+### pubspec.ymlの指定を変更する
 * 解決可能な最新バージョン(Resolvable)に更新
     * `flutter pub upgrade --major-versions`
     * `flutter pub upgrade --major-versions パッケージ名`
@@ -419,7 +419,7 @@ updated: 2025-01-01
     * `flutter pub get`
     * 依存解決で失敗する可能性がある。
     * (IMO)基本的に手動更新は例外的な対応と考えたほうが良いかもしれない。
-## (IMO) pubspec.ymlの指定と、バージョン解決について
+### (IMO) pubspec.ymlの指定と、バージョン解決について
 * pubspec.ymlは定期的にメンテナンスすることは勿論として、バージョン解決が狭くなりすぎないようにする必要がある。
 * 例えば `some_packeage: 8.2.1` といった固定の指定は問題を引き起こすことが多い。
 * 事由として下記がある
@@ -434,13 +434,13 @@ updated: 2025-01-01
 
 
 
-# パッケージを削除
+## パッケージを削除
 * パッケージを削除
     * `flutter pub remove パッケージ名` を実行して　`flutter pub get`
 * ios/配下のpodfileなどは、ビルドまで実行しないと削除されない。
     
 
-# Flutterのダウングレード
+## Flutterのダウングレード
 * `flutter downgrade バージョン`
     * ただし現在のChannelに該当のバージョンがない場合はダウングレードできない。
 * 直接gitのブランチを切り替えることでバージョンを変更できる

@@ -5,7 +5,7 @@ title: "Mac"
 [TOP(About this memo))](../README.md) > Mac
 
 
-# Mac
+## Mac
 
 * [Homebrew](./mac_homebrew.md)
 

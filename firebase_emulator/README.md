@@ -6,7 +6,7 @@ title: "Firebase Local Emulator Suite"
 
 
 
-# Firebase Local Emulator Suite
+## Firebase Local Emulator Suite
 
 [導入](./firebase_emulator_introduction.md)
 

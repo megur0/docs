@@ -6,11 +6,11 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(JavaScript)](./README.md) > 配列操作・アロー関数など
 
 
-# forEachやmapではbreakできない
+## forEachやmapではbreakできない
 * for文で書いてbreakするしかない。
 
 
-# map, forEach, filter, reduce
+## map, forEach, filter, reduce
 * 配列に対して使える。
 ```js
 var array = [2, 3, 5];
@@ -31,7 +31,7 @@ console.log([1, 2, 3, 4].reduce((previousValue, currentValue) => previousValue +
 // expected output: 10
 ```
 
-## 実用例
+### 実用例
 ```js
 return Object
     .keys(this.$route.query)
@@ -48,11 +48,11 @@ return Object
     * https://qiita.com/TelBouzu/items/08ce089d2747d978fd0f
     * https://blog.ryo4004.net/web/3988/
 
-## TODO
+### TODO
 * reduceの使い所についてもう少し整理する。
 
 
-# アロー関数
+## アロー関数
 * ES6で使えるようになった。
 ```js
 // 単一式の場合はブラケットやreturnを省略できる
@@ -75,7 +75,7 @@ const fn = (a, b) => ({ sum: a + b });
     * (参考) https://qiita.com/soarflat/items/b251caf9cb59b72beb9b
 
 
-# 即時関数
+## 即時関数
 * 以下のように無名関数（クロージャ）と組み合わせて構造を隠蔽できる。
 ```js
 var module = (function() {
@@ -97,12 +97,12 @@ console.log(count); // undefined
 ```
 
 
-# ラムダ式
+## ラムダ式
 * (IMO)(?) 結局のところシンタックスシュガーのようなものと捉えている。
 * (参考) http://softcommu-blog.com/?eid=9
 
 
-# スプレッド構文
+## スプレッド構文
 * 反復可能なオブジェクト（配列など）を、文脈に合わせて展開する。
 * (参考) https://analogic.jp/spread-operator/
 ```js

@@ -6,7 +6,7 @@ title: "App Store Connect/リリース - iOSアプリ開発"
 
 
 
-# App Store Connectへのアプリの登録
+## App Store Connectへのアプリの登録
 * SKU(Stock Keeping Unit：在庫管理の単位)
     * ユーザには表示されない内部トラッキング用にアプリに与える一意の ID。
     * アカウントにアプリを追加した後は、SKU を変更することはできない。
@@ -17,19 +17,19 @@ title: "App Store Connect/リリース - iOSアプリ開発"
     * おそらく、すべてのユーザーが下記に該当する場合は、「アクセス制限あり」自体の選択肢が不活性となり選択できない。
         * （公式ドキュメントの記述は見つからなかった）
     
-# アーカイブ
+## アーカイブ
 * Xcodeで、Product > Archive でアーカイブが生成される。
     * ビルドとアーカイブが行われる。
     * これによって.xcarchiveファイルが作成される
 * アーカイブをすると、Organizerの画面へ遷移する。
 
-# 参考: IPAファイルと.xcarchiveファイル
+## 参考: IPAファイルと.xcarchiveファイル
 * https://stackoverflow.com/questions/8591004/difference-between-ipa-and-xcarchive
 > IPA は、YourApp.app バンドルを含む、圧縮された Payload フォルダーです。.app には、イメージ、plist ファイル、圧縮された nib と実行可能ファイル、CodeSigning リソースなどのすべてのアプリケーション リソースが含まれます。
 > xcarchive にはアプリと dsym ファイルが含まれています。クラッシュ ログを非シンボリック化するには .DSYM が必要です。保存した .xcarchive を右クリックし、パッケージの内容を表示を選択して、その内容を確認します。
 > TLDR: .xcarchiveはあなたのための仲介ステップであり、.ipaはApp Storeへのアップロードに使用できます。
 > ipaの中身を調べるには、.ipaファイルを.zipにリネームして解凍します。 
-## IPAファイルの内容
+### IPAファイルの内容
 * zipに変更して中身を開くことが出来る
 * 例えば下記のような構成となっている。
 ```sh
@@ -59,7 +59,7 @@ tree
     ...
 ```
 * SymbolsはdSYMを元にして生成されたシンボルファイルであり、UUIDは.xcarchiveの各.dSYMのUUIDと一致する
-## SymbolsファイルがIPAに含まれているとセキュリティ上問題はある？
+### SymbolsファイルがIPAに含まれているとセキュリティ上問題はある？
 * https://forums.developer.apple.com/forums/thread/130061
     > .symbols ファイルは、App Store にビットコードではなくマシンコードを送信すると生成されます。これらは、シンボル化されたクラッシュ レポートを Xcode Organizer に配信するメカニズムの一部として使用されます。これらは、はるかに多くのデバッグ情報を含む完全な .dSYM ファイルよりも軽量です。
 * https://developer.apple.com/forums/thread/680599
@@ -71,7 +71,7 @@ tree
     * ただし、クラッシュレポートの送信のために、シンボルのUUID等の情報はApp Storeへ送信して紐づけ等は行ってる事が推測される?
 
 
-# App Store Connectへアップロード
+## App Store Connectへアップロード
 * (未登録であれば)App Store Connectでアプリを登録しておく
 * Window > Organizer > Archives > 対象を選択
     * ここで表示されるバージョンはCFBundleShortVersionStringとなり、括弧内の数字（ビルド番号）がCFBundleIdentifierとなる。
@@ -82,7 +82,7 @@ tree
 * Distribute App を押下 > 対象を選択。
     * 例えば、TestFlightのみであれば、`TestFlight Internal Only`
 
-# TestFlight
+## TestFlight
 * https://help.apple.com/xcode/mac/current/#/dev2539d985f
 * 内部テスト
     * アプリの審査不要
@@ -93,7 +93,7 @@ tree
     * ※ ビルドが Xcode や Xcode Cloud から「TestFlight Internal Only」(TestFlight の内部テストのみ) としてアップロードされた場合は、このテストには利用できない。
 * (IMO)内部テストでほとんど対応可能で、外部テストを利用することはあまりない？
 * スクリーンショットでフィードバックといった機能がある。
-## 内部テスト
+### 内部テスト
 * (未済の場合)対象のビルドをApp Store Connectへアップロードしておく
 * 内部テスターの追加
     * https://developer.apple.com/jp/help/app-store-connect/test-a-beta-version/add-internal-testers/
@@ -104,14 +104,14 @@ tree
 * 内部テスト > + でテストグループを登録(自分含め、テストするユーザーを招待)
 * ユーザーは届いたメールからTestFlightを開く。
 
-# Ad hoc
+## Ad hoc
 * https://developer.apple.com/documentation/xcode/distributing-your-app-to-registered-devices
 * TestFlightを利用する以外に、Ad hocで配信する方法がある。
 * この方法は、App Store Connectへのアップロードの必要がなく、直接、端末へipaファイルをインストールすることができる。
 * ただし、TestFlightと比較して以下のデメリットがある
     * 対象端末はApple Developer上で登録された端末であり、Provisioning Profileに紐づけがされている必要がある。
     * アプリの自動アップデートはされない
-## インストール方法
+### インストール方法
 * (未済であれば)アーカイブを作成する。
 * Window > Organizer > Archives > 対象を選択
 * Distribute App を押下 > Release Testing もしくは Debugging を押下
@@ -129,7 +129,7 @@ tree
         * なお、既に同じバンドルIDのアプリをインストール済み（ipaファイル、あるいはTestFlight）の場合はD&Dしてもなにも起こらない。
 
 
-# 輸出コンプライアンス
+## 輸出コンプライアンス
 * https://qiita.com/Sashiiii111/items/3c960b6d9cbb93f9449b
 * アメリカやフランスにおいて、暗号化技術を利用するソフトウェアにおいては規制があり、必要に応じて手続きを踏む必要があるため。
 * HTTPSなどの標準的な暗号化のみであれば、 「標準的な暗号化アルゴリズム」に該当する。
@@ -142,13 +142,13 @@ tree
     ```
     * ITSAppUsesNonExemptEncryptionは、"ITSApp は非免除暗号化を使用しています" といった意味のため、「標準的な暗号化アルゴリズムのみ利用」であれば「false（使用していない）」で良い。
 
-# その他
-## スクリーンショットをアップロードしても「このファイルはまだアップロードされていません」と表示される
+## その他
+### スクリーンショットをアップロードしても「このファイルはまだアップロードされていません」と表示される
 * ファイルをアップロードした際に何も表示されず、再度画面をリロードすると「このファイルはまだアップロードされていません」と表示されて灰色のファイル表示となることがある。
 * この場合は少し時間を置いて何度も試すとうまくいくことがある。
-## Apo Storeの検索結果の表示の際に、プレビューが表示されない
+### Apo Storeの検索結果の表示の際に、プレビューが表示されない
 * これはApp Storeの仕様で、インストール済みのアプリの場合は表示されない仕様となっている。
 * インストール未済であれば表示される。
-## コンソールへの出力
+### コンソールへの出力
 * アプリのコンソール出力はエンドユーザーも内容を見ることが可能である。
 * したがって、リリースビルドにおいてコンソールへの出力は必要最低限とすることが良いだろう。

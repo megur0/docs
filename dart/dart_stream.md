@@ -6,12 +6,12 @@ title: "ストリーム - Dart"
 
 
 
-# Stream
+## Stream
 > Asynchronous programming in Dart is characterized by the Future and Stream classes.
 
 > A stream is a sequence of asynchronous events. It is like an asynchronous Iterable—where, instead of getting the next event when you ask for it, the stream tells you that there is an event when it is ready.
 
-# Streamの種類
+## Streamの種類
 * https://dart.dev/tutorials/language/streams#two-kinds-of-streams
 * https://dart.dev/articles/libraries/creating-streams
 * Single subscription streams
@@ -24,7 +24,7 @@ title: "ストリーム - Dart"
   * 複数のリスナーが同時に購読可能なストリーム。
   * リスナーの有無に関係なく準備ができるとイベントが起動される。  
 
-# Streamの作成
+## Streamの作成
 * https://api.dart.dev/stable/2.18.5/dart-async/Stream-class.html 
 * Streamオブジェクトを返す。
 * async*をつける。
@@ -54,7 +54,7 @@ Stream<int> countStream(int to) async* {
   ```dart
   expect(Stream.error(Exception()), emitsError(isException));
   ```
-## (参考)Iterableの作成
+### (参考)Iterableの作成
 * https://dart.dev/guides/language/language-tour#generators
 * Iterableオブジェクトを返す。
 * sync*をつける。
@@ -66,7 +66,7 @@ Iterable<int> naturalsTo(int n) sync* {
 }
 ```
 
-# yield*
+## yield*
 * yield
   * ジェネレーターから非同期または同期のいずれかで値を出力するために使用
 * yield*
@@ -83,8 +83,8 @@ Iterable<int> r(int n) sync* {
   * https://stackoverflow.com/questions/57492517/difference-between-yield-and-yield-in-dart/57492636#57492636
 
 
-# Streamから値を受け取る
-## listen
+## Streamから値を受け取る
+### listen
 * StreamSubscriptionオブジェクトが返却される。
 * Streamのイベントは非同期に発生する。
 * 下記の結果を確認するとマイクロタスクよりは遅く、Futureよりも早いタイミングで受け取る。
@@ -114,7 +114,7 @@ Stream<int> countStream(int from, int to) async* {
 5
 */
 ```
-## await for
+### await for
 * listenとは異なる点として、await for の場合は後続のステートメントには進まない。
   * awaitと同様に後続処理はawait forの完了後に即時実行される
 * await forを使う関数はasyncである必要がある。
@@ -131,9 +131,9 @@ Future<void> main() async {
 // main end
 ```
 
-# Streamのエラー
+## Streamのエラー
 * listenの際にonErrorでエラーを受け取ることができる
-## Stream.error
+### Stream.error
 * エラー後もイベントは継続する
 ```dart
 void main() {
@@ -155,7 +155,7 @@ Stream<int> countStream(int to) async* {
 // 5
 // error
 ```
-## Exception
+### Exception
 * throwするとイベントは停止する。
 ```dart
 void main() {
@@ -191,7 +191,7 @@ void main() {
 // 4
 // 5
 ```
-## await for
+### await for
 * try〜catchでハンドリング可能
   ```dart
   try {
@@ -230,7 +230,7 @@ void main() {
   // Exception: error
   ```
 
-# Streamから他のStreamの値を使う
+## Streamから他のStreamの値を使う
 * yield* や await forを使う。
 ```dart
 void main() {
@@ -257,7 +257,7 @@ Stream<int> stream2() async* {
 // 2
 // 3
 ```
-## (参考) エラー後も引き続き値を受け取る
+### (参考) エラー後も引き続き値を受け取る
 * 下記の場合は、エラーハンドリング後は値を受け取ることができない。
   ```dart
   void main() {
@@ -302,7 +302,7 @@ Stream<int> stream2() async* {
     
 
 
-# Single/Broadcast
+## Single/Broadcast
 * シングルサブスクリプションストリーム
   ```dart
   main() {
@@ -369,18 +369,18 @@ Stream<int> stream2() async* {
   ```
 
 
-# (参考)Streamの破棄
-## リスナー側
+## (参考)Streamの破棄
+### リスナー側
 * 通常、リスナー側ではストリームの破棄は関心事ではなく購読をキャンセルするのみである。
 * ストリームをどのように終わらせるかは、ジェネレータ側の実装による。
 * https://github.com/dart-lang/sdk/issues/42480#issuecomment-649378170
-## ジェネレータ側
+### ジェネレータ側
 * IMO(未検証)
   * シングルサブスクリプションストリームの場合、購読が終了、キャンセルされた場合は自動的にガーベッジコレクションされる?
   * ブロードキャストストリームの場合は全て送信が完了後はガーベッジコレクションされる?
 
 
-# StreamController
+## StreamController
 * https://api.flutter.dev/flutter/dart-async/StreamController-class.html
 * Streamを扱いやすくしたクラス。
 * async* 〜 yieldを使ったStreamの作成は、Streamオブジェクトの宣言時にイベント自体を定義する必要がある。
@@ -400,7 +400,7 @@ final StreamController<int> sc1 = StreamController<int>();
 // 4
 // 5
 ```
-## sink.addとaddの違い
+### sink.addとaddの違い
 * sink.addとaddの機能は同じ。
 * sinkはStreamControllerオブジェクト自体は隠蔽して、addのみの操作をさせたいときに利用する。
   * StreamController自体を渡すとadd以外の操作も可能となってしまう。

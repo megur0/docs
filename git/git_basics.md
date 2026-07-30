@@ -6,7 +6,7 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(Git)](./README.md) > 基本用語・概念
 
 
-# 用語
+## 用語
 * Gitには、リモートリポジトリ・ローカルリポジトリ・作業フォルダ（ワークツリー）の3段階がある。
 * リモートリポジトリ：インターネット上、あるいはその他ネットワーク上のどこかに存在するリポジトリ。
 * ローカルリポジトリ：ユーザーが利用するために、自分の手元のマシン上に配置するリポジトリ。
@@ -22,11 +22,11 @@ updated: 2026-07-24
     * `origin/master`とスラッシュが付く場合、ローカルのrefs領域を指す。
     * `origin master`とスペースが付く場合、サーバーを指す。
 
-## 参考サイト
+### 参考サイト
 * (参考) https://qiita.com/kohga/items/dccf135b0af395f69144
 
 
-# HEAD~、HEAD^、@の関係
+## HEAD~、HEAD^、@の関係
 * Gitのv1.8.5以降、「HEAD」のエイリアスとして「@」が用意されている。
 * `git show <ハッシュ値>`のようにハッシュ値を直接指定してもコミットを参照できる。ハッシュ値は`git log`で確認できる。
 * 親コミットが複数ある場合（マージコミットなど）は、`^`（キャレット）と`~`（チルダ）を以下のように使い分ける。単一の親をたどる限りではHEAD~1とHEAD^は同じ意味になる。
@@ -37,12 +37,12 @@ o(HEAD~3) - o(HEAD~2 or HEAD~1^1) -o(HEAD~1 or HEAD^) -HEAD
 ```
 
 
-# ref
+## ref
 * 参照（refs）はGitにおけるSHA-1ハッシュ値を示す別名である。
 * GitのオブジェクトやコミットはSHA-1ハッシュ値で管理されている。ただし毎回SHA-1ハッシュ値を直接指定するのは手間なので、SHA-1ハッシュ値を指す参照（refs）が用意されている。
 * (参考) https://senooken.jp/post/2020/09/12/
 
-## .git/refsについて(TODO)
+### .git/refsについて(TODO)
 * `.git/refs/heads/`：ローカルのブランチへの参照を格納。
 * `.git/refs/remotes/`：リモートリポジトリへの参照（ブランチ、タグ）を格納。
 * `.git/refs/tags/`：ローカルのタグへの参照を格納。
@@ -55,6 +55,6 @@ o(HEAD~3) - o(HEAD~2 or HEAD~1^1) -o(HEAD~1 or HEAD^) -HEAD
     git log master
     ```
 
-## refspec
+### refspec
 * refspecはリモートリポジトリとローカルリポジトリの対応関係の書式。
 * 具体的には`.git/config`内で指定され、`fetch`/`pull`と`push`で使用する。(TODO)

@@ -5,7 +5,7 @@ title: "オブジェクト - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > オブジェクト
 
 
-# オブジェクト指向
+## オブジェクト指向
 * https://dart.dev/language/classes
   > Dart is an object-oriented language with classes and mixin-based inheritance. 
 * Dartはオブジェクト指向言語
@@ -22,13 +22,13 @@ title: "オブジェクト - Dart"
     * `var p1 = new Point(2, 2);`
 
 
-# identical
+## identical
 * オブジェクトが同一かどうかを判定する
 ```dart
 expect(identical(Object(), Object()), false);
 ```
 
-# ==メソッド
+## ==メソッド
 * https://api.dart.dev/stable/3.3.4/dart-core/Object/operator_equals.html
 * == はメソッドである。
   > 1. If x or y is null, return true if both are null, and false if only one is null.
@@ -38,20 +38,20 @@ expect(identical(Object(), Object()), false);
   * インスタンスの同一性ではなく、フィールドの同一性で==を使いたい際にオーバーライドして独自の実装を行えば良い。
 
 
-# Object.runtimeType
+## Object.runtimeType
 * ランタイムの型の取得
 
 
-# 型テスト演算子
-## as
+## 型テスト演算子
+### as
 * 型アサーション
 * アサーションに失敗すると実行時エラーとなる。
-## is
+### is
 * is での比較と、== で比較は異なる。
 * is の否定形は is! 
 
 
-# サンプルコード
+## サンプルコード
 ```dart
 void main() {
   print(Person == Person); // true
@@ -81,12 +81,12 @@ class Taro extends Person{}
   * https://qiita.com/kabochapo/items/925a2cee9199031272df
 
 
-# print
+## print
 * https://api.flutter.dev/flutter/dart-core/print.html
 * Object? を引数にとりコンソールへ出力する。
 * String以外のオブジェクトはオブジェクトのtoStringメソッドが呼ばれる。
 
-# (参考)pretty print
+## (参考)pretty print
 * 任意のオブジェクトの構造を動的に取得してpretty printするにはリフレクションを使えば可能?
 * リフレクションはFlutterでは使えない。
 * Flutterではinspect関数が用意されている。

@@ -6,7 +6,7 @@ updated: 2024-08-30
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 導入
 
 
-# ドキュメント・ライブラリ
+## ドキュメント・ライブラリ
 * ドキュメント
     * https://docs.flutter.dev
 * 標準ライブラリリファレンス（package:flutter）
@@ -20,7 +20,7 @@ updated: 2024-08-30
 
 
 
-# About Flutter
+## About Flutter
 * https://docs.flutter.dev/resources/faq#what-is-flutter
     > Flutter is Google’s portable UI toolkit for crafting beautiful, natively compiled applications for mobile, web, and desktop from a single codebase. Flutter works with existing code, is used by developers and organizations around the world, and is free and open source.
 * https://dart.dev/overview
@@ -29,11 +29,11 @@ updated: 2024-08-30
     * https://docs.flutter.dev/get-started/flutter-for/declarative
 
 
-# About Dart
+## About Dart
 * [Dart](../dart/dart_introduction.md)
 
 
-# (参考)React Nativeとの比較した各機能
+## (参考)React Nativeとの比較した各機能
 * https://docs.flutter.dev/get-started/flutter-for/react-native-devs
 * JSとの比較
     * null safeである

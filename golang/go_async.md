@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# Goroutines (ゴルーチン)
+## Goroutines (ゴルーチン)
 * Goのランタイムに管理される軽量なスレッド
 * go f(x, y, z)()
   * 新しいgoroutineが実行される
@@ -27,11 +27,11 @@ go func() {
 
 
 
-# チャネル
+## チャネル
 * チャネルとは、値の送受信ができるもの。
   * 送る側と受ける側が準備できるまで、 送受信はブロックされる。
   * したがって、チャネルを使うことでgoroutineの同期を可能にする。
-## 生成
+### 生成
 * ch := make(chan int)
 * 生成せずに使うとデッドロックするので注意。（これは何も送れないし受け取れないからすべてが待機になってしまうから？）
 ```go
@@ -52,13 +52,13 @@ fmt.Println("main start")
 	syn <- struct{}{}//これが送信できないのでロック。
 	fmt.Println("main end")
 ```
-## 送信
+### 送信
 * ch <- v
   * v をチャネル ch へ送信する
 * とりあえずシグナルだけ送りたい場合は空の構造体を使う
   * struct{}{}。空の構造体はメモリサイズが0
   * https://zenn.dev/mstn_/articles/76ae3f3e65d207
-## 受信
+### 受信
 * <-ch
     * 受信、もしくは close したことだけ検知するパターン。非同期処理の終了を待つ場合に使うことが多い
 * v := <-ch
@@ -73,32 +73,32 @@ fmt.Println("main start")
   }
   ```
   * https://hori-ryota.com/blog/golang-channel-pattern/
-## 自分で送信したものも受け取れる。
+### 自分で送信したものも受け取れる。
 * つまり、自分が送ったかどうかではなく、とにかく一番先頭で受信を待機しているスレッドが受信できる。
 ```go
 syn := make(chan int, 1)
 syn <- 5
 print(<-syn)// 5
 ```
-# 受信（select）
+## 受信（select）
 * 複数の case　においていずれかが準備ができるまで、ブロックする。
   * 複数のcaseが準備ができているときはランダムに選択される。
   * defaultはどのcaseも準備ができていないときに実行される。
 * https://go-tour-jp.appspot.com/concurrency/5
   * この例では、fibonacci側はquitチャネルに受信しない限りいつまでもchに送り続ける。quitを受け取った場合、returnする。
   * 呼び出し側は好きな個数分 fibonacciから値を受け取り、その後quitチャネルに送信する。
-## バッファ
+### バッファ
 * チャネルはバッファとして使える。
   * `ch := make(chan int, 100)`
 * バッファが詰まった時は、チャネルへの送信をブロック。
 * バッファが空の時には、チャネルからの受信をブロック。
-## close
+### close
 * 送り手は、これ以上の送信する値がないことを示すため、チャネルを close できる。（受け手はできない。やるとpanicになる）
   * 受け手：　v, ok := <-ch
     * 受信する値がない、かつ、チャネルが閉じているなら、 ok の変数は、 falseになる。
   * 通常はチャネルをcloseする必要はない。受け手が知る必要があるときにだけ。これ以上値が来ないことを受け手が知る必要があるときにだけです。
     * 例えば、 range ループを終了するという場合。
-## range
+### range
 * rangeで受け取る事が可能。（closeが来るまでループ）
   ```go
   c := make(chan int, 10)
@@ -107,7 +107,7 @@ print(<-syn)// 5
 		fmt.Println(i)
 	}
   ```
-## 送信専用、受信専用
+### 送信専用、受信専用
 ```go
 // ch 送信専用
 func test1(ch chan<- string, wg *sync.WaitGroup) {
@@ -124,7 +124,7 @@ func test2(ch <-chan string, wg *sync.WaitGroup) {
 ```
 
 
-# サンプルコード
+## サンプルコード
 * 自分で色々試してみた。（値の受け渡し、closeの状態、デッドロック）
 * https://go.dev/play/p/cECYnsK8LhX
 ```go
@@ -220,7 +220,7 @@ func main() {
   
 
 
-# 排他制御（Mutex）
+## 排他制御（Mutex）
 * チャネルによって通信間で同期を取ることもできるが、通信をしない場合に変数にアクセスするgoroutineを一つにするにはどうすればよいか？
   * このコンセプトを「排他制御」という。一般的にそのデータ構造をmutexという。
 * GOで用意されている「sync.Mutex」型は、構造体に含めることで利用できる？（ここはチュートリアルには説明が書いてなかった）
@@ -234,7 +234,7 @@ https://qiita.com/tomokon/items/449c01b14507c9817ad7
 
 
 
-# context
+## context
 * https://pkg.go.dev/context
 * キャンセルなどをサブルーチンに伝搬したり，限られたスコープ内で一貫してアクセスできるインメモリ KV ストア的な役目
 * 具体的な使い方
@@ -244,12 +244,12 @@ https://qiita.com/tomokon/items/449c01b14507c9817ad7
   * タイムアウトの伝播( WithTimeout )
 * https://www.wakuwakubank.com/posts/867-go-context/
 * https://zenn.dev/hsaki/books/golang-context/viewer/definition
-## 注意点
+### 注意点
 * 関数で許可されている場合でも、 nil Contextを渡さない。
 * リクエスト スコープのデータにのみ使用する。（たとえば、httpリクエストそれぞれのスコープに閉じたデータ）
 	* 間違った使い方として、関数のオプションパラメーターを渡すため 等
 	* https://moneyforward-dev.jp/entry/2020/07/28/go-context/
-## Value
+### Value
 * キーの衝突を避けるために個々のパッケージでそれぞれ独自型を定義してキーにする。
 	* そうしないとリンターで注意されるはず。
 	* 独自型は、struct{}{} をつかうと同じキーとしてみなされる罠がある。
@@ -258,11 +258,11 @@ https://qiita.com/tomokon/items/449c01b14507c9817ad7
 * contextはイミュータブルで、
 	* ctx = context.WithValue(ctx, key, value)  みたいな感じで新しく生成する。
 * https://tech.anti-pattern.co.jp/go-ctx-key/
-## サーバーでの使い方
+### サーバーでの使い方
 * [http](./go_http.md)を参照
 
 
-# sleep と go routine
+## sleep と go routine
 * 1マイクロセカンドでもsleepさせると、同じ処理なら後に終わる。
 ```go
 func main() {
@@ -289,7 +289,7 @@ func main() {
 
 
 
-# sync
+## sync
 * https://zenn.dev/yamato0211/articles/e3da679fd8dd6f
 ```go
 // You can edit this code!

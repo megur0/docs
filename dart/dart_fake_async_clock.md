@@ -5,7 +5,7 @@ title: "fake_async/clockパッケージ - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > fake_async/clockパッケージ
 
 
-# fake_async
+## fake_async
 * https://pub.dev/packages/fake_async
 * 明示的に経過時間を制御することで実際の経過時間を待たずに動作確認等を行うことができる。
 ```dart
@@ -74,7 +74,7 @@ future
   */
 }
 ```
-## (参考)FakeAsyncの実装
+### (参考)FakeAsyncの実装
 * FakeAsyncは内部的にClockオブジェクトを保持している。(デフォルト値はclock.now()のため現在日時となる)
 ```dart
 class FakeAsync {
@@ -169,7 +169,7 @@ abstract interface class Future<T> {
 ```
 
 
-# clock
+## clock
 * https://pub.dev/packages/clock
 * トップレベルのgetterであるclockはZoneによってインジェクションされる。withClock()を利用することでZoneへ指定のClockをもたせた文脈でコールバックを実行することができる。
 ```dart

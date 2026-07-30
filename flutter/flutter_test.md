@@ -7,7 +7,7 @@ updated: 2025-01-23
 
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * Flutter公式
     * https://docs.flutter.dev/testing/overview
 * Dart package:test
@@ -15,7 +15,7 @@ updated: 2025-01-23
 * 参考
     * https://github.com/flutter/flutter/wiki/Style-guide-for-Flutter-repo#write-test-find-bug
 
-# テストの分類
+## テストの分類
 * https://docs.flutter.dev/testing/overview
 * 公式のドキュメントに記載された内容ではないが、Flutterで提供される機能と実行時のruntimeTypeに基づいてテスト分類をすると下記のようになると考えられる。
 * ユニットテスト
@@ -26,7 +26,7 @@ updated: 2025-01-23
 * 結合テスト
     * `flutter test integration_test/xxx` で実行するもの。
     * testWidgets()のコールバックで行う操作は、IntegrationTestWidgetsFlutterBindingオブジェクトのメソッドに基づいて行われる。
-## ウィジェットテストと結合テストで検証可能なもの
+### ウィジェットテストと結合テストで検証可能なもの
 ||検証可能なもの|検証ができない・難しいもの|
 |-|-|-|
 |ウィジェットテスト|・ウィジェット<br/>・明示的なフレーム進行<br/>・FakeAsyncで進行させる非同期処理(モック化)|・HttpClientで実際のデータを取得する処理<br/>・現実の時間軸に沿ったフレーム進行<br/>・現実の時間軸に沿った非同期処理<br/>・ネイティブ側のAPIを呼び出す処理(プラグインの処理)|
@@ -34,7 +34,7 @@ updated: 2025-01-23
 
 * 下記の点は、ウィジェットテストの段階では検証されず、結合テストの段階ではじめて検証できる点に注意したい
   * バックエンドやFirestoreのクエリが実際に成功するか否か、実行結果が想定通りか否か
-## ネイティブ側のテスト
+### ネイティブ側のテスト
 * (TODO)
 * ネイティブ側のAPIの処理のエッジケース
     * 自身で書いたプラグイン等のエッジケースをテストしたい場合、多くの場合ネイティブの単体テスト(iOSの場合はXCTest)を書く必要がある
@@ -47,13 +47,13 @@ updated: 2025-01-23
     * https://stackoverflow.com/questions/67908341/how-to-interact-with-native-ui-elements-from-flutter-integration-test
     
 
-# パッケージ
-## flutter_testパッケージ
+## パッケージ
+### flutter_testパッケージ
 * https://api.flutter.dev/flutter/flutter_test/flutter_test-library.html
 * package:testの上に構築されたflutter用のテストライブラリ
     * (IME) "package:testの上に構築"とドキュメントに書かれているものの、実際のコード上は [dartのpackage:test](https://pub.dev/packages/test) の方ではなくpackage:test-apiというパッケージに依存しているようだった。
 * 標準パッケージの為、デフォルトで利用可能
-## integration_testプラグイン
+### integration_testプラグイン
 * https://github.com/flutter/flutter/tree/main/packages/integration_test#integration_test
 * https://docs.flutter.dev/testing/integration-tests
 * https://docs.flutter.dev/cookbook/testing/integration/introduction
@@ -77,8 +77,8 @@ updated: 2025-01-23
         `flutter test $path_to_test` to run it instead.
         ```
 
-# flutter test
 ## flutter test
+### flutter test
 * https://docs.flutter.dev/cookbook/testing/unit/introduction
 * ヘルプ
   *  `flutter test -h` で確認
@@ -169,7 +169,7 @@ updated: 2025-01-23
     * テストをサブセットに分割して実行するためのオプション
     * テスト数が膨らんだ際にCI環境等実行速度を速くする場合などに有用となる
 
-## flutter test integration_test
+### flutter test integration_test
 * integration_testプラグインを追加した状態で`flutter test`において、`integration_test`またはその配下のファイルを指定するとデフォルトのデバイスに対してビルドから実行される。
     * 明示的にデバイスを指定する場合は`-d (デバイスID)`にて指定する。
 * `integration_test`以外の ディレクトリ名を指定すると、通常の`flutter test`で対象を指定した際の挙動となる。
@@ -193,7 +193,7 @@ updated: 2025-01-23
     * `flutter test integration_test` において自動的にこのメソッドがmain処理の前に暗黙的に実行される。
         * 2回目以降は無視されるため、明示的にmain内で呼んでいたとしても問題ない。
     * ※ `flutter run`の場合は暗黙的には呼ばれない。
-## カバレッジ
+### カバレッジ
 * lcovをインストールしておく必要がある。
   * `brew install lcov`
 * `flutter test --coverage`
@@ -226,7 +226,7 @@ updated: 2025-01-23
     * なお、1行もカバレッジ対象のコードが含まれないファイルは出力されない。
       * 例えば、coverage:ignore-start 〜 endですべてのコードを囲んでいるファイルはカバレッジ対象であっても出力されない。
 
-# setUpAll, setUp, tearDown, tearDownAll
+## setUpAll, setUp, tearDown, tearDownAll
 ```dart
 int var1 = 0;
 int var2 = 0;
@@ -284,7 +284,7 @@ tearDownAll
 
 ```
 
-# testWidgets()
+## testWidgets()
 * https://api.flutter.dev/flutter/flutter_test/testWidgets.html
   > Runs the callback inside the Flutter test environment.
 * testWidgets()を実行時、渡したコールバックの実行開始時点で シングルトンのTestWidgetsFlutterBinding.instanceには必ずインスタンスが設定されている。
@@ -320,7 +320,7 @@ tearDownAll
   // ・flutter test integration_test で実行(flutter test integration_test/xxx_test.dart でも同様)
   // <IntegrationTestWidgetsFlutterBinding>
   ```
-## HttpClientのモック化
+### HttpClientのモック化
 * AutomatedTestWidgetsFlutterBindingとLiveTestWidgetsFlutterBindingでは、HttpClientは自動的にモック化される。
 * 処理自体でエラーは発生しないが、ステータスコードは400となりデータは空となる。
 ```dart
@@ -373,7 +373,7 @@ HTTP request failed, statusCode: 400, https://docs.flutter.dev/assets/images/das
   // (integration_test/)
   // 00:01 +1: All tests passed! 
   ```
-## フレームと非同期処理
+### フレームと非同期処理
 * https://api.flutter.dev/flutter/flutter_test/TestWidgetsFlutterBinding/clock.html
     > The current time.In the automated test environment (flutter test), this is a fake clock that begins in January 2015 at the start of the test and advances each time pump is called with a non-zero duration.In the live testing environment (flutter run), this object shows the actual current wall-clock time.
 * AutomatedTestWidgetsFlutterBinding
@@ -387,7 +387,7 @@ HTTP request failed, statusCode: 400, https://docs.flutter.dev/assets/images/das
 * LiveTestWidgetsFlutterBinding, IntegrationTestWidgetsFlutterBindingの場合 
     * 通常と同様にプラットフォームからのVsync信号に従ってフレーム処理が進行する。
     * FakeAsyncによるインジェクションはされない。
-## 画面表示 
+### 画面表示 
 * AutomatedTestWidgetsFlutterBinding
     * UIは表示されない
     * https://github.com/flutter/flutter/wiki/Running-and-writing-tests#running-unit-tests
@@ -409,7 +409,7 @@ HTTP request failed, statusCode: 400, https://docs.flutter.dev/assets/images/das
     * このメソッドで表示領域のSizeの調整が可能
 
 
-# Finder
+## Finder
 * Elementツリー上で Widgetを検索するファインダーを作成するための基本クラス
 * https://api.flutter.dev/flutter/flutter_test/Finder-class.html
 ```dart
@@ -462,7 +462,7 @@ ScrollController? getScrollController() {
 * ジェネリクスを持つウィジェット
     * find.byTypeにおいて SomeWidget<dynamic>はSomeWidget<具体的な型>にはヒットしない為注意。
     * 例えば `find.byType(SomeWidget)` は SomeWidget\<dynamic\>にヒットするがSomeWidget\<int\>にはヒットしない
-## byWidgetPredicateの活用: PageViewのScrollable
+### byWidgetPredicateの活用: PageViewのScrollable
 * 例えば下記のようにScrollableを含むウィジェットが子に存在するPageViewをスクロールしたいケースがあるとする。
 * この場合、scrollUntilVisibleに指定するscrollableは、単に「PageViewの子孫のScrollable」と指定すると一意に定まらずエラーとなってしまう。
 * この場合、筆者は以下のようにbyWidgetPredicateで属性を絞り込むことで PageView自身のScrollableを取得している。
@@ -480,7 +480,7 @@ final pageViewScrollable = find.descendant(
         widget.axisDirection == AxisDirection.right));
 ```
 
-# Canvasの検査
+## Canvasの検査
 * PaintPattern
   * https://api.flutter.dev/flutter/flutter_test/PaintPattern-class.html
 * トップレベルのプロパティのpaintsが用意されているため、これを利用する
@@ -529,11 +529,11 @@ expect(
 
 
 
-# WidgetTester
+## WidgetTester
 * https://docs.flutter.dev/cookbook/testing/widget/introduction
 * WidgetTesterはtestWidgets()のコールバック引数として渡され、WidgetTesterの各メソッドの内部では TestWidgetsFlutterBindingのシングルトンのメソッドを実行する。
 * したがってこのシングルトンのruntimeTypeによって、WidgetTesterの各メソッドの振る舞いが変わる。
-## WidgetTester.pump()
+### WidgetTester.pump()
 * https://api.flutter.dev/flutter/flutter_test/WidgetTester/pump.html
 * 内部ではTestWidgetsFlutterBinding.pump()を実行する。
 * AutomatedTestWidgetsFlutterBinding.pump()の場合
@@ -621,10 +621,10 @@ expect(
         flutter: get data finished
         flutter: wait..
         ```
-## WidgetTester.pumpWidget()
+### WidgetTester.pumpWidget()
 * https://api.flutter.dev/flutter/flutter_test/WidgetTester/pumpWidget.html
 * 対象のウィジェットを子として、ツリーをビルドし、フレームをスケジュール、pump()を実行する。
-## WidgetTester.pumpAndSettle();
+### WidgetTester.pumpAndSettle();
 * https://api.flutter.dev/flutter/flutter_test/WidgetTester/pumpAndSettle.html
 * フレームがスケジューリングされている限り、pump()を繰り返し実行し続ける。
 * 例えばアニメーションなどは終了するまでフレームをスケジューリングするため、アニメーションが終わるまでフレームを進行させたい場合等に利用する。
@@ -638,7 +638,7 @@ expect(
   * エンドレスのアニメーション
   * ゲームエンジンのFlameのTicker
   * AdMobの広告
-## WidgetTester.runAsync()
+### WidgetTester.runAsync()
 * https://api.flutter.dev/flutter/flutter_test/WidgetTester/runAsync.html
 * 偽装されたTimerのみでは進行できない非同期処理は、Timerを進めてもCompletedとはならない。
 * これらの非同期処理を実行するために利用する。
@@ -649,7 +649,7 @@ expect(
     * 前者は処理が進まず、後者は処理が進む理由についてはコードリーディングできていない。(TODO)
   * File関連の処理
     * Fileオブジェクト自体は即時取得できるが、ファイル内容やサイズ等を参照する処理は偽装Timerでは進められない。
-## 拡張: 特定の要素が確認できるまでフレームを進める
+### 拡張: 特定の要素が確認できるまでフレームを進める
 * 例えば、結合テストでは外部のリソース等の応答時間が一定ではないため、特定の要素を確認するまでフレームを進める、といった処理を行いたいケースが多い。
 * 以下の拡張は指定のFinderを確認できるまでpump()をし続ける。
 ```dart
@@ -682,8 +682,8 @@ extension WidgetTesterExtension on WidgetTester {
 }
 ```
 
-# UIの操作・他
-## WidgetTester.tap, enter
+## UIの操作・他
+### WidgetTester.tap, enter
 ```dart
 main() {
   testWidgets("", (widgetTester) async {
@@ -714,7 +714,7 @@ main() {
   });
 }
 ```
-## WidgetTester.element
+### WidgetTester.element
 ```dart
 BuildContext getContext(WidgetTester widgetTester, [Type? type]) {
   return widgetTester.element(find.byType(type ?? Scaffold));
@@ -726,7 +726,7 @@ final ThemeData theme = Theme.of(
   tester.element(find.byType(example.Home)),
 );
 ```
-## アニメーションを含むウィジェットのテストは個別ウィジェットの実装に依存する。
+### アニメーションを含むウィジェットのテストは個別ウィジェットの実装に依存する。
 * 例: go_routerの遷移
 ```dart
   testWidgets("", (widgetTester) async {
@@ -799,7 +799,7 @@ final ThemeData theme = Theme.of(
       * これは視認上は問題はないが、テストの際には注意が必要である。
       * たとえば、`expect(find.text("スナックバー表示テキスト"), findsOneWidget);` とした際にScaffoldを含む画面がスタックに複数存在する場合は、`findsOneWidget`ではなく画面数分設定する必要がある。
 
-## WidgetTester.takeException()
+### WidgetTester.takeException()
 ```dart
 testWidgets("", (tester) async {
     await tester.pumpWidget(MaterialApp(
@@ -810,7 +810,7 @@ testWidgets("", (tester) async {
     expect(tester.takeException().toString(), contains("error"));
   });
 ```
-## WidgetTester.pageBack()
+### WidgetTester.pageBack()
 * WidgetTester.pageBack()はlocaleが'en'の場合しか動作しない。
     * https://github.com/flutter/flutter/issues/51121
 * 筆者は代替策として下記のように実装した。
@@ -836,7 +836,7 @@ Future<void> pageBack(WidgetTester tester) async {
 }
 ```
 
-# スクロール
+## スクロール
 * 末端へ移動
     * スクロールポジションを移動して、pumpをした時点で画面へ反映（レンダリング）される。
     ```dart
@@ -885,7 +885,7 @@ Future<void> pageBack(WidgetTester tester) async {
     * 上記はflingを使っているがdragを使ってもできそうではある。
         * flingとdragの違いは、コードを見たがあまりわからなかった。
 
-# TestWidgetsFlutterBinding.delayed()
+## TestWidgetsFlutterBinding.delayed()
 * https://api.flutter.dev/flutter/flutter_test/TestWidgetsFlutterBinding/delayed.html
 * WidgetTester.binding.delayed()から呼び出すことができる。
 * AutomatedTestWidgetsFlutterBindingの場合はフェイクのクロックを進める。
@@ -914,7 +914,7 @@ Future<void> pageBack(WidgetTester tester) async {
   }
   ```
 
-# ゴールデンテスト(matchesGoldenFile)
+## ゴールデンテスト(matchesGoldenFile)
 * https://api.flutter.dev/flutter/flutter_test/matchesGoldenFile.html
 * https://www.youtube.com/watch?v=vka33yBz5e4
 * (参考)
@@ -933,12 +933,12 @@ Future<void> pageBack(WidgetTester tester) async {
         * matchesGoldenFile()の処理がテストコード中に存在しない場合はオプションをつけても何も生成されない。
 * test/failureのディレクトリ
     * 失敗した箇所、既存のイメージ、今回のイメージのファイルが生成される。
-## ゴールデンテストと実行環境
+### ゴールデンテストと実行環境
 * https://github.com/flutter/flutter/issues/56383
 * ゴールデンテストは実行する環境によって結果が異なり、そのため実行環境を統一する必要がある。
 * これはCIでのテストの際も動作させるOSの考慮が必要である。
 * (IMO)開発チームによってはこの問題がゴールデンテストの導入の障害となる可能性がある。
-## ゴールデンテストとImageProvider
+### ゴールデンテストとImageProvider
 * Flutter の 画像系ウィジェット(例えばAssetImage)で画像を読み込む際は、ImageProviderという抽象クラスを継承したオブジェクトを経由してイメージを非同期に読み込む。
 * テストを実行した際、非同期のイメージの読み込みが完了していない場合は、ゴールデンテストのキャプチャに何も表示されない状態となってしまう。特にテストファイル内の冒頭のテストケースは読み込まれないことが多い。
 * 対策
@@ -1050,7 +1050,7 @@ class _MyWidgetState extends State<MyWidget> {
   }
 }
 ```
-## 画像をスタブにする
+### 画像をスタブにする
 * イメージの内容自体がゴールデンテストの対象ではない場合は、ImageProviderを取得する箇所をスタブ化させてしまう方法がシンプルである。
 ```dart
 //...
@@ -1186,8 +1186,8 @@ void main() {
 ```
 
 
-# スタブ・モック化
-## ラッパーをスタブ化する
+## スタブ・モック化
+### ラッパーをスタブ化する
 * 例えば下記のようにhttpClient.getUrl()のラッパー関数と、その関数をインジェクションするクラスがあるとする。
 ```dart
 class Backend {
@@ -1246,7 +1246,7 @@ test("", () async{
 ```
 * Mockitoを利用してモック化する方法もある
     * https://docs.flutter.dev/cookbook/testing/unit/mocking
-## スタブ化したいオブジェクトをグローバル(トップレベル)変数として宣言しておく方法
+### スタブ化したいオブジェクトをグローバル(トップレベル)変数として宣言しておく方法
 * アプリケーションコードであれば、共通で利用するクラスをグローバル変数として扱う事が多いだろう。
 * グローバル変数として定義しておくメリットは、APIを置換可能にするためにインジェクションを利用する必要がないため、コード量を減らすことができる。
 * 下記のように各画面で利用するbackendという変数をトップレベルに定義しておけば、テストでは直接サブクラスで置き換えれることでスタブ化できる。
@@ -1271,7 +1271,7 @@ setUpAll(() {
 });
 ```
 
-## プラグインのテスト
+### プラグインのテスト
 * https://docs.flutter.dev/testing/plugins-in-tests
 * 最も手軽な方法はプラグインのAPIの呼び出しをラップして、それをスタブ化する方法となる。 
 * この方法でテストが実現できるのであれば、なるべくこの方法を採用する事が良いだろう。
@@ -1330,7 +1330,7 @@ setUpAll(() {
         * https://stackoverflow.com/questions/76586920/mocking-imagepicker-in-flutter-integration-tests-not-working
 
 
-# トラブルシューティング(IME)
+## トラブルシューティング(IME)
 * flutter_tester プロセスの残留
     * https://github.com/Dart-Code/Dart-Code/issues/4690
     * VSCodeからテストを実行するとflutter_testerのプロセスが終了せずに残ってしまう事象が確認された。
@@ -1358,8 +1358,8 @@ setUpAll(() {
     * https://github.com/firebase/flutterfire/issues/6833
 
 
-# その他
-## @visibleForTesting
+## その他
+### @visibleForTesting
 * @visibleForTestingを付与したメンバーは外部のライブラリからはテスト以外で使用できないようにする。
 ```dart
 // lib/some_library.dart
@@ -1383,7 +1383,7 @@ innerLogic();
 //...
 innerLogic();//警告は発生しない
 ```
-## ErrorWidget.builder, FlutterError.onError
+### ErrorWidget.builder, FlutterError.onError
 * ErrorWidget.builderは testWidgets()のコールバック内で変更するとアサートエラーとなってしまうため、testWidgets()の外に書く。
     * `The value of ErrorWidget.builder was changed by the test`
 * 一方、FlutterError.onErrorはtestWidgets()処理の中で上書きされているため、もしテストの為に上書きしたいのであればtestWidgetsのコールバック内で書く。
@@ -1415,7 +1415,7 @@ class _MyApp extends StatelessWidget {
   }
 }
 ```
-## TestAsyncUtils
+### TestAsyncUtils
 * https://api.flutter.dev/flutter/flutter_test/TestAsyncUtils-class.html
 * awaitをせずにWidgetTester.pump()等を実行するとアサートエラーとなるが、これはWidgetTester.pumpが内部でTestAsyncUtils.guardを呼び出しているためである。
 * 例えば、自前の処理でも下記のようにTestAsyncUtils.guardを呼び出すことでawait漏れを検出することができる。
@@ -1438,8 +1438,8 @@ Future<String> f() async {
 }
 ```
 
-# (参考)flutter_testのクラスと処理
-## `flutter test`における testWidgets()の処理
+## (参考)flutter_testのクラスと処理
+### `flutter test`における testWidgets()の処理
 * 下記はflutter_testのtestWidgets()を呼んだ際、かつ`flutter test`で実行した際の処理の流れ、および関係するクラスとなる。
 
 <img src="./svg/flutter_test/flutter_test_widgets.svg" width="100%"><br/><br/>  
@@ -1464,12 +1464,12 @@ Future<String> f() async {
     * 本来はプラットフォーム側のvsync信号によってエンジン経由でこれらの関数が実行されるが`flutter test`の場合は、これが無いためpump()によって能動的に実行する。
 
 
-## WidgetTester
+### WidgetTester
 * WidgetTester.pumpWidget(), pump(), pumpAndSettle()
     * `TestWidgetsFlutterBinding get binding => super.binding as TestWidgetsFlutterBinding;` にて TestWidgetsFlutterBindingまたはその派生オブジェクトの各メソッドを呼ぶ。
         * 実体としては、WidgetsBinding.attachRootWidget()およびwrapWithDefaultView()や SchedulerBinding.scheduleFrame()を呼んでいる。
         * また、TestWidgetsFlutterBindingの派生であるAutomatedTestWidgetsFlutterBindingや、LiveTestWidgetsFlutterBinding のpump()を呼ぶ。
-## LiveTestWidgetsFlutterBinding, IntegrationTestWidgetsFlutterBinding
+### LiveTestWidgetsFlutterBinding, IntegrationTestWidgetsFlutterBinding
 * 下記は LiveTestWidgetsFlutterBinding　と その派生クラス IntegrationTestWidgetsFlutterBindingのクラス図と処理の流れとなる
 
 <img src="./svg/flutter_test/flutter_live_test_widgets.svg" width="85%"><br/><br/>  
@@ -1503,7 +1503,7 @@ Future<String> f() async {
     ```
 
 
-## FlutterView
+### FlutterView
 * WidgetsBinding.wrapWithDefaultView()を呼ぶため、ツリーにはView(RenderView)が存在し、View.view(dart:ui.FlutterView)にはPlatformDispatcher.implicitViewが設定されることになる。
 * PlatformDispatcher.implicitViewはWidgetsBinding.wrapWithDefaultView()でnull assertionされているため、flutter testにおいても何らかの値が設定される必要がある。
 * コードリーディングはできていないが、おそらく`flutter test`の場合は何らかのダミーのFlutterViewが設定されると推測している。
@@ -1543,7 +1543,7 @@ class IntegrationTestWidgetsFlutterBinding extends LiveTestWidgetsFlutterBinding
     //...
 }
 ```
-## flutter test integration_test の際に `IntegrationTestWidgetsFlutterBinding.ensureInitialized();` はどこから呼ばれるのか
+### flutter test integration_test の際に `IntegrationTestWidgetsFlutterBinding.ensureInitialized();` はどこから呼ばれるのか
 * `flutter test integration_test` で実行する場合は暗黙的に `IntegrationTestWidgetsFlutterBinding.ensureInitialized();`が実行されている。
 * この処理はintegration_code内のコード上では確認できなかった
 * スタックフレームを出力してみたところ、下記のtest_apiというパッケージから、flutter_toolsというフォルダの_testMain を経由して実行されている。

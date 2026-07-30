@@ -4,7 +4,7 @@ title: "制限と課金 - Firestore"
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > 制限と課金
 
-# 使用量と上限
+## 使用量と上限
 * 無料の割当て
     * すべて日単位
     * https://firebase.google.com/docs/firestore/quotas?hl=ja#free-quota
@@ -22,7 +22,7 @@ title: "制限と課金 - Firestore"
         * 40000
     * ソフトリミット
         * コレクションへの最大書き込み速度（コレクションに含まれているドキュメントのインデックス付きフィールドには順次値が含まれている場合）
-## ストレージサイズの計算
+### ストレージサイズの計算
 * https://firebase.google.com/docs/firestore/storage-size?hl=ja
 * 文字列のサイズは、UTF-8 でエンコードされたバイト数 + 1 の値として計算される。
     * 文字列は、コレクション ID、文字列ドキュメント ID、ドキュメント名、フィールド名、文字列フィールドの値 に使われる。
@@ -46,12 +46,12 @@ title: "制限と課金 - Firestore"
 
 
 
-# 費用のアラート
+## 費用のアラート
 * 想定外の請求の回避手段としてはアラートしか手段がないので注意
 * https://firebase.google.com/docs/firestore/quotas?hl=ja#manage_spending
 * https://firebase.google.com/docs/firestore/pricing?hl=ja#manage_spending
 
-# モニタリング
+## モニタリング
 * https://firebase.google.com/docs/firestore/monitor-usage?hl=ja
 * ダッシュボード
     * Google Cloud Platform Console と Firebase コンソールの両方でFirestoreのダッシュボードが見れる。
@@ -64,9 +64,9 @@ title: "制限と課金 - Firestore"
     * Cloud Firestore コンソールの使用状況ダッシュボードにも同じ指標データが表示される。
     * カスタム ダッシュボードと使用状況アラートを設定するには、Cloud Monitoring を使用
 
-# 課金
+## 課金
 * https://firebase.google.com/docs/firestore/pricing?hl=ja
-## 課金対象
+### 課金対象
 * 読み取り、書き込み、削除を行うドキュメントの数。
 * 例えば東京ロケーションの場合は下記。（執筆当時)
     * ドキュメント 100,000 点あたり $0.038、$0.115、$0.013（読み取り、書き込み、削除）
@@ -96,7 +96,7 @@ title: "制限と課金 - Firestore"
     * ネットワーク帯域幅の使用量を確認するには、GCP Console を使用して課金データをファイルにエクスポートする。
     * https://firebase.google.com/docs/firestore/pricing?hl=ja#general_network_pricing
 * 課金はすべて日単位で発生
-## 課金の具体例
+### 課金の具体例
 * https://firebase.google.com/docs/firestore/billing-example?hl=ja#large-10m-installs
 * アプリインストール数が100万（1 日のアクティブ ユーザー数が 100,000）で、$292.02/月
 

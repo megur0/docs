@@ -5,21 +5,21 @@ title: "導入 - Firestore"
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > 導入
 
 
-# Firestoreとは?
+## Firestoreとは?
 * 2019年2月1日に正式リリースされた、FirebaseとGCPからのモバイル、Web、サーバー開発に対応した柔軟でスケーラブルな NoSQL クラウド データベース
 * FirestoreとRealtime Databaseの違いは?
     * https://firebase.google.com/docs/database/rtdb-vs-firestore?hl=ja
     * Firestoreを推奨されている。
 
 
-# firestoreのネイティブモードと、Datastoreモード
+## firestoreのネイティブモードと、Datastoreモード
 * 基本的に新規開発であればネイティブモードを選択する。
 * 参考
     * https://qiita.com/kento_gm/items/0ae03a6fee989a53ed2f
     * https://zenn.dev/google_cloud_jp/articles/a0a6b5f855fe90
 
 
-# SDK
+## SDK
 * HTTP 呼び出しまたは RPC 呼び出しを使用して Firebase API を直接呼び出すこともできるが、SDKを使うことを推奨。
 * モバイル SDK とウェブ SDK
     * Firebase セキュリティ ルールと Firebase Auth を組み合わせると、クライアントは Firebase データベースに直接接続できる。（サーバーレス）
@@ -30,13 +30,13 @@ title: "導入 - Firestore"
     * アクセス保護をする場合は Identity and Access Management（IAM）を使用する。
 
 
-# Firebase Local Emulator Suite 
+## Firebase Local Emulator Suite 
 * https://firebase.google.com/docs/firestore/quickstart?hl=ja#optional_prototype_and_test_with
 * Firebaseのテストをローカルで行うことができる。
 * Cloud Firestore、Realtime Database、Hosting、Cloud Functions for Firebase（セキュリティ ルール エンジンを含む）の高精度エミュレータのセット
 * Cloud Firestore エミュレータは Local Emulator Suite の一部。
 
-# Firestoreのロケーション
+## Firestoreのロケーション
 * https://firebase.google.com/docs/firestore/locations?hl=ja
 * https://firebase.google.com/docs/firestore/best-practices?hl=ja#database_location
 * レイテンシを低減して可用性を高めるため、データを必要とするユーザーとサービスに近いロケーションにする。
@@ -62,7 +62,7 @@ title: "導入 - Firestore"
 * なお、リージョンロケーションのデータは、リージョン内の複数のゾーンに複製される。
 
 
-# プロジェクトとFirestoreデータベース
+## プロジェクトとFirestoreデータベース
 * Cloud Firestore データベースは、プロジェクトごとに 1 つに制限されている。
 * なお、FirestoreはApp Engine に依存しているので、プロジェクトでFirestoreを有効にすると、App Engineがそれに伴って有効になる。
 * https://firebase.google.com/docs/firestore/solutions/automate-database-create?hl=ja

@@ -7,11 +7,11 @@ updated: 2024-08-30
 
 
 
-# ドキュメント
+## ドキュメント
 * overview
     * https://docs.flutter.dev/resources/architectural-overview
 
-# Dartコード
+## Dartコード
 * アプリ
     * Dartコード
     * 開発者が所有
@@ -20,7 +20,7 @@ updated: 2024-08-30
     * アプリを構築するための高レベルの API (ウィジェット、ヒット テスト、ジェスチャ検出、アクセシビリティ、テキスト入力など) を提供
     * アプリのウィジェット ツリーをシーンに合成
 
-# Engine
+## Engine
 > The engine’s C and C++ code are compiled with LLVM. 
 * C/C++で書かれている。    
 * フレームのペイント
@@ -34,7 +34,7 @@ updated: 2024-08-30
 * Engine -> 各プラットフォームのAPI の呼び出し
     * Embedder APIを使用して特定のプラットフォームと統合
 
-# Embedder
+## Embedder
 * アプリをホストするOS と Flutter の間の接着剤
     * レンダリング サーフェス
     * アクセシビリティ
@@ -54,18 +54,18 @@ updated: 2024-08-30
 * 各プラットフォームのフォルダー（ios/, android/など）に入っている。
 
 
-# Runner
+## Runner
 * Embedder のプラットフォーム固有の API によって公開される部分を、ターゲット プラットフォームで実行可能なアプリ パッケージに構成
 * flutter createでテンプレートが作成される。
 * 各プラットフォームのフォルダー（ios/, android/など）に入っている。
 
 
-# (IME)ビルド・実行の流れ
+## (IME)ビルド・実行の流れ
 * 参考
     * https://qiita.com/kurun_pan/items/520d91b4f5da6f14345b
 * 以下はflutter buildやflutter runコマンド実行時の内部処理のおおまかな流れ
 * ※ やや推測も含まれるため、細かい箇所で誤りがあるかもしれない。
-## Dartコード（アプリ・Framework）
+### Dartコード（アプリ・Framework）
 * 参考
     * https://zenn.dev/tsuruo/articles/48909d22d49ffe
 * 開発者が作成したアプリ自体の Dart ソースコードと、Flutter Framework (${install先}/packages/flutter) で提供されるライブラリのソースコードがビルドされる。
@@ -77,7 +77,7 @@ updated: 2024-08-30
 * Release モード
     * マシン語のネイティブコードにビルドされる。
     * 各Flutter アプリのプロジェクトディレクトリ直下にコンパイルされたコード（機械語）が置かれる。
-## 実行バイナリ
+### 実行バイナリ
 * アプリを動かしたいターゲットの各OS向けの実行バイナリが作成される。
 * ターゲットOS毎のToolchain (ビルド環境)にてビルドされる。
     * AndroidStudio や XCode, Clang 
@@ -94,7 +94,7 @@ updated: 2024-08-30
         * Embber APIによってプラットフォーム固有のAPIをラップしてエンジンへ提供
         * プラットフォーム固有の入力イベントなどをエンジンへ渡す役割もある?
         * プロジェクトディレクトリ直下の android/, ios/, macos/, linux/ に ソースコードがある。
-## (参考)（例）iOSのシミュレーターや実機でFlutterコードが実行される流れ
+### (参考)（例）iOSのシミュレーターや実機でFlutterコードが実行される流れ
 * シミュレーターや実機での実行時には、iosフォルダに入っているソースコードがXcodeによってビルドされ、その実行バイナリがシミュレータ（実機）にインストールされる（という筆者の理解）
 * このときDartコード（SDKのコード、アプリケーションコード）もコンパイルされる。
     * デバッグモードの際は中間言語

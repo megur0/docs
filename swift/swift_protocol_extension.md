@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > プロトコル・extension
 
 
-# プロトコル
+## プロトコル
 * JavaやC#でいうインターフェース。
 * クラスだけでなく、構造体や列挙型にも使える。
 * クラスにプロトコルを適合させる場合、そのクラスがスーパークラスを持っている場合は、スーパークラス名の後にプロトコル名を書く。
@@ -47,7 +47,7 @@ class SomeClass: SuperClass, SomeProtocol, AnotherProtocol {
 * (参考) https://tea-leaves.jp/swift/content/%E3%83%97%E3%83%AD%E3%83%88%E3%82%B3%E3%83%AB
 
 
-# extension(WIP)
+## extension(WIP)
 * 定義済みの構造体やクラス、列挙型、プロトコルの機能を拡張する。
 * StringやViewなど標準ライブラリに組み込まれているクラスなどにも拡張して機能を持たせることができる。
 * 拡張できるもの

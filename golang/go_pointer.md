@@ -9,10 +9,10 @@ updated: 2026-07-25
 
 
 
-# 公式(A tour of Go)
+## 公式(A tour of Go)
 * https://go-tour-jp.appspot.com/moretypes/1
 
-# new
+## new
 * 指定したポインタ型を生成
 ```go
 type person struct {
@@ -31,7 +31,7 @@ func DeepCopy[T any](src *T) *T {
 ```
 
 
-# プリミティブ
+## プリミティブ
 * プリミティブのリテラルや関数の戻り値から直接アドレスを取得することはできない。
 ```go
 package main

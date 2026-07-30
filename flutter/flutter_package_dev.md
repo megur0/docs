@@ -7,14 +7,14 @@ updated: 2024-10-14
 
 
 
-# TODO
+## TODO
 * 詳細まで書く
 
-# 公式
+## 公式
 * https://docs.flutter.dev/packages-and-plugins/developing-packages
 * https://dart.dev/guides/libraries/create-packages
 
-# 基本
+## 基本
 * パッケージ構成
     * pubspec.yaml
     * lib
@@ -34,7 +34,7 @@ updated: 2024-10-14
     * これはパッケージはlockされたバージョンではなく、pubspec.ymlで指定されたバージョンすべてで動作する必要があるため、と考えられる。
         * 仮にlockファイルによって依存先のパッケージのバージョンが固定されてしまうと容易に複数のパッケージで依存のconflictが発生してしまう。
 
-## パッケージの公開
+### パッケージの公開
 * パッケージの公開
     * https://docs.flutter.dev/packages-and-plugins/developing-packages#publish
     * https://dart.dev/tools/pub/publishing#publishing-is-forever
@@ -63,8 +63,8 @@ updated: 2024-10-14
         * 2.1.0 -> 2.1.0-dev.1
     * pubは安定版が利用可能な場合はそちらを優先するため、ユーザーがプレリリースでテストしたい場合はpubspec.ymlで^2.0.0や^2.1.0ではなく ^2.1.0-dev.1 を指定する。
 
-# プラグインパッケージ
-## フェデレーションプラグイン
+## プラグインパッケージ
+### フェデレーションプラグイン
 * さまざまなプラットフォームのサポートを個別のパッケージに分割する方法
 * プラグインパッケージを作成する場合は、基本的にフェデレーションプラグインによって作成する。
 * フェデレーションプラグインには以下のパッケージが必要となる。
@@ -72,7 +72,7 @@ updated: 2024-10-14
     * プラットフォーム パッケージ（ios, Android, windows 等）
     * プラットフォームインターフェースパッケージ
 
-# pub.devにパブリッシュされていないパッケージを利用する
+## pub.devにパブリッシュされていないパッケージを利用する
 * https://docs.flutter.dev/packages-and-plugins/using-packages#dependencies-on-unpublished-packages
 * pathでローカルのフォルダを指定できる。
 * gitでgitリポジトリを指定できる。
@@ -82,8 +82,8 @@ updated: 2024-10-14
         * 最新版を常に取得するにはref: HEADと指定する。（指定しない場合は初回にダウンロードしたコミットハッシュのバージョンを使用し続ける?）
     * https://stackoverflow.com/questions/54022704/how-to-add-a-package-from-github-in-flutter
 
-# その他
-## plugin_platform_interface
+## その他
+### plugin_platform_interface
 * https://pub.dev/packages/plugin_platform_interface
 * implementsではなくextendsを強制させる仕組みを提供
     * 該当のクラスは、PlatformInterfaceというinterfaceをextendsすることでこの仕組みを利用できる。
@@ -93,5 +93,5 @@ updated: 2024-10-14
 * ただし、Dartのbaseキーワードの導入されたため、このパッケージは今後非推奨となる可能性がある。
     * https://pub.dev/packages/plugin_platform_interface#a-note-about-base
 * 例えば permission_handlerパッケージ　PermissionHandlerPlatformクラスが利用していた。
-## (参考)Semantic Versioning 2.0.0-rc.1
+### (参考)Semantic Versioning 2.0.0-rc.1
 * https://semver.org/spec/v2.0.0-rc.1.html

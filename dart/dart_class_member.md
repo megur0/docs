@@ -4,7 +4,7 @@ title: "クラス（メンバー） - Dart"
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > クラス（メンバー）
 
-# クラス・オブジェクト
+## クラス・オブジェクト
 * https://dart.dev/language/classes
 > Dart is an object-oriented language with classes and mixin-based inheritance. Every object is an instance of a class, and all classes except Null descend from Object. Mixin-based inheritance means that although every class (except for the top class, Object?) has exactly one superclass, a class body can be reused in multiple class hierarchies. Extension methods are a way to add functionality to a class without changing the class or creating a subclass. Class modifiers allow you to control how libraries can subtype a class.
 * Dartはオブジェクト指向言語
@@ -12,12 +12,12 @@ title: "クラス（メンバー） - Dart"
 * オブジェクトを構成するメンバー
   * functions(methods）
   * data (インスタンス変数)
-## (参考)(IMO)プロパティとインスタンス変数の違いは?
+### (参考)(IMO)プロパティとインスタンス変数の違いは?
 * 明確な定義はDartのドキュメントに無かったが、一般的にプロパティは「オブジェクトに付属するもの」であり、オブジェクト.xxxでアクセスするものを指す（はず）
   * オブジェクト.xxx()のようにメソッドやsetterを実行する場合は除く
 * .xxxが内部的に変数なのかgetterなのかは関係ない。
 
-# インスタンス変数（instance variables）
+## インスタンス変数（instance variables）
 ```dart
 class A {
   A(this._test, this._test2, this._test3);
@@ -67,15 +67,15 @@ void main() {
   * finalではない変数、initializerのないlate finalの変数は暗黙のsetterが作成される。
   * このgetter/setterの仕様はJavaやC#とは異なるので注意。
 
-# instance method
+## instance method
 * instance methodの名前にはoperatorsを使うことができる。
 
-# static variable
+## static variable
 > Static variables aren’t initialized until they’re used.
 * static変数やトップレベルの変数で参照されるオブジェクトは、プログラムの存続期間中は生存する。
   * https://stackoverflow.com/questions/74642826/flutter-static-usage-and-performance
 
-# static method
+## static method
 * staticメソッドよりもトップレベルメソッドを使ったほうがよいとのこと。（コンパイル時に定数として使える為）
   ```
   Consider using top-level functions, instead of static methods, for common or widely used utilities and functionality.
@@ -84,17 +84,17 @@ void main() {
 * IMO
   * 筆者は名前空間を区切るためにあえて使うことがある。
 
-# classのスコープ
+## classのスコープ
 * classやenumの名前の先頭に "_"をつけることでプライベートとなりスコープがライブラリ内となる。
   * Dartではclassをネストすることはできないため最小のスコープがライブラリ内。
   * enumもclass内に入れることはできない。
 
 
-# (IME) プライベートクラスの中のメンバーはプライベートとした方が良いか?
+## (IME) プライベートクラスの中のメンバーはプライベートとした方が良いか?
 * いずれにせよ同じライブラリ内でのみアクセス可能となるため、意味は無い?
 
 
-# (参考)Dartでのprivateフィールドの実現
+## (参考)Dartでのprivateフィールドの実現
 * Dartでは同じライブラリ内であればPrivateの変数にもアクセスすることができる。
 * Libraryの最小単位は１ファイルである。
 ```dart
@@ -143,7 +143,7 @@ class B2 {
   * 諦める。
 
 
-# (参考) Dartのsetter
+## (参考) Dartのsetter
 * 呼び出し側からは、setterの内部処理はブラックボックスとなる。
     ```dart
     main() {

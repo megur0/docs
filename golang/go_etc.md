@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# sort.Slice
+## sort.Slice
 * 比較関数 `func(i int, j int) bool`において
 	* iの値 < jの値  の時に 真とする: 昇順
 	* iの値 > jの値  の時に 真とする: 降順
@@ -58,7 +58,7 @@ func main() {
 ```
 
 
-# sort.SliceStable
+## sort.SliceStable
 * sort.Sliceは等しい値でも、オリジナルの順番が保証されないが、sort.SliceStableの場合は保証される。
 	> SliceStable sorts the slice x using the provided less function, keeping equal elements in their original order. 
 * なお、内部で要素数が12個まではsort.Sliceもステーブルの処理を行う。

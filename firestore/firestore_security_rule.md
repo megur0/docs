@@ -5,7 +5,7 @@ title: "セキュリティルール - Firestore"
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > セキュリティルール
 
 
-# セキュリティルール
+## セキュリティルール
 * バージョン
     * 2019 年 5 月以降、Cloud Firestore セキュリティ ルールのバージョン 2 が使用可能になった。
     * セキュリティ ルールで rules_version = '2'; を最初の行にして、バージョン 2 にオプトインする必要がある。
@@ -21,11 +21,11 @@ title: "セキュリティルール - Firestore"
     * IMO
         * Firebaseコンソール上でもデプロイできるが、コード上で管理した方が中長期の保守はしやすいかもしれない。
 
-# セキュリティルールによって不正アクセスを防止する
+## セキュリティルールによって不正アクセスを防止する
 * Cloud Firestore セキュリティ ルールを使用して、データベースに対する不正オペレーションを防止
 * たとえば、ルールを使用することによって、悪意のあるユーザーがデータベース全体を繰り返しダウンロードする行為を防止
 
-# データの保護
+## データの保護
 * モバイルおよびウェブ クライアント ライブラリ
     * Firebase Authentication と Cloud Firestore セキュリティルールを使用して、サーバーレスな認証、承認、データ検証を処理
     * App Check を使用して、ご自分のアプリだけが Cloud Firestore のデータにアクセスできるように保護
@@ -34,7 +34,7 @@ title: "セキュリティルール - Firestore"
     * Identity and Access Management（IAM）を使用して、データベースへのアクセスを管理
     * すべての Cloud Firestore セキュリティ ルールをバイパスし、代わりに Google アプリケーションのデフォルト認証情報を使用して認証を行う。
 
-# ルールの構成
+## ルールの構成
 * 全体
 ```
 service cloud.firestore {
@@ -76,7 +76,7 @@ service cloud.firestore {
     * match ステートメントごとに使用できる再帰ワイルドカードは 1 つのみとなる。
 
 
-# ルールの記述
+## ルールの記述
 * 認証
     * `〜　allow read, write: if request.auth != null;`
     * `match /users/{userId} { allow read, update, delete: if request.auth != null && request.auth.uid == userId;`
@@ -134,12 +134,12 @@ service cloud.firestore {
     * 必須ではないフィールドをチェックしたい時は、フィールドが存在しないとrequest.resource.data.〜でエラーになってしまうのでgetを使う。（getで取得したものが存在しない場合は、引数で指定したデフォルト値を適用）
         * `request.resource.data.get('tags', []) is list;`
 
-# 部分的な書き込みは許可されない。
+## 部分的な書き込みは許可されない。
 * セキュリティ ルールは、クライアントにドキュメントの変更を許可するか、編集全体を拒否するかのどちらか
 * ドキュメント内の一部のフィールドへの書き込みを許可する一方で、同じオペレーションにおいてその他の書き込みを拒否するようなセキュリティ ルールは作成不可。
 * https://firebase.google.com/docs/firestore/security/rules-fields?hl=ja#partial_writes_are_never_allowed
 
-# セキュリティルールはフィルタではない
+## セキュリティルールはフィルタではない
 * 例えば、`allow read: if resource.data.visibility == 'public';`　は　publicのものだけを抽出して返すわけではない。
 * リクエスト内容として、publicなものだけを取得するクエリになっている必要がある。
 * したがってリクエスト結果に1件でもpublicではないものが含まれているとリクエストは拒否される。
@@ -155,7 +155,7 @@ service cloud.firestore {
     * OK
         * `db.collection("stories").where("author", "==", user.uid).get()`
 
-# 制限
+## 制限
 * https://firebase.google.com/docs/firestore/security/rules-structure?hl=ja#security_rule_limits
 * https://firebase.google.com/docs/firestore/quotas?hl=ja#security_rules
 * リクエストあたりの exists()、get()、getAfter() 呼び出しの最大数
@@ -171,21 +171,21 @@ service cloud.firestore {
     * コンパイル済みルールセットのサイズは 250 KB
 * その他制限はリンク参照。
 
-# コレクショングループのクエリに関するセキュリティグループ(具体例)
+## コレクショングループのクエリに関するセキュリティグループ(具体例)
 * https://firebase.google.com/docs/firestore/security/rules-query?hl=ja#collection_group_queries_and_security_rules
 
 
-# アクセスの安全性
+## アクセスの安全性
 * 開発中にオープンアクセスを許可するようにルールを設定している場合、デモプロジェクト ID を推測してデータにアクセスし、データを窃取、変更、削除することが可能であることは留意したほうが良い。
     * https://firebase.google.com/docs/firestore/security/insecure-rules?hl=ja#open_access
 * クローズドアクセス
     * https://firebase.google.com/docs/firestore/security/insecure-rules?hl=ja#closed_access
     * Firebase Admin SDK と組み合わせ、サーバーのみのバックエンドとして Cloud Firestore を使用する場合、セキュリティルール上ではすべて拒否しておいて、クライアントからのアクセスはサーバー経由にする。
 
-# セキュリティルールのテスト
+## セキュリティルールのテスト
 * https://firebase.google.com/docs/firestore/security/test-rules-emulator?hl=ja
 
-# カスタムクレーム
+## カスタムクレーム
 * Firebase Admin SDK では、ユーザー アカウントのカスタム属性の定義がサポートされている。
 * これをつかうことでセキュリティルールでユーザーの役割ごとにアクセス制御などができる。
 * カスタム クレームは、アクセス制御を提供するためだけに使用される。

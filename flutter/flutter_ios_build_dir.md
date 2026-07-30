@@ -6,15 +6,15 @@ updated: 2024-10-17
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > iOSでビルドされる構成
 
 
-# FlutterのDebug/Profile/Release と iOSのConfigulations
+## FlutterのDebug/Profile/Release と iOSのConfigulations
 * Flutterの3つのビルドモードは、iOSのプロジェクトには Project > Info > Configulations として反映されている。
     * これらはproject.pbxprojのXCBuildConfigurationやXCConfigurationListで定義されている
     * XCBuildConfigurationの内容として、ios/Flutter内のxcconfigファイルが読み込みされている。
 * Flutterのビルドモード（Debug/Profile/Release）については[こちら](./flutter_arch.md)を参照
 
 
-# ios/ディレクトリの構成
-## ios/Flutter
+## ios/ディレクトリの構成
+### ios/Flutter
 * Xcodeの設定ファイル(xcconfig, plist)と、Flutterのエンジンのパッケージ（Flutter.podspec）が含まれている。
 * xcconfig
     * xcconfigは、Xcode の Build Settings をコードで設定するファイル
@@ -48,7 +48,7 @@ updated: 2024-10-17
 * flutter_export_environment.sh
     * 各環境変数をexport
     * flutter runのオプションの--dart-defineや--dart-define-from-fileで定義した変数も"DART_DEFINES"としてBase64でエンコードされた状態でexportされる。
-## CocoaPods, プラグイン
+### CocoaPods, プラグイン
 * Flutterのプラグインをpubspec.ymlへ追加してビルドや、futter pub addを実行すると、ios/.symlinks/pluginsや、cocoapods関係のファイル・フォルダが自動生成される。
 * ios/.symlinks/plugins
     * プラグイン関連を追加してビルドするとこのディレクトリが生成される。
@@ -152,7 +152,7 @@ updated: 2024-10-17
         ```
 * ios/Pods
     * CocoaPodsのライブラリの本体
-## Target(ios/Runner)
+### Target(ios/Runner)
 * FlutterではTargetは"Runnner"という名称で生成される。
     * (参考) デフォルト名「Runner」の名称を変更する
         * https://github.com/flutter/flutter/pull/124533
@@ -230,7 +230,7 @@ updated: 2024-10-17
     * 上記のGeneratedPluginRegistrantのファイルを読み込み。
     * このファイルは本体やプラグインのproject.pbxprojから読み込まれている。
 * info.plist
-## Workspace, Project
+### Workspace, Project
 * CocoaPodsの利用有無（プラグインの利用有無）に関係なくデフォルトでWorkspaceも生成される。
 * 両方とも名前はRunnnerとなる。
 * Runner.xcodeproj
@@ -252,7 +252,7 @@ updated: 2024-10-17
         </Workspace>
         ```
 
-# トラブルシュート
+## トラブルシュート
 * ImpellerのError表示
     ```
     [ERROR:flutter/shell/platform/darwin/graphics/FlutterDarwinContextMetalImpeller.mm(42)] Using the Impeller rendering backend.
@@ -266,10 +266,10 @@ updated: 2024-10-17
         * `This operation can fail if the version of the OS on the device is incompatible with the installed version of Xcode.`
 
 
-# project.pbxprojの内容
+## project.pbxprojの内容
 * 以下はproject.pbxprojの一部を抜き出したものである。
 * 各設定項目やファイルに割り当てされたUUIDは省略している。
-## フォルダ構造(PBXGroup)
+### フォルダ構造(PBXGroup)
 * PBXGroupにて、Xcodeでプロジェクトを開いた際のディレクトリ構成?が定義されている
     * mainGroup
         * Flutter
@@ -358,7 +358,7 @@ updated: 2024-10-17
 		};
 /* End PBXGroup section */
 ```
-## Project
+### Project
 * mainGroupとtargetsが指定されている。
 ```
 /* Begin PBXProject section */
@@ -376,7 +376,7 @@ updated: 2024-10-17
 		};
 /* End PBXProject section */
 ```
-## ビルドフェーズ
+### ビルドフェーズ
 * ビルドフェーズに関する定義を抜き出すと下記のようになる。
 * 定義より、TargetのRunnerは以下の6つのビルドフェーズに分けられているようだ。
     * Run Script
@@ -502,7 +502,7 @@ updated: 2024-10-17
 		};
 /* End PBXNativeTarget section */
 ```
-## buildSettings
+### buildSettings
 * XCBuildConfigurationを確認すると、Debug, Profile, Releaseの3つがそれぞれ3つにさらに分割されている。
     * この3つはXCConfigurationListの中で、 TagetのRunnerTests, Runner, ProjectのRunner の 3つのそれぞれに別で割り当てされている。
 ```
@@ -608,7 +608,7 @@ updated: 2024-10-17
 		};
 /* End XCBuildConfiguration section */
 ```
-## 全体 
+### 全体 
 ```
 // !$*UTF8*$!
 {

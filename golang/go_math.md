@@ -8,10 +8,10 @@ updated: 2026-07-25
 
 
 
-# rand
+## rand
 * セキュアな疑似乱数の必要があるなら（パフォーマンスは落ちるが）この関数やmath/randではなく、crypto/randを使う。
 
-# rand.Seed
+## rand.Seed
 * Go 1.20以降はrand.Seed関数は非推奨となった。
     * https://github.com/golang/go/issues/54880
 * Seed関数を呼ばなくても固定値ではないSeed値が設定され、擬似的なランダム性はデフォルトで担保されるようになった。

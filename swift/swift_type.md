@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > 型（struct・class・enum）
 
 
-# 値型と参照型
+## 値型と参照型
 * (参考) https://swift.codelly.dev/guide/%E6%A7%8B%E9%80%A0%E4%BD%93%E3%81%A8%E3%82%AF%E3%83%A9%E3%82%B9/%E5%80%A4%E5%9E%8B%E3%81%A8%E5%8F%82%E7%85%A7%E5%9E%8B.html#%E5%80%A4%E5%9E%8B
 * 構造体と列挙型は値型で、クラスは参照型。
 * Swiftでは、基本的な型であるInt型、Float型、Bool型、String型、Array型、Dictionary型などは全て値型。
@@ -19,11 +19,11 @@ updated: 2026-07-26
 * Swiftでは、なるべく値型を使い、参照型は必要最低限にすると良い。
 
 
-# インスタンス
+## インスタンス
 * 構造体もクラスもenumも同様に「インスタンス化」が可能。
 
 
-# イニシャライザ
+## イニシャライザ
 * initは型のコンストラクタ。
 ```swift
 let myString = String.init("Hello, World!")
@@ -54,7 +54,7 @@ private func isActiveDestination(_ number: Int) -> Binding<Bool> {
 ```
 
 
-# プロパティ
+## プロパティ
 * クラスや構造体、列挙型で定義することができる定数/変数。
 * 列挙型では、コンピューテッドプロパティおよびタイプ（型）プロパティのみ使える（ストアドプロパティおよびインスタンスプロパティは使えない）。
     * 列挙型はそもそも、予め決まった値にもとづいたものなので。
@@ -87,7 +87,7 @@ private func isActiveDestination(_ number: Int) -> Binding<Bool> {
         * クラス型の計算型プロパティの場合、代わりにclassキーワードを使用して、サブクラスがスーパークラスの実装をオーバーライドできるようにすることもできる。
 
 
-# struct
+## struct
 * 構造体の中には定数、変数、イニシャライザ、関数が定義可能。
 * 構造体にはプロトコルを指定することもできる。
 ```swift
@@ -111,7 +111,7 @@ struct 構造体名: プロトコル {
 * (参考) https://tech.amefure.com/swift-struct
 
 
-# mutating
+## mutating
 * StructやEnumのような値型では、自身の値を変更する場合、メソッドの宣言にmutatingキーワードをつける必要がある。
 * mutatingキーワードが指定されたメソッドの呼び出しは再代入として扱われるので、定数に格納された値型のインスタンスに対しては実行できずコンパイルエラーとなる。
 ```swift
@@ -124,7 +124,7 @@ struct Character {
 ```
 
 
-# クラス
+## クラス
 * init（initializer）
 * Swiftはシングル継承モデルを使用しており、どのクラスも1つのスーパークラスしか持たない。
 * Swiftのクラスは複数のインターフェイス（プロトコルとも呼ばれる）を実装することができる。
@@ -156,7 +156,7 @@ struct Character {
     ```
 
 
-# Enum
+## Enum
 * (TODO) enum値を定義する練習をしておく。
 * メリット
     * 可読性が高い、コード補完で入力できる、switch文で使う際は網羅していないとコンパイルエラーになるので保守性がある。
@@ -194,5 +194,5 @@ init?(rawValue: String) {
 * (参考) https://shuhey-hashimoto.com/swift/【swift】列挙型の使い方/
 
 
-# デコード・エンコード(WIP)
+## デコード・エンコード(WIP)
 * Decodable

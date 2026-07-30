@@ -5,19 +5,19 @@ title: "クラッシュレポート - iOSアプリ開発"
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > クラッシュレポート
 
 
-# WIP: 随時更新
+## WIP: 随時更新
 * このメモは執筆中のため随時更新 
 
-# 公式
+## 公式
 * https://developer.apple.com/documentation/xcode/building-your-app-to-include-debugging-information
 
-# 参考
+## 参考
 * https://qiita.com/ichikawa7ss/items/9d53301c67449831a94e
 
-# シンボル
+## シンボル
 * クラス名、グローバル変数、およびメソッドと関数名
 
-# DWARF と DWARF with dSYM の違い
+## DWARF と DWARF with dSYM の違い
 * DWARF(Debugging With Arbitrary Record Formats)
     * https://ja.wikipedia.org/wiki/DWARF
         > DWARF（ドワーフ）とは、広く使われているデバッグ用データフォーマットの規格である。当初ELFと共に設計されたが、オブジェクトファイルのフォーマットとは独立している
@@ -30,7 +30,7 @@ title: "クラッシュレポート - iOSアプリ開発"
         > info.plist  
     > したがって、配布用にアプリをアーカイブする際にクラッシュ レポートの外部分析が必要な場合は、dSYM ファイルで DWARF を使用する必要があります。  
 
-# dSYM(デバッグシンボル)
+## dSYM(デバッグシンボル)
 * Xcodeがコードをマシン語へ変換する際にアプリのシンボルのリストを作成する
 > この関連付けは、デバッグシンボルを作成するので、Xcode でデバッガを使用したり、クラッシュレポートによって報告された行番号を参照することができます。
 > アプリのリリースビルドは、配布アプリのサイズを小さくするためにコンパニオンデバッグシンボル（dSYM）ファイルにデバッグシンボルを配置します。
@@ -40,7 +40,7 @@ title: "クラッシュレポート - iOSアプリ開発"
 > バイナリと dSYM ファイルは、同一のビルド UUID を持つ場合にのみ互換性があります。 
 > 配布する特定のビルドのためにdsymファイルを保持し、クラッシュレポートから問題を診断するときに使用してください。
 
-# Configurationsによる違い
+## Configurationsによる違い
 * XCodeではデフォルトで以下の２つのConfigurationsが設定されているが、デフォルトでReleaseでのみdSYMが生成される。
 * Debug
     * デフォルトでコンパイルされたバイナリ ファイル内にデバッグ シンボルが配置

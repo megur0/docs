@@ -6,7 +6,7 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > [一覧(セキュリティ)](./README.md) > セキュリティの基本原則・脆弱性管理
 
 
-# セキュリティの基本7原則
+## セキュリティの基本7原則
 * Defense In Depth（多層防御）
 * Least Privilege（最小権限の原則）
 * System Hardening（システムの堅牢化）
@@ -21,17 +21,17 @@ updated: 2026-07-25
     * Auditing（監査）: 認証・認可が適切に機能することを検証するため、認証・認可をログとして記録すること
 
 
-# パッチ・マネジメント（Patch Vulnerable Systems and Software）
+## パッチ・マネジメント（Patch Vulnerable Systems and Software）
 * システム・ソフトウェアは時間が経つにつれて様々な脆弱性が発見され、セキュリティレベルは低下していく傾向にある。適切にパッチを当てていくことでセキュリティレベルを維持する、という原則。
 * 多くのインシデントは既知の脆弱性を悪用することで攻撃が成立するため、パッチ・マネジメントは重要。
 
 
-# CVD（Coordinated Vulnerability Disclosure、協調的な脆弱性の公開）
+## CVD（Coordinated Vulnerability Disclosure、協調的な脆弱性の公開）
 * 発見された脆弱性に関する情報をベンダ（開発者）などの関係者と調整し、修正プログラムなどの解決策が用意できてから一般公開すること。
 * https://en.wikipedia.org/wiki/Coordinated_vulnerability_disclosure
 
 
-# CVE、CVSS
+## CVE、CVSS
 * CVSSスコアの目安
     * 7.0〜8.9: 高
     * 9.0〜10.0: 重大

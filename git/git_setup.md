@@ -6,18 +6,18 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(Git)](./README.md) > 環境構築・リポジトリ管理
 
 
-# help, version
+## help, version
 * `git help commit`
 * `git --version`
 
 
-# config
-## 設定の段階
+## config
+### 設定の段階
 * システム：インストールしたgitへの設定（オプション: `--system`）
 * グローバル：ユーザー単位での設定（`--global`）
 * ローカル：リポジトリ単位での設定（`--local`。ローカルのみオプション省略可能）
 
-## 設定コマンド
+### 設定コマンド
 ```
 git config --system [システムへの設定]
 git config --global [グローバルへの設定]
@@ -25,14 +25,14 @@ git config --local [ローカルへの設定]
 ```
 * 設定ファイルは直接編集することも可能だが、コマンドでの設定を推奨。
 
-## 設定ファイルの場所
+### 設定ファイルの場所
 * システム：`/etc/gitconfig`
 * グローバル：`~/.gitconfig`
 * ローカル：作業フォルダの`.git/config`に書き込まれる。`vim .git/config`などで直接編集も可能。
 * gitコマンドではシステム、グローバル、ローカルの順に設定が読み込まれる。
 * Macの場合、何も設定していない状態ではシステム・グローバルの設定ファイルは存在しない（何かしら設定コマンドを実行すると作成される）。
 
-## 初期設定
+### 初期設定
 * ユーザー名・メールアドレスは必ず設定しておく。公開リポジトリだとWebから見えてしまうので注意。
     * `vi .git/config`で直接編集するか、以下のコマンドで設定する。
         ```
@@ -46,19 +46,19 @@ git config --local [ローカルへの設定]
     git config --local remote.origin.url "https://xxxxxx@github.com/xxxxxxx/needs.git"
     ```
 
-## 設定ファイルの確認
+### 設定ファイルの確認
 ```
 git config --local -l   # ローカルの設定
 git config --global -l  # グローバルの設定
 ```
 
-## unset
+### unset
 ```
 git config --local --unset user.name
 git config --local --unset user.email
 ```
 
-## (参考) その他のおすすめ設定
+### (参考) その他のおすすめ設定
 * (参考) https://qiita.com/hayamofu/items/d8103e789196bcd8b489
 * `core.quotepath`：diffなどのファイルパスを出力するコマンドで（`-z`オプションを付けない場合）、パス中の特殊文字をバックスラッシュ付きのダブルクォートで囲む機能。OFFにしても問題なさそう。
 ```
@@ -78,7 +78,7 @@ git config --local core.precomposeunicode true
 ```
 
 
-# clone
+## clone
 * cloneは、リモートリポジトリが保持しているデータをほぼすべてコピーする。プロジェクトの全ファイルの全履歴が、`git clone`で手元にやってくる。
 * 指定のディレクトリに入れたい場合
     ```
@@ -91,8 +91,8 @@ git config --local core.precomposeunicode true
     ```
 
 
-# remote
-## pushとリモート名
+## remote
+### pushとリモート名
 * pushはアップロード。`git push <name> <branch>`で、ローカルのコードを`<name>`という名称のリモートリポジトリの`<branch>`ブランチにアップロードする。`<name>`は「サーバーを表すただの短縮名」なので、URLでも良い。
     * 例：`git push origin master`
     * 短縮せずに全部書くと`git push git@github.com:DQNEO/sample.git master:master`のようになる。`master:master`は、ローカルのmasterをリモートのmasterに反映させるという意味。
@@ -104,7 +104,7 @@ git config --local core.precomposeunicode true
         ```
     * (参考) https://qiita.com/hshimo/items/99811144bf4a081319e5
 
-## 基本
+### 基本
 * リモートリポジトリの一覧を表示（`-v`で詳細を表示）
     ```
     git remote
@@ -121,14 +121,14 @@ git config --local core.precomposeunicode true
         * 慣例上「origin」とすることが多い。削除は`git remote rm origin`。
     * このコマンドは「`<name>`という短縮名でリモートリポジトリを登録する」という命令なので、短縮名を使わずURLを直接コマンドに渡す（例：`git push <URL> <ブランチ>`）ことも可能ではある。便利なので通常は短縮名を使う。
 
-## リモート側で名前が変更された場合
+### リモート側で名前が変更された場合
 * (参考) http://mzgkworks.hateblo.jp/entry/git-remote-changename
 ```
 git remote set-url origin <新しいURL>
 git remote -v   # 確認
 ```
 
-## リモートリポジトリの作成
+### リモートリポジトリの作成
 * その1：GitHubやBitbucketでリモートリポジトリを作成し、cloneして必要なものを入れてpushする。
 * その2：既存のディレクトリをpushしたい場合
     ```
@@ -145,7 +145,7 @@ git remote -v   # 確認
     * ベースにしたいものを`git archive`でエクスポートする（[エクスポート](#エクスポート)参照）。
     * エクスポートしたものをcloneしたディレクトリに入れてadd/commit/push。
 
-## (参考) ローカルでpush可能なリポジトリを作成する場合
+### (参考) ローカルでpush可能なリポジトリを作成する場合
 * (参考) http://blog.atwata.com/tool/2017/10/10/init-local-bare-git-repository.html
 * 作成
     ```
@@ -165,7 +165,7 @@ git remote -v   # 確認
         ```
 
 
-# mirror(WIP)
+## mirror(WIP)
 * 用途は要確認(?)。
 * `git push --mirror`
     * ローカルリポジトリの`refs/`がそのままリモートリポジトリの`refs/`にプッシュされる。
@@ -178,11 +178,11 @@ git remote -v   # 確認
         ```
 
 
-# SSH
-## sudoでのgit cloneの注意点
+## SSH
+### sudoでのgit cloneの注意点
 * sudoで`git clone`（SSH経由）を実行するとrootで実行されることになるため、秘密鍵が想定しているユーザーのホームディレクトリ以外（例：`/home/ec2-user/`ではない場所）から参照されてしまうことがある(?)。
 
-## GitHubのSSH設定（注意点のみ）
+### GitHubのSSH設定（注意点のみ）
 * `~/.ssh/config`に以下のように設定する。
     ```
     Host github.com
@@ -192,7 +192,7 @@ git remote -v   # 確認
     ```
 * Hostを単に「github」とだけ設定した場合、pushする際に`git@github.com:sampleProject/aaaa.git`の`github.com`部分を`github`に変える必要がある。
 
-## SSH時のパスフレーズとGIT_SSH_COMMAND
+### SSH時のパスフレーズとGIT_SSH_COMMAND
 * パスフレーズは作成時に空欄にしておく方が扱いやすい。
 * 秘密鍵の認証に失敗した場合、パスフレーズ入力の対話処理に入ってしまうことがあり、CIで実行すると無応答になってしまう。対話処理を出さず、失敗時は異常を示す終了コードを返したい場合は、事前に`GIT_SSH_COMMAND="ssh -o BatchMode=yes"`を設定してバッチモードにすればよい。
     * 例
@@ -202,7 +202,7 @@ git remote -v   # 確認
     * (参考) https://zenn.dev/amay077/articles/ef1016062f5676
 
 
-# fork
+## fork
 * Gitの機能ではなく、GitHubなどのサービス側の機能。
 * 複製した側のリポジトリから元リポジトリにプルリクエストを送ることができる。
     * (参考) https://takemikami.com/archives/1451/
@@ -211,7 +211,7 @@ git remote -v   # 確認
     * (参考) https://yasulab.tumblr.com/post/11856357434/fork-%E3%81%99%E3%82%8B%E6%84%8F%E5%91%B3-github-%E3%81%AB%E3%81%AF-fork-%E3%81%A8%E3%81%84%E3%81%86%E6%A9%9F%E8%83%BD%E3%81%8C%E3%81%82%E3%82%8Bfork-%E3%81%AF-git
     * (参考) https://qiita.com/iverson3kobe0824/items/3e95cc5476b1c621fe95
 
-## forkを使ったフロー
+### forkを使ったフロー
 * cloneは単に任意のリポジトリをローカルに複製するもの。
 * forkはOSSなど自分以外のリポジトリに対して、追加機能の実装やバグ修正を行いたい場合に使用する。
 * 例
@@ -221,7 +221,7 @@ git remote -v   # 確認
     4. リポジトリAの管理者にPull Requestを送信
 * (参考) https://qiita.com/matsubox/items/09904e4c51e6bc267990
 
-## fork元の変更を取り込みたい場合
+### fork元の変更を取り込みたい場合
 ```
 git remote add <適当なname> <fork元のURL>/xxx.git
 git fetch <適当なname>
@@ -231,7 +231,7 @@ git merge <適当なname>/master
 * (参考) https://qiita.com/Nossa/items/ace2ab802adc85f86b20
 
 
-# 履歴まで含めてリポジトリをコピーしたい場合
+## 履歴まで含めてリポジトリをコピーしたい場合
 * 方法1：fork
     * forkすると元リポジトリに通知が行くため、単純にコピーしたいだけの場合には向かない。本来forkは元リポジトリへの貢献を前提とした使い方であるため、用途としてもずれる。
 * 方法2：GitHub importを使う
@@ -246,7 +246,7 @@ git merge <適当なname>/master
     * (TODO) 方法4でオリジナル側の変更を後から取り込めるかは未確認。forkの節にある`git remote add`のやり方と同様にできる可能性がある。
 
 
-# エクスポート
+## エクスポート
 * (参考) http://dqn.sakusakutto.jp/2012/11/git_export_archive_checkout_index.html
 * 除外ファイルを作っておく
     * `.gitattributes`ファイルを作成し、以下を記述する（例）。
@@ -264,7 +264,7 @@ git merge <適当なname>/master
     * `-x`：解凍、`-C`：解凍先
 
 
-# submodule(WIP)
+## submodule(WIP)
 * (参考) https://qiita.com/aki_55p/items/ed3f1d77b3a7235c8bec
 * Gitプロジェクトの中に別のGitプロジェクトを入れる仕組み。
     * 例えば`hoge`というリポジトリの中で、`fuga`というリポジトリを外部から`git clone`してきた場合、`hoge`側で`git push`しても`fuga`の中身はpushされない。
@@ -274,4 +274,4 @@ git merge <適当なname>/master
         ```
 
 
-# subtree(TODO)
+## subtree(TODO)

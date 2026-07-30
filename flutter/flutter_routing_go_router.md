@@ -6,23 +6,23 @@ updated: 2024-10-14
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > go_router
 
 
-# go_router
+## go_router
 * https://pub.dev/documentation/go_router/latest/index.html
 * https://github.com/flutter/packages/tree/main/packages/go_router
 * Routerに関するデリゲーター、プロパイダー、パーサー、戻るディスパッチャをラップするパッケージ
 * GoRouterクラスとして宣言的にルーティング処理を記述するができる。
 * GoRouterクラスはRouterConfigを実装しており、開発者はデリゲーター等の処理を意識せずにルーティング処理を記述できる。
 * Flutter公式によるパッケージ
-## (IMO) 名称について
+### (IMO) 名称について
 * このパッケージおよび機能の集合体を指す名称として、公式には「go_router」「GoRouter」「Go Router」と少し揺れがある。
     * https://pub.dev/documentation/go_router/latest/index.html
 * 筆者は「go_router」と表記している。
     * 「GoRouter」の場合はクラス名と重複するため
     * 「Go Router」の場合は筆者はGo言語を連想してしまうため
-## アップデート頻度
+### アップデート頻度
 * 現在のメジャーバージョンは14でかなりアップデート頻度の高いパッケージとなる。
 
-# 主なプロパティ
+## 主なプロパティ
 ```
 GoRouter
   initialLocation: String? initialLocation
@@ -104,7 +104,7 @@ GoRouter
             * https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/stateful_shell_route.dart
 
     
-# GoRouter.go と GoRouter.push メソッド
+## GoRouter.go と GoRouter.push メソッド
 |機能|メソッド|動作|
 |-|-|-|
 |go| GoRouter.go(...) または BuildContext.go(...)| 親ルートからサブルートへ移動したときのみスタックに積まれる。<br/>実行前のスタックは全てリセットされる。 |
@@ -128,7 +128,7 @@ GoRouter
     * タイポによるミスを軽減するために積極的に利用したほうが良いだろう。
 
 
-# (参考) (例) StatefulShellRouteを使った ボトムナビゲーション(+ドローワー)を含む画面の構成の実現
+## (参考) (例) StatefulShellRouteを使った ボトムナビゲーション(+ドローワー)を含む画面の構成の実現
 * 画面の構成と対応するオブジェクトの構成のイメージは下記のようになる。
 ![](./svg/go_router/navigation.drawio.svg)
 
@@ -258,14 +258,14 @@ GoRouter
 
     ```
 
-# (参考) (例) フルスクリーン かつ ナビゲーションスタックに積むページ
+## (参考) (例) フルスクリーン かつ ナビゲーションスタックに積むページ
 * 例えば、以下のようにプロフィール画面を任意の画面の上に表示したいケースを実現する方法の例を示す。
     ```
     任意の画面
         プロフィール画面(フルスクリーン)(「戻る」が可能)
             プロフィール編集画面(「戻る」が可能)
     ```
-## 実現方法
+### 実現方法
 * プロフィールとプロフィール名編集画面を親子関係にする。以下は例。
     * /profile
     * /profile/edit
@@ -378,7 +378,7 @@ GoRouter
     ```
 
 
-# エラーハンドリング
+## エラーハンドリング
 * https://github.com/flutter/packages/blob/main/packages/go_router/example/lib/exception_handling.dart
 * https://pub.dev/documentation/go_router/latest/topics/Error%20handling-topic.html
 
@@ -419,7 +419,7 @@ void main() {
 }
 ```
 
-# 実行されるビルダー
+## 実行されるビルダー
 * 基本的には、ある操作をした後に残ったスタック(Navigator.pages)内のPageに紐づくルートのビルダーが実行されると考えられる。
 * GoRouter.go()の場合は親ページもスタックに追加されるが、pushの場合は親ページは追加されない。
 * 複数のルートのビルダーが実行される際、各ビルダーの実行順番のルールや法則はわからなかった。
@@ -537,11 +537,11 @@ void main() {
     */
     ```
 
-# ディープリンク
+## ディープリンク
 * Flutter frameworkはディープリンクをサポートしており、FlutterDeepLinkingEnabledを有効にすることでgo_routerへディープリンクがハンドリングされる。
 * go_routerのルート定義は、ディープリンクの場合でも通常のルーティング処理と同様となる。
 * https://pub.dev/documentation/go_router/latest/topics/Deep%20linking-topic.html
-## ディープリンクの遷移はスタックがリセットされる
+### ディープリンクの遷移はスタックがリセットされる
 * ディープリンクによる遷移ではスタックがリセットされて対象のルートへ遷移する
     * GoRouter.go()と同様の処理となる。
 * ディープリンクをGoRouter.push()でハンドリングするには?
@@ -554,12 +554,12 @@ void main() {
     * https://github.com/flutter/flutter/issues/138632
 
 
-# NavigatorObserver 
+## NavigatorObserver 
 * ShellRouteでは NavigatorObserver が発火しない。
 * https://github.com/flutter/flutter/issues/112196
 
 
-# optionURLReflectsImperativeAPIs
+## optionURLReflectsImperativeAPIs
 * go_routerの8.0.0では命令的なpushがデフォルトではURLを変更しなくなった。
     * https://pub.dev/packages/go_router/changelog#800
     * https://github.com/flutter/flutter/issues/129893#issuecomment-1617762284
@@ -580,7 +580,7 @@ void main() {
 * 反映させるにはGoRouter.optionURLReflectsImperativeAPIs = trueとする必要がある。
 
 
-# go_router_builder
+## go_router_builder
 * https://pub.dev/packages/go_router_builder
 * ルートやパラメータを定義して静的にチェックできる。
 * コードジェネレータ(build_runner)に依存
@@ -628,7 +628,7 @@ void main() {
     * `flutter pub run build_runner build`によって上記からGoRouteの定義が生成される。
 
 
-# (参考)ディープリンクでCustom URL Schemesを渡した際のエラー
+## (参考)ディープリンクでCustom URL Schemesを渡した際のエラー
 * ※ 12.1.3にて確認
 * 例えば「myApp://details」というカスタムURLで遷移しようとすると、下記のようなエラーが発生する。
     ```
@@ -673,8 +673,8 @@ void main() {
     * https://github.com/flutter/flutter/issues/100624
 
 
-# (参考)Issue
-## refreshとpopが同じフレームで実行されるとpopが実行されない
+## (参考)Issue
+### refreshとpopが同じフレームで実行されるとpopが実行されない
 * https://github.com/flutter/flutter/issues/142394
 * 同じフレームでrefreshメソッドを使用(あるいはrefreshListenableが発火)すると、pop メソッドがルートをポップしない
 ```
@@ -695,9 +695,9 @@ GoRouter.of(context).refresh();
 ```
 
 
-# (参考) GoRouterのクラスの構成
+## (参考) GoRouterのクラスの構成
 ![](./svg/go_router/go_router_class.svg)
-## GoRouter.redirect()内でGoRouter.of(context)はエラーとなる
+### GoRouter.redirect()内でGoRouter.of(context)はエラーとなる
 * 下記はエラーとなる。
 ```dart
 void main() {

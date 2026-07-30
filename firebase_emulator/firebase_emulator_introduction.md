@@ -4,7 +4,7 @@ title: "導入 - Firebase Local Emulator Suite"
 
 [TOP(About this memo))](../README.md) > [一覧(Firebase Local Emulator Suite)](./README.md) > 導入
 
-# Firebase Local Emulator Suite
+## Firebase Local Emulator Suite
 * https://firebase.google.com/docs/emulator-suite?hl=ja
 * Firebase Local Emulator Suite は、アプリのビルドとテストをローカルで行うことのできる、デベロッパー向けの高度なツールセット
     * 評価、プロトタイピング、開発、継続的インテグレーションのワークフローに適している。
@@ -37,14 +37,14 @@ title: "導入 - Firebase Local Emulator Suite"
         * 安全なローカル環境で Firebase Extensions のインストールと管理を行うことで、請求額を最小限に抑えながらその機能を理解できる。
 
 
-# Admin SDKでエミュレータを使う場合
+## Admin SDKでエミュレータを使う場合
 * https://firebase.google.com/docs/emulator-suite/connect_auth?hl=ja#admin_sdks
 * 環境変数に設定する必要がある。
     * export FIREBASE_AUTH_EMULATOR_HOST="localhost:9099"
 * Cloud Functions エミュレータは Authentication エミュレータを自動的に認識するため、Cloud Functions エミュレータと Authentication エミュレータの統合をテストする場合はこの手順を省略できる。
 
 
-# firebase-tools
+## firebase-tools
 * Firebaseのエミュレータの機能(API)はインストールしているfirease(firebase-tools)に依存する
     * ソースコード
         * https://github.com/firebase/firebase-tools/tree/master/src/emulator

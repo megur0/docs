@@ -5,7 +5,7 @@ title: "関数 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 関数
 
 
-# クロージャ
+## クロージャ
 * Dartの関数はすべてクロージャである。
 > Dart is a lexically scoped language, which means that the scope of variables is determined statically, simply by the layout of the code.
 * 例
@@ -28,7 +28,7 @@ final data = () {
   }();
 ```
 
-# 同名の変数は近くのスコープが優先される。
+## 同名の変数は近くのスコープが優先される。
 ```dart
 main(){
   int a = 3;
@@ -39,14 +39,14 @@ main(){
 }
 ```
 
-# 関数は第一級オブジェクト
+## 関数は第一級オブジェクト
 * 関数を変数のようにあつかうことができる
 ```dart
 final a = () => print("a");
 a();
 ```
 
-# 無名関数(lambda)
+## 無名関数(lambda)
 * 下記の「(item) {return item.toUpperCase();}」 や 「(item) => print('$item: ${item.length}')」 は無名関数
 ```dart
 const list = ['apples', 'bananas', 'oranges'];
@@ -78,17 +78,17 @@ void f2(Function() f) async {
 // second:1
 ```
 
-# アロー関数
+## アロー関数
 * ショートハンドとしてアローのシンタックスが書ける。
 * expressionは書けるがstatementは書けない
 
-# parameters
-## Optional parameters
+## parameters
+### Optional parameters
 * 任意の引数を指す。
 * Dartには以下のOptional parametersがある。
   * Optional positional parameters
   * Optional named parameters
-## Positional parameters
+### Positional parameters
 * 順序にしたがって必ず指定する必要がある引数
 ```dart
 void positionalParamTest(String a, String b) {
@@ -122,7 +122,7 @@ OptionalPositionalParamTest("aaa", "bbb", "ccc");
 OptionalPositionalParamTest("aaa", "bbb", "ccc", "ddd");
 ```
 
-## Named parameters
+### Named parameters
 * 名前付き引数
 * Optional Named parameters
   * requiredをつけない場合は任意の引数となる。
@@ -174,7 +174,7 @@ void namedParamTest6({required String? c, String d="ddd"}, String? a, String? b)
 }*/
 ```
 
-# tear-off
+## tear-off
 * https://dart.dev/effective-dart/usage#dont-create-a-lambda-when-a-tear-off-will-do
 * https://dart.dev/language/constructors
 * 関数、メソッド、または名前付きコンストラクタを括弧なしで参照すると、tear-offが作成される。

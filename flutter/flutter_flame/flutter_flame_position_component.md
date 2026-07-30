@@ -5,7 +5,7 @@ updated: 2024-09-18
 
 [TOP(About this memo))](../../README.md) >  [Flutter](../README.md) > [一覧(Flame)](./README.md) > PositionComponent
 
-# PositionComponent
+## PositionComponent
 * https://pub.dev/documentation/flame/latest/components/PositionComponent-class.html
     > A Component implementation that represents an object that can be freely moved around the screen, rotated, and scaled.
 * Transform2Dクラス
@@ -68,7 +68,7 @@ updated: 2024-09-18
     final p2 = component.positionOfAnchor(Anchor.bottomRight);
     ```
 
-# ShapeComponents
+## ShapeComponents
 * PolygonComponent, RectangleComponent, CircleComponent
 ```dart
 @override
@@ -77,7 +77,7 @@ Future<void> onLoad() async {
 }
 ```
 
-# ParallaxComponent
+## ParallaxComponent
 * https://github.com/flame-engine/flame/tree/main/examples/lib/stories/parallax
 * 複数のイメージを重ねて異なるスピードで動かすことができる
 * ParallaxComponentにparallaxを指定して利用する
@@ -105,7 +105,7 @@ Future<void> onLoad() async {
     ```
 
 
-# イメージ、Sprite、Animation
+## イメージ、Sprite、Animation
 * https://docs.flame-engine.org/latest/flame/rendering/images.html
 * Loading images
     * Imagesクラス
@@ -155,7 +155,7 @@ Future<void> onLoad() async {
             return decodeImageFromList(response.bodyBytes);
         });
         ```
-## SpriteComponent
+### SpriteComponent
 * https://pub.dev/documentation/flame/latest/components/SpriteComponent-class.html
 * https://docs.flame-engine.org/latest/flame/components.html#spritecomponent
 * Sprite
@@ -172,7 +172,7 @@ Future<void> onLoad() async {
 ```
 * size
     * sizeを設定しない場合はイメージ本体のサイズ(Sprite.srcSize)となる。
-## SpriteAnimationComponent
+### SpriteAnimationComponent
 * https://pub.dev/documentation/flame/latest/components/SpriteAnimationComponent-class.html
 * SpriteAnimationComponent.animationにSpriteAnimationを設定することで、そのアニメーションにしたがって処理される
 * SpriteAnimation
@@ -200,13 +200,13 @@ Future<void> onLoad() async {
         * spriteAnimation.frames[currentIndex].sprite で現在のSpriteを取り出して、Sprite.renderを実行
     * なお、SpriteAnimation.createTicker()によってSpriteAnimationTickerを取得することもできる
         * Tickerの終了を待ったり、開始時や終了時の処理を記述できる。
-## TODO 
+### TODO 
 * SpriteBatch
 * SpriteSheet  
 * ImageComposition
 * Animation  
 
-# TextComponent
+## TextComponent
 * TextComponentは生成時にsizeが自動で計算されて設定される。
 * TextPaintクラスはTextPainterクラスへ変換できる。事前にサイズを取得したい場合は利用できるだろう。
 ```dart
@@ -222,7 +222,7 @@ TextComponent(text: 'Test', textRenderer: p);
 ```
 
 
-# ButtonComponent
+## ButtonComponent
 * ButtonComponentのsizeはコンストラクタのみ引数のbuttonのサイズとして評価される点に注意
 * 以下はコンストラクタでbuttonを指定した場合とonLoad内で設定した場合の比較
 ```dart
@@ -310,7 +310,7 @@ class Child extends SpriteComponent {
 
 ```
 
-# その他のPositionComponent派生クラス
+## その他のPositionComponent派生クラス
 * SpriteAnimationGroupComponent
 * SpriteGroupComponent
 * SpawnComponent

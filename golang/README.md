@@ -6,9 +6,9 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > Go
 
 
-# Go
+## Go
 
-# 基本
+## 基本
 * [導入](./go_introduction.md)
 
 * [環境構築](./go_env.md)

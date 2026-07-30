@@ -7,37 +7,37 @@ updated: 2026-07-25
 
 
 
-# 言語仕様
+## 言語仕様
 * https://go.dev/ref/spec
 * https://go.dev/talks/2012/splash.article
 
-# ドキュメント
+## ドキュメント
 * https://golang.org/doc/
 
-# チュートリアル
+## チュートリアル
 * https://golang.org/doc/tutorial/
 
-# go-tour
+## go-tour
 * https://go-tour-jp.appspot.com/
 
-# effective go
+## effective go
 * https://golang.org/doc/effective_go
 
-# playground
+## playground
 * https://go.dev/play/
 * shift + enterで実行
 
-# パッケージ
+## パッケージ
 * https://pkg.go.dev/
-## パッケージを開発して公開する。
+### パッケージを開発して公開する。
 * https://golang.org/doc/modules/developing#design
 
 
-# よくある質問
+## よくある質問
 * https://go.dev/doc/faq#convert_slice_of_interface
 
 
-# Goの特徴
+## Goの特徴
 * 型（typeで宣言したもの）を レシーバーとしたメソッドを定義することで暗黙的に実装したことになり、
 * インターフェースを受け取る方は引数の型をそのインターフェースとして宣言する感じ。（そっちは明示的）
 * ポインタを利用する。

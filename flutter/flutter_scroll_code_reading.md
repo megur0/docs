@@ -7,11 +7,11 @@ updated: 2024-08-30
 
 
 
-# 注意
+## 注意
 * 以下は筆者がFlutterのコードリーディングを2023年の7月頃に行って理解した内容である。
 * 筆者の理解であり内容に誤りが含まれている可能性、情報が古くなっている可能性がある点に注意。
 
-# スクロール処理についてコードリーディングを行ったモチベーション
+## スクロール処理についてコードリーディングを行ったモチベーション
 * 開発中に以下のような発見があり、内部の動作がどのようになっているか興味を持ったことが動機となる。
 * ListViewを使った画面のデバッグ中にオフセットの最大値(maxScrollExtent)の値が変動することがわかった
     * 検索すると関連するIssueがいくつかあることがわかった。
@@ -20,18 +20,18 @@ updated: 2024-08-30
     * correctBy()でオフセットを変更してみるとスクロールアクションは停止しないが、直後に変更前のオフセット位置に強制的に戻されてしまう。
     * おそらく何らかのアニメーション処理が発生していることは予測できたものの、具体的な中身を知りたくなった。
 
-# クラス図の表記について
+## クラス図の表記について
 * [クラス図の表記方法](../common/about_class_diagram.md)
 
-# レンダリングに関するクラス、メソッド・プロパティの色付け
+## レンダリングに関するクラス、メソッド・プロパティの色付け
 * [アーキテクチャ(レンダリング)](./flutter_arch_code_reading.md) を参照
 
-# ScrollableState, ScrollPosition, ScrollActivity
+## ScrollableState, ScrollPosition, ScrollActivity
 
 ![](./svg/scroll_code_reading/flutter_scroll_activity_class.drawio.svg)
 
 
-## ScrollableStateのビルド
+### ScrollableStateのビルド
 * ScrollableStateのビルドの要点として、下記が実行される。
     * InitState
         * ScrollControllerの生成
@@ -54,7 +54,7 @@ updated: 2024-08-30
         * ScrollPositionへaddListener(ScrollController.notifyListeners)される。
             * ここでScrollController.notifyListenersが指定されることで、開発者がコントローラーへaddListenerで指定したコールバックが実行されることになる。
 
-## ドラッグ操作によるアニメーションとレンダリング
+### ドラッグ操作によるアニメーションとレンダリング
 * 流れとしては以下のようになる
     1. ホールド・ドラッグスタート(ドラッグ操作のために画面へタッチ)
     2. ドラッグアップデート(ドラッグ操作)
@@ -76,7 +76,7 @@ updated: 2024-08-30
 * オフセットがアップデートされると、ChangeNotifierを継承したScrollPosition.notifyListenerが呼ばれ、マウント時にaddListenerされているmarkNeedsLayoutが呼ばれて再レイアウト・レンダリングされて画面へ反映される。
 * このAnimationオブジェクトによる値の更新とオフセットのアップデート・markNeedsLayoutとレンダリングが毎フレーム繰り返されることで、スクロール画面が動いているように見える。
 
-## (参考)ScrollController.onAttach
+### (参考)ScrollController.onAttach
 * ScrollContollerを使ったScrollPositionの各種メソッドの実行
     * スクロールのオフセット情報を参照する標準の方法は、ScrollControllerを利用することである。
     * ただ、ScrollContoller.positionの参照にあたっては注意しなければならない点として、ScrollPositionがアタッチされる前に参照するとエラーとなってしまう事がある。
@@ -112,7 +112,7 @@ updated: 2024-08-30
             * 恐らく無い?
             * もし実現したいのであればScrollableクラスを拡張する必要がある。（費用対効果の観点から、Scrollableクラスの拡張は行うことはまずないだろう）           
 
-## (参考)スクロールのオフセットと進行中のアクティビティを補正するプログラム
+### (参考)スクロールのオフセットと進行中のアクティビティを補正するプログラム
 * https://github.com/flutter/flutter/issues/99158#issuecomment-1637020182
 * 動的にロードされる子のサイズ変更に伴ってmaxScrollExtentが変わった際に、SingleChildScrollViewのスクロールのオフセットがずれてしまうことを回避したプログラム。
     * ListViewに関しては動的にmaxScrollExtentが変わることの考慮も必要なため書いていない。
@@ -124,9 +124,9 @@ updated: 2024-08-30
 
 
 
-# ScrollView(ListView)とViewport
+## ScrollView(ListView)とViewport
 
-## ツリー構造・クラス図・処理の流れ
+### ツリー構造・クラス図・処理の流れ
 
 * 下記の図はビルド・レイアウトフェーズにおいてListViewのbuildメソッド以降で生成されるWidgetとRenderObjectの階層を表した図となる。<br/><br/>
 
@@ -258,7 +258,7 @@ updated: 2024-08-30
         * 実際には RenderSliverList -> RenderPadding -> RenderViewport、といった伝搬によってdirtyになると考えられる。
 
 
-## (参考)最大スクロールオフセットの算出の実装
+### (参考)最大スクロールオフセットの算出の実装
 * ScrollViewで利用しているSliverListのRenderObjectであるRenderSliverListは、キャッシュ領域にある子の寸法から１つあたりの平均値を算出し、スクロールの最大のオフセットを「現在のキャッシュ領域の末端 + 領域外の子数 * 平均値」にて算出する。
 * キャッシュ領域(cacheExtent)は、RenderViewport.performLayout()において下記のように算出されている。
     ```dart
@@ -369,7 +369,7 @@ updated: 2024-08-30
         * なお、RenderSliver.calculateCacheOffset()で値が算出されており、trailingScrollOffset(endScrollOffset) - eadingScrollOffset(childScrollOffset(firstChild!)) の値とconstraintsをベースに算出しているようだった。
 
 
-# Scrollbar
+## Scrollbar
 * 以下はスクロールバーに関連するクラスと処理の流れを表した図となる。<br/><br/>
 ![](./svg/scroll_code_reading/flutter_scroll_bar_class.drawio.svg)
 
@@ -425,7 +425,7 @@ updated: 2024-08-30
     ```
     
 
-## (参考)その他
+### (参考)その他
 * AppBarはスクロールを開始位置から動かすと背景色が透過するが、これはAppBar内部で下記のように処理されている。
 
     ![](./svg/scroll_code_reading/flutter_scroll_app_bar.drawio.svg)
@@ -453,7 +453,7 @@ updated: 2024-08-30
     > MouseRegion is used when it is needed to compare the list of objects that a mouse pointer is hovering over between this frame and the last frame. This means entering events, exiting events, and mouse cursors. 
 
 
-# スクロール関連のIssueと考察
+## スクロール関連のIssueと考察
 * ListViewのアイテムが非常に多い場合、スクロールバーを手動で一気に動かしたりanimateToで大きく移動させると著しく動作が遅くなる事由
     * これはSliverList（RenderSliverList）がレイアウトの際にレンダーツリーの生成を行っていることが原因と考えられる。
         * 通常のウィジェットはビルドの際にレンダーツリーが構築されて、レイアウト処理とは分けられている。

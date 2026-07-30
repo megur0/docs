@@ -6,21 +6,21 @@ title: "その他(未整理) - iOSアプリ開発"
 
 
 
-# WIP
+## WIP
 * このメモは作成中
 * 取り急ぎ、分散した知識をここに追記していき、後ほど整理する。
 
-# ユーザーに許可の設定状態の確認
-## Appのバックグラウンド更新
+## ユーザーに許可の設定状態の確認
+### Appのバックグラウンド更新
 * iOS7から利用できるようになった
 * デフォルトでは有効だがユーザーが設定で無効化できる。
 * UIApplication.sharedApplication.backgroundRefreshStatus から有効・無効状態を参照できる
-## 通知
+### 通知
 * 設定 > 対象のアプリ > 通知 以下の設定状況に該当する設定状況
 * UNUserNotificationCenter.current().notificationSettings() から参照できる
 
 
-# App Tracking Transparency（ATT）
+## App Tracking Transparency（ATT）
 * https://developer.apple.com/jp/app-store/user-privacy-and-data-use/
 > iOS 14.5、iPadOS 14.5、tvOS 14.5以降では、ユーザーをトラッキングしたり、ユーザーのデバイスの広告識別子にアクセスしたりする際には、AppTrackingTransparency（ATT）のフレームワークを通じてユーザーの許可を得る必要があります。
 
@@ -36,7 +36,7 @@ title: "その他(未整理) - iOSアプリ開発"
 * (IMO) ATTによる許可を得ている際に、IDFAではなくEmail等の情報でユーザーをトラッキングすることはガイドライン上は良いのか?
     * できないと解釈した方が良い、と筆者は考えている。
 
-# SKAdNetwork
+## SKAdNetwork
 * https://developer.apple.com/documentation/storekit/skadnetwork/
     > 広告ネットワーク API は、ユーザーのプライバシーを維持しながら広告主が広告キャンペーンの成功を測定するのに役立ちます。API には次の 3 つの参加者が関与します。  
 

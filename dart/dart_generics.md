@@ -5,7 +5,7 @@ title: "ジェネリクス - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > ジェネリクス
 
 
-# Generics
+## Generics
 * https://dart.dev/language/generics
 > Why use generics? Generics are often required for type safety, but they have more benefits than just allowing your code to run:
 ```dart
@@ -22,7 +22,7 @@ T first<T>(List<T> ts) {
 }
 ```
 
-# サンプル
+## サンプル
 ```dart
 import 'dart:convert';
 import 'dart:io';
@@ -51,7 +51,7 @@ Future<Response<T>> request<T>(Uri url, T Function(Map<String, dynamic> json) co
 }
 ```
 
-# Genericsの型に対してnewはできない
+## Genericsの型に対してnewはできない
 * 例えば下記のような処理は不可
   ```dart
   import 'package:flutter/material.dart';
@@ -74,7 +74,7 @@ Future<Response<T>> request<T>(Uri url, T Function(Map<String, dynamic> json) co
   * https://github.com/dart-lang/sdk/issues/30074
 
 
-# 派生クラスの親のジェネリクスの型
+## 派生クラスの親のジェネリクスの型
 * 派生クラスは親のジェネリクスの型を明示的に指定しない場合はdynamicとなる
 * mixinがonで指定したクラスのジェネリクスの型は明示的に指定しなくてもwithの際に決定される。
 ```dart

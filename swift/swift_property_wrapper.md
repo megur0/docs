@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > Property Wrapper
 
 
-# Property Wrapper
+## Property Wrapper
 * プロパティの振る舞いを変更・追加し、簡単に再利用するための仕組み。
 * lazyのように「プロパティの振る舞い」をいちいち言語の機能として組み込むと大変。
 * 開発者がlazyと同じような「プロパティの振る舞いを変更」する機能を実装できるよう、Property Wrapperが導入された。
@@ -20,7 +20,7 @@ updated: 2026-07-26
 * (参考) https://kobatech-blog.com/swift-property-wrapper/
 
 
-# lazy
+## lazy
 * プロパティを非Optionalとして公開しつつ、遅延初期化を実現できる。
 ```swift
 struct Foo {

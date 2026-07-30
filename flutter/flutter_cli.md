@@ -7,12 +7,12 @@ updated: 2025-01-08
 
 
 
-# ドキュメント
+## ドキュメント
 * https://docs.flutter.dev/reference/flutter-cli
 * https://dart.dev/tools/pub/cmd
 * Flutterのコマンドは内部的に Dartのコマンドを利用している。
 
-# グローバルオプション
+## グローバルオプション
 * --help(-h)
 * -v, --verbose
     * 内部で実行されているシェルコマンドのログを詳細に出力する
@@ -20,10 +20,10 @@ updated: 2025-01-08
     * 実行環境を指定
 * --version
 
-# ヘルプ
+## ヘルプ
 * `flutter --help`
 
-# プロジェクト作成
+## プロジェクト作成
 * `flutter create`
     * `flutter create --org com.example your_project_name`
     * サンプルプロジェクトから作成
@@ -37,11 +37,11 @@ updated: 2025-01-08
             * --templateを指定しない場合もデフォルトでappとなる。
         * module, package, plugin, plugin_ffi, skeleton
 
-# flutterのインストール状態の確認
+## flutterのインストール状態の確認
 * `flutter doctor`
 * 各種ツールチェインが正常にインストールされていることを確認
 
-# pub系コマンド
+## pub系コマンド
 * `flutter pub get`
     * pubspec.ymlに基づいてパッケージをダウンロード・更新
     * pub getコマンドはアプリが依存するパッケージを判断し、それをキャッシュフォルダへ配置する。
@@ -58,11 +58,11 @@ updated: 2025-01-08
     * 例
         * `flutter pub run flutter_native_splash:create`
 
-# デバイス確認
+## デバイス確認
 * `flutter devices --machine`
     * 現在動作できるシミュレーターや端末を確認
 
-# 実行
+## 実行
 * `flutter run -d デバイス`
 * pub get、ビルド、インストール、実行まで全てを行う。ホットリロードなどのショートカットも表示される
 * モードの指定
@@ -100,7 +100,7 @@ updated: 2025-01-08
 
 
 
-# ビルド、インストール
+## ビルド、インストール
 * `flutter build [target]`
     * デフォルトがリリースモードとなる。
         * (IMO)
@@ -113,11 +113,11 @@ updated: 2025-01-08
         * iosのアーカイブ(ipa)ファイルを生成する
 * `flutter install`
 
-# クリーン
+## クリーン
 * `flutter clean`
 * build/と.dart_tool/ ディレクトリを削除
 
-# デバイスのデタッチ・アタッチ
+## デバイスのデタッチ・アタッチ
 * https://docs.flutter.dev/add-to-app/debugging
 * デタッチ
     * `flutter run`を実行した後に d を押下するとデタッチされる。
@@ -125,15 +125,15 @@ updated: 2025-01-08
     * 再度デバイスをアタッチ
     * --device-id でデバイスを指定しない場合、先頭のデバイスが使われる？
 
-# フォーマット
+## フォーマット
 * `dart format`
 * ※ `flutter format` は `dart format`をラップするコマンドだったが削除された。
     * https://github.com/flutter/flutter/pull/129360
-## (参考) Github Actionsにdart formatを追加する
+### (参考) Github Actionsにdart formatを追加する
 * https://starhoshi.hatenablog.com/entry/2023/05/19/172447
 
 
-# その他
+## その他
 * `flutter screenshot --out 出力先ファイル`  
     * 現在接続中のデバイスのスクリーンショットを撮る
 * パッケージの依存関係のツリーを表示

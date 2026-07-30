@@ -8,21 +8,21 @@ updated: 2026-07-25
 
 
 
-# スタックトレース
+## スタックトレース
 * Go1.13の時にxerrorsから輸入されたが、リリース前に消された、という経緯がある。
 * https://zenn.dev/nekoshita/articles/097e00c6d3d1c9
 
 
-# ログの自前実装 の 参考にしたもの。
+## ログの自前実装 の 参考にしたもの。
 * https://zenn.dev/tharu/articles/8c2ec139615fc4
 
 
-# slog
+## slog
 * https://zenn.dev/88888888_kota/articles/7e97ff874083cf
 
 
 
-# logrus
+## logrus
 * logrus.Infolnなどは、内部でstd.Infoln(args...)していて、
     * 最終的に、Logger.Out.Writeが実行されている。
 * このstdは下記のように初期化されており、つまり出力先はデフォで標準エラー出力になっている、というわけだ。（logパッケージと一緒。）
@@ -44,7 +44,7 @@ func New() *Logger {
 	}
 }
 ```
-# echoでlogrus
+## echoでlogrus
 * https://echo.labstack.com/middleware/logger/
 
   

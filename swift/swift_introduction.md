@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > 導入
 
 
-# Swiftの特徴（勉強中）
+## Swiftの特徴（勉強中）
 * 値型中心の言語である。
     * (参考) https://heart-of-swift.github.io/value-semantics/how-to-use-value-types.html
     * 構造体にプロトコルを準拠させてインスタンス化するという書き方が特徴的。
@@ -22,8 +22,8 @@ updated: 2026-07-26
 * (IMO) 関数の戻り値の型宣言に `->` を使うため、戻り値や引数が関数型の場合に `->` が連続し、やや読みづらく感じる。
 
 
-# わからないこと(?)
-## ルートレベルで計算プロパティが書けるのはなぜか
+## わからないこと(?)
+### ルートレベルで計算プロパティが書けるのはなぜか
 ```swift
 protocol Animal {
     func sound()
@@ -39,7 +39,7 @@ var pet1 = Dog()
 pet1.sound() // bow wow
 ```
 
-## Viewへの準拠時のルールでわからないこと
+### Viewへの準拠時のルールでわからないこと
 ```swift
 struct ContentView: View {
     /* var body: some View {
@@ -50,35 +50,35 @@ struct ContentView: View {
 ```
 
 
-# (IMO) SwiftUI と Flutter の比較
+## (IMO) SwiftUI と Flutter の比較
 * 内部構造がFlutterに比べて少しわかりづらいと感じた。
 * 例えばFlutterのColumnは子ウィジェットを `List<Widget>` で保持しており構造が把握しやすいが、SwiftのVStackは内部でアトリビュートによる変換を行っていたり、List構造ではなくTupleViewのような構造を使っているため、ジェネリクスを多用した複雑な構造になっている。
 * ただし、someやアトリビュートの変換処理によって、UIの記述自体はFlutterより簡潔になっている印象がある。
 
 
-# チュートリアル
+## チュートリアル
 * https://developer.apple.com/tutorials/swiftui/creating-and-combining-views
 
 
-# Swift Playground
+## Swift Playground
 * https://apps.apple.com/jp/app/id1496833156
 * 手軽に実行するならこれで十分そう（非公式ではあるものの）。
     * (参考) https://paiza.io/projects/eOPjaLd3Odv8pZZdEFJirA?language=swift
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * SwiftUI
     * https://developer.apple.com/documentation/swiftui
 * Swift
     * https://docs.swift.org/swift-book/documentation/the-swift-programming-language/
 
 
-# swift.codelly
+## swift.codelly
 * わかりやすく体系的にまとまっている。
 * (参考) https://swift.codelly.dev/
 
 
-# Xcode
+## Xcode
 * フォーマット: `cmd + a` で全選択して `ctrl + i`
 * ブレークポイントを設置できる。
 * コードエリア右側の左下にある再生ボタン、または `command + option + p` で実行するとプレビューが表示される。

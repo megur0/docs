@@ -4,7 +4,7 @@ title: "静的解析 - Dart"
 
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 静的解析
 
-# 静的解析(static analysis)
+## 静的解析(static analysis)
 * https://dart.dev/tools/analysis
 * Flutterの静的解析(Static analysis)は以下で構成される。
     * アナライザー
@@ -73,7 +73,7 @@ title: "静的解析 - Dart"
                 * https://github.com/dart-lang/core/issues/833#issuecomment-2556951886
                 * 現状は「constをlinterで開発者に強制させる」ほどの「一般的なプロジェクトにおけるconstの測定可能なメリット」が十分にないためこの選択に至ったと考えられる。
 
-# dart format
+## dart format
 * https://dart.dev/tools/dart-format
 * [Dart フォーマット ガイドライン](https://dart.dev/effective-dart/style#formatting)に従ったフォーマット
 * `dart format`で実行

@@ -5,7 +5,7 @@ title: "導入 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 導入
 
 
-# ドキュメント・ライブラリ
+## ドキュメント・ライブラリ
 * https://dart.dev/guides
 * 言語ツアー
     * https://dart.dev/guides/language/language-tour
@@ -20,7 +20,7 @@ title: "導入 - Dart"
     * http, path, logging, ffi, collection, async, test, js, intl, meta, mockito, os_detect など。
 
 
-# About Dart
+## About Dart
 * https://dart.dev/overview#platform
 * https://dart.dev/guides/language/effective-dart
 * https://www.youtube.com/watch?v=5F-6n_2XWR8
@@ -51,7 +51,7 @@ title: "導入 - Dart"
     * https://api.flutter.dev/index.html
 
 
-# クラス、OOP志向
+## クラス、OOP志向
 * DartやOOP, クラスを中心としたプログラミング
 * Flutterのウィジェットはクラス
 * Reactのコンポーネントは関数
@@ -60,18 +60,18 @@ title: "導入 - Dart"
 
 
 
-# Dartコードのコンパイル
+## Dartコードのコンパイル
 * https://docs.flutter.dev/resources/faq#run-ios
 * 参考
     * https://zenn.dev/tsuruo/articles/48909d22d49ffe
-## リリースモード
+### リリースモード
 * 機械語で実行（AOTコンパイル）
     * Dart コード（アプリケーションコードと SDK 両方）は機械語に AOT コンパイルされる。
 * Dart VMも利用する
     * リリースモード（AOT コンパイル）においても Dart VM はランタイムに絞った軽量な形で利用されている
     * 理由は、ガベージコレクタや Dart ライブラリのネイティブメソッドの提供などで、これらはデプロイされたアプリケーション上にも存在。
     * コンパイルされた機械語は、precompiled runtime と呼ばれる軽量な（JIT パイプラインのサブセット）Dart VM 上のランタイム上で実行される
-## デバッグモード/プロファイルモード
+### デバッグモード/プロファイルモード
 * 中間表現で実行（JITコンパイラ）
     * https://docs.flutter.dev/tools/hot-reload
     * ホットリロード
@@ -82,5 +82,5 @@ title: "導入 - Dart"
     * dart run コマンドは内部的には Dart VM の JIT コンパイラを使っている。
 
 
-# コマンドラインツール
+## コマンドラインツール
 * https://dart.dev/tools/sdk

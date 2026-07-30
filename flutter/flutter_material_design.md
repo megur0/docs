@@ -7,7 +7,7 @@ updated: 2024-10-08
 
 
 
-# Material 3
+## Material 3
 * https://m3.material.io/
 * https://m3.material.io/develop/flutter
 * https://docs.flutter.dev/ui/design/material
@@ -21,14 +21,14 @@ updated: 2024-10-08
     * フローティングアクションボタンはひとつのスクリーンでなるべく一つ置き、 その画面でもっとも一般的な動作を促すために使うことを推奨されている。
 
 
-# Flutterのmaterialライブラリ
+## Flutterのmaterialライブラリ
 * Material library
     * マテリアルデザインに準拠したウィジェット
     * UI構築にあたってはWidgets library, Material libraryの両方利用可能である。また自身で作成することも可能。
 * flutter/material.dart は flutter/widget.dartを継承している。
     * flutter/material.dartをimportすると、flutter/widget.dartの内容も利用可能
 
-# マテリアルデザインの有効化
+## マテリアルデザインの有効化
 * Flutterでマテリアルデザインを利用する方法
     * Flutter 3.16以降では、マテリアル 3 がデフォルトで有効になっている。
     * pubspec.yaml
@@ -41,7 +41,7 @@ updated: 2024-10-08
         * 設定されたcolorSchemeはマテリアルデザインのダイナミックカラーに基づいた色が設定される。
 
 
-# 利用方法
+## 利用方法
 * ColorScheme
     * https://api.flutter.dev/flutter/material/ColorScheme-class.html
         > A set of 30 colors based on the Material spec that can be used to configure the color properties of most components.
@@ -177,7 +177,7 @@ main() => runApp(MaterialApp(
     )));
 ```
 
-# TextTheme
+## TextTheme
 * https://api.flutter.dev/flutter/material/TextTheme-class.html
 * 各プロパティがnullableである事由
   * Theme.of(context).textThemeの各プロパティはnullableとなっている。
@@ -186,7 +186,7 @@ main() => runApp(MaterialApp(
     * https://github.com/flutter/flutter/issues/86807
 
 
-# Material系のウィジェットは先祖にMaterialウィジェットを必要とする
+## Material系のウィジェットは先祖にMaterialウィジェットを必要とする
 * したがって先祖にMaterialウィジェットを置くか、Materialウィジェットを生成する(かつ先祖にMaterialウィジェットを必要としない)ウィジェットが必要となる   
     * 例えば、Card, Dialog, Drawer, or Scaffoldウィジェットなど
 ```dart
@@ -212,7 +212,7 @@ class ListTile extends StatelessWidget {
 }
 ```
 
-# テーマの上書き
+## テーマの上書き
 ```dart
 // 下記から抜粋
 // https://stackoverflow.com/a/63777364/22090329

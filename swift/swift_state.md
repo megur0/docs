@@ -7,7 +7,7 @@ updated: 2026-07-26
 
 
 
-# 状態管理
+## 状態管理
 * https://developer.apple.com/documentation/swiftui/managing-model-data-in-your-app
 * (参考) https://zenn.dev/yorifuji/articles/swiftui-managing-model-data
 * (参考) https://3.1415.jp/yc91jqwt

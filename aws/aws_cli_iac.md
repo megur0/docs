@@ -6,25 +6,25 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > AWS CLI・CloudFormation
 
 
-# CodeCommit
+## CodeCommit
 * Amazon Web Servicesのプライベートなgitリポジトリ。
 * (参考) https://dev.classmethod.jp/articles/codecommit-introduction/
 * (参考) https://dev.classmethod.jp/articles/codecommit-try/
 * CodeCommit、CodeDeploy、CodePipelineを組み合わせることで、CI/CDを構築できる(?)。
 
-# AWS CLI
-## 利用ケース
+## AWS CLI
+### 利用ケース
 * 自分のPCやAWS以外のサーバーから利用する場合
     * 専用のIAMユーザーを作成し、アクセスキーの発行が必要。
 * EC2のインスタンス上から利用する場合
     * 必要な権限を持つIAMロールを作成し、EC2インスタンスにアタッチする(推奨)。
     * またはアクセスキーを利用する方法もあるが、アクセスキーが万が一流出した場合に外部から不正利用される可能性があるため非推奨。
 
-## （参考）AWS CLIでEC2インスタンスの作成
+### （参考）AWS CLIでEC2インスタンスの作成
 * VPC、IGWやセキュリティグループ、サブネット、SSH鍵の設定など、一通りAWS CLIから作成できる。
 * (参考) https://www.isoroot.jp/blog/3188/
 
-## ローカルでの利用
+### ローカルでの利用
 * (参考) https://qiita.com/shonansurvivors/items/1fb53a2d3b8dddab6629
 * インストール(M1 Mac)
     * (参考) https://www.yamamanx.com/m1mac-aws-cliv2/
@@ -37,14 +37,14 @@ updated: 2026-07-24
     * `brew install awscli`でインストールする方法もある。
     * (参考) https://docs.aws.amazon.com/ja_jp/cli/latest/userguide/install-cliv2-mac.html#cliv2-mac-install-cmd-all-users
 
-## 環境変数
+### 環境変数
 * アクセスキーID: `AWS_ACCESS_KEY_ID`
 * シークレットアクセスキー: `AWS_SECRET_ACCESS_KEY`
 * リージョン: `AWS_DEFAULT_REGION`
 * 出力形式: `AWS_DEFAULT_OUTPUT`
 * プロファイル: `AWS_DEFAULT_PROFILE`
 
-## プロファイルの設定(デフォルトとして設定される)
+### プロファイルの設定(デフォルトとして設定される)
 ```
 $ aws configure
   AWS Access Key ID [None]: {アクセスキー(各自)}
@@ -54,21 +54,21 @@ $ aws configure
 ```
 確認: `aws configure list`
 
-## 名前付きプロファイル作成
+### 名前付きプロファイル作成
 ```
 $ aws configure --profile user1
 ```
 すでに作成済みのプロファイルを指定すると編集モードになる。
 確認: `aws configure list --profile user1`
 
-## プロファイルの確認
+### プロファイルの確認
 * `~/.aws/credentials`、`~/.aws/config`に保存されている。専用の確認コマンドは無いため、以下で直接確認する。
 ```
 cat ~/.aws/credentials
 cat ~/.aws/config
 ```
 
-## プロファイルの切り替え
+### プロファイルの切り替え
 ```
 export AWS_DEFAULT_PROFILE=user1
 aws configure list  # 確認
@@ -81,28 +81,28 @@ aws configure list  # 確認
 ```
 * `AWS_PROFILE`との関係(?): `AWS_DEFAULT_PROFILE`が設定されていない場合は`AWS_PROFILE`が優先されるらしい。両方設定されている場合は`AWS_DEFAULT_PROFILE`が優先される。
 
-## コマンド実行時にプロファイルを都度切り替える
+### コマンド実行時にプロファイルを都度切り替える
 * `--profile`で指定すればよい。(例) `aws s3 ls --profile user1`
 
-## その他コマンドメモ
+### その他コマンドメモ
 ```
 aws iam list-users   # IAMユーザー確認
 aws iam list-groups  # IAMグループを確認
 ```
 
-## EC2インスタンス上で使う場合
+### EC2インスタンス上で使う場合
 * (参考) https://qiita.com/toshiro3/items/37821bdcc50c8b6d06dc
 * リージョン内で稼働している全インスタンスの情報を取得する場合
 ```
 aws ec2 describe-instances
 ```
 
-# CloudFormation
+## CloudFormation
 * テンプレートファイルからAWSリソースをプロビジョニングするサービス。テンプレートベースで、作成〜変更〜削除が可能。CloudFormation自体への追加料金は無い。
 * (参考) https://dev.classmethod.jp/articles/aws-all-iac/
 * (参考) [入門レベルでわかりやすい記事](https://dev.classmethod.jp/articles/cloudformation-beginner01/)
 
-## スタック
+### スタック
 * テンプレートからプロビジョニングされるリソースの集合をスタックという。JSON/YAML形式のテンプレートテキストから、CloudFormationを経由してスタックを作成し、そのスタック単位でリソースの集合を管理する。
 * スタックでリソースを管理しておくと、テンプレートを流した後に「設定を変えてやり直したい」となった際、スタックを削除するだけで簡単に作成したリソースを削除できる。
 

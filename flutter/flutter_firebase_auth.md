@@ -5,14 +5,14 @@ updated: 2024-10-21
 
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > Firebase Authentication
 
-# Admin SDKの変更はストリームで検知できない
+## Admin SDKの変更はストリームで検知できない
 * https://firebase.google.com/docs/auth/flutter/start?hl=ja
     > Firebase Admin SDK で User プロファイルを更新しても、idTokenChanges()、userChanges()、authStateChanges() は呼び出されません。最新の User プロファイルを取得するには、FirebaseAuth.instance.currentUser.reload() を使用して強制的に再読み込みする必要があります。
     Firebase Admin SDK や Firebase コンソールで User を無効にしたり削除しても、idTokenChanges()、userChanges()、authStateChanges() は呼び出されません。FirebaseAuth.instance.currentUser.reload() を使用して強制的に再読み込みする必要があります。これにより、アプリコードで検出して処理できる user-disabled または user-not-found 例外が発生します。
 * なお、IDトークンの有効期限が切れた後はストリーム処理において再取得が行われるため、その際にはじめて検知することができる。
     * その際にエラーとなるのか、サインアウト状態となるのかは未検証
 
-# メールアドレスのVerificationはストリームで検知できない
+## メールアドレスのVerificationはストリームで検知できない
 * メールアドレスのVerification(※)は、ストリームで検知することはできない。
     * ※ createUserWithEmailAndPasswordやswitchToPermanentFromAnonymousやverifyBeforeUpdateEmailによって送信されたメール内のリンクを押下して検証を完了させるもの
 * currentUser().emailVerified が検証済みか否かの状態を表すが、この値を更新するにはreloadを行う、もしくはIDトークンの有効期限が切れて再取得が行われるまで待つ必要がある。
@@ -35,7 +35,7 @@ updated: 2024-10-21
     * 24/7/30時点で、下記のドキュメントはupdateEmailが掲載されている。
         * https://firebase.google.com/docs/auth/flutter/manage-users?hl=ja#set_a_users_email_address
 
-# アカウント生成時にエンドユーザーがメールアドレスを誤ってしまった場合
+## アカウント生成時にエンドユーザーがメールアドレスを誤ってしまった場合
 * 具体的には、createUserWithEmailAndPasswordやswitchToPermanentFromAnonymousの際に、ユーザーがタイポ等で(メールアドレスとしての形式は正しいが)誤ったメールアドレスにてアカウント作成してしまうケースとなる。
     * なお、これらのAPIはメールアドレスの形式チェックは行われる(不正な場合はコードとして"invalid-email"を返す)が、メールを送信できたかどうかはエラー情報として返されることはない。
 * 筆者が確認した限り、このケースに対してユーザー操作のみで解決可能な直接的なAPIは無いと考えられる。

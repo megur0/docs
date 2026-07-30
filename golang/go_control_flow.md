@@ -7,11 +7,11 @@ updated: 2026-07-25
 
 
 
-# インデント
+## インデント
 * golangは特別な理由がなければインデントはタブを使う。（フォーマッタを実行するとそのようになる）
 * https://go.dev/doc/effective_go#formatting
 
-# 変数スコープ
+## 変数スコープ
 ```go
 func main() {
 	r := "a "
@@ -28,7 +28,7 @@ func main() {
 * ただ、紛らわしいので自分は基本的に内側のブロックでも同じ変数名は使わない。
 
 
-# switch
+## switch
 * goのswitchは自動的にbreakする（breakを書く必要がない。）
 * 注意として、何も書かなかった場合でもbreakするので注意。
 * fallthroughと書くと次のケースを続けて実行する。
@@ -45,7 +45,7 @@ func checkNumber(i int) {
 }
 ```
 
-# if
+## if
 * 括弧不要。中括弧は必要。
   * if x < 0 {〜 とか for sum < 1000 { 
 * if with ショートステートメント（ ifの中だけで使える変数が宣言できる）
@@ -62,7 +62,7 @@ func checkNumber(i int) {
     }
     ```
 
-# for
+## for
 * 括弧不要
 ```go
 for i := 0; i < 10; i++ {

@@ -6,12 +6,12 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > [一覧(セキュリティ)](./README.md) > 暗号・ハッシュ
 
 
-# 公開鍵・デジタル署名
+## 公開鍵・デジタル署名
 WIP
 * (参考) https://zenn.dev/mhackit/scraps/355fe56dc7b4c8
 
 
-# ハッシュの種類
+## ハッシュの種類
 * MD5
     * 128ビットの長さのハッシュ値。
     * チェックサムによる改ざんの確認に使われる。
@@ -32,7 +32,7 @@ WIP
     * (執筆時点の情報) 同シートでは、新規実装であれば`Argon2id`を第一候補とし、次点で`scrypt`、`bcrypt`（コストファクター12以上を推奨）、FIPS準拠が必要な場合に限り`PBKDF2`という優先順位になっている。既存システムで`bcrypt`を使っている場合、直ちに移行が必須というわけではないが、コストファクターが低い（10未満など）場合は引き上げを検討した方がよい。
 
 
-# HMAC（Hash-based Message Authentication Code）
+## HMAC（Hash-based Message Authentication Code）
 * ハッシュ関数と秘密鍵を組み合わせてメッセージ認証コード（MAC）を生成する仕組み。
 * 改ざん検出の仕組み
     * 送信者と受信者が共通の秘密鍵を持ち、メッセージと鍵を用いてHMACを生成する。

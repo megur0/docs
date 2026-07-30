@@ -6,18 +6,18 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > 基本文法
 
 
-# 記法
+## 記法
 * 構造体名はパスカル記法(UpperCamelCase)、プロパティやメソッドはローワーキャメル記法(lowerCamelCase)を用いることが推奨されている。
 
 
-# print
+## print
 ```swift
 let range = 0.0...3.5
 print("type: \(type(of: range))")
 ```
 
 
-# 変数
+## 変数
 * var
 ```swift
 var age1: Int
@@ -70,7 +70,7 @@ var age3 = 43 // 型推論
         * 暗黙的アンラップ型は、最初はnilで宣言したいが、使うときには必ず値が入っているような場合に使用する。
 
 
-# 範囲型（Range）
+## 範囲型（Range）
 ```swift
 let range2 = 0...3
 let range = 0..<3
@@ -78,11 +78,11 @@ let range4 = 0.0...3.5
 ```
 
 
-# コレクション
+## コレクション
 * 配列 (Array)、セット (Set)、ディクショナリ (Dictionary)。
 
 
-# 制御構文
+## 制御構文
 * for
 ```swift
 for num in [10, 20, 30, 40, 50] {

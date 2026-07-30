@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > エラーハンドリング
 
 
-# エラーを投げる（throws, throw）
+## エラーを投げる（throws, throw）
 ```swift
 func メソッド名(引数名: 型) throws -> 戻り値 {
     // エラーを投げる可能性のある処理を記述
@@ -15,7 +15,7 @@ func メソッド名(引数名: 型) throws -> 戻り値 {
 ```
 
 
-# do try catch
+## do try catch
 ```swift
 do {
     try 〜

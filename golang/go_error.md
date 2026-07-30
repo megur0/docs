@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# 間違ったエラーハンドリング
+## 間違ったエラーハンドリング
 ```go
 if strings.Contains(err.Error(), "cannot unmarshal") {
     logger.Warn(c.RequestID, "Invalid field format:%s", err)
@@ -16,9 +16,9 @@ if strings.Contains(err.Error(), "cannot unmarshal") {
 }
 ```
 
-# panic, recover
+## panic, recover
 
-## panic
+### panic
 * programを non-zeroのコードでexitさせる。
 * deferは実行され、呼び出し元のdeferも実行される。
     * os.Exitは呼ばれないため、Fatalログ + os.Exitより、panicの方が良い気がする。
@@ -43,13 +43,13 @@ func main() {
 ```
 
 
-## recover
+### recover
 * panicが起きるような自体においてはプログラムは落ちたほうが良い状況なので、基本recoverはしない。
 * ただ、net/httpでは、リクエストハンドラがpanicしたのをrecoverして単一のHTTPリクエストがプロセス全体を終了させないようにしているので、こういう使い所はある。
 * https://qiita.com/ruiu/items/ff98ded599d97cf6646e#2-2
 * https://go.dev/doc/effective_go#errors
 * https://zenn.dev/nobonobo/articles/e0af4e8afc6c38b42ae1
-### recover() は関数内部で実行されることで初めてpanicを受け取ってくれる
+#### recover() は関数内部で実行されることで初めてpanicを受け取ってくれる
 * これだとpanicは回収されない
 ```go
 func main() {
@@ -68,7 +68,7 @@ func main() {
 	panic("パニックが回収されませんでした")
 }
 ```
-### panic時に戻り値はデフォルト値になる。
+#### panic時に戻り値はデフォルト値になる。
 ```go
 func main() {
 	s := f()
@@ -92,13 +92,13 @@ func f() error {
 
 
 
-# error, errors（Wrap, Is, As）
+## error, errors（Wrap, Is, As）
 
 
-## Goのエラー周りの参考
+### Goのエラー周りの参考
 * https://zenn.dev/link/comments/1dd0f100389e4e
 
-## interface
+### interface
 ```go
 // /usr/local/go/src/builtin/builtin.go
 type error interface {
@@ -106,7 +106,7 @@ type error interface {
 }
 ```
 
-## errors.New
+### errors.New
 ```go
 // /usr/local/go/src/errors/errors.go
 func New(text string) error {
@@ -118,7 +118,7 @@ type errorString struct {
 }
 ```
 
-## Goのエラーの返しには暗黙のルールがある
+### Goのエラーの返しには暗黙のルールがある
 * https://zenn.dev/nobonobo/articles/19c84c231aff46
 * エラーがnilではない時、処理結果が保有するリソースは開放する必要がない
 * エラーがnilの時、処理結果が保有するリソースは不要になったらリソース解放処理の呼び出しが必要
@@ -126,10 +126,10 @@ type errorString struct {
 * nilでないエラーを返しつつ解放が必要なリソースも返す様な処理関数やメソッドは存在するのか？
     * これは「存在しないことが期待されている」
 
-## エラーのラップ
+### エラーのラップ
 * interface{ Unwrap() error }を実装しておくことと、errors.Isやerrors.AsがUnwrapの戻り値のerrorを再帰的にチェックしてくれる。
 	* この仕組みによってエラーのラップが実現できる。
-### ラップ方法
+#### ラップ方法
 * fmt.Errorf()を使う方法
 	* fmt.Errorf()で”%w”フォーマットを適用すると、wrapError構造体ポインタが返される。
 	* wrapErrorは下記のように定義されている。
@@ -170,11 +170,11 @@ type errorString struct {
 	* https://kaminashi-developer.hatenablog.jp/entry/2022/12/15/093000
 
 
-## errors.Is, errors.As
-### errors.Is(err, target error) bool
+### errors.Is, errors.As
+#### errors.Is(err, target error) bool
 * errとtargetの単純比較、もしくはerr.Is(error) boolが実装されていれば、その結果を返す。
 * err.Unwrap() errorが実装されている場合は、再帰的にUnwrapの結果をerrに代入して上と同様の比較を行う。
-### errors.As(err error, target any) bool
+#### errors.As(err error, target any) bool
 * 以下のいずれかでpanicとなる。(つまり、targetはerror型のポインタ or インターフェースへのポインタ である必要がある。)
 	* targetがnil
 	* targetがポインターではない。
@@ -185,7 +185,7 @@ type errorString struct {
 		* この場合はtargetが指す先にerrが代入される。
 	* errがAsメソッドを定義しているかつ、targetを引数に取ったAsメソッドの結果がtrue
 * err.Unwrap() errorが実装されている場合は、再帰的にUnwrapの結果をerrに代入して上と同様の比較を行う。
-### なんとなくの使い方。
+#### なんとなくの使い方。
 * Is -> 一致するかどうか。Isを実装することで一致条件をカスタマイズできる。
 * As
 	* 同系統の複数のエラーをひとつの構造でまとめて扱いたいとき。

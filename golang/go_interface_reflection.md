@@ -9,12 +9,12 @@ updated: 2026-07-25
 
 
 
-# リフレクション
+## リフレクション
 * https://go.dev/blog/laws-of-reflection
 * リフレクションは、interfaceの変数内に格納されている型と値のペアを検査するためのメカニズム
 
 
-# reflect.ValueOf
+## reflect.ValueOf
 * reflect.Valueを返す。
 * KindやTypeメソッドが使える。
 	* Kind()は Kind型を返す。
@@ -88,7 +88,7 @@ type Value struct {
 }
 ```
 
-# reflect.TypeOf
+## reflect.TypeOf
 * TypeOfは値をreflect.Typeを返す
     * TypeOfの引数の型はinterface{}になっている。
 ```go
@@ -97,7 +97,7 @@ fmt.Println("type:", reflect.TypeOf(x))
 ```
 
 
-# Interface()
+## Interface()
 * interface{}型として取得する。（これを、unpackと言うらしい。）
 	* InterfaceメソッドはValueOf関数の逆と考えることができる。
 * そのため、reflect.ValueOfで取得した値はいつでも復元できる。
@@ -118,7 +118,7 @@ fmt.Println(v.Interface())
 fmt.Println(v)
 ```
 
-# リフレクトから値を得る手段
+## リフレクトから値を得る手段
 * String()などのメソッドで取得する方法
 ```go
 fmt.Println(reflect.ValueOf("test").String()) // test
@@ -152,7 +152,7 @@ switch v := rv.Interface().(type) {
 ```
 
 
-# Settable
+## Settable
 * reflect.Valueは、interface{}としてコピーした値であり、
 * Set***メソッドで値を設定することはできない。
 ```go
@@ -174,7 +174,7 @@ fmt.Println(p.Elem().Interface()) // 7.1
 fmt.Println(x)                    // 7.1
 ```
 
-# reflect.Value.Elem()、reflect.Type.Elem()
+## reflect.Value.Elem()、reflect.Type.Elem()
 ```go
 k := 3
 vk := reflect.ValueOf(k)
@@ -207,7 +207,7 @@ fmt.Println(vj.Elem())        // 3
 * https://future-architect.github.io/articles/20220921a/
 
 
-# 構造体
+## 構造体
 ```go
 type T struct {
     A int
@@ -230,7 +230,7 @@ b := reflect.ValueOf(a)
 s.Field(0).Set(b) // Setでreflect.Valueをセットできる。
 fmt.Println("t is now", t)
 ```
-## FieldByName
+### FieldByName
 ```go
 s := struct{ Name string }{}
 vps := reflect.ValueOf(&s).Elem()
@@ -242,7 +242,7 @@ fmt.Println(vf.Type(), vf.CanSet(), vf.CanAddr()) // string　true true
 	* cmpopts.IgnoreFields(Compare{}, "CreatedAt", "UpdatedAt")
 
 
-# New
+## New
 ```go
 v := reflect.New(reflect.TypeOf(0))
 fmt.Println(v)        // 0x...
@@ -256,13 +256,13 @@ fmt.Printf("%v", a) // &{ false}
 	* https://ja.stackoverflow.com/questions/66039/go-と-database-sql-で構造体がない場合でも値を取得したい
 
 
-# Indirect
+## Indirect
 * reflect.Valueの値がポインターなら、其の参照先を取得し、ポインターじゃないならそのまま。
 * structなどで、ポインターかそうではない場合どちらの可能性もある場合に、型をチェックする必要がないので便利。
 * https://qiita.com/chimatter/items/b0879401d6666589ab71
 
 
-# ElemやIndirectで取得したreflect.ValueのTypeが、 reflect.ValueOfとふるまいが違う件
+## ElemやIndirectで取得したreflect.ValueのTypeが、 reflect.ValueOfとふるまいが違う件
 ```go
 func main() {
 	var a any // 型が any。
@@ -280,14 +280,14 @@ func main() {
 ```
 
 
-# その他参考
+## その他参考
 https://kaminashi-developer.hatenablog.jp/entry/2022/11/08/095537
 https://qiita.com/masakurapa/items/e1e49f9d6c864d97458f
 https://maku77.github.io/p/hxhzfbs/
 
 
 
-# サンプルコード
+## サンプルコード
 ```go
 import (
 	"reflect"

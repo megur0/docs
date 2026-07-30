@@ -7,13 +7,13 @@ updated: 2026-07-25
 
 
 
-# set型
+## set型
 * Goにはset型がない。
 * sliceやmapを使えば表現可能。
 * https://qiita.com/kotaroooo0/items/fe63ecc68723ab6ee81f
 
 
-# 配列(Arrays)
+## 配列(Arrays)
 * 例
   * var a [10]int
   * primes := [6]int{2, 3, 5, 7, 11, 13}
@@ -21,7 +21,7 @@ updated: 2026-07-25
 * よって配列のサイズを変えることはできない。
 * しかし、Goでは配列を扱うための便利なものが用意されている -> slices
 
-# Slices
+## Slices
 * https://go-tour-jp.appspot.com/moretypes/7
 * https://go-tour-jp.appspot.com/moretypes/10
 * 配列は固定長。一方で、スライスは可変長。
@@ -122,11 +122,11 @@ a[:]
   * https://go-tour-jp.appspot.com/moretypes/18
 
 
-# sliceの要素の削除など
+## sliceの要素の削除など
 * https://go.dev/wiki/SliceTricks
 
 
-# map、mapリテラル
+## map、mapリテラル
 * https://go-tour-jp.appspot.com/moretypes/19
 ```go
 m := make(map[string]int)
@@ -168,12 +168,12 @@ for key, value := range m {// 順番はランダムになるので注意。
 ```
 
 
-# 参照型のコピー
+## 参照型のコピー
 * Goのsliceやmapは値への参照を保持しているため、単純に値をコピーするだけではDeepCopyできない。（シャローコピーになってしまう）
 * copyを使うのが正しい。
 
 
-# (IMO) []Modelと[]*Model
+## (IMO) []Modelと[]*Model
 * []*Modelを使う必要は無いはず。
 * []Modelを渡すとスライスはコピーされるが、その参照先は共有されるため。
 * なお、ChatGPTに聞いたら誤った回答が出てきた

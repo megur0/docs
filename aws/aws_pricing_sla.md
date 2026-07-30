@@ -6,12 +6,12 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > 料金・SLA・障害
 
 
-# AWSで発生している障害と影響の確認
+## AWSで発生している障害と影響の確認
 * 「Personal Health Dashboard」で、リージョン単位の障害情報を確認できる。
 * (例) EU-WEST-2リージョンで障害のステータスが上がっていたが、利用しているリージョンとは異なるため影響はなさそうと判断した(2020/8/25時点)。
 * https://phd.aws.amazon.com/phd/home#/event-log
 
-# AWSのSLA
+## AWSのSLA
 * Amazonの利用規約では、EC2(EBS)はマルチAZ構成で99.99%(単体だと90%)。
     * 月換算: 24時間 × 30日 × 0.01% = 4.32分
 * RDSのSLAはマルチAZで99.95%(シングルAZは保証対象外(?))。
@@ -23,6 +23,6 @@ updated: 2026-07-26
 * (参考) https://qiita.com/shojimotio/items/bf21180ec8436f58db43
 * (参考) https://dev.classmethod.jp/articles/sla-for-more-than-100-aws-services/
 
-# コストアラート(AWS Budgets)
+## コストアラート(AWS Budgets)
 * 月間予算額を設定し、実績または予測が閾値(例: 80%)を超えたタイミングでメール通知する仕組み。
 * コスト配分タグ(例: `Project`、`Environment`)でリソースを絞り込んだ予算(特定プロジェクト/環境のみのコストを追跡する予算)を組むこともできるが、その場合は事前にAWS Billingの管理画面で該当タグを「コスト配分タグ」として有効化しておく必要がある。有効化していないと、タグによる絞り込みが機能しない(通知自体は動くが、対象コストが常に0円になるなど気づきにくい形で機能不全になる)。この有効化はコンソールでの手動操作が必要になることが多い。

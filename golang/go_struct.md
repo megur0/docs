@@ -7,7 +7,7 @@ updated: 2026-07-25
 
 
 
-# 宣言
+## 宣言
 * https://go-tour-jp.appspot.com/moretypes/2
   ```go
   type Vertex struct {
@@ -27,7 +27,7 @@ updated: 2026-07-25
   * ポインタはnilになる。
 
 
-# empty struct
+## empty struct
 * struct{}のこと。
 * chanで空で送りたい時に、 struct{}{}みたいに使ったりする。
 * メモリサイズが0
@@ -37,7 +37,7 @@ updated: 2026-07-25
 
 
 
-# ポインター
+## ポインター
 ```go
 type A struct {
 	A string
@@ -49,14 +49,14 @@ func main() {
 }
 ```
 
-# ネスト
+## ネスト
 * ネストした構造体の初期化
   * 結構癖がある。
   * https://qiita.com/kiida/items/e465ad268bbacf529432
   * https://joniy-joniy.hatenablog.com/entry/2016/12/09/163117
 
 
-# リテラルのショートハンド
+## リテラルのショートハンド
 * 下記のように書ける。
 
 ```go
@@ -112,7 +112,7 @@ pendingMemberIdAndUserId = append(pendingMemberIdAndUserId, struct {
 
 
 
-# シャローコピー、ディープコピー
+## シャローコピー、ディープコピー
 * プリミティブだけを含む構造体であれば、ポインタのコピーでディープコピーができる。
 ```go
 t := &T{1, "aaa"}
@@ -145,7 +145,7 @@ func main() {
 ```
 * https://moneyforward-dev.jp/entry/2021/12/22/go-deep-copy/
 
-# 複雑な構造体のディープコピー
+## 複雑な構造体のディープコピー
 * https://moneyforward-dev.jp/entry/2021/12/22/go-deep-copy/
 * https://zenn.dev/tutuz/articles/1826b8383f8d79cd3af3
 * https://qiita.com/kz23szk/items/8d60a4716f7e2de2e946
@@ -156,14 +156,14 @@ func main() {
   * ③deep copyメソッドの自動生成　などがある。
 * ただ、①②に関しては速度面がネックではある。（テストコードだったらOK）
 
-# レスポンスで、構造体 -> 他の構造体へコピーしたい箇所をどうするか？
+## レスポンスで、構造体 -> 他の構造体へコピーしたい箇所をどうするか？
 * レスポンスを返すときにモデル -> レスポンスと変換のためにコードが増えるところを削減したい。
 * これは上記の①や②で可能ではあるのだが、基本的に冗長な処理なのでコード削減のためにやるべきではないかな、という判断をした。
 * もし、go generateとかで省略できるようなものがあれば、いつか使いたい。
 * https://zenn.dev/syo_yamamoto/articles/9ddb767dfb85c6
 
 
-# embbed
+## embbed
 * Goでは構造体に型を埋め込むことができる。
 * 埋込した型はフィールドとして追加される。
 * メソッドの移譲: 埋込した型が持つメソッドを、保持していることになる
@@ -321,7 +321,7 @@ func main() {
 	s.Test.A("test")
 }
 ```
-## interface へ 埋め込み?? 
+### interface へ 埋め込み?? 
 * interfaceの中へ型を含めるものは、構造体のembbedingとは全く異なる意味のため注意。
 * これは埋め込みではなく、型制約。
 ```go
@@ -333,11 +333,11 @@ func f(a i) {// error: cannot use type i outside a type constraint: interface co
 
 }
 ```
-## 埋め込んだ構造体が同じ同名フィールドを保つ場合
+### 埋め込んだ構造体が同じ同名フィールドを保つ場合
 * ネストが深いほうが無視される。
 * ネストが同じ場合は参照時にエラーになる。
 * https://techblog.kayac.com/go-embedding-structs-including-common-keys
-## (参考)エラーの実装
+### (参考)エラーの実装
 * ErrUnexpectedProcess, ErrExpectedProcessを共通化について、下記のように埋め込みしたことで省略できた。
   * newErrUnexpectedProcess, newErrExpectedProcessは無くても良いのだが、
    newErrExpectedProcess{processError("error message"),} のように毎回書くのは結構分かりづらいので。
@@ -372,7 +372,7 @@ func newErrExpectedProcess(message string) ErrExpectedProcess {
 
 
 
-# サンプルコード
+## サンプルコード
 * 埋め込みを利用してレスポンスを定義した例
 ```go
 package main

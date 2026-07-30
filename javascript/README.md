@@ -6,7 +6,7 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > JavaScript
 
 
-# JavaScript
+## JavaScript
 
 * 学習リソース・仕様
     * [参考リンク・コミュニティ・仕様](./javascript_reference.md)

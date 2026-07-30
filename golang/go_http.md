@@ -9,23 +9,23 @@ updated: 2026-07-25
 
 
 
-# net/httpによるサーバー参考
+## net/httpによるサーバー参考
 https://goodbyegangster.hatenablog.com/entry/2022/10/07/122943
 content-typeとかのチェックもある。
 https://andmorefine.gitbook.io/learn-go-with-tests/build-an-application/json
 
 
-# net/http  
+## net/http  
 * echoやginやgorillaなどはnet/httpのラッパー的な感じ。
 * 参考
   * https://journal.lampetty.net/entry/understanding-http-handler-in-go
   * https://tech.yappli.io/entry/2022/05/16/Goのnet/httpパッケージを理解する
   * https://future-architect.github.io/articles/20210714a/
 
-# 各種例
+## 各種例
 * テストコードを参照。
 
-# httpクライアント
+## httpクライアント
 * 以下の２つの方法がある。
   * net/httpパッケージに定義されている関数を使用する方法
     * http.Get関数とか
@@ -38,7 +38,7 @@ https://andmorefine.gitbook.io/learn-go-with-tests/build-an-application/json
   * リクエストの制限時間（タイムアウト）（0の場合は制限しないことを指す）
 * https://leben.mobi/go/http-client-get/practice/web/
 
-# text/template　で テンプレートをparse
+## text/template　で テンプレートをparse
 * https://qiita.com/taizo/items/bf1ec35a65ad5f608d45
 ```go
 // 実行
@@ -101,7 +101,7 @@ func main() {
 
 
 
-# ミドルウェア
+## ミドルウェア
 ```go
 func middlewareOne(next http.Handler) http.Handler {
   return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
@@ -115,7 +115,7 @@ http.Handle("/", middlewareOne(middlewareTwo(finalHandler)))
 
 
 
-## context
+### context
 * http.Requestにはcontext.Contextが入っている。
 * これはキャンセル情報なども伝搬してくれる。（httpコネクションの切断 等）
 * キャンセルの伝搬を処理する？
@@ -131,14 +131,14 @@ http.Handle("/", middlewareOne(middlewareTwo(finalHandler)))
 
 
 
-# Graceful shutdown
+## Graceful shutdown
 * https://cloud.google.com/blog/ja/products/application-development/graceful-shutdowns-cloud-run-deep-dive
 * ソースコードにいろいろメモをしているので参照。
 
 
-# サードパーティ
+## サードパーティ
 
-## echo
+### echo
 * https://echo.labstack.com/guide/routing/
   * (IMO) もう少し具体例があると分かりやすい。
 * firebase auth
@@ -146,7 +146,7 @@ http.Handle("/", middlewareOne(middlewareTwo(finalHandler)))
 * https://github.com/nrikiji/go-echo-sample/tree/blog-example
 
 
-## go-playground/validator
+### go-playground/validator
 * https://github.com/go-playground/validator
 * requiredの場合、デフォルト値（intなら0、stringなら""）をエラーとするので注意。
   * 値として渡されたものが、デフォルトなのか渡されたものなのか区別がつかない。
@@ -156,7 +156,7 @@ http.Handle("/", middlewareOne(middlewareTwo(finalHandler)))
 
 
 
-# サンプルコード
+## サンプルコード
 ```go
 package main
 

@@ -6,7 +6,7 @@ title: "列挙型 - Dart"
 
 
 
-# Enum
+## Enum
 * https://dart.dev/language/enums
 * enum のすべてのインスタンスは先頭で宣言する必要がある。
 * インスタンス変数はmixin によって追加されたものも含めて、finalである必要がある。
@@ -47,7 +47,7 @@ enum E2 {
 */
 ```
 
-# enumの判定はswitchを使う
+## enumの判定はswitchを使う
 * https://dart.dev/language/branches#exhaustiveness-checking
 * enumやsealed classは取りうる値が完全に列挙可能であるため、switchを利用することで漏れを静的に検出可能。
 ```dart
@@ -73,7 +73,7 @@ switch (status) {
 ```
 
 
-# byXXXの実装
+## byXXXの実装
 ```dart
 enum MyEnum {
   a(10),

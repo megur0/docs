@@ -6,7 +6,7 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(JavaScript)](./README.md) > this・プロトタイプ・class
 
 
-# this
+## this
 * JavaScriptの`this`はJavaやC++の`this`とは全く挙動が異なる。
 * JavaScriptの`this`は、ある関数が呼び出された際に、その関数を格納していたオブジェクトを指す。
 * (参考) http://www.yunabe.jp/docs/javascript_class_in_google.html
@@ -37,7 +37,7 @@ sayHelloShared.call(bob);  // Hello, I'm Bob
     * (参考) https://postd.cc/how-do-javascript-closures-work-under-the-hood/
 
 
-# new
+## new
 * JavaScriptの`new`もJavaやC++でクラスのインスタンス化を行う`new`とは動きが異なる。
 * `new`と一緒に関数を呼び出すと、まず新しい空のオブジェクト（`{}`）が生成される。次に関数が呼び出されるが、その際に関数内の`this`が生成されたオブジェクトを指すようになる。関数が実行された後、生成されたオブジェクトが`new`の実行結果として返される。
 ```js
@@ -84,7 +84,7 @@ var alice = {
 ```
 
 
-# プロトタイプ
+## プロトタイプ
 * prototypeには2種類ある。
     * (参考) https://tatsuno-system.co.jp/2020/03/16/blog_java-script/
     * 関数オブジェクトが持つ`prototype`
@@ -156,18 +156,18 @@ function Animal() {
 ```
 
 
-# ミックスイン
+## ミックスイン
 * ミックスインの説明の図を見ると、prototypeやsuperの理解にも役立つ。
 * (参考) https://ja.javascript.info/mixins
 
 
-# class
+## class
 * Class構文はprototypeベースのクラス定義構文の糖衣構文。
 * 従来のprototypeベースの構文より、簡潔かつ明瞭にクラスを定義できる。
 * ES2015から導入された。
 * (参考) https://qiita.com/soarflat/items/b251caf9cb59b72beb9b
 
-## prototypeベースの構文
+### prototypeベースの構文
 ```js
 var Person = function(name) {
     this.name = name;
@@ -180,7 +180,7 @@ Person.prototype.getName = function() {
 };
 ```
 
-## Class構文
+### Class構文
 ```js
 class Person {
     constructor(name) {
@@ -195,7 +195,7 @@ class Person {
 }
 ```
 
-## 継承
+### 継承
 ```js
 class Person {
     constructor(name) {
@@ -222,7 +222,7 @@ teacher.sayHello(); // => Hi, I'm soarflat
 ```
 
 
-# コールバック関数内でthisを参照するとき
+## コールバック関数内でthisを参照するとき
 * コールバック関数の中で外側の`this`を参照したい場合、以下のように`let re_this = this`のような形で退避しないと参照できないことがある。`this.xxxx = token`のように直接書くと`undefined`になる。
 ```js
 data() {
@@ -245,7 +245,7 @@ mounted() {
     * (参考) https://tadaken3.hatenablog.jp/entry/vue-scope-this
 
 
-# jQueryの$
+## jQueryの$
 * JavaScript自体としては、`$`は単なる変数名として使える記号。
 * jQueryでは`$`を関数として使っている。jQueryの`$`はユーティリティ的ないくつかのプロパティやメソッドを持つ。
 * `$`を関数として呼び出す（`$("セレクタ")`など）とjQueryオブジェクトを返す。

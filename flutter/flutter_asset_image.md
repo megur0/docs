@@ -6,11 +6,11 @@ updated: 2024-10-03
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 画像・アセット
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * https://docs.flutter.dev/ui/assets/assets-and-images
 
 
-# dart:ui.Image
+## dart:ui.Image
 * FlutterのImageとdart:ui.Imageは名前が衝突するため、通常は名前付きimportをする。
 ```dart
 import 'dart:ui' as ui;
@@ -24,10 +24,10 @@ Future<ui.Image> loadImage(String name) async {
 }
 ```
 
-# FlutterのImage, AssetImage
+## FlutterのImage, AssetImage
 * https://docs.flutter.dev/ui/assets/assets-and-images#loading-images
 
-# 解像度を考慮した画像アセット
+## 解像度を考慮した画像アセット
 * https://docs.flutter.dev/ui/assets/assets-and-images#resolution-aware
 * Flutter は、現在のデバイスのピクセル比に適した解像度の画像を読み込むことができる
 * devicePixelRatio
@@ -59,6 +59,6 @@ Future<ui.Image> loadImage(String name) async {
         * デバイスに表示される大きさ：300x300pixel
 
 
-# 起動画面のカスタマイズ
+## 起動画面のカスタマイズ
 * https://docs.flutter.dev/ui/assets/assets-and-images#ios-1
 * https://docs.flutter.dev/platform-integration/ios/launch-screen

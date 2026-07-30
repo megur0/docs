@@ -7,7 +7,7 @@ updated: 2024-09-11
 
 
 
-# Flutter のアニメーションの作成
+## Flutter のアニメーションの作成
 * Flutterでアニメーションを描画する方法は下記の方法が考えられる。
   * 1.値を算出してウィジェットへ渡す
     * 通常のウィジェット
@@ -35,7 +35,7 @@ updated: 2024-09-11
     * flameやforge2d(flame_forge2d)など
   * UIの動作は1や2で実現し、より複雑なアニメーションやゲームのモーション等は3や4を採用すると良いだろう。
 
-# Ticker, TickerProvider
+## Ticker, TickerProvider
 * https://api.flutter.dev/flutter/scheduler/Ticker-class.html
 * https://api.flutter.dev/flutter/scheduler/TickerProvider-class.html
 * Tickerは(アニメーション)フレーム毎にコールバックを実行する
@@ -122,7 +122,7 @@ updated: 2024-09-11
 
     ```
 
-# Animation
+## Animation
 * https://api.flutter.dev/flutter/animation/Animation-class.html
     > An animation with a value of type T.
 * 抽象クラスでListenableサブクラスとなる。
@@ -130,7 +130,7 @@ updated: 2024-09-11
     * AnimationController
     * CurvedAnimation
     * Tweenのメソッドによって生成されるオブジェクト(runtimeTypeはプライベートクラス)
-## AnimationController(Animationサブクラス)
+### AnimationController(Animationサブクラス)
 * https://api.flutter.dev/flutter/animation/AnimationController-class.html
 * Animationを継承する
 * Tickerのstart, stop, disposeなどの処理や渡すコールバックなどをラップしたクラス。TickerProviderを引数のvsyncで指定する。
@@ -284,7 +284,7 @@ updated: 2024-09-11
   ```
 
 
-# Animatable<T>
+## Animatable<T>
 * https://api.flutter.dev/flutter/animation/Animatable-class.html
 * Animation<double>からT型のオブジェクトを生成するクラス。
 * 主な用途として、任意個数の目的別のAnimatableオブジェクトを使って、AnimationControllerから目的に応じたAnimationオブジェクトを生成(してvalueを利用)する
@@ -417,7 +417,7 @@ class _TweenTestState extends State<TweenTest>
   }
 }
 ```
-## 内部処理
+### 内部処理
 * valueをオーバーライドしてtransformで返しており、このtransfromをTweenが実装している。
     * AnimatableやTweenのサブクラスを定義する事で独自のTweenを定義できる。
 ```dart
@@ -468,18 +468,18 @@ class Tween<T extends Object?> extends Animatable<T> {
 ```
 
 
-# アニメーションに関連するウィジェット
+## アニメーションに関連するウィジェット
 * https://docs.flutter.dev/ui/widgets/animation
-## AnimatiedBuilder
+### AnimatiedBuilder
 * https://api.flutter.dev/flutter/widgets/AnimatedBuilder-class.html
 * listenableを受け取って監視する。
 * 実装はListenbleBuilderと同じもので、可読性を高めるために異なる名前のウィジェットとなっている。
 * ListenableBuilderでも同じ目的は達成できるが、意図に従って使い分けをすると良いだろう。
-## AnimatedWidget
+### AnimatedWidget
 * https://api.flutter.dev/flutter/widgets/AnimatedWidget-class.html
 * 与えられたListenableの値が変わった際にリビルドされる。
 * AnimatiedBuilderとの違いはこちらはabstract classで、拡張して利用する。
-## アニメーションオブジェクトを直接渡すウィジェット
+### アニメーションオブジェクトを直接渡すウィジェット
 * トランジション系
     * Animation.valueを基に算出した値をTransform等のウィジェットに渡して画面に反映しても良いが、下記のウィジェットを利用すると直接Animationオブジェクトを渡して目的を達成できる。
     * PositionedTransition
@@ -493,7 +493,7 @@ class Tween<T extends Object?> extends Animatable<T> {
 * 他
     * AnimatedModalBarrier
     * AnimatedList
-## コントローラやアニメーションオブジェクトを利用せずアニメーションを実現する
+### コントローラやアニメーションオブジェクトを利用せずアニメーションを実現する
 * 下記のウィジェットは、直接アニメーションのオブジェクトを操作せずに各目的を実現する。
 * AnimatedContainer
 * AnimatedAlign
@@ -506,8 +506,8 @@ class Tween<T extends Object?> extends Animatable<T> {
 
 
 
-# その他
-## フレーム単位でsetStateを行う際の注意
+## その他
+### フレーム単位でsetStateを行う際の注意
 * 例として、下記ではTextFieldへ入力をすることができない。
 * これはおそらく、setStateが毎フレーム実行されることで、TextFieldのジェスチャー検知からカーソル表示までの処理に影響が出ていると考えられる。
 * 対策としては、下記が考えられる。

@@ -6,17 +6,17 @@ updated: 2024-11-01
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > Firebase Crashlytics
 
 
-# 注意
+## 注意
 * 筆者はMac環境で「XCode」「VSCode」にてiOSアプリをFlutterで開発しているため、このメモではAndroidについては触れない。
 * このメモは(他のメモと比べて特に)筆者の推測や調査が混じっている点に注意。
 
-# Firebase Crashlyticsについて
+## Firebase Crashlyticsについて
 * [こちら](../firebase_crashlytics/firebase_crashlytics.md)を参照
 
-# iOSのクラッシュレポートについて
+## iOSのクラッシュレポートについて
 * [こちら](../ios/ios_crash_report.md)を参照
 
-# Flutterプロジェクトへの導入(iOS)
+## Flutterプロジェクトへの導入(iOS)
 * 以下の手順に従う
     * firebase_crashlyticsプラグインを追加し、`flutterfire configure`を実行する。
     * ※ firebase_analyticsについては追加は任意。
@@ -36,7 +36,7 @@ updated: 2024-11-01
             > FEAT: automatically add debug symbols script by detecting crashlytics dependency. 
         * https://github.com/invertase/flutterfire_cli/blob/main/CHANGELOG.md#flutterfire_cli---v030-dev15
             > FEAT: upload debug symbols script. 
-## デバッグビルド時のdSYMの欠損(TODO)
+### デバッグビルド時のdSYMの欠損(TODO)
 * デバッグ時にCrashlyticsへレポートを送信すると、Crashlytics上でdSYMの欠損エラーが表示される。
     ```
     このアプリには未処理のクラッシュが x 件あります。これらを処理するには、x 個の dSYM ファイルをアップロードしてください。
@@ -53,12 +53,12 @@ updated: 2024-11-01
     * 一度ビルドを作成したうえで全ての.dSYMを手動で送信しても、事象は解消されない。
     * (?)クラッシュが発生した際に何度かFlutterアプリをリスタートをしているとdSYMの欠損エラーが解消してCrashlyticsでレポートを見ることができることもある。
 * 現状、デバッグ時のdSYMの正しい対応については分かっていない。
-## (注意) Crashlyticsのアップロードスクリプトが、ios/Runner.xcodeproj/project.pbxprojに含まれている場合
+### (注意) Crashlyticsのアップロードスクリプトが、ios/Runner.xcodeproj/project.pbxprojに含まれている場合
 * Crashlyticsの方で、ビルドフェーズに以下の名前の実行スクリプトを追加されている場合は、削除する。(XCodeを開いて Runner > Build Phases でゴミ箱アイコンから削除する。 )
     * `[firebase_crashlytics] Crashlytics Upload Symbols`
     * ※ このスクリプトはdSYMファイルをCrashlyticsへアップロードするもので、firebase_crashlyticsプラグインの方で追加されるもの。上記のFlutterfireのスクリプトでも同じコマンドを呼び出しており重複するため削除する。
     * https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=flutter&hl=ja
-## (参考)アップロードスクリプトの処理
+### (参考)アップロードスクリプトの処理
 * flutterfireが追加するビルドフェーズのスクリプトは下記。(flutterfire v1.0.0)
     ```sh
     #!/bin/bash
@@ -114,7 +114,7 @@ updated: 2024-11-01
     Successfully uploaded Crashlytics build event and symbols
     ```
 
-# Dartコードを難読化した際のシンボルファイルはアップロード不要
+## Dartコードを難読化した際のシンボルファイルはアップロード不要
 * dSYMは上記のスクリプトによってアップロードされるが、flutterのビルド時に難読化(`--obfuscate`)を行った場合でも、dSYMは難読化されない。
     * ※ もともとdSYMはiOSのリリースビルドではバイナリには含まれないため、dSYMが難読化される必要はない。
     * したがって`--split-debug-info`によって出力される.symbolファイルをCrashlyticsへアップロードする必要はない。
@@ -130,10 +130,10 @@ updated: 2024-11-01
             * https://firebase.google.com/support/release-notes/ios#crashlytics_8
 
 
-# Flutter.framework.dSYM 
+## Flutter.framework.dSYM 
 * flutterfire_cliによって追加されるアップロードスクリプトが実行されても、Flutter.framework.dSYMは含まれない。
 * このdSYMは個別にアップロードする必要がある。(あるいはスクリプトへ追加する。)
-## Flutter.framework.dSYMの場所
+### Flutter.framework.dSYMの場所
 * https://github.com/flutter/engine/blob/main/docs/Crashes.md#ios
 * 3.24以降
     * ~/flutter/bin/cache/artifacts/engine/ios-release/Flutter.xcframework の中に含まれる。
@@ -146,7 +146,7 @@ updated: 2024-11-01
             > これはFlutter.framework.dsymバンドルをtoolsキャッシュからflutter build ipaが生成するappアーカイブにコピーする。
 * 3.24より前のバージョン
     * Google Cloud Storage からダウンロードする
-## (参考)(IMO)3.24以降はアーカイブには含まれるようになったが、Crashlyticsに自動的にアップロードがされるわけではない?
+### (参考)(IMO)3.24以降はアーカイブには含まれるようになったが、Crashlyticsに自動的にアップロードがされるわけではない?
 * 下記のIssueは、CrashlyticsでFlutter.framework.dSYMが欠損していると報告されるというIssueだが、その原因は(Issueやその対応PRを読む限り)Xcode 16 以降、App Store の検証でFlutter.framework.dSYMが必要になった事、と考えられる。
     * https://github.com/flutter/flutter/issues/116493#issue-1475337907
         > Crashlyticsによってプロダクションクラッシュが報告されましたが、UUID 1F29F0F6-7F1B-3049-A2C2-B0101BD2AB95のdSYMが見つからないため、詳細を表示することができません。
@@ -162,18 +162,18 @@ updated: 2024-11-01
         * flutterfireは"${PODS_ROOT}/FirebaseCrashlytics/upload-symbols"がアップロードする「Runner.app.dSYM」に加えて「App.framework.dSYM」もアップロードしているが、このdSYMとFlutter.framework.dSYMの関係性は分からない。
     * 上記のIssueの、Firebase Crashlyticsが「dSYMの欠損」として検知した事と、Flutter.framework.dSYMを(XCode16以降で)アーカイブに含める必要が発生した事、の因果関係はよく分からない。
 
-# dSYM を Firebase Crashlyticsへ個別にアップロードする
+## dSYM を Firebase Crashlyticsへ個別にアップロードする
 * `flutterfire configure`によって追加されるスクリプトがアップロードするdSYMは、App.framework.dSYM と Runner.app.dSYM の２つのみとなる。
 * したがって例えばFlutter.framework.dSYMや、その他利用しているプラグインといったoptionalなdSYMも、頻繁にスタックトレースに出現するものは個別にアップロードしておく必要がある。
 * 以下は(筆者が調べた範囲での)アップロード方法となる。
 * なお、ビルドスクリプトを書き換えてこれらのコマンドを自動的に実行しても良いだろう。
-## (方法1)upload-symbolsコマンド
+### (方法1)upload-symbolsコマンド
 * 下記のようにdSYMファイルを直接、upload-symbolsコマンドへ渡す。
 ```sh
 find ./ -name "*.dSYM" | xargs -I \{\} ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios \{\}
 ```
 * https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?platform=ios&hl=ja#manually-upload-dsyms
-## (方法2)upload-symbolsコマンド
+### (方法2)upload-symbolsコマンド
 * アーカイブファイルに含まれるdSYMsを渡す方法
     * Xcodeで生成されるアーカイブ(xxxx.xcarchive)には、dSYMsが含まれる。
 * dSYMsの場所
@@ -182,14 +182,14 @@ find ./ -name "*.dSYM" | xargs -I \{\} ios/Pods/FirebaseCrashlytics/upload-symbo
 ```sh
 ios/Pods/FirebaseCrashlytics/upload-symbols -gsp ios/Runner/GoogleService-Info.plist -p ios "/path/to/Library/Developer/Xcode/Archives/YYYY-mm-dd/Runner YYYY-mm-dd, hh.mm.xcarchive/dSYMs"
 ```
-## (方法3)firebaseコマンド
+### (方法3)firebaseコマンド
 * 筆者は、この方法はJavaのExceptionが発生して動作しなかった。
 * 以下を実行する。
 ```sh
 `firebase crashlytics:symbols:upload --app="(コンソール上で確認できるアプリのID)" obfuscate/ios/app.ios-arm64.symbols`
 ```
 * https://firebase.google.com/docs/crashlytics/get-deobfuscated-reports?hl=ja&platform=flutter#android-split-debug-info
-## (IMO)どのタイミングで直接アップロードするか？
+### (IMO)どのタイミングで直接アップロードするか？
 * 利用しているFlutter Flameworkやパッケージのバージョン（ビルド）が変わらない限り、毎回アップロードする必要はない。
 * 下記のようにバージョンが変わった際にアップロードすればよいだろう。
 * Flutter Flameworkのバージョンを更新した際

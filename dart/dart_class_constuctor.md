@@ -5,7 +5,7 @@ title: "クラス(コンストラクタ) - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > クラス(コンストラクタ)
 
 
-# ドキュメント
+## ドキュメント
 * https://dart.dev/language/constructors
 * 参考
   * コンストラクタに関しては初学の際にドキュメントのみでは理解が追いつかなかったのでネットの記事も参照しながら学習した。
@@ -13,7 +13,7 @@ title: "クラス(コンストラクタ) - Dart"
   * https://www.cresc.co.jp/tech/java/Google_Dart2/language/classes/classes.html
 
 
-# (IMO) 所感
+## (IMO) 所感
 * 筆者がDartの初学の際、コンストラクタの学習コストが高かった。例えば下記のようなコードは多少の慣れが必要かもしれない。
 ```dart
 class A {
@@ -27,7 +27,7 @@ class B extends A {
 }
 ```
 
-# 無名コンストラクタ、名前付きコンストラクタ
+## 無名コンストラクタ、名前付きコンストラクタ
 ```dart
 class Book {
   String title = '';
@@ -40,7 +40,7 @@ class Book {
 }
 ```
 
-# コンストラクタのオーバーロードはできない
+## コンストラクタのオーバーロードはできない
 ```dart
 class Book {
   String title = '';
@@ -52,7 +52,7 @@ class Book {
 }
 ```
 
-# Automatic field initialization
+## Automatic field initialization
 * Automatic field initializationは、コンストラクタが走る前に値がセットされる。
 ```dart
 class Book {
@@ -68,7 +68,7 @@ class Book {
 }
 ```
 
-# 初期化が必要なフィールドはコンストラクタ実行前に設定する必要がある
+## 初期化が必要なフィールドはコンストラクタ実行前に設定する必要がある
 ```dart
 class Book {
   String title;
@@ -93,7 +93,7 @@ class Book2 {
 }
 ```
 
-# Initializer List
+## Initializer List
 * コンストラクタの宣言の後ろに「:処理内容」という形式で記述できる処理。 
 * Initializer Listはコンストラクタの中身が実行される前に処理を行うことができる。
 ```dart
@@ -103,7 +103,7 @@ Point(double x, double y): this.x = x, this.y = y1 {
 //コンストラクタの処理が不要の場合は下記のように書くことができる。
 Point(double x, double y): this.x = x, this.y = y1;
 ```
-## (参考) Flutterでよく見る記述
+### (参考) Flutterでよく見る記述
 * Flutterのウィジェットでよく見られる下記の書き方も Initializer Listになる。
 ```dart
 class MyWidget extends StatefulWidget {
@@ -116,7 +116,7 @@ class MyWidget2 extends StatefulWidget {
   // ...
 }
 ```
-## Initilizerは式
+### Initilizerは式
 * ステートメントをはエラーとなる。
 ```dart
 class Book {
@@ -124,7 +124,7 @@ class Book {
   // Book(this.title): print(title); // エラー
 }
 ```
-## Initilizerは親クラスのフィールドの初期化ができない
+### Initilizerは親クラスのフィールドの初期化ができない
 ```dart
 class A {
   int a = 0;
@@ -139,7 +139,7 @@ class B extends A{
 }
 ```
 
-# デフォルトコンストラクタ
+## デフォルトコンストラクタ
 * https://dart.dev/language/constructors#default-constructors
 * デフォルトコンストラクタは、引数なしの無名のコンストラクタとなる。
 ```dart
@@ -155,13 +155,13 @@ void main() => print(Book());
 
 
 
-# コンストラクタの継承
+## コンストラクタの継承
 * https://dart.dev/language/constructors#constructors-arent-inherited
 * サブクラスはスーパークラスのコンストラクタを自動的に継承しない。
 * したがって、親クラスでコンストラクタを定義していたとしても、子クラスが何もコンストラクタを定義していない場合は子クラスはデフォルトコンストラクタが自動的に定義される。
   * なお、親クラスで名前無しかつ引数なしコンストラクタが定義されていない場合はエラーとなる。（後述）
 
-# サブクラスのコンストラクタ
+## サブクラスのコンストラクタ
 * 要点は下記となる。
   * サブクラスは必ず親のコンストラクタを呼ぶ必要がある。
     * 明示的に呼ぶ もしくは 暗黙的に呼ばれる
@@ -170,7 +170,7 @@ void main() => print(Book());
     * 親のコンストラクタを呼ぶにはイニシャライザでsuperによって呼ぶ。
     * コンストラクタ内の処理ではsuperによってコンストラクタを呼ぶことはできない。
       * superによってコンストラクタ以外の親のメソッドを呼ぶことは可能
-## 明示的にスーパークラスのコンストラクタを呼ばなかった場合
+### 明示的にスーパークラスのコンストラクタを呼ばなかった場合
 * この場合は、暗黙的にスーパークラスのコンストラクタが呼ばれる。
 * デフォルトコンストラクタの場合
   * スーパークラスの引数なし、かつ無名のコンストラクタを呼ぶ。
@@ -202,7 +202,7 @@ class A {
   */
 }
 ```
-## 明示的にスーパークラスのコンストラクタを呼ぶ
+### 明示的にスーパークラスのコンストラクタを呼ぶ
 * Initializer Listからsuperを使って呼ぶことができる。
 ```dart
 class Person {
@@ -248,7 +248,7 @@ class B {
 }
 ```
 
-# Initializer Listと、親クラスのコンストラクタの実行順番
+## Initializer Listと、親クラスのコンストラクタの実行順番
 * Initializer Listはスーパークラスのコンストラクタの実行よりも先に実行される。実行順番は以下となる。
   * サブクラスのinitializer list
   * スーパークラスのinitializer list
@@ -286,7 +286,7 @@ main a: 1
 */
 ```
 
-# Initializer List の superの省略記法
+## Initializer List の superの省略記法
 ```dart
 /*
 // OK
@@ -358,7 +358,7 @@ class Vector3d extends Vector2d {
 }
 ```
 
-# 定数コンストラクタ
+## 定数コンストラクタ
 * 定数コンストラクタのdataはすべてfinalで非lateである必要がある。
 ```dart
 class ImmutablePoint {
@@ -371,7 +371,7 @@ assert(identical(a, b)); // They are the same instance!
 assert(!identical(a, const ImmutablePoint(1, 2)));
 assert(!identical(a, ImmutablePoint(1, 1)));
 ```
-## 定数コンストラクタで生成されるオブジェクトがconst値となるかどうかは、呼び出し側に依存する
+### 定数コンストラクタで生成されるオブジェクトがconst値となるかどうかは、呼び出し側に依存する
 * 定数コンストラクタで生成されるオブジェクトは必ずイミュータブルにはなる。
 * 一方でオブジェクトがconst値となるかどうかは利用側に依存する。
   ```dart
@@ -390,7 +390,7 @@ assert(!identical(a, ImmutablePoint(1, 1)));
   ```
 
 
-# ファクトリコンストラクタ
+## ファクトリコンストラクタ
 * factoryを先頭につけたコンストラクタを設定すると、自動でインスタンスが作成されず、コンストラクタ内でインスタンスを生成することができる。
 ```dart
 class City {
@@ -412,7 +412,7 @@ class City {
 }
 ```
 
-# プライベートのコンストラクタを扱う
+## プライベートのコンストラクタを扱う
 * _(アンダースコア)で始まる名前付きコンストラクタを使うことで、利用をライブラリ内に制限する。
 ```dart
 class Foo {
@@ -420,7 +420,7 @@ class Foo {
 }
 ```
 
-# リダイレクトコンストラクタ
+## リダイレクトコンストラクタ
 * コンストラクタから別のコンストラクタを呼び出す。
 ```dart
 class Dog {

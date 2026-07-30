@@ -5,7 +5,7 @@ title: "http - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > http
 
 
-# dart:ioライブラリのHttpClientと httpパッケージ
+## dart:ioライブラリのHttpClientと httpパッケージ
 * HttpClientはlowレベルのhttpのAPI
   * https://github.com/dart-lang/sdk/blob/ab2d19c93da6eaf14adc4d3161c8b19a5029cf8d/sdk/lib/io/io.dart#L63
   > The classes [HttpClient] and [HttpServer] provide low-level HTTPfunctionality.
@@ -16,7 +16,7 @@ title: "http - Dart"
   > Instead of using these classes directly, consider using more developer-friendly and composable APIs found in packages
   > For HTTP clients, look at `package:http`.
 
-# httpパッケージのRequestクラスによるcharsetの付与
+## httpパッケージのRequestクラスによるcharsetの付与
 * https://github.com/dart-lang/http/issues/184#issuecomment-511945225
 * dart.devの公式パッケージであるhttpパッケージのRequestでは、content-typeに暗黙的にcharset=utf-8を付与する。
 * 実装を確認すると下記のようになっている。

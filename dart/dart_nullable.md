@@ -5,18 +5,18 @@ title: "Null - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > Null
 
 
-# nullable
+## nullable
 * 型に?をつけると、nullableになる。初期化していない場合はnullが入る。
 ```dart
  int? a;
  print(a);
 ```
 
-# null safety
+## null safety
 * https://dart.dev/null-safety
 * not null が保証されていない（or 保証されていない可能性があるとコンパイラが判断する）変数についてコンパイルエラーを出すこと。
 
-# null assertion
+## null assertion
 * null safetyのデメリットとして、このチェックはコンパイラの推論によるものであり、実行時にnullになりえないケースでもコンパイルエラーとしてしまうものが多くあること。
 * この場合、!(非nullであることのassert)を使う。
 ```dart
@@ -42,7 +42,7 @@ void main() {
 }
 ```
 
-# Conditional　access
+## Conditional　access
 * Conditional subscript access
      * `fooList?[1]`の値が存在しない場合はnullを返す。
 * Conditional member access
@@ -60,14 +60,14 @@ if (a?.b != null) {
 }
 ```
 
-# 省略記法
+## 省略記法
 ```dart
  int? a;
  int b = a ?? 4;
  a ??= 3;
 ```
 
-# (参考)null と 値自体が渡されていないことの区別
+## (参考)null と 値自体が渡されていないことの区別
 * optionalな引数や、名前付き引数において、引数がnullableの際に「nullとして渡されたのか？」「渡されていないのか？」を直接的に区別する事はできない。
 * https://stackoverflow.com/questions/30830592/checking-if-optional-parameter-is-provided-in-dart/30838348#30838348
 * https://www.reddit.com/r/dartlang/comments/u3o43q/can_i_differentiate_between_a_parameter_not_being/

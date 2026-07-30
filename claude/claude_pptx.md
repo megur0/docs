@@ -6,9 +6,9 @@ updated: 2026-07-30
 [TOP(About this memo))](../README.md) > [一覧(Claude)](./README.md) > Claude Code の pptx スキルについて
 
 
-# Claude Code の pptx スキルについて
+## Claude Code の pptx スキルについて
 
-## pptx スキルとは
+### pptx スキルとは
 
 Anthropic が提供する「事前構築済み（pre-built）」Agent Skills の一つ。以下のようなことができる。
 
@@ -22,7 +22,7 @@ Anthropic が提供する「事前構築済み（pre-built）」Agent Skills の
 - docx（Word）
 - pdf
 
-## Claude Code に標準搭載されているか？
+### Claude Code に標準搭載されているか？
 
 **いいえ、されていない。**
 
@@ -32,7 +32,7 @@ Anthropic が提供する「事前構築済み（pre-built）」Agent Skills の
 - Claude Code に標準で組み込まれているのは、オープンソースの **Claude API skill**（8言語のAPIリファレンス・SDKドキュメント・ベストプラクティスを提供）
 - pptx スキルとは別物
 
-## 「anthropic-skills」との混同について
+### 「anthropic-skills」との混同について
 
 Anthropic は `anthropics/skills` という GitHub リポジトリ（公式スキル集）を公開しており、その中に以下が含まれる。
 
@@ -42,20 +42,20 @@ Anthropic は `anthropics/skills` という GitHub リポジトリ（公式ス�
 
 このリポジトリはマーケットプレイス形式で配布されているため「Claude Code 用に最初から入っている公式スキル集」という印象を持ちやすいが、実際は **任意でインストールするオプション** であり、Claude Code にデフォルトでバンドルされているわけではない。
 
-## 比較表
+### 比較表
 
 | | Claude.ai / Claude API | Claude Code |
 |---|---|---|
 | pptx / xlsx / docx / pdf | 標準搭載（すぐ使える） | 標準搭載ではない（任意でカスタムスキルとして導入可） |
 | Claude API skill | — | 標準搭載 |
 
-## Claude Code で PowerPoint 作成をしたい場合
+### Claude Code で PowerPoint 作成をしたい場合
 
 - `anthropics/skills` リポジトリから pptx スキルのソースを取得し、カスタムスキルとして導入する（例：`~/.claude/skills/` に配置）
 - ただし公式には「参考・デモ目的」の提供とされており、Claude.ai / API の本番実装と動作が異なる場合がある点に注意
 - サードパーティ製の同等スキルがプラグイン／マーケットプレイス経由で配布されているケースもある
 
-## 参考情報源
+### 参考情報源
 
 - Agent Skills - Claude Platform Docs: https://platform.claude.com/docs/en/agents-and-tools/agent-skills/overview
 - Skills（Managed Agents）- Claude Platform Docs: https://platform.claude.com/docs/en/managed-agents/skills

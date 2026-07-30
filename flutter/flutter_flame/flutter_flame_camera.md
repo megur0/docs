@@ -7,10 +7,10 @@ updated: 2024-08-30
 
 
 
-# CameraComponent と World
+## CameraComponent と World
 * https://docs.flame-engine.org/latest/flame/camera_component.html
 * https://github.com/flame-engine/flame/blob/main/examples/lib/stories/camera_and_viewport/coordinate_systems_example.dart
-## World
+### World
 * https://pub.dev/documentation/flame/latest/camera/World-class.html
     > このコンポーネントの主な機能は、通常のレンダリングを無効にし、 CameraComponentを通じてのみレンダリングできるようにすることです。  
     > 更新は、通常どおりワールド ツリーを通じて進行します。
@@ -19,7 +19,7 @@ updated: 2024-08-30
 * Worldが他のコンポーネントと異なる点は、1 つ以上のCameraComponentによってレンダリングされる点になる。
 * 多くの場合、Worldクラスを拡張して独自のワールドクラスを作成して、そこにロジックを実装(onLoadなど)を実装する。
 * Gameは複数のWorldを持つこともできる。カメラのターゲットとなるワールドを切り替えて、レンダリングされるワールドを制御することができる
-## CameraComponent
+### CameraComponent
 * 概念としては、CameraComponentはWorldを「見る」役割となる。
 * 生成時にWorldが引数で必要だが、後で別のものに置き換えることもできる
 * ViewportとViewfinderというコンポーネントを内部に持つ
@@ -41,7 +41,7 @@ updated: 2024-08-30
     * viewfinder.visibleWorldRectを返す
 * カメラのコントロール
     * https://docs.flame-engine.org/latest/flame/camera_component.html#camera-controls
-## Viewport
+### Viewport
 * Viewportに子コンポーネントを追加すると全面に静的なHUD(ヘッドアップディスプレイ)として表示することができる。
 * Viewport.size
 * Viewport.anchor
@@ -50,15 +50,15 @@ updated: 2024-08-30
     * MaxViewport(デフォルト)
         * gameで許可された最大サイズまで大きくなる。
     * その他、FixedResolutionViewport, FixedSizeViewport, FixedAspectRatioViewport, CircularViewport
-## ViewFinder
+### ViewFinder
 * ViewFinderに子コンポーネントを追加すると、Worldの前に表示され、Viewportの後ろに表示され、Worldと同じトランスフォームが適用される。
 * ViewFinder.angle
 * ViewFinder.anchor
 * ViewFinder.zoom
 * ViewFinder.position
-## Backdrop
+### Backdrop
 * ワールドの下に静的なコンポーネントを置くことができる。(例えばParallaxComponentを置くなど)
-## サンプルコード
+### サンプルコード
 * 以下はドラッグでカメラの位置やズームを操作するサンプルとなる
     * カメラの初期位置は0,0で、ワールド内のテキストも0,0のため、画面上は中心に配置される。（カメラから見て対象は正面に存在するため）
     * ズームに関してはiOSで試したが想定通りの動作にはできなかった

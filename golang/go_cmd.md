@@ -8,16 +8,16 @@ updated: 2026-07-25
 
 
 
-# cmd/go ドキュメント
+## cmd/go ドキュメント
 https://pkg.go.dev/cmd/go#section-documentation
 
 
-# go build
-## バイナリ
+## go build
+### バイナリ
 * docker scanした際に、バイナリのはずなのにgolangの使っているモジュールまで解析できているようだったので不思議だった。
 * 調べたところ、goのバイナリには結構な情報があるらしく、使っているモジュール情報も含まれているようだ。
 * https://knqyf263.hatenablog.com/entry/2021/02/12/162928
-## go buildの際のコンパイル対象
+### go buildの際のコンパイル対象
 * 前提
     * コンパイルしたファイルの依存先（import先）もすべてコンパイルされ、ひとつのバイナリになる。
     * 依存していないファイルはコンパイルされないので、その分はバイナリサイズが増えない。
@@ -33,17 +33,17 @@ https://pkg.go.dev/cmd/go#section-documentation
     * main.goがコンパイルされる。注意点として、同ディレクトリ内の他のgoファイルはコンパイルされないので注意。
 * go build main.go server.go
     * main.goとserver.goがコンパイルされる。
-## 何もしないmain.goファイルをbuildすると、バイナリサイズは1.2MBくらいだった。
+### 何もしないmain.goファイルをbuildすると、バイナリサイズは1.2MBくらいだった。
 ```sh
 -rwxr-xr-x  1 user  staff  1177168 Mar 24 08:15 aaa
 ```
-## ビルドタグ
+### ビルドタグ
 ```go
 // +build foo
 go build -tags foo
 ```
   * https://qiita.com/ueokande/items/fac0d1219dbbc8f44db7 
-## ldflags
+### ldflags
 * sやwを指定することで、シンボルテーブルやデバッグに関する情報を取り除き、ビルドサイズを小さくできる。
 * -ldflags="-s -w"
     * https://qiita.com/ssc-ynakamura/items/da37856f7f217d708a07
@@ -56,7 +56,7 @@ go build -tags foo
 
 
 
-# go fmt（gofmt）
+## go fmt（gofmt）
 * gofmt main.go
   * -l 修正を行ったファイルを表示
   * -w 上書きする（つけないとファイルが更新されない）
@@ -67,7 +67,7 @@ go build -tags foo
 * https://qiita.com/suin/items/9f9bdaa0cb9cb80cf752
 
 
-# go generate
+## go generate
 * go generate ./... or 対象のディレクトリでgo generate
 * https://qiita.com/yaegashi/items/d1fd9f7d0c75b2bb7446
     * ちょっと内容が古いかも。（例えばgo runの外部モジュール実行は最新版だと、go:generate go run golang.org/x/tools/cmd/stringer@latest -type=Status ってバージョン指定をしないと動かない）

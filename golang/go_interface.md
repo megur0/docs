@@ -9,12 +9,12 @@ updated: 2026-07-25
 
 
 
-# 仕様
+## 仕様
 * https://go.dev/ref/spec#Interface_types
 > An interface type defines a type set. A variable of interface type can store a value of any type that is in the type set of the interface. Such a type is said to implement the interface. The value of an uninitialized variable of interface type is nil.
 
 
-# インターフェース型の定義
+## インターフェース型の定義
 * 定義
 	* /usr/local/go/src/runtime/runtime2.go
 ```go
@@ -27,7 +27,7 @@ type iface struct {
 * インターフェースのゼロ値はtypeとdataがともにnil
 
 
-# interface{}
+## interface{}
 * ゼロ個のメソッドを指定されたインターフェース型。空のインターフェース 
 * 下記のように定義されているため anyのキーワードとして扱うことができる
 	```go
@@ -45,7 +45,7 @@ type iface struct {
 	```
 
 
-# intefaceは何とでも比較ができる。
+## intefaceは何とでも比較ができる。
 ```go
 import "fmt"
 
@@ -70,7 +70,7 @@ func f1(a any) {// any型として受け取る
 ```
 
 
-# インターフェース型の代入可能性
+## インターフェース型の代入可能性
 * Goがインターフェースに代入可能となるためにはそのメソッドが実装されているだけでよい。（暗黙的、implicit）
 * これは、
 	* interface宣言したものは、単にinteface型として、typeとvalueから構成されるものであり、
@@ -112,9 +112,9 @@ func (t t1) m2() string {
 type i1 interface{ m() string }
 
 ```
-## nilはinterface型に代入可能
+### nilはinterface型に代入可能
 * nil は interface型に代入可能である。
-## interface型からinterface型への代入可能性
+### interface型からinterface型への代入可能性
 * interface同士でもinterfaceを満たしていれば代入可能。
 ```go
 type I interface{}
@@ -162,7 +162,7 @@ func f1(a any) error {
 
 
 
-# インターフェース型のnilについて
+## インターフェース型のnilについて
 * interface型のnilは大きく分けると2つある点に注意
 	1. inteface型のゼロ値: 定義にあるようにtypeとdataの両方がnilである場合
 	2. typeに値が入っていて、dataがnilの場合
@@ -278,7 +278,7 @@ return nil
 * https://bleis-tift.hatenablog.com/entry/go-the-bad-parts
 * https://zenn.dev/hsaki/articles/go-convert-json-struct
 * https://zenn.dev/nobonobo/articles/19c84c231aff46
-## typed nilはメソッドを実行してもpanicとならない
+### typed nilはメソッドを実行してもpanicとならない
 * 例えばnilのポインターの先を取得しようとすると、エラーとなる。
 * 一方で、interfaceは型情報を持っているnilであればpanicとはならない。
 * https://go.dev/tour/methods/12
@@ -305,7 +305,7 @@ func main() {
 
 
 
-# 型アサーション（Type Assertions）
+## 型アサーション（Type Assertions）
 * https://go-tour-jp.appspot.com/methods/15
 * interface{}は具象値の型情報が含まれる。
 * したがって、Interface()で受け取った値に型アサーションすることで、値を復元できる。
@@ -326,7 +326,7 @@ fmt.Println(y)
 n, ok := i.(int)
 fmt.Println(n, ok) // 0  false
 ```
-## 参考
+### 参考
 * ConnPoolがinterfaceとしてPing()を持っているかアサーション。
 ```go
 if pinger, ok := db.ConnPool.(interface{ Ping() error }); ok {
@@ -341,7 +341,7 @@ if driverCtx, ok := driveri.(driver.DriverContext); ok {
 ```
 
 
-# Type switches
+## Type switches
 * interface{}型に対しては、型switchができる。
 ```go
 i := interface{}("hello")
@@ -375,7 +375,7 @@ func (db *DB) Select(query interface{}, args ...interface{}) (tx *DB) {
 	...
 }
 ```
-## caseの注意
+### caseの注意
 ```go
 switch vv := val.(type) {
 	case bool:
@@ -388,7 +388,7 @@ func GetZeroVal[R any](a R) R {
 }
 ```
 
-# よく使われる標準パッケージのインターフェース
+## よく使われる標準パッケージのインターフェース
 * fmt.Stringer
 	* fmtパッケージに定義されている
 	* fmt.printlnだと、Stringerインターフェースのstringメソッドが呼ばれている。
@@ -404,7 +404,7 @@ func GetZeroVal[R any](a R) R {
 	* https://go-tour-jp.appspot.com/methods/24
 
 
-# interfaceを実装した変数のポインター、の表現
+## interfaceを実装した変数のポインター、の表現
 * まず、ポインタじゃないケースは、例えば下記のように当然いけるのだが、
 ```go
 type i interface{ f() }
@@ -435,7 +435,7 @@ func main() {
 
 
 
-# interfaceの埋め込み
+## interfaceの埋め込み
 * interface に interfaceへ埋め込むこともできる
 	* https://go.dev/ref/spec#Embedded_interfaces
 	```go
@@ -488,7 +488,7 @@ func main() {
 	```
 
 
-# General interfaces
+## General interfaces
 * TODO: この部分についてドキュメントを読んだけど、十分に理解できていない。
 * https://go.dev/ref/spec#General_interfaces
 * 最も一般的なinterfaceの形として、インターフェース要素は、任意の型項T、または基礎となる型Tを指定する ~Tの形の項、または項t1|t2|...|tnの和
@@ -562,7 +562,7 @@ interface {
 	```
 
 
-# generics
+## generics
 * 以下は、ポインターであり、かつ GetIDというメソッドを持つ構造体を表現
   * genericsを使うことで、「任意の型」を表現できている。
 ```go

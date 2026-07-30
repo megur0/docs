@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# nilリテラルのvariableへの代入
+## nilリテラルのvariableへの代入
 ```go
 import (
 	"fmt"
@@ -33,13 +33,13 @@ func main() {
 }
 ```
 
-# nilリテラル、nilが格納されたvariable, interface, それらの型情報
+## nilリテラル、nilが格納されたvariable, interface, それらの型情報
 * nilリテラル自体は型情報は持っていない。
 * 型を持つvariableにnilを格納することで、「値がnilでXXX型の変数」ができる(と思われる)
 * これがinterface型に変換されると、interface型の構造には型情報(type)と値(data)として保持される。
     * 例えば上記のreflect.TypeOfやreflect.ValueOfはany型として値を受取り、そのtypeやdataを表示している。
 
-# nilのキャスト
+## nilのキャスト
 * nilはキャストできる。
 ```go
 package main
@@ -55,7 +55,7 @@ func f(a *string) {}
 func f2[T any](a T) {}
 ```
 
-# nilの比較
+## nilの比較
 * nil リテラル同士だと比較はできない
 ```go
 //println(nil == nil) // operator == not defined on untyped nil
@@ -71,7 +71,7 @@ println(nil == (error)(nil))// これもtrue
 ```go
 println(reflect.ValueOf((*int32)(nil)).IsNil()) // true
 ```
-## Typed-nil問題　
+### Typed-nil問題　
 * 簡単に言うと、interface型において、typed nil（typeはnilではなく、dataがnil）とnil（typeもdataもnil）は等しくないので注意、という話。
 * 詳細は[インターフェース](./go_interface.md)を参照
 

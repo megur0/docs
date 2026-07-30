@@ -6,19 +6,19 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(JavaScript)](./README.md) > モジュール(import/export)
 
 
-# 名前空間（モジュール）
+## 名前空間（モジュール）
 * (参考) https://teratail.com/questions/83675
 * ES5以前のJavaScriptには名前空間(namespace)という概念がそもそもなかった。各ファイルは単に結合されるだけだったため、グローバル変数の重複等による問題が発生していた。
 * ES6(ES2015)から名前空間の概念が追加された。ただし、ここで追加された名前空間は1つのファイル内で名前空間を分ける手法ではなく、複数のファイルそれぞれが名前空間を持つ方式であり、これがES6から追加されたモジュール(module)である。
 * ES6からモジュールとしてスクリプトファイルを読み込む動作ができるようになった。それ以前は、JavaScriptをHTML内で複数羅列した場合、単なるファイルの結合に過ぎなかった。
 * モジュール: スクリプトファイル一つ一つが独自の名前空間を持ち、公開された名前を通してしかやり取りできない。
 
-## TypeScriptのnamespace機能
+### TypeScriptのnamespace機能
 * (IMO) 通常は使わず、JSのモジュール機能を使うべき。大きなプロジェクトでも困ることはないはず。
 * (参考) https://maku.blog/p/a3eh9w2/
 
 
-# export, import
+## export, import
 * export / import はES2015 (ES6) の構文。
 * exportとは、そのモジュールにあるクラスや変数を外部のファイルからも使えるようにする宣言のこと。
     * 外部のファイル側からはimport文を使うことで利用できる。
@@ -50,7 +50,7 @@ updated: 2026-07-24
     * (IMO) 呼び出したいモジュールがReactのようにnamespaceになっている場合は `import React, { 呼び出したいモジュール } from 'react'` のようにし、それ以外でdefault exportになっているものは波括弧をつけず、defaultになっていないものは波括弧をつける、という理解で概ね合っていそう。
 
 
-# exports / require
+## exports / require
 * Node自体がサポートしているパッケージの読み込み方（厳密にはCommonJSの仕様）。
 * importと比べてどちらを使うかは、プロジェクトやチームの方針による。
     ```
@@ -72,7 +72,7 @@ updated: 2026-07-24
     * (参考) https://jovi0608.hatenablog.com/entry/20111226/1324879536
     * (IMO) 迷ったら`module.exports`を使っておけばよい。moduleは現在のモジュールへの参照であり、実際にはグローバルではなく各モジュールごとのローカルとなる。
 
-## 具体例・TIPS
+### 具体例・TIPS
 * これだとOK
     * `import AuthUtil from '../../utils/AuthUtil';`
     * `import { AUTH_CLIENTS } from '../../utils/AuthUtil';`

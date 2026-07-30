@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > ジェネリクス
 
 
-# 関連型（Associated Type）
+## 関連型（Associated Type）
 * https://docs.swift.org/swift-book/documentation/the-swift-programming-language/generics/#Associated-Types-in-Action
 * プロトコル定義時点では決められず、準拠側で指定したい型があるときに使う。
     * プロトコル用のジェネリクス的なもの（プロトコル自体にジェネリクス記法が使えない理由は不明(?)）。
@@ -35,7 +35,7 @@ struct IntStack: Container {
     * (IMO) プロトコルを使わずに、ジェネリクス関数で書くほうが分かりやすいかも？
 
 
-# ジェネリクス
+## ジェネリクス
 * (参考) https://blog.recruit.co.jp/rmp/mobile/studying-swift-generitics/
 * (参考) https://qiita.com/shoheiyokoyama/items/31eca0d4b27bc9608eb8
 * Generic Functions、型パラメータ(Type Parameters)

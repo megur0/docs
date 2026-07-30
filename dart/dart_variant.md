@@ -5,7 +5,7 @@ title: "共変・反変 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 共変・反変
 
 
-# 共変と反変のサンプルコード
+## 共変と反変のサンプルコード
 ```dart
 // ignore_for_file:unused_local_variable
 

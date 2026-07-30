@@ -6,10 +6,10 @@ updated: 2026-03-11
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > ローカライズ
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization
 
-# Flutterのローカライゼーション/国際化
+## Flutterのローカライゼーション/国際化
 * MaterialAppまたはCupertinoAppウィジェットにはローカライゼーションの機能が備わっている。
     * これらのウィジェットのプロパティでLocalizationsDelegateを実装したオブジェクトを渡す。
 * flutter_localizationsパッケージは、言語ファイルを設定する事でLocalizationsDelegateを実装したクラスを自動生成できる。
@@ -54,16 +54,16 @@ updated: 2026-03-11
         ```
 * intlパッケージを利用する事で数値や日付などのローカライゼーションが可能。
 
-# サポート対象のロケール
+## サポート対象のロケール
 * サポート対象として指定したロケールの言語が対応可能が言語となる。
 * 実際にアプリを表示した際に表示される言語は、ユーザーが端末の設定にて選択している言語となる。
 
-# 強制上書き
+## 強制上書き
 * https://docs.flutter.dev/ui/accessibility-and-internationalization/internationalization#overriding-the-locale
 * Localizations.override()から生成したウィジェットでラップする事で子孫ウィジェットのLocaleを上書きすることが可能。
 
 
-# マイグレーション対応(25/4/6 追記)
+## マイグレーション対応(25/4/6 追記)
 * ビルド時に以下のメッセージが表示される
 ```sh
 Synthetic package output (package:flutter_gen) is deprecated:

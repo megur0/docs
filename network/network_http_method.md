@@ -5,7 +5,7 @@ updated: 2026-07-25
 
 [TOP(About this memo))](../README.md) > [一覧(ネットワーク)](./README.md) > HTTPメソッド・アーキテクチャ
 
-# GET/POST/PUT/DELETE
+## GET/POST/PUT/DELETE
 * まとめ
   * GET,POSTの違いをURLに乗せるか乗せないかの違いと考えるのは正確さに欠ける。まずは役割で考えるべき。
   * それとは別に、セキュリティの観点でURLに機密情報は乗せるべきではない。
@@ -20,8 +20,8 @@ updated: 2026-07-25
 * PUTはクライアントが作成したいリソースのURIが明確である場合に用いる。一方POSTは新しく作成されるリソースのURIがサーバーによって決まる場合に用いる。SQLに例えるならば、PUTはIDを伴うINSERT文だが、POSTはIDを伴わないINSERT文である。
 * POSTはべき等ではなく、PUTはべき等とされている。
 
-# HTTP前提のアーキテクチャ
-## RPC
+## HTTP前提のアーキテクチャ
+### RPC
 * 外部のプログラムが提供するプロシージャを呼び出す仕組み。
 * すべてPOSTで対応可能なシンプルさがあり、複数言語に渡るプログラム間で条件分岐する場合でも直接メソッドでの操作が可能。
 * メソッドが直接エンドポイントに作用するので機能追加がしやすい。
@@ -30,7 +30,7 @@ updated: 2026-07-25
 * (IMO) サーバー間のプロセス通信には向いていそうだが、WebのフロントとバックのようなI/F構造では、フロントからメソッドとして直接呼び出せることの利点はあまり無いように感じる。
 * (IMO) そもそもRPCは、サーバー間のネットワークが分離していることを意識させない（抽象化する）ことが目的の技術という気もする。
 
-### gRPC
+#### gRPC
 * (参考) https://www.slideshare.net/disc99_/apirestgrpc
 * Googleが公開したRPCのプロトコルで、通信プロトコルがHTTP/2。
   * WebSocketやHTTPのレイヤではなく、「約束事」という意味でのプロトコル(?)。
@@ -46,20 +46,20 @@ updated: 2026-07-25
 * (参考) gRPCを実装して解説： https://zenn.dev/hsaki/books/golang-grpc-starting/viewer/intro
 * (参考) Golang grpc flutterの例： https://flutterawesome.com/flutter-mobile-app-which-communicates-with-golang-server-over-grpc/amp/
 
-## gRPC-Web
+### gRPC-Web
 * gRPC通信をWebでも使うことができるもの。ブラウザはHTTP/2の低レベルな制御ができないため、ブラウザから直接gRPCサーバーを呼び出すことはできず、gRPC-Web用のプロキシ（Envoyなど）を経由する構成が必要になる。
 * プロジェクト自体は既にGA(Generally Available)となっているが、クライアントストリーミングや双方向ストリーミングは執筆時点でも未対応。
 * プロキシを立てる構成が前提になる分、実装コストはそれなりに大きい(IMO)。
 * 通常のWebシステムでこれを使うメリットは大きくないように思う（大規模なストリームなどの通信が高速化するケースくらい(IMO)）。近年は、ブラウザから追加のプロキシなしで直接呼び出せる[Connect](./network_streaming.md)が代替として使われることも増えている(IMO)。
 
-## REST(REpresentational State Transfer)
+### REST(REpresentational State Transfer)
 * URLがリソースになっていること。名詞であることが原則。
 * ステートレスであること。
 * HTTPプロトコルによって一貫性かつ互換性のある操作を行える(登録はPOST、取得はGET、削除はDELETEなど)。
 * URLを見ることで、URLの機能とそのレスポンス情報を解読しやすく、エンドポイントを見ればどういうデータが行き交ったのかが理解しやすい(IMO)。
 * サーバー側とは受け取るリソースのみの認識共有で済むので、フロントとバックがそれぞれの相互依存を気にせず開発に集中できる。
 
-## SOAP
+### SOAP
 * (IMO) 通常はRESTを使えばよいと思う。
 * 通信プロトコル（規約）の一つ。
 * メッセージの記述にXMLを、データ伝送に主にHTTPを用いる。
@@ -70,5 +70,5 @@ updated: 2026-07-25
   * (IMO) SOAPは現在ではあまり使われなくなっている。RESTの捉え方についても議論が分かれることがある。
   * (参考) https://jp.quora.com/Web開発におけるRESTやRESTfulとはなんですか-そうでは無いもの
 
-## GraphQL
+### GraphQL
 * (TODO) 別途整理する。

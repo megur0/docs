@@ -6,19 +6,19 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > EC2・EBS
 
 
-# EC2
-## インスタンスタイプの検索
+## EC2
+### インスタンスタイプの検索
 * サイドメニューの「インスタンスタイプ」から検索できる。フィルタも使える。
     * 例: architectureはx86_64、金額(on-demand linux pricing)は0.1以下、メモリ8以上16未満、といった条件で絞り込める。この条件だと一番安いのは「t3a.large」で「0.0752 USD per Hour」だった(2021/3/15時点)。
 
-## インスタンスタイプの変更
+### インスタンスタイプの変更
 * EC2の場合は「停止」を実施してからインスタンスタイプを変更する。RDSでもインスタンスクラス変更時に再起動が発生するため、動き自体は近い(?)。
 
-## インスタンスの削除
+### インスタンスの削除
 * インスタンスを停止する。数分待つとインスタンスの状態が「terminated」になる。数日してからリストから削除される。
 * (参考) https://qiita.com/yuta-38/items/549087e77f1397bc1d92
 
-## インスタンスを停止したのにEBSで課金される
+### インスタンスを停止したのにEBSで課金される
 * EBSストレージはアカウントでプロビジョニングしたストレージ量に応じて「ギガバイト-月」単位で課金される。
 * EBS関連の課金を停止するには、不要になったEBSボリュームとEBSスナップショットを削除する。
 * EBSスナップショットは、アクティブなEBSボリュームよりも安価な料金で請求される。
@@ -28,7 +28,7 @@ updated: 2026-07-24
 * EBSスナップショット: 1か月に格納されたデータ1GBあたり0.05USD
 * (参考) https://aws.amazon.com/jp/ebs/pricing/
 
-## インスタンスを停止したのにElastic IPで課金される
+### インスタンスを停止したのにElastic IPで課金される
 * 次の条件が満たされている限り、Elastic IPアドレスに料金は発生しない。満たされていないElastic IPアドレスは、それぞれ1時間単位で請求される。
     * Elastic IPアドレスがEC2インスタンスに関連付けられている
     * Elastic IPアドレスに関連付けられているインスタンスが実行中である
@@ -36,7 +36,7 @@ updated: 2026-07-24
 * (参考) https://aws.amazon.com/jp/premiumsupport/knowledge-center/elastic-ip-charges/
 * (参考) https://aws.amazon.com/jp/premiumsupport/knowledge-center/ec2-billing-terminated/
 
-## インスタンスを削除したのに課金される
+### インスタンスを削除したのに課金される
 * 例えば以下のEC2リソースがプロビジョニングされたまま残っている場合がある。
     * Amazon Elastic Block Store
     * Elastic IPアドレス
@@ -47,17 +47,17 @@ updated: 2026-07-24
 * リザーブドインスタンスを購入している場合、契約が終了するまで毎月時間単位で請求される。
 * (参考) https://aws.amazon.com/jp/premiumsupport/knowledge-center/terminate-relaunched-instance/
 
-## CPUクレジットについて
+### CPUクレジットについて
 * EC2のバーストパフォーマンスインスタンス(T2/T3系)も同様のCPUクレジットの仕組みで動作する。具体的な数値やRDSでの例は[RDS・Aurora](./aws_rds.md)の「CPUクレジットについて」を参照。
 
-# EBS
+## EBS
 * EC2のルートデバイスにEBSをアタッチする方法は以下を参照。
     * (参考) https://qiita.com/dskst/items/302119452bc399414bae
 * デバイス名の例(?)
     * Amazon Linux(t2.micro): `/dev/xvda`
     * Ubuntu(t2.micro): `/dev/sda1`
 
-## EBSの課金
+### EBSの課金
 * EC2とEBSは仮想サーバーとディスクの関係で、セットで使うのが基本。
 * EC2を停止しても、紐づけられているEBSはプロビジョニングされている(保持している)だけで課金される(無料枠の期間中は課金されない)。
 * 大量のデータを保存するなら、比較的安価なS3を使うほうがよい。

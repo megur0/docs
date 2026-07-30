@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > 非同期処理
 
 
-# PromiseKit、Combine、Swift Concurrencyについて
+## PromiseKit、Combine、Swift Concurrencyについて
 * (参考) https://tech-blog.optim.co.jp/entry/2022/03/25/100000
 * コールバックによる非同期処理
     * 可読性が悪い。
@@ -22,13 +22,13 @@ updated: 2026-07-26
     * Swift 5.5で追加された非同期・並行処理関連の機能群。
 
 
-# RxSwiftやReactiveSwift
+## RxSwiftやReactiveSwift
 * サードパーティ製ライブラリ。
 * 非同期処理やイベント処理のためのライブラリ。
 * Combine、Swift Concurrencyの登場によって、今後の使用が減少していく可能性がある(?)。
 
 
-# Combine
+## Combine
 * (参考) https://www.bravesoft.co.jp/blog/archives/15610
 * iOS13から追加されたApple純正のフレームワーク。
 * 簡単に言うと、イベントを発行する側と受け取る側に分かれて、あるイベントが発行されたら、それを受け取った側の処理が走ることを容易にしたフレームワーク。
@@ -96,7 +96,7 @@ subject.send(3)
     ```
 
 
-# Swift Concurrency
+## Swift Concurrency
 * コールバックを使う方法は可読性が悪い。
 * Swift 5.5からは、Swiftの言語機能としてSwift Concurrencyが登場。
     * 非同期処理、並行処理のコードを簡潔かつ安全に記述できる機能。

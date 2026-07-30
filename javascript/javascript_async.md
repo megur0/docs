@@ -6,7 +6,7 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(JavaScript)](./README.md) > 非同期処理・イベントループ
 
 
-# データ取得（fetch）
+## データ取得（fetch）
 * fetchを使う。
     * 従来、このような機能はXMLHttpRequestを使用して実現されてきた。
     * fetchはそのより良い代替となるもので、Service Workerのような他の技術からも簡単に利用できる。
@@ -14,7 +14,7 @@ updated: 2026-07-24
 * (参考) https://developer.mozilla.org/ja/docs/Web/API/Fetch_API/Using_Fetch
 
 
-# 非同期処理・イベントループについて思うこと（IMO）
+## 非同期処理・イベントループについて思うこと（IMO）
 * (IMO) JavaScriptの非同期処理は、歴史的に大まかに以下のように発展してきたと理解している。
     * もともとJavaScriptは、非同期のAPIと処理を同期させるためにコールバック関数を渡す形式だった。ただし、依存関係のある非同期API呼び出しが増えるとコールバックが多重にネストし、可読性が著しく低下するという問題があった（いわゆるコールバック地獄）。
     * そこで`Promise`、`then`、`Promise.all`といった仕組みが登場した。非同期APIを呼ぶ関数側でPromiseとしてラップして返し、呼び出す側は`then`や`Promise.all`によって同期的に扱えるようにした。
@@ -26,7 +26,7 @@ updated: 2026-07-24
     * イベントループの仕組みを理解しないと、ブラウザ上で動作するJavaScriptコードの挙動を正しく説明できない（例: setTimeoutの挙動）。
 * (IMO) 初学者にとっては、このあたりの仕組み（コールスタック・イベントループ・WebAPIs・タスクキュー等）を理解しないまま非同期処理のコードだけを覚えると、遠回りしやすい分野だと感じる。
 
-## (IMO) awaitがasyncの中でしか使えない制約について
+### (IMO) awaitがasyncの中でしか使えない制約について
 * この制約の理由は、async/awaitの内部実装に起因すると理解している。
 * (IMO) この制約は、awaitの用途から考えた本質的な必然性というより、「JavaScript」という言語の実装上の都合による制約という側面が大きいのではないかと感じている。
     * (?) 一方で、これは単なる実装都合とも言い切れない面がある。通常の関数は呼び出されたら必ず一度で実行が完了する（実行の途中で他の処理に制御を明け渡さない）というJavaScriptの前提があり、`await`はその前提を崩して関数の実行を中断・再開できるようにする仕組みである。`async`という明示的なマーカーを必須にすることで「この関数は中断されうる」ということが静的に分かるようにしている、という見方もでき、その意味では一定の設計上の合理性があるとも考えられる。
@@ -39,27 +39,27 @@ updated: 2026-07-24
 * (参考: Goのgoroutineとの対比についての記事) https://zenn.dev/nobonobo/articles/9a9f12b27bfde9
 
 
-# 参考記事
+## 参考記事
 
-## イベントループ
+### イベントループ
 * https://qiita.com/guanghuihui/items/57dcc7cb867eee951f36
 * https://meetup-jp.toast.com/896
 
-## 仕様
+### 仕様
 * HTMLスペック（WebAPIs）: https://html.spec.whatwg.org/multipage/webappapis.html#hostenqueuepromisejob
 * ECMAScript: https://tc39.es/ecma262/#sec-intro
 * Promiseの仕様: https://promisesaplus.com/
 * MDN: https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Operators/await
     * Mozillaの公式サイト。一次ソースではないが、ドキュメントはしっかりしている。
 
-# ブラウザで動くJSは分かりづらい
+## ブラウザで動くJSは分かりづらい
 * プログラマーがコールスタックやイベントループ、WebAPIs、タスクキューを含めた動きを理解していないと、コードの挙動が理解できないことがある。
     * 例えば、try〜catchをなぜコールバック内に渡す必要があるのかは、スタックの状態が分かっていないと納得しにくい。
     * (参考) https://meetup-jp.toast.com/896
 * (IMO) JSの仕様（ECMAScript）自体よりも、ブラウザ上でJSを扱う部分（イベントループ等）の理解の方が難しいと感じる。
 
 
-# JavaScript本体と、JavaScriptが駆動する環境は別物
+## JavaScript本体と、JavaScriptが駆動する環境は別物
 * JavaScript本体（JavaScriptランタイム・エンジン）は、シングルスレッドで動作する。
     * あくまでもJavaScriptエンジン自体がシングルスレッドで動いているのであって、実際にはブラウザ側でJavaScript以外の機能（後述）も動いているため、全体としてはマルチスレッドで動いている（この区別が重要）。
     * JavaScript本体はシングルスレッドで同期的に動く（単一のコールスタックで処理する）言語だが、JavaScriptエンジンを駆動する環境（ブラウザやNode.js）はマルチスレッドかつ非同期に動作する。この二重構造がJavaScriptを分かりづらくしている一因と考えられる。
@@ -68,7 +68,7 @@ updated: 2026-07-24
         * イベントループの具体的な処理手順はHTMLの仕様に記載されている: https://html.spec.whatwg.org/multipage/webappapis.html#event-loops
 * コールスタック、イベントループ、コールバックキューやその他のAPIをブラウザ側が保持している。
 
-## ランタイム
+### ランタイム
 * コールスタックとヒープメモリを持つ。
     * ヒープメモリはメモリのアロケーション、コールスタックはスタックフレームなどの管理を担う。
 * setTimeoutやDOM、HTTPリクエスト（XMLHttpRequest）はJSランタイムには含まれない。これらはブラウザが提供する機能（WebAPIs）である。
@@ -76,12 +76,12 @@ updated: 2026-07-24
     * Google Chromeで使われているオープンソースのJavaScriptエンジン。C++で書かれている。
     * https://github.com/v8/v8
 
-## コールスタック
+### コールスタック
 * 関数のスタック。呼び出すとpush、returnでpopされる。
 * スタックオーバーフロー
     * 例えば、関数が自分自身を無限に呼び出せばオーバーフローを起こすことができる。
 
-## イベントループ、タスクキュー、WebAPIs
+### イベントループ、タスクキュー、WebAPIs
 * JSエンジンはシングルスレッドで、コールスタックは1つだけしか持たない。つまりランタイムは一度に1つのことしかできない。
 * しかし、実際には非同期に動くものが存在する。setTimeoutやXMLHttpRequestのようなI/O待ちが発生するものについては、ブラウザがランタイム（JavaScriptエンジン）以外の機能も持っているためである（この意味では、非同期なのはJavaScript自体ではなく、JavaScriptが駆動するブラウザ側と言える）。
     * (?) ただしPromise/async・awaitによるマイクロタスクの遅延自体は、外部のI/Oを介さなくてもJavaScript（ECMAScript）の言語仕様自体の中で発生する点には注意（詳細は「awaitがasyncの中でしか使えない制約について」を参照）。
@@ -91,12 +91,12 @@ updated: 2026-07-24
 * イベントループはコールスタックとタスクキューを監視する。コールスタックが空になると、タスクキューからコールスタックへpushする。
 * (参考: 動きを可視化できるツール) http://latentflip.com/loupe/
 
-## Node.js
+### Node.js
 * Node.jsもブラウザと同様に非同期IOを実現しているが、その実装であるlibuvライブラリが提供するイベントループは、ブラウザのタスク/マイクロタスクモデルとは異なる構造（タイマー、I/O、close callback等のフェーズに分かれた構造）を持つ。
 * (?) Node.jsはブラウザではないためHTML仕様に準拠する対象ではなく、「HTML仕様に準拠しきれていない」というより「ブラウザとは別の設計のイベントループを持つ」と捉えるのが正確。そのため、ブラウザ環境のイベントループとは詳細な実装が異なる（そもそもブラウザ同士でも細部は異なる）。
 * (参考) https://meetup-jp.toast.com/896
 
-## イベントループの具体例
+### イベントループの具体例
 * WebAPIsとtry〜catchとコールスタック
     * WebAPIsを呼び出す際、try〜catchで囲んでもキャッチできない。コールバック関数の中にtry〜catchを入れる必要がある。
     * 理由: コールバック関数はWebAPIsの処理が完了した後にタスクキューに入れられ、コールスタックが空になったタイミングでイベントループによってタスクキューからコールスタックへpushされる。その時点では外側の文脈（try〜catchを書いたスタックフレーム）はすでにスタックから外れているため、外側にtry〜catchを書いてもキャッチできない。
@@ -111,20 +111,20 @@ updated: 2026-07-24
     * 上記はB→Aの順番で実行される。まず`setTimeout`の呼び出しがスタックに積まれ、WebAPIsの`setTimeout`が呼ばれる。スタック側は`setTimeout`の呼び出しが完了次第すぐにpopされ、次に`console.log('B')`がpushされて実行される。WebAPIs側では、指定時間経過後にコールバック関数がタスクキューに入る。そしてイベントループによって、スタックが空になった後（つまり`console.log('B')`が完了した後）にタスクキューからスタックへ移されコールバック関数が実行される。したがってB→Aの順番になる。
     * この性質上、`setTimeout`はコールスタックとマイクロタスクキュー（後述）がすべて空になってから実行される。つまり、指定した秒数ぴったりで実行されるのではなく「最短で指定した秒数後に実行される」というだけである。
 
-## Render Queue
+### Render Queue
 * (?) 「Render Queue」という呼称・3階層モデルはHTML仕様上の正式な用語ではなく、レンダリングとイベントループの関係を理解しやすくするための簡略化されたモデルとして捉えた方がよい。仕様上は、イベントループの1回のイテレーションの中で条件を満たした場合に「レンダリングを更新する」ステップが実行される、という形で定義されている。
 * コールスタックに処理がある間、ブラウザはレンダリングができない。つまり、コールスタックに処理がある間はRender Queueは待機している。
 * ただし、Render Queueの処理はコールスタックには渡されない（この点がタスクキューと異なる）。
 * 優先順位は Call Stack > Render Queue > Task Queue となる。
     * Call StackとRender Queueが空であれば、Task Queueの先頭から処理が1つだけ取り出され、Call Stackへpushされる。
 
-## マイクロタスク
+### マイクロタスク
 * マイクロタスクはマイクロタスクキューで管理される。
 * マイクロタスクキューは、タスクキューよりも優先してイベントループによって確認される。
 * Promiseの仕様、およびその基盤となる抽象的な「Job Queue」の概念自体はECMAScriptで定義されているが、それをいつ実行するかという具体的な「マイクロタスクキュー」としての処理手順（レンダリングとの兼ね合いを含む）はHTMLスペック側で定義されている。
     * (?) このため、一時期ブラウザごとにPromiseまわりの挙動が異なっていたことがある。
 
-### Promise
+#### Promise
 * Promiseはマイクロタスクを介して処理される。
 * `Promise.resolve`はfulfilledなPromiseを返す。
 * Promiseのcatch
@@ -137,7 +137,7 @@ updated: 2026-07-24
         * https://qiita.com/krmbn0576/items/e9bc5384b790df9e39ab
         * https://qiita.com/akameco/items/cc73afcdb5ac5d0774bc
 
-### async（async function）
+#### async（async function）
 * `async`をつけた関数はPromiseを返すようになる。
 * 呼び出し後、（`await`に到達するまでは）即時同期的に実行される。
 * 返り値
@@ -145,7 +145,7 @@ updated: 2026-07-24
     * 例外を投げている場合は`Promise.reject`で返す。
 * `await`を呼んだ場合、呼び出し側の関数は実行が続く（このとき呼び出し側は、async関数から暗黙のPromiseを受け取っている）。
 
-### await（await演算子）
+#### await（await演算子）
 * Promiseが解決され、解決された値が返る（resolveされる）のを待つ。
     * つまり、Promiseが呼んだマイクロタスクがスタックにpushされて完了するまで待つ。
 * `await`に続く値がPromiseでなかった場合は`Promise.resolve(値)`に変換される。
@@ -164,7 +164,7 @@ updated: 2026-07-24
     ```
     * (参考) https://makky12.hatenablog.com/entry/2020/01/11/175931
 
-### then（Promise.prototype.then()）
+#### then（Promise.prototype.then()）
 * (参考) https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Promise/then
 * 最大2つの引数を取り、Promiseが解決した場合と拒否した場合それぞれのコールバック関数を渡せる。
 * Promiseが解決/拒否されると、それぞれのコールバック関数が「非同期」に呼ばれる（マイクロタスクとして登録される）。
@@ -173,20 +173,20 @@ updated: 2026-07-24
     * 値を返した場合、`then`が返すPromiseはその返り値でresolveする（何も返さなかった場合はundefinedとしてresolve）。
     * エラーを投げた場合、`then`が返すPromiseはその値でreject（拒絶）される。
 
-### さらに学習する場合の参考
+#### さらに学習する場合の参考
 * https://qiita.com/toshihirock/items/e49b66f8685a8510bd76
 * https://www.tohoho-web.com/ex/promise.html
 * https://azu.github.io/promises-book/#introduction
 * awaitやasyncについての実験記事: https://zenn.dev/uhyo/articles/return-await-promise
 
 
-# JavaScriptでマルチスレッドを実現する方法
+## JavaScriptでマルチスレッドを実現する方法
 * Web Worker（ブラウザ）やNode.jsの`worker_threads`モジュールを使う。
     * (?) Node.jsには`cluster`モジュールもあるが、これは複数のNode.jsプロセスをforkして分散させるマルチプロセスの仕組みであり、スレッドではない点に注意。Web Workerに対応する「実際にスレッドを使う」仕組みはNode.jsでは`worker_threads`である。
 * (IMO) これらは厳密にはJavaScript自体の機能というより、JavaScriptの外部の仕組みを使ってマルチスレッドを実現しているものと捉えられる。
 
 
-# window.locationの非同期性
+## window.locationの非同期性
 * `window.location.replace`や`assign`
     * (参考) https://kokudori.hatenablog.com/entry/20120919/1348047725
     * `window.location.replace`は非同期に行われるため、その間に次の処理が進んでしまい、画面遷移前に意図しない描画（例: `this.create = true`によるDOM更新）が発生することがある。

@@ -4,7 +4,7 @@ title: "Firebase Authentication"
 
 [TOP(About this memo))](../README.md) > Firebase Authentication
 
-# IDトークン と 更新トークン
+## IDトークン と 更新トークン
 * Firebase Authenticationの認証時にはIDトークンと更新トークン(refresh token)を受け取る。
 * クライアントSDKによってバックグラウンドで 更新トークンを使ってFirebase ID トークンをリフレッシュし続けてセッションが維持される。
 * 更新トークン
@@ -21,7 +21,7 @@ title: "Firebase Authentication"
     * https://medium.com/google-cloud-jp/firebase-auth-token-jp-d400a113a440、
 
 
-# 更新トークンの無効化
+## 更新トークンの無効化
 * https://firebase.google.com/docs/auth/admin/manage-sessions?hl=ja
 * 更新トークンの無効化は、ユーザの削除、無効化、大きな変更の検出（パスワードやメールアドレスの更新など）、Admin sdk側で無効化処理をした時 となる。
 * 更新トークンが無効化された場合は、クライアントSDKが次回のIDトークン更新ができないため、そこでサインアウト扱いになる。
@@ -36,7 +36,7 @@ title: "Firebase Authentication"
     * (IMO)IDトークン自体は利用可能(?)だが、UIとしてはユーザーをサインアウトさせることができるため、実用上はコンソール上でユーザーを無効化とする方法で良いケースが多いかもしれない。
 
 
-# メールアドレス列挙保護の有効化
+## メールアドレス列挙保護の有効化
 * https://cloud.google.com/identity-platform/docs/admin/email-enumeration-protection?hl=ja
 * Firebase Authenticationの 設定 > ユーザーアクション にて有効／無効の設定ができる
 * なお、以下のように新しいプロジェクトはデフォルトで有効となっている。
@@ -47,7 +47,7 @@ title: "Firebase Authentication"
     * https://stackoverflow.com/questions/75455503/how-to-protect-against-email-enumeration-on-sign-up
    
 
-# パスワードのセキュリティポリシー
+## パスワードのセキュリティポリシー
 * Firebase Authenticationにはパスワードのセキュリティポリシーを設定する機能が無い。
 * Firebase Authenticationはパスワードの条件が6文字以上という条件のみのため、そのまま利用した場合はセキュリティ上の課題が残る
     * https://firebase.google.com/docs/auth/admin/manage-users?hl=ja

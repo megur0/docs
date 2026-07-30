@@ -6,23 +6,23 @@ updated: 2024-08-30
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > プラグイン（各種）
 
 
-# TODO
+## TODO
 * ここはよく利用するプラグインを随時追記していく?予定
 
-# 起動画面・スプラッシュ
+## 起動画面・スプラッシュ
 * https://pub.dev/packages/flutter_native_splash
 
-# アプリアイコン
+## アプリアイコン
 * https://pub.dev/packages/flutter_launcher_icons
 
-# テキストのシェア
+## テキストのシェア
 * share-plus
 * テキストのシェア機能
 
-# image picker
+## image picker
 * https://pub.dev/packages/image_picker/example
 
-# QRコード
+## QRコード
 * https://pub.dev/packages/qr_code_scanner
 * qr_flutter, qr_code_scanner
 * READMEのintegrationの箇所
@@ -31,5 +31,5 @@ updated: 2024-08-30
         * https://stackoverflow.com/questions/61289553/if-set-io-flutter-embedded-views-preview-to-true-cant-run-flutter-project-norm
     * Androidの初期設定等は現在のバージョンでは不要?
 
-# バージョン情報取得
+## バージョン情報取得
 * https://pub.dev/packages/package_info_plus

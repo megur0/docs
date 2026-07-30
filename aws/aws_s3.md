@@ -6,7 +6,7 @@ updated: 2026-07-27
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > S3
 
 
-# S3
+## S3
 * S3の特長は容量が無制限で安いこと。
     * S3の月額料金は0.025USD/1GBあたり(最初の50TB、スタンダードストレージ)。
     * EBSは0.12USD/1か月にプロビジョニングされたストレージ1GBあたり。
@@ -18,28 +18,28 @@ updated: 2026-07-27
     * VPCエンドポイントを使えば、AWSのサービス内でセキュアにトラフィックを流すことができ、通信料金もかからないため経済的。
     * エンドポイントのポリシー作成時はデフォルトで全ての操作を許可するポリシーがセットされるため、S3以外の操作ができないように設定しておく。
 
-## S3に静的ファイルを置いて、Route53からAレコードで飛ばす
+### S3に静的ファイルを置いて、Route53からAレコードで飛ばす
 * 概要: S3でバケットを作成し、静的ウェブサイトホスティングを設定する。
 * (参考) [Amazon S3で静的ウェブサイトを設定する](https://docs.aws.amazon.com/AmazonS3/latest/userguide/HostingWebsiteOnS3Setup.html)
 * (参考) [Amazon S3バケットでホストされているウェブサイトへのトラフィックのルーティング](https://docs.aws.amazon.com/ja_jp/Route53/latest/DeveloperGuide/RoutingToS3Bucket.html)
 
-## S3の静的サイトをHTTPS化する
+### S3の静的サイトをHTTPS化する
 * AWSからSSL証明書を無料で発行できるサービス(Certificate Manager)がある。Certificate Managerで発行したSSL証明書はCloudFrontまたはElastic Load Balancingでのみ利用できる。EC2や他のVPSで運用しているサーバーには使えないので注意。
 * (IME) サービス終了の告知用に静的ファイルだけをS3に置くようなケースでは、HTTPS証明書の設定をわざわざ行うのが手間になることがある。その場合はHTTPSアクセスをHTTPへリダイレクトさせる、という割り切った対応も一案。
 * (参考) https://cre8cre8.com/aws/https-s3-and-cloudfront.htm
 * (参考) https://dev.classmethod.jp/articles/cloudfront-s3-customdomain/
 
-## Amazon S3 Glacier
+### Amazon S3 Glacier
 * S3の料金の十分の一程度(?)。ただしS3自体が十分安いことと、GlacierはAPIツールが必要になる(?)ため、あまり使っていない(IME)。
 * (参考) https://www.acrovision.jp/service/aws/?p=1646
 
-## S3料金内容
+### S3料金内容
 * ストレージ容量、データ転送(課金対象はS3からの送信のみ。受信(S3へのアップロード)は無料)、リクエスト数で課金される。
     * (参考) https://qiita.com/kawaz/items/07d67a851fd49c1c183e
 * CloudFront+S3とS3単体の料金比較: アクセスが多い場合はCloudFrontを使うほうがよい(?)。
     * (参考) https://qiita.com/yamamoto_y/items/c58ae2083a792d8b7b0f
 
-## アクセス制御の仕組み(ACL・バケットポリシー)とは
+### アクセス制御の仕組み(ACL・バケットポリシー)とは
 * S3のアクセス制御は主に3つの仕組みの組み合わせで決まる。
     * ブロックパブリックアクセス(バケット単位。オンにすると他の設定より優先されてパブリックアクセスを封じる)
     * バケットポリシー(バケット単位)
@@ -59,7 +59,7 @@ updated: 2026-07-27
     * ブロックパブリックアクセスがオンの場合、ACLやバケットポリシーでパブリックアクセスを許可する設定を書いても無効化される(次項「使い方」参照)。
     * そのため、パブリックに公開する必要のないバケットは基本的にブロックパブリックアクセスを全てオンにしておき、必要な場合のみ個別に見直すのが安全(IMO)。
 
-## 使い方
+### 使い方
 * とりあえずバケットを作り、バケット自体の「ブロックパブリックアクセス」は全てオン状態にする。
     * この状態だと、個々のファイルにアクセスしても`access denied`になる。
     * PHPからSDKを使ってファイルをputする場合は、`'ACL' => 'private'`にしないと403 forbiddenになる(`public_read`などにするとエラーになる)。
@@ -76,14 +76,14 @@ updated: 2026-07-27
     * (参考) https://docs.aws.amazon.com/ja_jp/AmazonS3/latest/dev/acl-overview.html
 * S3はCloudFrontを経由させ、Origin Access Identity(CloudFrontのみ許可)を使うことで閲覧制限ができる(?)。
 
-## CORS設定
+### CORS設定
 * ブラウザから直接S3へアップロード/ダウンロードさせる構成(署名付きURLでのPUTなど)では、S3バケット側にCORS設定が必要。オリジン(ドメイン)ごとに許可するHTTPメソッドやヘッダーを指定する。
 * マルチパートアップロードなどでレスポンスヘッダー`ETag`をJavaScript側で読み取りたい場合は、公開ヘッダーに`ETag`を含める必要がある(ブラウザはデフォルトでカスタムレスポンスヘッダーをJS側に公開しないため)。
 
-## ライフサイクルルール
+### ライフサイクルルール
 * 一時的にしか使わないファイル(CSVアップロードの一時置き場、ログなど)は、ライフサイクルルールで一定日数後に自動削除する設定をしておくと、消し忘れによるストレージ課金の積み上がりを防げる。
 
-## ログ配信の許可設定(バケットポリシー)
+### ログ配信の許可設定(バケットポリシー)
 * ALBのアクセスログやCloudFrontのアクセスログをS3に送る場合、それぞれログを配信するAWS側の主体(Principal)が異なるため、バケットポリシーの書き方も変わる。
     * ALB: リージョンごとに固定された「ELBサービスアカウント」のAWSアカウントIDをPrincipalに指定する。
     * CloudFront: `cloudfront.amazonaws.com`のサービスプリンシパルを指定し、意図しない他アカウントのCloudFrontから書き込まれないよう送信元アカウントの条件で自アカウントに絞る。

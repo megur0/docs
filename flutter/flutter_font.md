@@ -7,7 +7,7 @@ updated: 2024-10-08
 
 
 
-# デフォルトのフォント
+## デフォルトのフォント
 ```dart
 print(DefaultTextStyle.of(context).style);
 
@@ -21,15 +21,15 @@ TextStyle(debugLabel: (dense bodyMedium 2021).merge((blackCupertino bodyMedium).
 * 参考
     * https://stackoverflow.com/questions/52860153/what-is-the-default-font-family-of-a-flutter-app
 
-# カスタムフォントの利用
+## カスタムフォントの利用
 * https://docs.flutter.dev/cookbook/design/fonts
 
 
-# DefaultTextStyle
+## DefaultTextStyle
 * https://api.flutter.dev/flutter/widgets/DefaultTextStyle-class.html
 * 子孫のTextウィジェットにスタイルを適用する。
 * DefaultTextStyle.mergeのコンストラクタを利用すると、部分的にオーバーライドが可能。
-## Scaffoldウィジェットを親とするかどうかでテキストの表示が異なるのはなぜか？
+### Scaffoldウィジェットを親とするかどうかでテキストの表示が異なるのはなぜか？
 * 例えば下記で標準出力へ出力されるスタイルや画面に表示されるテキストはScaffoldで囲むかどうかによって異なる。
 ```dart
 main() => runApp(const MaterialApp(
@@ -55,7 +55,7 @@ contents = AnimatedDefaultTextStyle(
     child: contents,
 );
 ```
-## Overlay
+### Overlay
 * Overlayは(作成しない限り)WidgetsApp、CupertinoApp、または MaterialAppのNavigatorによって作成されたものを利用することが一般的だが、
 * ウィジェットツリー上、MaterialAppのchild以降で指定されるDefaultTextStyleは先祖であるOverlayには(当然ではあるのだが)適用されない。
 ```dart

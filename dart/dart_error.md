@@ -5,7 +5,7 @@ title: "エラーハンドリング - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > エラーハンドリング
 
 
-# エラー処理
+## エラー処理
 > Your Dart code can throw and catch exceptions. Exceptions are errors indicating that something unexpected happened. If the exception isn't caught, the isolate that raised the exception is suspended, and typically the isolate and its program are terminated.
 * https://dart.dev/language/error-handling
 * ExceptionやErrorだけではなく、任意のオブジェクトを投げることを可能。
@@ -61,7 +61,7 @@ void a() {
 ```
 
 
-# assert
+## assert
 * https://dart.dev/language/error-handling#assert
 * assertはリリースビルドでは処理されず残しておいても問題ないため、コードテストに適している。
 * Flutter はデバッグ モードでアサーションを有効にする。
@@ -110,7 +110,7 @@ assert(urlString.startsWith('https'));
   }
   ```
 
-# その他
+## その他
 * StackTraceの取得
   * `main() => print(StackTrace.current);`
 * Dartで定義されているError, Exceptionクラス

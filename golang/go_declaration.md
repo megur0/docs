@@ -6,10 +6,10 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > [一覧(Go)](./README.md) > 宣言
 
 
-# 代入可能性
+## 代入可能性
 https://go.dev/ref/spec#Assignability
 
-# 変数宣言
+## 変数宣言
 https://go-tour-jp.appspot.com/basics/12
 ```go
 var i int
@@ -22,12 +22,12 @@ var s string
   * 数値型(int,floatなど): 0
   * bool型: false
   * string型: "" (空文字列( empty string ))
-## 型推論
+### 型推論
 * 宣言時に右辺から型推論される。
   * https://go-tour-jp.appspot.com/basics/14
 
 
-# 変数宣言のショートハンド
+## 変数宣言のショートハンド
 * hoge := 1
   * これはvar hoge = 1 のショートハンド
 * a, b := 3, 4
@@ -42,14 +42,14 @@ a := 2 //再宣言としてエラーになる。
 a := 1
 a,b := 2,3
 ```
-## その他ショートハンド
+### その他ショートハンド
 * https://stackoverflow.com/questions/45086082/multiple-variables-of-different-types-in-one-line-in-go-without-short-variable
 
 
 
 
 
-# 定数
+## 定数
 * https://go.dev/ref/spec#Constants
 * https://go-tour-jp.appspot.com/basics/15
 * const a int = 3
@@ -57,11 +57,11 @@ a,b := 2,3
 * 文字(character)、文字列(string)、boolean、数値(numeric)のみで使える。
 * structリテラルでは使えない。
 * := は使えない。
-## 定数宣言ってあんまり使わない？
+### 定数宣言ってあんまり使わない？
 * 割りと、Goのライブラリでもconstを使って共通の変数を宣言している箇所が少ない。
 * というのも、プリミティブだけしかconstが使えないため、使える場所が少ないから。
 * (IMO) プリミティブだけconstを使ってもコード上の一貫性がないため、あまり積極的には使わない。
-## iota
+### iota
 * 連続した整数定数の表現に利用できるGo独自の識別子
 * https://go.dev/ref/spec#Iota
 ```go

@@ -5,10 +5,10 @@ title: "各ライブラリ（随時整理） - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 各ライブラリ（随時整理）
 
 
-# dart:ui
+## dart:ui
 * Built-in types and core primitives for a Flutter application.
 
-# dart:typed_data
+## dart:typed_data
 * https://api.flutter.dev/flutter/dart-typed_data/dart-typed_data-library.html
 * 固定サイズのデータ​​ (符号なし 8 バイト整数など) と SIMD 数値型を効率的に処理するライブラリ
 * ByteBuffer

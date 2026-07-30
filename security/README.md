@@ -6,7 +6,7 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > セキュリティ
 
 
-# セキュリティ
+## セキュリティ
 
 * [セキュリティの基本原則・脆弱性管理](./security_principles.md)
 

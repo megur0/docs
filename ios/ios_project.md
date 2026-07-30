@@ -6,7 +6,7 @@ title: "Xcodeプロジェクトの構成 - iOSアプリ開発"
 
 
 
-# Xcodeプロジェクトの構成
+## Xcodeプロジェクトの構成
 * プロジェクトは、Target, Project, Workspaceの３つによって構成される。
 * プロジェクトを開く際は、Projectで管理している場合はProject、Workspaceで管理している場合はWorkspaceから開く。
     * `open hoge.xcodeproj`
@@ -53,11 +53,11 @@ title: "Xcodeプロジェクトの構成 - iOSアプリ開発"
     * https://stackoverflow.com/questions/21631313/xcode-project-vs-xcode-workspace-differences
     
 
-# xc
+## xc
 * https://stackoverflow.com/questions/8591004/difference-between-ipa-and-xcarchive
     >  "xc"は、ユーザー用ではなく Xcode 用であることを示すヒントです。(例: Xcode 用の他のファイル: .xcodeproj、.xcworkspace)
 
-# project.pbxproj
+## project.pbxproj
 * 各ファイルや設定項目には一意に識別するためのuuidが割り当てされている。
     * https://stackoverflow.com/questions/22648347/project-pbxproj-hashing-for-files-what-hash-is-used-and-how
 * buildSettings の 情報が含まれる。
@@ -75,7 +75,7 @@ title: "Xcodeプロジェクトの構成 - iOSアプリ開発"
     * 下記の記事でproject.pbxprojの流れが図解されている。
     * https://qiita.com/yokomotod/items/02e395e99bb891d27f67
 
-# xcconfig
+## xcconfig
 * Build Settingsの内容が含まれるファイル
 * Xcode上のBuild Settingsで設定を直書きした場合は、xcconfigよりもそちらの設定が優先される。
 * したがってxcconfigの設定を反映するためには、Xcode上のBuild Settingsは項目ごとに$(inherited)を指定する必要がある。
@@ -83,15 +83,15 @@ title: "Xcodeプロジェクトの構成 - iOSアプリ開発"
     * cocoapodsが生成したConfigファイルの設定を読み込む必要がある
     * 各Configurationごとのファイルで生成されたファイルを#includeする。
 
-# Project > Info > Configurations
+## Project > Info > Configurations
 * デフォルトでDebug, Release の２つの設定が用意されている。
 
 
-# Assets.xcassets
+## Assets.xcassets
 * プロジェクト内の画像フォルダ
 * デフォルトでプロジェクト中に生成される。
 
-# CocoaPods
+## CocoaPods
 * https://cocoapods.org/
 * iOSアプリ開発で使用するライブラリの管理を簡単にするためのツール
 * インストールにはruby環境が必要
@@ -122,12 +122,12 @@ title: "Xcodeプロジェクトの構成 - iOSアプリ開発"
     * `pod repo update`
 
 
-# Xcodeproj 
+## Xcodeproj 
 * RubyからXcodeのプロジェクトを作成したり編集したりするためのツール
 * gemで提供される。
 
 
-# Bundle configuration
+## Bundle configuration
 * https://developer.apple.com/documentation/bundleresources/information_property_list/bundle_configuration
 * CFBundleIdentifier
     * バンドルの一意の識別子。

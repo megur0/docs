@@ -5,12 +5,12 @@ title: "各種エミュレータ - Firebase Local Emulator Suite"
 [TOP(About this memo))](../README.md) > [一覧(Firebase Local Emulator Suite)](./README.md) > 各種エミュレータ
 
 
-# FCM
+## FCM
 * FCMはEmulatorではサポートされていない。 
 * https://github.com/firebase/firebase-tools/issues/4222
 
 
-# Authentication エミュレータ
+## Authentication エミュレータ
 * セキュリティ上の理由から、署名なしの ID トークンを発行
     * このトークンは他の Firebase エミュレータ、または構成されている場合は Firebase Admin SDK によってのみ受け入れられる。
     * これらのトークンは、本番環境の Firebase サービスまたは本番環境モードで実行されている Firebase Admin SDK によって拒否される。
@@ -42,14 +42,14 @@ title: "各種エミュレータ - Firebase Local Emulator Suite"
 * cloud taskのような他のGCPサービスやAlgoliaのような外部サービスはモックする必要がある
     * 参考
         * https://zenn.dev/tkow/scraps/8160da23277fb8
-## verifyBeforeUpdateEmailのAPI
+### verifyBeforeUpdateEmailのAPI
 * v13.17.0 からサポートされるようになった
 * https://github.com/firebase/firebase-tools/issues/3424#issuecomment-2345732192
 
 
 
 
-# Firestore エミュレータ
+## Firestore エミュレータ
 * Emulator Suite UIでは、Firebase セキュリティ ルールの評価トレースなどを行うことができる。
 * トランザクション
     * ロックが解除されるまでに最長で 30 秒かかる。
@@ -59,7 +59,7 @@ title: "各種エミュレータ - Firebase Local Emulator Suite"
     * したがって複合インデックスのチェックはコンソールプロジェクトへ接続する必要がある。
 * 上限
     * たとえば、本番環境サービスではサイズが大きいことを理由に拒否されるトランザクションでも、エミュレータでは許容される場合がある。
-## オフラインキャッシュ と エミュレータのデータ
+### オフラインキャッシュ と エミュレータのデータ
 * https://firebase.google.com/docs/emulator-suite/connect_and_prototype?hl=ja#connect_your_app_to_the_emulators
 >注: Cloud Firestore エミュレータは、シャットダウン時にデータベースのコンテンツを消去する。Firestore SDK のオフライン キャッシュは自動的に消去されないため、エミュレートされたデータベースとローカル キャッシュの不一致を回避するよう、エミュレータ構成でローカル永続性を無効にすることもできる。Web SDK では、永続性はデフォルトで無効になっている。
 * IMO: 実際、どうすれば良いのか？
@@ -78,14 +78,14 @@ title: "各種エミュレータ - Firebase Local Emulator Suite"
         * 調べたが、`FirebaseFirestore.instance.terminate()`してから実行する方法しか見つからなかった。アプリのライフサイクルにうまく組み込む方法が見つからなかったのでこの方法は断念。
             * https://firebase.google.com/docs/reference/android/com/google/firebase/firestore/FirebaseFirestore#clearPersistence()
             * https://stackoverflow.com/questions/63930954/how-to-properly-call-firebasefirestore-instance-clearpersistence-in-flutter
-## 適用されたセキュリティルールの確認
+### 適用されたセキュリティルールの確認
 * エミュレーターのFirestore>Requestsより どのセキュリティルールが適用されたか確認できる。
 * https://firebase.google.com/docs/firestore/security/test-rules-emulator?hl=ja
 
-# Cloud Storage エミュレータ
+## Cloud Storage エミュレータ
 * https://firebase.google.com/docs/emulator-suite/connect_storage?hl=ja
 
-# Cloud Functions エミュレータ
+## Cloud Functions エミュレータ
 * https://firebase.google.com/docs/emulator-suite/connect_functions?hl=ja
 * エミュレータで可能な事
     * コーラブルな関数のエミュレート
@@ -104,7 +104,7 @@ title: "各種エミュレータ - Firebase Local Emulator Suite"
 * エミュレータは、エラー時の再試行をサポートしていない。
 * typescriptの場合はコンパイル済みでない場合、エミュレータ立ち上げ時にエラーとなる。
 
-# Extensions エミュレータ
+## Extensions エミュレータ
 * https://firebase.google.com/docs/emulator-suite/use_extensions?hl=ja
 * 安全なローカル環境で拡張機能のインストールと管理を行い、請求額を最小限に抑えながらその機能を理解できる。
     * 拡張機能の中には、Google Cloud APIs を呼び出し、Local Emulator Suite 内にエミュレータが存在しないサービスにアクセスするものがあり、費用の請求が発生する可能性がある。

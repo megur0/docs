@@ -5,7 +5,7 @@ title: "文法 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 文法
 
 
-# 前置、後置
+## 前置、後置
 ```dart
 void main() {
   int a = 0;
@@ -14,7 +14,7 @@ void main() {
 }
 ```
 
-# comments
+## comments
 * Single-line comments
 * Multi-line comments
     * `A multi-line comment begins with /* and ends with */`
@@ -23,14 +23,14 @@ void main() {
     * []で囲んだクラスやメソッドなどにドキュメント上でリンクが貼られる。
     * `dart doc`でhtmlのドキュメント作成ができる
 
-# 文（statement）
-## 式（expression）
+## 文（statement）
+### 式（expression）
 * Conditional expressions
     * `condition ? expr1 : expr2`
     * `expr1 ?? expr2`
 * forやifのexpression
     * `[for (var i in [1,2,3]) '#$i', if(true)"#4"].forEach(print);`
-## control statement
+### control statement
 * if statement
     * The statement conditions must be expressions that evaluate to boolean values, nothing else. 
 * for
@@ -55,7 +55,7 @@ void main() {
 * switch
 
 
-# label
+## label
 * ネストしたループのbreakやcontinueなど。
   * IME 使ったことがない。
 * 参考
@@ -63,9 +63,9 @@ void main() {
 
 
 
-# オペレーター
+## オペレーター
 * https://dart.dev/language/operators
-## Bitwise and shift operators
+### Bitwise and shift operators
 * https://dart.dev/language/operators#bitwise-and-shift-operators
 * and
   * &
@@ -73,19 +73,19 @@ void main() {
   * |
 * xor
   * ^
-## assignment-operators
+### assignment-operators
 * https://dart.dev/language/operators#assignment-operators
 * Null-aware operators
   * ??= 演算子
   * b ??= value;
-## spread operator（スプレッド演算子）
+### spread operator（スプレッド演算子）
 ```dart
 var arrayInt = [1, 2, 3];
 var arrayString = ['a', 'b', 'c'];
 var addArray = [...arrayInt, ...arrayString];
 print(addArray); // [1, 2, 3, a, b, c]
 ```
-## カスケード（Cascade notation）
+### カスケード（Cascade notation）
 * https://dart.dev/language/operators#cascade-notation
 ```dart
 List<String> test = ['a'];
@@ -94,7 +94,7 @@ test.add('c');
 // 上記は以下のように書くことができる
 List<String> test = ['a']..add('b')..add('c');
 ```
-## 算術演算子
+### 算術演算子
 * https://dart.dev/language/operators#arithmetic-operators
 ```dart
 assert(2 + 3 == 5);
@@ -106,10 +106,10 @@ assert(5 % 2 == 1); // Remainder
 assert('5/2 = ${5 ~/ 2} r ${5 % 2}' == '5/2 = 2 r 1');
 ```
 
-# pattern, switch, if-case(WIP)
+## pattern, switch, if-case(WIP)
 * https://dart.dev/language/patterns
 * https://dart.dev/language/branches
-## Dart3のswitch
+### Dart3のswitch
 * breakがなくても、次のcase を実行することがなくなった。
 * enumが網羅されていない場合はエラーを返す
 * 一つのcaseの中に複数の項目を設定することができる
@@ -147,7 +147,7 @@ void main() {
 // 2-a
 // 3
 ```
-## (参考) enum以外にswitch構文を使ってみる
+### (参考) enum以外にswitch構文を使ってみる
 * IMO
   * switchによる網羅性のメリットは無いため、この場合はswitchで書くメリットはあまり無さそうと考える。
   * 値の関係性がもう少し複雑でif文のネストが深くなる場合などはswitch文でフラットに書ける場合はありそうだが、好みの範疇かもしれない。

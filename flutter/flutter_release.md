@@ -6,14 +6,14 @@ updated: 2024-11-05
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > リリース
 
 
-# 注意
+## 注意
 * このメモは対象環境はiOS/Xcodeとなる。
 
-# 公式ドキュメント
+## 公式ドキュメント
 * https://docs.flutter.dev/deployment/ios
 
 
-# 方法1: flutter build ios -> アーカイブ　によって行う方法
+## 方法1: flutter build ios -> アーカイブ　によって行う方法
 1. バージョンの設定
     * pubspec.ymlに設定を行う
     * 微修正等でTestFlightに新しい内容でアップロードする場合はビルド番号を上げる。
@@ -21,7 +21,7 @@ updated: 2024-11-05
     * `flutter build ios (各種オプション)` 
 3. XCode側の作業
     * Xcodeでアーカイブを行い、アーカイブをApple Store Connect（Test Flightや配信）へアップロードやAd hocでインストールする。 
-## XCode側のアーカイブは最後のビルド構成を利用する
+### XCode側のアーカイブは最後のビルド構成を利用する
 * https://github.com/flutter/flutter/issues/64626#issuecomment-681156022
 * XCodeのアーカイブ処理はビルド処理も含まれており、そのビルド処理は最後のビルド構成を利用する。
     * 前回に`flutter build ios 〜` によって実行したビルド処理と同じビルド処理を行う。
@@ -31,14 +31,14 @@ updated: 2024-11-05
     * ただし、pubspec.ymlのversionを変更しても、Xcodeのアーカイブのみでは反映されなかった。
     * 内部の処理がどのようになっているかは分からない。確実に変更を反映するにはflutter側でビルドも実施したほうが良いかもしれない。
 
-# (参考)ビルド時の--debugや--profile
+## (参考)ビルド時の--debugや--profile
 * ビルド時に--debugや--profileをつけても、Xcodeでアーカイブした時点で利用ができなくなる。
     * これはkDebugModeの状態によって確認できた。
     * TestFlightの場合でも、Ad hocの場合でもkDebugModeはfalseとなった。
 * https://stackoverflow.com/questions/75911065/flutter-build-ignores-profile-flag
 
-# 方法2: flutter build ipa を利用する方法
-## ipaファイルの作成
+## 方法2: flutter build ipa を利用する方法
+### ipaファイルの作成
 * 調べてみたところ、マニュアルで作成したProvisioning Profileの場合、初回のアーカイブファイル作成はflutter build ipa から実施する事はできないと考えられる。
     * 手元で実施してみたところ、
         * ビルドまでは完了するが、`error: exportArchive: No signing certificate "iOS Distribution" found` のエラーが発生
@@ -65,7 +65,7 @@ updated: 2024-11-05
     * これによって以下が生成される
         * build/ios/archive/Runner.xcarchive
         * build/ios/ipa 
-## App Store Connect（TestFlight）へアップロード
+### App Store Connect（TestFlight）へアップロード
 * 上記の手順で初回はXCodeからTestFlightへアップロードして、ExportOptions.plistをエクスポートしておく
 * そのExportOptions.plistで上記のflutter build ipaを実行することで、App Store Connect（Test Flight）へのアップロードも同時に行われる。
 * IME
@@ -73,16 +73,16 @@ updated: 2024-11-05
     ```sh
     Oops; flutter has exited unexpectedly: "PathNotFoundException: Directory listing failed, path 〜
     ```
-## App Store Connect（配信）へアップロード
+### App Store Connect（配信）へアップロード
 * 上記の手順で、初回はXCodeからApp Store Connectへアップロードして、ExportOptions.plistをエクスポートしておく
 * そのExportOptions.plistで上記のflutter build ipaを実行することで、App Store Connect（配信）へのアップロードも同時に行われる。
 
 
-# (参考)xcrun altoolを利用してIPAファイルをApp Store Connectへアップロードする方法
+## (参考)xcrun altoolを利用してIPAファイルをApp Store Connectへアップロードする方法
 * Flutter公式で紹介されている方法として`flutter build ipa`でIPAファイルを作成して、xcrunコマンドでアップロードする方法となる。
     * https://docs.flutter.dev/deployment/ios#upload-the-app-bundle-to-app-store-connect
 * 筆者の場合は`flutter build ipa`でExportOptions.plistを指定することでApp Store Connectへのアップロードも同時に実施されるため、この方法は利用していないが記録として残しておく。
-## 手順
+### 手順
 * App Store Connectで APIキーを作成する。
     * App Store Connect > ユーザとアクセス > 統合 > App Store Connect API から作成
     * 作成したAPIキーのファイルをダウンロードして~/.private_keysに配置する。('~/private_keys'、'~/.appstoreconnect/private_keys'でも良い)
@@ -91,8 +91,8 @@ updated: 2024-11-05
     * (キーID)と(Issuer ID)はApp Store ConnectのAPIの画面でコピーできる。
     * `xcrun altool --upload-app --type ios -f build/ios/ipa/*.ipa --apiKey (キーID) --apiIssuer (Issuer ID)`
 
-# 難読化
-## バイナリは逆コンパイル可能
+## 難読化
+### バイナリは逆コンパイル可能
 * apkやipaファイルといったアーカイブファイル（圧縮ファイル）は、アプリ上で実行するためのバイナリを含んでいる
 * Androidの場合は、apkファイルは公式のapktoolで逆コンパイルが可能である。
 * 一方、iOSの場合ipaファイルは公式の方法は無いが、基本的に元のソースコードに近いコードを復元できると考えて差し支えないだろう。
@@ -101,7 +101,7 @@ updated: 2024-11-05
         * https://forums.developer.apple.com/forums/thread/99653
         * ipaファイルに含まれるもの
             * https://www.micss.biz/2023/02/20/5857/
-## 難読化をする
+### 難読化をする
 * https://docs.flutter.dev/deployment/obfuscate
 * コード内の関数名とクラス名を隠し、各シンボルを別のシンボルに置き換えて、攻撃者が独自のアプリをリバース エンジニアリングすることを困難にする。
 * `flutter build` に `--obfuscate --split-debug-info=ディレクトリ` を付与することで難読化する。
@@ -120,12 +120,12 @@ updated: 2024-11-05
         > 現在、--split-debug-info のサポートは Android でのみ利用できます。  
         > Apple プラットフォームの場合、この機能のサポートは今後のリリースで利用可能になる予定ですが、Flutter SDK のマスター チャンネルを使用することで、今すぐアクセスすることができます。
         * https://github.com/firebase/firebase-tools/issues/5291#issuecomment-1338892219
-## 難読化の解除
+### 難読化の解除
 ```sh
 # 以下はシンボルファイルが「obfuscate/ios」に存在する場合
 flutter symbolize -i 対象ファイル -d obfuscate/ios/app.ios-arm64.symbols
 ```
 
 
-# (未読)codemagic-cli-toolsを利用したCI/CI
+## (未読)codemagic-cli-toolsを利用したCI/CI
 * https://docs.flutter.dev/deployment/ios#create-a-build-archive-with-codemagic-cli-tools

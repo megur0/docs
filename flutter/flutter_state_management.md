@@ -8,13 +8,13 @@ updated: 2025-12-07
 
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * https://docs.flutter.dev/data-and-backend/state-mgmt
 * Flutterは宣言型のUI プログラミング
   * https://docs.flutter.dev/data-and-backend/state-mgmt/declarative
 
 
-# (参考)WidgetとElementの概要図
+## (参考)WidgetとElementの概要図
 
 <img src="./svg/state_management/abst.svg" width="100%"><br/><br/>  
 
@@ -23,7 +23,7 @@ updated: 2025-12-07
   * [アーキテクチャ(コードリーディング)](./flutter_arch_code_reading.md)
 
 
-# Ephemeral state（ローカルな状態） vs app state（共有状態）
+## Ephemeral state（ローカルな状態） vs app state（共有状態）
 * https://docs.flutter.dev/data-and-backend/state-mgmt/ephemeral-vs-app
 * Ephemeral state（ローカルな状態）
   * 現在のページで扱っている情報や、アニメーションの進行状況 などのローカル、局所的に利用する状態
@@ -40,13 +40,13 @@ updated: 2025-12-07
   > When asked about React's setState versus Redux's store, the author of Redux, Dan Abramov, replied: "The rule of thumb is: Do whatever is less awkward."
     > https://github.com/reduxjs/redux/issues/1287#issuecomment-175351978
 
-# StatelessWidget
+## StatelessWidget
 * https://api.flutter.dev/flutter/widgets/StatelessWidget-class.html
 * ミュータブルな変数やオブジェクトを持たない
 * フィールドはすべてfinalで変更することはできない。
 * build()メソッドをオーバーライドしなければならない。
 
-# StatefulWidget/State
+## StatefulWidget/State
 * https://api.flutter.dev/flutter/widgets/StatefulWidget-class.html
 * https://api.flutter.dev/flutter/widgets/State/setState.html
 * StatefulWidget
@@ -82,7 +82,7 @@ updated: 2025-12-07
   * Widgetが前回のビルド時のオブジェクトと同一のものであれば再利用される。
   * Widgetに関しては、const値のオブジェクトではなく、かつ、共通のオブジェクトを使いまわししていない場合(例えばbuildメソッド内で直接生成したりビルダーから生成している等)は、リビルドの度に都度生成される。
 
-# リビルド時のElementの再利用
+## リビルド時のElementの再利用
 * https://api.flutter.dev/flutter/widgets/Element/updateChild.html
 * https://api.flutter.dev/flutter/widgets/GlobalKey-class.html
 * Flutterは前回ビルドされたウィジェットツリーの各ノードと、今回のビルドしているウィジェットツリーの各ノードを比較して、Widgetのオブジェクトが異なる場合でも可能な限りElementのツリーやRenderObjectのツリーは再利用をしようとする。
@@ -107,7 +107,7 @@ updated: 2025-12-07
       * ウィジェットのcreateElement()メソッドからElementを新規に生成し、Element.mount()によってマウントを行う。
       * この時、子がStafulWidgetであればinitState()とbuild(), StatelessWidgetであればbuild()が実行される。
 
-# GlobalKey
+## GlobalKey
 * https://api.flutter.dev/flutter/widgets/GlobalKey-class.html
 * https://docs.flutter.dev/ui#keys
 * GlobalKeyをウィジェットに設定することによって以下を実現することが出来る。
@@ -118,7 +118,7 @@ updated: 2025-12-07
 * 複数のウィジェットに対して同一のGlobalKeyを利用するとアサートエラーとなる。
 
 
-# (参考)親がリビルドされた際の、子のビルドについて具体例
+## (参考)親がリビルドされた際の、子のビルドについて具体例
 * 以下のような親子関係 において、ParentWidgetのりビルド時にChildWidgetの各メソッドが呼ばれるかどうか、State内のデータは維持されるかを複数のパターンで実行。
   * ParentWidget
     * ┗ ChildWidget (またはChildWidget2)
@@ -307,7 +307,7 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
 
 ```
 
-# State.setState()
+## State.setState()
 * void setState(VoidCallback fn)
 * 内部でmarkNeedsBuild()を実行している。（dirtyであるリストへ追加され、次回のフレームでリビルドされる。)
 * 下記のようにBuildContextを非同期処理の後に参照するとFlutterのリンターによって警告が表示される。
@@ -359,7 +359,7 @@ class ChildWidgetState2 extends State<ChildWidget2> with DebugMixin {}
     }
   ```
 
-# BuildContext
+## BuildContext
 * https://api.flutter.dev/flutter/widgets/BuildContext-class.html
   > A handle to the location of a widget in the widget tree.  
 * マウント状態, ウィジェット
@@ -500,7 +500,7 @@ class MyWidgetState extends State<MyWidget> with DebugMixin {}
 ```
 
 
-# (参考) StatefulWidget/Stateを一つのクラスで扱う
+## (参考) StatefulWidget/Stateを一つのクラスで扱う
 * widget側でStateのライフサイクルのメソッドを受け取るようにすれば可能。
 * BuildContextやsetState()、ミュータブルの更新については、メソッドの引数や戻り値で渡される設計となる。
 * 参考コード
@@ -511,7 +511,7 @@ class MyWidgetState extends State<MyWidget> with DebugMixin {}
     * https://github.com/dart-lang/language/issues/329
 
 
-# 非同期処理
+## 非同期処理
 * Flutter(宣言的UI)を実装する上で、その特徴を強く意識するタイミングは非同期処理かもしれない(IMO)
 * Flutterにおいて、非同期処理を行う上では以下のように非同期処理と表示制御を分けて考える必要がある。
     * 非同期処理
@@ -593,7 +593,7 @@ class _MyWidgetState extends State<MyWidget> {
       });
     }
   ```
-## FutureBuilder
+### FutureBuilder
 * https://api.flutter.dev/flutter/widgets/FutureBuilder-class.html
 * FutureBuilderは 渡したFutureの状態に応じて内部でリビルドを行うStatefulWidget派生クラスである。
 * 前節の例では非同期処理の結果を変数に格納したり、非同期処理が完了したタイミングでsetState()を実行していたが、例えば下記のようにFutureBuilderで記述する場合はそれらの記述は不要となる。
@@ -638,12 +638,12 @@ class _MyWidgetState extends State<MyWidget> {
   }
 }
 ```
-## StreamBuilder
+### StreamBuilder
 * https://api.flutter.dev/flutter/widgets/StreamBuilder-class.html
 * FutureBuilderと同様にStream値をそのまま渡す事ができるウィジェット
 
 
-# InheritedWidget
+## InheritedWidget
 * https://api.flutter.dev/flutter/widgets/InheritedWidget-class.html
 * ツリーの先祖にInheritedWidget派生オブジェクトが存在する際、子孫は以下のメソッドを通して監視、取得することができる。
   * BuildContext.dependOnInheritedElement()
@@ -655,7 +655,7 @@ class _MyWidgetState extends State<MyWidget> {
   * 内部の動作としてはInheritedElement.updated()の際に自身に依存するElementのdidChangeDependencies()を呼ぶ。
   * それによって依存先のElementのmarkNeedsBuild()が呼ばれてダーティとなる。
   * なお、StatefulElementの場合はState.didChangeDependencie()も呼ばれる。
-## 具体的なユースケース
+### 具体的なユースケース
 * 複数の子孫ウィジェットで共通で使うデータを持たせたい・監視させたい場合  
   * ChangeNotifier等はクラスの外側で宣言するかコンストラクタインジェクションをする必要があるが、InheritedWidgetの場合は子孫であればcontext経由で取得・監視が可能となる。
 * 例として、_Backgroundウィジェットと_Textウィジェットで構成されるLogoウィジェットを考えてみる。_Backgroundと_Textだけが利用したい共通のイミュータブルなデータがあるとする。
@@ -855,7 +855,7 @@ class MyWidget extends StatelessWidget {
   * https://gist.github.com/megur0/eb782ff7053508d20b24325fc2537cbf
 
 
-# InheritedModel
+## InheritedModel
 * https://api.flutter.dev/flutter/widgets/InheritedModel-class.html
 * 前節のInheritedWidgetでは、リビルドの際にすべての依存先をダーティにする。
 * InheritedModelではダーティとする依存先を取捨選択することができる。
@@ -864,11 +864,11 @@ class MyWidget extends StatelessWidget {
   * 依存先をダーティにする際の条件としてupdateShouldNotifyDependent()をオーバーライドして依存先ごとに保持している"aspect"に応じて条件設定を行うことができる。
 * サンプルは公式のAPIドキュメントを参照
 
-# (参考)InheritedNotifier
+## (参考)InheritedNotifier
 * https://api.flutter.dev/flutter/widgets/InheritedNotifier-class.html
 * ChangeNotifierやValueNotifierなどのnotifierの通知を受け取ると、それをInheritedWidgetとしてツリーで通知する
 
-# Listenable
+## Listenable
 * https://api.flutter.dev/flutter/foundation/Listenable-class.html
   > The listeners are typically used to notify clients that the object has been updated.
 * Listenableは変更を知らせるために使う。
@@ -905,7 +905,7 @@ class MyNotifier with ChangeNotifier {
   }
 }
 ```
-## ListenableBuilder
+### ListenableBuilder
 * https://api.flutter.dev/flutter/widgets/ListenableBuilder-class.html
 * Listenableの更新の度にリビルドされるウィジェット
 ```dart
@@ -966,7 +966,7 @@ MyWidget
 */
 ```
 
-# ValueNotifier
+## ValueNotifier
 * https://api.flutter.dev/flutter/foundation/ValueNotifier-class.html
 * 単一の値を保持するChangeNotifier。
 * value が等価演算子 == によって評価された古い値と等しくないものに置き換えられるとリスナーに通知する。
@@ -987,7 +987,7 @@ void main() {
 ```
 
 
-# (IMO) アプリ全体で利用するデータは、Listenable派生クラスとInheritedWidget派生クラスのどちらを利用するか?
+## (IMO) アプリ全体で利用するデータは、Listenable派生クラスとInheritedWidget派生クラスのどちらを利用するか?
 * これについて、筆者はどちらでも好みのものを選択すれば良いと考える。
 * Listenable派生クラスであればChangeNotifier等を継承させたクラスを外部に定義して、それを直接参照するか適宜インジェクションしたものを各画面でListenableBuilderなどで監視すれば良いだろう。
 * InheritedWidget派生クラスであれば、runAppの直下に配置すればすべての画面から参照・監視が可能となる。

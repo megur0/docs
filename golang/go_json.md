@@ -6,7 +6,7 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > [一覧(Go)](./README.md) > json
 
 
-# json.Unmarshal
+## json.Unmarshal
 * json.Unmarshalの第二引数へ、interface{}型や、map[string]interface{}型を渡すことで、Mapに変換したものを入れてくれる。
 * 構造体を渡すと、構造体へ変換してくれる。
 ```go
@@ -21,7 +21,7 @@ func main() {
   fmt.Println(mapData["name"].(string))
 }
 ```
-# 構造体への変換について注意。
+## 構造体への変換について注意。
 * json -> 構造体の変換は構造体自体を宣言しておく必要がある。
 * ネストされた構造体にany型が入っているとmapになってしまうので注意。
   * anyのフィールドへ別の構造体（json宣言がされているもの）を入れても mapになってしまう。
@@ -67,12 +67,12 @@ func main() {
 	fmt.Printf("%+v \n", respObj2) // {Result:success Data:{Entity:aaa}}
 }
 ```
-# Unmarshalの注意
+## Unmarshalの注意
 * 対象のjsonに指定した構造体が入って無くてもエラーにならない。（デフォルト値が入る）
 * 対象のjsonに指定した構造体以外が入っていても無視される。
-## (IME) json.Unmarshalのエラーハンドリングの注意
+### (IME) json.Unmarshalのエラーハンドリングの注意
 * フィールド内で例えば、uuidなどのデコードに失敗した場合でも、特にエラーのラップもせずにそのまま返ってくる
-## 配列を含むjsonを、mapへunmarshalする
+### 配列を含むjsonを、mapへunmarshalする
 * []mapにする必要がある。structにする場合も同様に配列にする必要がある。
 * そうしないと、json: cannot unmarshal array into Go value　〜ってエラーが出る
 https://stackoverflow.com/questions/25465566/golang-parse-json-array-into-data-structure
@@ -81,7 +81,7 @@ https://stackoverflow.com/questions/42289591/unmarshaling-json-top-level-array-i
 
 
 
-# json.Marshal
+## json.Marshal
 ```go
 import (
 	"encoding/json"
@@ -99,7 +99,7 @@ func main() {
 	fmt.Println("%+v", string(j)) 
 }
 ```
-## omitemptyや-にフィールドを対象外とすることができる。
+### omitemptyや-にフィールドを対象外とすることができる。
 * https://pkg.go.dev/encoding/json#Marshal
 > omitempty "オプションは、フィールドが空の値（false、0、nilポインタ、nilインターフェース値、長さ0の配列、スライス、マップ、文字列として定義される）を持つ場合、そのフィールドをエンコードから省略することを指定する。 特別なケースとして、フィールドタグが"-"の場合、フィールドは常に省略される。 名前"-"のフィールドは、タグ"-, "を使っても生成できることに注意。
 * これらはUnmarshalでは影響しない点に注意。
@@ -107,7 +107,7 @@ func main() {
 
 
 
-## json.Encoder、json.Decoderを使う方法もある。
+### json.Encoder、json.Decoderを使う方法もある。
 * json.Marshalと違うのは、io.Writerへ渡す形式であること。
 	* なのでファイルへの書き込みでも、バッファへの出力、標準出力への出力など汎用的にできる感じ。
 ```go
@@ -143,13 +143,13 @@ fmt.Println(buffer.String())
 * https://tech.yappli.io/entry/go_unmarshal_interface
 
 
-# 戻り値のjsonのテスト
+## 戻り値のjsonのテスト
 * jsonをUnmarshalしてMapにする。同じく想定値をjsonとして用意してそれをMapにして両者をDeep Equalで比較。
 * https://handlename.hatenablog.jp/entry/2014/10/02/100444
 
 
 
-# Jsonの文字列はU+000A （"\n"で表現されるunicode） を含んではいけない。
+## Jsonの文字列はU+000A （"\n"で表現されるunicode） を含んではいけない。
 * Jsonの仕様として、含むことは禁止されている。
 * そして、Goでもencoding/jsonでパースするときもこの仕様に従っている。
 https://blog.nishimu.land/entry/2014/04/16/213243
@@ -163,7 +163,7 @@ if err := json.Unmarshal([]byte("\"\n\""), &str); err != nil {
 
 
 
-# テストコード
+## テストコード
 ```go
 import (
 	"encoding/json"
@@ -268,8 +268,8 @@ func TestJson(t *testing.T) {
 ```
 
 
-# テストコード(エスケープシーケンス)
-## まとめ
+## テストコード(エスケープシーケンス)
+### まとめ
 * Unmarshal(Json -> データ)の文字列に対する処理
 	* エスケープシーケンスは特殊文字へ変換
 	* エスケープされているエスケープ文字はその文字として変換（例えば「\\n」は「\n」として取り込む）
@@ -288,7 +288,7 @@ func TestJson(t *testing.T) {
 * json.Encoder.Encode
 	* Marshalとほぼ同じ挙動だが、 HTML文字の置き換えはEncoder.SetEscapeHTML(false)をしておくとOFFになる。
 	* 末尾に"\n"が追加される。(これに関しては意図が理解できていない)
-## IMO
+### IMO
 * 上記の文字列の変換処理はオプションによってオプトアウトできると良いと感じた。
 * 事由
 	* Jsonの変換処理に、文字列の内容自体への副作用があると考慮事項が増える。
@@ -296,7 +296,7 @@ func TestJson(t *testing.T) {
 * ref ここに少し近いことが書いてある。
 	* https://golang50shad.es/
 
-## RFC
+### RFC
 * Jsonの仕様ではダブルクオテーション、スラッシュ、バックスラッシュ、一部の特殊文字を含むことはできないとRFCに定められている。
 * https://datatracker.ietf.org/doc/html/rfc8259
 

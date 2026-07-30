@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > SwiftUI
 
 
-# SwiftUI
+## SwiftUI
 * (参考) https://zenn.dev/rikutosato/books/6cee0a2b8aa796/viewer/876e85
 * (参考) https://zenn.dev/coconala/articles/d721a5f0edca6e
 * SwiftUIは宣言的UIで、コードベースでレイアウトを組む。Storyboardを使わない。
@@ -18,12 +18,12 @@ updated: 2026-07-26
 * SwiftUIからUIKitの部品を使うためのラッパーとしてUIViewRepresentable、UIKitからSwiftUIを使うUIHostingControllerなども用意されている。
 
 
-# Viewプロトコル
+## Viewプロトコル
 * (参考) https://tech.amefure.com/swift-protocol
 * 読み取り専用のコンピューテッドプロパティであるbodyプロパティのみを持つ。
 
 
-# よく使うもの
+## よく使うもの
 ```swift
 Image
     Image("turtlerock").clipShape(Circle()).overlay { Circle().stroke(.gray, lineWidth: 4) }.shadow(radius: 7)
@@ -34,7 +34,7 @@ Spacer
 ```
 
 
-# modifier
+## modifier
 ```swift
 .frame(height: 300)
 .padding(.bottom, -130)
@@ -51,7 +51,7 @@ Spacer
 * (参考) https://tech.amefure.com/swift-modifier-create
 
 
-# ForEach
+## ForEach
 * range型を渡して繰り返しViewを表示させることができる。
 ```swift
 struct ContentView: View {
@@ -67,7 +67,7 @@ struct ContentView: View {
 ```
 
 
-# SwiftUIのコード
+## SwiftUIのコード
 * インターフェースを定義して、それをextensionでたくさん拡張している。例えば下記。
     * 要件を追加
         * 例えばextension Viewで、foregroundColorなら下記のように書かれている。
@@ -76,12 +76,12 @@ struct ContentView: View {
         ```
     * 型メソッドを実装。
 * 直接プロトコルに書かずに、わざわざextensionで分けているのは、(IMO) @available(iOS 13.0, macOS 10.15, tvOS 13.0, watchOS 6.0, *)のように、機能ごとに動作バージョンを分けるためではないかと推測している。
-## 描画処理
+### 描画処理
 * Viewプロトコルにはユーザーが実装すべき内容が書いてあるが、それを描画するレイヤがどこにあるかは分からない。
 * (IMO) ユーザーがViewプロトコルに準拠したstructを実装し、それをPreviewProviderに渡すことで、Xcodeのランタイムが解析してプレビューしてくれている、という理解でいる。
 
 
-# SwiftUIの省略記法の解説
+## SwiftUIの省略記法の解説
 * (参考) https://kumamotone.hatenadiary.jp/entry/2019/08/09/075526
 ```swift
 var body: some View {
@@ -102,7 +102,7 @@ var body: VStack<TupleView<(Text, Text)>> = VStack<TupleView<(Text, Text)>>(
     }
 )
 ```
-## 解説
+### 解説
 まず、SwiftUIのように次々とViewを継ぎ足していくたびに、`VStack<TupleView<(Text, Text)>>`のような型指定を変更するのは苦行になってくる。
 それをsomeを使って省略する。
 ```swift
@@ -139,16 +139,16 @@ var body: some View {
 ```
 
 
-# Grid
+## Grid
 * Grid&GridRowは、iOS16以降で使用可能。
 
 
-# ナビゲーション
+## ナビゲーション
 
-## NavigationView
+### NavigationView
 * iOS16以降はDeprecated。
 
-## NavigationStack
+### NavigationStack
 * iOS16以降のみ使える。
 * NavigationViewの課題
     * NavigationLinkを使って簡単にスタックの遷移ができるものの、コードで遷移先を制御するにはコードが複雑化する。
@@ -157,5 +157,5 @@ var body: some View {
     * 遷移情報を配列で管理できる。
 * (参考) https://zenn.dev/chocoyama/articles/32d52cf66dd6ff
 
-## TabViewとNavigationStackを組み合わせる
+### TabViewとNavigationStackを組み合わせる
 * (参考) https://notificare.com/blog/2022/11/25/a-better-tabview-in-swiftui/

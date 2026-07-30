@@ -5,7 +5,7 @@ title: "ライブラリ - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > ライブラリ
 
 
-# ライブラリ
+## ライブラリ
 * https://dart.dev/language/libraries
 * Dartではライブラリという単位で構成を管理される。
 * ライブラリ単位でスクリプトにインポートしたり、ライブラリ単位で名前空間を分ける。
@@ -18,18 +18,18 @@ title: "ライブラリ - Dart"
   > Note: When the library directive isn’t specified, a unique tag is generated for each library based on its path and filename. Therefore, we suggest that you omit the library directive from your code unless you plan to generate library-level documentation.
 
 
-# (参考) Dartの名前空間名前空間について
+## (参考) Dartの名前空間名前空間について
 * 比較対象: Go
   * Go言語の場合はimportしたパッケージはデフォルトでパッケージ名で名前空間が分けられる。（アクセスの際はパッケージ名.xxxとなる）
 * importしたライブラリは別々の名前空間とはならない。
 * 衝突する場合はimportの際にプレフィクスを指定する必要がある。
 
-# エントリーポイント
+## エントリーポイント
 * エントリーポイントはmain関数となる
 * mainは引数指定可能。
   * `void main(List<String> arguments) {/* ... */}`
 
-# import と part
+## import と part
 * import
   * ライブラリを読み込むために使用。
   * publicのみ読み込む
@@ -39,7 +39,7 @@ title: "ライブラリ - Dart"
 * 公式ではpartとpart ofでのファイル分割よりも、個別のライブラリとして分割してimportでアクセスすることが推奨されている。
   * https://dart.dev/guides/libraries/create-packages#organizing-a-package
   
-# import
+## import
 * ビルトインのライブラリのURIはdart:からはじまる。
 * identifiersが衝突する場合はprefixを使うためにasを使う。
 * ライブラリの一部のみ使う
@@ -50,7 +50,7 @@ title: "ライブラリ - Dart"
   import 'package:lib2/lib2.dart' hide foo;
   ```
 
-# export
+## export
 * 外部に公開するライブラリを指定するために使用する。メインのライブラリにexportを記述することで、メインのライブラリを読み込むだけでexportで指定されたライブラリにもアクセスできる。
 ```dart
 lib/my_library.dart
@@ -58,7 +58,7 @@ lib/my_library.dart
   export 'src/bar.dart';
 ```
 
-# プライベート
+## プライベート
 * _をつけることでファイル（ライブラリ）単位でプライベートになる。
   * クラス内のオブジェクトがプライベートでも、同じライブラリ内であればアクセスできるので注意。
   ```dart
@@ -79,7 +79,7 @@ lib/my_library.dart
 * (参考)アノテーションで@protectedはある。@privateはない。
   * https://github.com/dart-lang/sdk/issues/41089
 
-# ライブラリの作成(未読)
+## ライブラリの作成(未読)
 * https://dart.dev/guides/libraries/create-library-packages
 
 

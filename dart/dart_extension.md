@@ -5,7 +5,7 @@ title: "拡張 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 拡張
 
 
-# Extension
+## Extension
 * https://dart.dev/language/extension-methods
 > Extension methods add functionality to existing libraries. You might use extension methods without even knowing it. For example, when you use code completion in an IDE, it suggests extension methods alongside regular methods.
 ```dart

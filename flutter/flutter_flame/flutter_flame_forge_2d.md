@@ -7,7 +7,7 @@ updated: 2024-09-18
 
 
 
-#  Forge2D(forge2d)
+##  Forge2D(forge2d)
 * https://github.com/flame-engine/forge2d
 * https://pub.dev/packages/forge2d
 * Box2D 
@@ -18,20 +18,20 @@ updated: 2024-09-18
   * 現在もともとのDart移植版のリポジトリ(box2d)はアーカイブされている
     * https://github.com/google/box2d.dart
 
-# flame_forge2d
+## flame_forge2d
 * https://github.com/flame-engine/flame/tree/main/packages/flame_forge2d
 * https://pub.dev/packages/flame_forge2d
 * forged_2dとFlameゲームエンジンのブリッジを行うパッケージ
 * forge2dに依存する
 * 実装自体は小さなコードベースとなる。
 
-# サンプルコード
+## サンプルコード
 * https://github.com/flame-engine/flame/tree/main/examples/lib/stories/bridge_libraries/flame_forge2d
 * シンプルな完全なサンプル
   * ボールがバウンドするサンプル
   * https://github.com/flame-engine/flame/tree/main/packages/flame_forge2d/example
 
-# Box2D(Forge2D)の速度制限と、そのflame_forge2d側の対策について
+## Box2D(Forge2D)の速度制限と、そのflame_forge2d側の対策について
 * 詳しくは理解できていないが、Box2D, Forge2Dには速度制限があり、その速度制限に達するとそれより速度は上がらない。
 * (参考)forge2Dの設定箇所
   ```dart
@@ -46,7 +46,7 @@ updated: 2024-09-18
   * https://www.iforce2d.net/b2dtut/gotchas#speedlimit
   * https://stackoverflow.com/questions/14774202/is-there-an-upper-limit-on-velocity-when-using-box2d
   * https://siv3d.jp/bbs/patio.cgi?read=181
-## flame_forge2d側の対策
+### flame_forge2d側の対策
 * flame_forge2dでは、すぐにForge2Dの速度制限に達してしまうことから、その対策としてズームレベルを10.0としていると記載されている。
   * https://docs.flame-engine.org/latest/bridge_packages/flame_forge2d/forge2d.html
     > Forge2DGame has a built-in CameraComponent and has a zoom level set to 10 by default, so your components will be a lot bigger than in a normal Flame game.  
@@ -74,7 +74,7 @@ updated: 2024-09-18
       * https://github.com/flame-engine/flame/blob/main/examples/lib/stories/bridge_libraries/flame_forge2d/utils/boundaries.dart
 
 
-# flame_forge2dを利用する際に実装者がすること、その事由
+## flame_forge2dを利用する際に実装者がすること、その事由
 * GameはForge2DGameを利用する
   * このクラスがworldとしてForge2DWorldを扱うため。
 * 物理シミュレーションが必要なコンポーネントはBodyComponentを利用する
@@ -90,13 +90,13 @@ updated: 2024-09-18
   * BodyComponent同士の接触時のシミュレーションも都度反映される。
   * その他の処理を接触時に発生させたい場合、ContactCallbacksを利用する。
 
-# Forge2DGame
+## Forge2DGame
 * FlameGameの派生クラス
 * WorldはForge2DWorld派生クラスを利用する
 * camera
   * zoomがデフォルトで10.0となる。
 
-# Forge2DWorld
+## Forge2DWorld
 * BodyComponentと通常のFlameコンポーネントの両方を扱う。
 * これがforge2D(forge2d.World)のラッパーとなる。
   * Forge2DWorldの各メソッドは、ほぼforge2d.Worldの各メソッドのラッパーとなっている。
@@ -128,7 +128,7 @@ updated: 2024-09-18
       * 接触の際にmixinのContactCallbacksのメソッドを呼ぶためにこの派生クラスが設定されている。
       * 少しトリッキーで、衝突時のコールバックで渡されるContactから取得できるユーザーデータ（Object型）に格納されたContactCallbacksオブジェクトを取り出してメソッドを呼び出している。
 
-# BodyComponent
+## BodyComponent
 * HasGameReference<T extends Forge2DGame>, HasPaint を 既に withしている
   * したがって、デフォルトでgameを参照できる。
   * paintに値を設定することで描画される色や線などを設定できる。
@@ -227,7 +227,7 @@ updated: 2024-09-18
   * 描画をするか否か。デフォルトはtrue
   * 例えば、子のコンポーネントとしてスプライトやテキストコンポーネントを設定する場合などは、自身は描画する必要がないためfalseとするといった用途がある。
 
-# forge2d.Body
+## forge2d.Body
 * https://pub.dev/documentation/forge2d/latest/forge2d/Body-class.html
   > A rigid body. These are created via World.createBody.
 * postion
@@ -259,7 +259,7 @@ updated: 2024-09-18
   * 質量の設定
   * TODO
 
-# mixin ContactCallbacks
+## mixin ContactCallbacks
 * BodyComponentが接触した際のイベントを実装するために利用する
 * 注意点として、forge2d.Body.userDataにContactCallbacksオブジェクトを設定する必要がある。
   * https://docs.flame-engine.org/latest/bridge_packages/flame_forge2d/forge2d.html#contact-callbacks
@@ -287,7 +287,7 @@ updated: 2024-09-18
   }
   ```
 
-# 通常のFlutterウィジェットを物理シミュレーションで動かす
+## 通常のFlutterウィジェットを物理シミュレーションで動かす
 * 以下の方法で実現する
   * GameWidget.overlayBuilderMapを利用して通常ウィジェットをGameへ被せる
   * BodyをGame内で生成し、overlayBuilderMapからの引数gameを経由してウィジェットからBodyを参照する
@@ -298,7 +298,7 @@ updated: 2024-09-18
   * https://stackoverflow.com/questions/69328474/can-i-use-a-widget-as-a-actual-component-in-flutter-flame
    
 
-# (未読了)Joints
+## (未読了)Joints
 * https://docs.flame-engine.org/latest/bridge_packages/flame_forge2d/joints.html
 > Joints are used to connect two different bodies together in various ways.   
 > They help to simulate interactions between objects to create hinges, wheels, ropes, chains etc.

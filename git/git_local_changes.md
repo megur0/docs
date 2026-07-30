@@ -6,7 +6,7 @@ updated: 2026-07-24
 [TOP(About this memo))](../README.md) > [一覧(Git)](./README.md) > ローカルの変更管理
 
 
-# status
+## status
 * `git status`
 * 以下がわかる。
     * 今どのブランチにいるか
@@ -25,7 +25,7 @@ updated: 2026-07-24
     ```
 
 
-# git diff(WIP)
+## git diff(WIP)
 * (参考) https://qiita.com/shibukk/items/8c9362a5bd399b9c56be
 * `git diff --stat`
 * `git diff HEAD..<リモート名>/<ブランチ名>`
@@ -48,8 +48,8 @@ updated: 2026-07-24
     ```
 
 
-# add, commit
-## 覚えておきたいこと
+## add, commit
+### 覚えておきたいこと
 * 直前のコミットに上書きする
     ```
     git commit --amend                # コミットメッセージ入力のためにエディタが開く
@@ -64,7 +64,7 @@ updated: 2026-07-24
 * `-v`（`--verbose`）：メッセージを入力する際に下部に差分を表示してくれる（この部分および先頭に`#`がある行はコミットされない）。
 * `-a`を付けるとaddを省略してcommitできる。
 
-## 基本
+### 基本
 * commit：ローカルリポジトリに変更を反映するのがcommit。リモートに反映するのがpush。
 * コミットの流れ
     ```
@@ -137,7 +137,7 @@ updated: 2026-07-24
         * (参考) https://docs.github.com/ja/issues/using-labels-and-milestones-to-track-work/managing-labels
         * (参考) http://negi-lab.blog.jp/MyLabelsForIssue
 
-## その他
+### その他
 * 初回のコミットを取り消す場合
     ```
     git update-ref -d HEAD
@@ -160,7 +160,7 @@ updated: 2026-07-24
         * まだインデックスにaddしていない場合は`-f`は不要。
 
 
-# rm
+## rm
 * ファイルを削除したい場合
     * IDEによっては、ファイルを削除すると自動的に以下のコマンドが実行されることがある(?)。
     ```
@@ -170,7 +170,7 @@ updated: 2026-07-24
     ```
 
 
-# gitignore
+## gitignore
 * 例
     ```
     .idea
@@ -178,7 +178,7 @@ updated: 2026-07-24
     db.ini
     ```
 
-## .gitignoreが反映されないとき
+### .gitignoreが反映されないとき
 * 既にGitに追加済みのファイルの場合、以下の手順で対応する。
     1. `.gitignore`を編集
     2. キャッシュを削除：`git rm (-r) --cached <ignoreしたいファイル>`
@@ -186,8 +186,8 @@ updated: 2026-07-24
 * (参考) https://qiita.com/fuwamaki/items/3ed021163e50beab7154
 
 
-# reset
-## 覚えておきたいこと
+## reset
+### 覚えておきたいこと
 * コミットを一つ前に戻す
     ```
     git reset --soft HEAD^
@@ -197,7 +197,7 @@ updated: 2026-07-24
     git reset --hard <ハッシュ値>
     ```
 
-## 基本
+### 基本
 * 特定の状態に戻したい場合（コミット単位）
     ```
     git reset --hard HEAD   # 全部戻るので注意
@@ -210,22 +210,22 @@ updated: 2026-07-24
     git reset origin/xxx
     ```
 
-## untrackedなファイルの削除
+### untrackedなファイルの削除
 * `git reset --hard`をしてもuntrackedなファイルは残る。削除するには以下を使う。
     ```
     git clean -fdx
     ```
 
 
-# checkout
-## 覚えておきたいこと
+## checkout
+### 覚えておきたいこと
 * 特定のファイルを最後のコミットに戻す
     ```
     git checkout HEAD <filepath>
     git checkout <hash> <filepath>
     ```
 
-## 基本
+### 基本
 * (参考) http://www-creators.com/archives/1388
 * SVNのcheckoutとは違う機能なので注意（SVNのcheckoutはgit cloneに近い）。
 * `git checkout`の機能は以下の2つ（別の機能なので注意）。
@@ -266,7 +266,7 @@ updated: 2026-07-24
     * インデックスや作業ツリーを退避させる`stash`というコマンドもある。
 
 
-# stash
+## stash
 * 退避
     ```
     git stash   # save は省略可能
@@ -299,8 +299,8 @@ updated: 2026-07-24
 * (参考) https://www.granfairs.com/blog/staff/git-stash
 
 
-# git log
-## 覚えておきたいこと
+## git log
+### 覚えておきたいこと
 ```
 git log -1 --stat
 git log --oneline -2
@@ -312,7 +312,7 @@ git log -p -2                # -p: 詳細のdiff
 git log --name-status        # 変更したファイルを表示
 ```
 
-## その他
+### その他
 ```
 git log --since="4 days ago" --until="2015/01/22"
 git log --author='xxxxxx'
@@ -320,7 +320,7 @@ git log origin/master --oneline -2
 ```
 
 
-# git show
+## git show
 * `git show`で開始、`q`で終了。現在のブランチで一つ前のコミットとの比較を表示する。
 * ハッシュ値やファイル指定ができる。
     ```
@@ -336,7 +336,7 @@ git log origin/master --oneline -2
     ```
 
 
-# git clean
+## git clean
 * (参考) https://gotohayato.com/content/104/
 * 作業ディレクトリから追跡対象外のファイルを削除するコマンド。
 * `git clean -ndx`：ドライラン

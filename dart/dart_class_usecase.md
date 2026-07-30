@@ -5,13 +5,13 @@ title: "(IMO)拡張や実装やclass修飾子の使い分 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > (IMO)拡張や実装やclass修飾子の使い分
 
 
-# 注
+## 注
 * 本メモは IMO(In my opinion)となる。
 
 
-#  拡張, 実装, class修飾子の使い分け
+##  拡張, 実装, class修飾子の使い分け
 
-## classの修飾子とmixinの使い分け
+### classの修飾子とmixinの使い分け
 ![](./svg/class_usecase/class_judge.drawio.svg)
 
 * 派生クラスのプロパティ
@@ -19,14 +19,14 @@ title: "(IMO)拡張や実装やclass修飾子の使い分 - Dart"
     * パターン分のクラスを複数用意して、用途に応じたクラスを継承させる方法
     * 親クラスの各プロパティをnullableとして継承する側で取捨選択させる方法(想定外のプロパティの組み合わせはassertによってエラーとする)
 
-## extends, with, implementsの使い分け
+### extends, with, implementsの使い分け
 | | コンストラクタの再利用| 多重継承・実装 | 列挙型からの利用 | 主な用途 | 主な用途(テスト) |
 |---|---|---|---|---|---|
 |extends| o | x | x|class利用時(interface以外) | テスト対象のスタブ(モック)化 |
 |implements| o | o | o |interface class利用時 | テスト対象のスタブ(モック)化<br/>※プライベートコンストラクタとなっていて継承できないもの |
 |with| x | o | o | mixin利用時 | - |
 
-## 列挙型の活用
+### 列挙型の活用
 * 利用可能なら積極的に使いたい。
 * メリット
     * 羅列（switchによる網羅的な分岐、valuesで網羅的な処理ができる）
@@ -36,7 +36,7 @@ title: "(IMO)拡張や実装やclass修飾子の使い分 - Dart"
         * 例えば、あるbase class(implementsができない)を継承したenum、といった用途には利用できない。
     * 定数以外の引数が必要な場合
 
-## too muchな継承の利用方法
+### too muchな継承の利用方法
 * 極端な例ではあるが、下記のような継承の利用は冗長となる。
 ```dart
 class ScreenA {void checkAuth(){/**/};}
@@ -52,7 +52,7 @@ class ScreenB(Auth auth) {/**/}
 ```
 
 
-# 責務の分離
+## 責務の分離
 * 責務の分離は下記のような方法があり、それぞれ用途によって使い分けることが良いだろう。
 
 |手段|特徴|分離したAPIの呼び出し可能範囲|スタブ化|主な用途|

@@ -5,15 +5,15 @@ title: "GitHub Pages"
 [TOP(About this memo))](../README.md) > GitHub Pages
 
 
-# 公式
+## 公式
 * https://docs.github.com/ja/pages
 
-# Jekyll
+## Jekyll
 * https://jekyllrb.com/
 * GitHub PagesではJekyllという変換ツールが利用されており、これによってマークダウンがhtmlへと変換される。
     
 
-# 注意点
+## 注意点
 * https://docs.github.com/ja/pages/quickstart
 * 既にマークダウンで構成していれば、下記に従ってすぐにWEBサイト化できるが、以下の注意点がある。
 * GitHub Pagesのデフォルトのマークダウンのパーサーがgithub.comで利用されているGFMと異なる。
@@ -29,7 +29,7 @@ title: "GitHub Pages"
     * 修正後も危険なページの表示は変わらず、Googleの解除フォームへ申請をしたがすぐには解消されなかったためリポジトリの名前を変えることで対応した。
 
 
-# マークダウンのパーサーを変更する
+## マークダウンのパーサーを変更する
 * https://github.com/github/jekyll-commonmark-ghpages
 * Github Pagesのデフォルトのマークダウンのパーサーはkramdownというものが使われている。
 * パーサーをGFMに準拠させるには、リポジトリのルートに_config.ymlを作成して、下記のようにする。
@@ -53,12 +53,12 @@ title: "GitHub Pages"
     * https://hidakatsuya.dev/2021/02/14/markdown-and-commonmark-and-ghm.html
 
 
-# (参考)マークダウンのパーサーがkramdown(デフォルト)の状態で筆者のマークダウンで発生した問題
+## (参考)マークダウンのパーサーがkramdown(デフォルト)の状態で筆者のマークダウンで発生した問題
 * これらは記録として、残しておく。
 * なお、これらの問題はパーサーを先述した通りに変えたことで全て解消された。
 * kramdown自体の問題という話ではなくGFMに準拠したパーサーとkramdownの違いによって発生した問題となる。
 * kramdownのオプション等で回避できたかもしれないが、その点については調査していない。
-## 親ディレクトリへの相対パスがうまく変換されない。
+### 親ディレクトリへの相対パスがうまく変換されない。
 * Jekyllによってmdファイルはhtmlへ変換されるが、このときに各リンクのパスも合わせて変換される。
 * 一方で、親ディレクトリ上のマークダウンへのリンクではファイルの拡張子が変わらない事象が確認された。
 * 例えば`[リンク](../test.md)` は  `<a href="../test.md">` のようにmdのまま変換されてしまい、リンク切れとなってしまう。
@@ -71,7 +71,7 @@ title: "GitHub Pages"
     ```
     * 参考
         * https://github.com/benbalter/jekyll-relative-links
-## コードブロックとしてパースされないケース
+### コードブロックとしてパースされないケース
 * 1例として、下記のように箇条書きの後に同じインデントレベルのコードブロックがあるとうまく表示されない場合がある。
   * うまくパースされない(ことが多い)ケース
   ```
@@ -83,7 +83,7 @@ title: "GitHub Pages"
     ```
 * ただ、上記の上手くパースされないケースは、内部のコードの内容によってはうまくパースされる場合があり、はっきりとした法則はわからない。
 * インデントさえしていれば、問題ない。
-## h2やh3が直前の箇条書きの中に入ってしまう
+### h2やh3が直前の箇条書きの中に入ってしまう
 * 下記のように記述すると、サブタイトルとして生成されるh2タグが、箇条書きのliタグの中に含まれるようになってしまう。
   ```
   # タイトル
@@ -97,7 +97,7 @@ title: "GitHub Pages"
 
   ## サブタイトル
   ```
-## 引用と箇条書き
+### 引用と箇条書き
 * 以下のように、連続して引用の行と箇条書きの行を記述すると2が1にネストされてしまう。
   ```
   > 1
@@ -111,7 +111,7 @@ title: "GitHub Pages"
   ```
 
 
-# テーマを利用する
+## テーマを利用する
 * https://docs.github.com/ja/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll
 * 下記のように、`jekyll-theme-NAME` という命名規則で_config.yml へ記述することでサポートされているテーマを利用できる。
     ```
@@ -128,13 +128,13 @@ title: "GitHub Pages"
 * (IMO) 単純にコードの読みやすさ、という観点ではサポートされているテーマは、筆者個人としてはあまりユースケースに合わなかった。
     * github.comのメモの延長として利用する場合はminimalのままで、必要であればスタイルをカスタマイズする事が時間をかけずに済む方法かもしれない。
 
-## (未調査)テーマのスタイルを自身でカスタマイズする。
+### (未調査)テーマのスタイルを自身でカスタマイズする。
 * https://docs.github.com/ja/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll#customizing-your-themes-css
 * https://docs.github.com/ja/pages/setting-up-a-github-pages-site-with-jekyll/adding-a-theme-to-your-github-pages-site-using-jekyll#customizing-your-themes-html-layout
 * minimalのカスタマイズ方法
   * https://github.com/pages-themes/minimal
 
-# その他 _config.ymlの設定
+## その他 _config.ymlの設定
 * sitemap
   ```
   plugins:
@@ -145,7 +145,7 @@ title: "GitHub Pages"
   lang: ja
   ```
 
-# Google Analytics
+## Google Analytics
 * https://github.com/pages-themes/primer#customizing-google-analytics-code
 * _config.ymlへ以下を追記
 ```
@@ -169,7 +169,7 @@ google_analytics: G-XXXXXXXXXX
   * https://zenn.dev/key_luvless/articles/d6b14182c0b4e0
 
 
-# (IME)Google サーチコンソールへの登録
+## (IME)Google サーチコンソールへの登録
 * 筆者の場合は以下の手順で登録した。
 * プロパティを追加 > URLプレフィックス追加 > Google Analyticsで認証
 * サイトマップの登録

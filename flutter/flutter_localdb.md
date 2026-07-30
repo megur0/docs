@@ -7,12 +7,12 @@ updated: 2024-08-30
 
 
 
-# ローカルファイルの保存
+## ローカルファイルの保存
 * https://docs.flutter.dev/cookbook/persistence/reading-writing-files
 * Flutterアプリでは通常、path_providerプラグインとdart:ioライブラリを組み合わせて行う。
     * 詳細は上記URL参照
 
-# データ保存のための各種パッケージ
+## データ保存のための各種パッケージ
 * shared_preferences
     * https://pub.dev/packages/shared_preferences
     * https://docs.flutter.dev/cookbook/persistence/key-value

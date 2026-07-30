@@ -5,14 +5,14 @@ title: "宣言 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 宣言
 
 
-# 宣言
+## 宣言
 * Dartではトップレベルの変数が利用可能。
 * 型推論
     * 型推論があるため型宣言は必須ではない
 * 値は宣言時に初期化しなくても良い
     * 使用されるまでに初期化しないとコンパイルエラとなる。
 
-# var, final, const
+## var, final, const
 * constは、Dart独特の機能
   * const は それ以降で同じ引数で別の変数でオブジェクトを代入しても、両者はまったく同じオブジェクトが使われる。
   ```dart
@@ -80,7 +80,7 @@ class B {
   final int test;
 }
 ```
-## constの省略
+### constの省略
 ```dart
 const pointAndLine = const {
   'point': const [const ImmutablePoint(0, 0)],
@@ -95,7 +95,7 @@ const pointAndLine = {
 };
 ```
 
-# (参考)関数リテラルはconstではない
+## (参考)関数リテラルはconstではない
 * 関数リテラル（例えば、(){}）は、定数ではなく都度、新しいインスタンスを作成する。
 * したがって以下のようにconst値に代入するとエラーとなる。
 ```dart
@@ -107,11 +107,11 @@ void a() {} // トップレベルの関数はconstとなる
 ```
 > This is because all functions in dart inherit Function class which doesn't have const constructor.
 * https://stackoverflow.com/questions/75027076/why-cant-you-declare-constant-function-literals-in-dart
-## 関連：Constant function literals
+### 関連：Constant function literals
 * https://github.com/dart-lang/language/issues/1048
 
 
-# (参考)引数のデフォルト値のconstは省略ができない。
+## (参考)引数のデフォルト値のconstは省略ができない。
 * 下記はエラーとなる。
   ```dart
   void f([List<int> a = []]) {} // エラー: The default value of an optional parameter must be constant.
@@ -123,7 +123,7 @@ void a() {} // トップレベルの関数はconstとなる
   const List<int> a = []; // エラーにならない
   ```
 
-# late
+## late
 * トップレベル変数やクラス変数の初期化処理は、その変数が初めて使われる際に実行される。（lazily initialized）
 * 変数は使われるときまでに初期化されていれば良いが、それをコンパイラが上手く検出できないときがあり、その場合にlateを利用する
 * lateをつけると初期化処理を使用直前にするため、使用する場合だけ初期化処理をさせたい場合などに使える。

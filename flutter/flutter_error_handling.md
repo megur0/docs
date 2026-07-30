@@ -7,12 +7,12 @@ updated: 2024-08-30
 
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * https://docs.flutter.dev/testing/errors
 * https://api.flutter.dev/flutter/widgets/ErrorWidget-class.html
 
 
-# エラーハンドラー
+## エラーハンドラー
 
 * Flutterではグローバルなエラーをハンドリングする以下のAPIが用意されている。
 
@@ -72,7 +72,7 @@ void main() {
 }
 ```
 
-# (参考)ErrorWidget.builderの内部処理
+## (参考)ErrorWidget.builderの内部処理
 * 内部ではdart:uiのParagraphを使ってpaintされていた。
 ```dart
 class ErrorWidget extends LeafRenderObjectWidget {

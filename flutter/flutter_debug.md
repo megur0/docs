@@ -6,16 +6,16 @@ updated: 2025-01-04
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > デバッグ
 
 
-# VSCodeのFlutter環境の構築
+## VSCodeのFlutter環境の構築
 * [環境構築・アップデート](./flutter_install_update.md)を参照
 
-# Devtools
+## Devtools
 * https://docs.flutter.dev/tools/devtools/overview
     > DevTools is a suite of performance and debugging tools for Dart and Flutter.
 * 参考
     * https://marble-heroes.com/blog/cqldl6nt3xgw
  
-# （こちらを推奨）VSCode上でDevtoolsを利用する
+## （こちらを推奨）VSCode上でDevtoolsを利用する
 * Flutter extension for VS Codeを入れることでVSCode上でDevtoolsを使用可能となる。
 * VSCode上で実行すると、自動的にDevtools上の出力を「DEBUG CONSOLE」へ出力する。
 * VSCodeのインスペクタもVSCode上で開くことが可能。
@@ -23,7 +23,7 @@ updated: 2025-01-04
     * Devtoolsに組み込まれたUIと異なり、リスタートしてもブレークポイントがリセットされない。
         * IMO) DevtoolsのUIよりも高機能となっている。
 
-# コマンドラインからDevtoolsを利用する
+## コマンドラインからDevtoolsを利用する
 * flutter runから起動する
     * `flutter run`では内部的にDevtoolsを起動されていて、Dart DevToolsによるデバッグとパフォーマンス分析を有効になっている。
     * 「v」でブラウザから開く
@@ -39,7 +39,7 @@ updated: 2025-01-04
 * ブレークポイントを設定したい場合は、ソースコードに debugger() を設定して実行する。
     * その後のステップ実行などはDevtools上で行う。
 * gdbでブレークポイントを操作する方法もある（未確認）
-## コードとDevtoolsの連携
+### コードとDevtoolsの連携
 * https://api.dart.dev/stable/3.1.1/dart-developer/dart-developer-library.html
 * dart:developerパッケージをimportする。
     * Dart ランタイムと対話することを目的とした特殊なライブラリ
@@ -75,13 +75,13 @@ updated: 2025-01-04
         * 引数の型はObject?型
         * 記述すると警告が表示される。
 
-# (参考)VSCode vs コマンドライン+Devtools
+## (参考)VSCode vs コマンドライン+Devtools
 * FlutterチームはVSCodeを推奨
     > If you write Flutter apps only with Dart code, you can debug your code using your IDE’s debugger. The Flutter team recommends VS Code.
     * https://docs.flutter.dev/testing/native-debugging
 
 
-# 様々なdebugフラグやメソッド
+## 様々なdebugフラグやメソッド
 * https://docs.flutter.dev/testing/code-debugging
 * 例えばエディタ上で"debug"と打つと様々なデバッグのグローバルなフラグやメソッドがレコメンドされる。
 * これらのメソッドや、フラグをtrueにすることで様々な情報を確認する事ができる。
@@ -119,7 +119,7 @@ updated: 2025-01-04
     * debugRepaintRainbowEnabled
         * 各ウィジェットの周囲に色付きの境界線を表示する
 * ※ 上記以外にも多くのフラグやメソッドがある。
-## flutter test の際の注意点
+### flutter test の際の注意点
 * Flutterのテストではデバッグ変数を有効にしている場合にassertエラーとなる。
 * これを回避したい場合はテストの末尾でデバッグ変数にfalseに戻しておく必要がある。
 ```
@@ -129,7 +129,7 @@ The value of a widget debug variable was changed by the test.
 ```
 
 
-# DiagnosticableTree.toStringDeep()
+## DiagnosticableTree.toStringDeep()
 * https://api.flutter.dev/flutter/foundation/DiagnosticableTreeMixin/toStringDeep.html
 * ElementはDiagnosticableTreeの派生クラスで、toStringDeep()を利用する事で自身と子孫の構成を出力できる。
 ```dart
@@ -155,7 +155,7 @@ class MyWidget extends StatelessWidget {
         * TextTreeRenderer.render()が実際にStringを生成している箇所で、このあたりの実装を読めばわかるかもしれない。
 
 
-# パフォーマンス測定(未読)
+## パフォーマンス測定(未読)
 * https://docs.flutter.dev/perf#diagnosing-performance-problems
 * Performance Overlayを有効にする
     * https://docs.flutter.dev/testing/code-debugging#trace-dart-code-performance
@@ -163,6 +163,6 @@ class MyWidget extends StatelessWidget {
     * https://future-architect.github.io/articles/20220317a/
 * TODO
 
-# アニメーションのデバッグ(未読)
+## アニメーションのデバッグ(未読)
 * https://docs.flutter.dev/testing/code-debugging#debug-animation-issues
 * TODO

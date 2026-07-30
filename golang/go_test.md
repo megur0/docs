@@ -7,10 +7,10 @@ updated: 2026-07-25
 
 
 
-# 公式
+## 公式
 * https://pkg.go.dev/testing
 
-# Go言語のtesting.Tとtesting.Mとtesting.Bとtesting.Fの違いと使い方
+## Go言語のtesting.Tとtesting.Mとtesting.Bとtesting.Fの違いと使い方
 https://sagantaf.hatenablog.com/entry/2023/07/21/235340
 * https://pkg.go.dev/testing#pkg-overview
 * testing.T
@@ -27,7 +27,7 @@ https://sagantaf.hatenablog.com/entry/2023/07/21/235340
 	* Fuzzing（ランダムなデータ）を使ったテスト
 
 
-# go test
+## go test
 * https://golang.org/doc/tutorial/add-a-test
 * xxxx_test.goというファイル名にする。
 * testingパッケージをインポート
@@ -41,21 +41,21 @@ https://sagantaf.hatenablog.com/entry/2023/07/21/235340
 * https://www.twihike.dev/docs/golang-primer/testing
 
 
-# 実行
+## 実行
 * 「TestUserRepository」という名前の関数のみ実行（正規表現）
 * -count=1でキャッシュを消している
 ```sh
 docker compose exec api go test -v -count=1 -timeout 30s -run ^TestUserRepository$ ./app/repository
 ```
-## すべてのパッケージで実行する方法はある？
+### すべてのパッケージで実行する方法はある？
 * `go test ./...`
 
 
 
-# 並列化
+## 並列化
 * go testの並列化は２つある。
 * https://engineering.mercari.com/blog/entry/how_to_use_t_parallel/
-## パッケージ単位での並列化(デフォルトで有効)
+### パッケージ単位での並列化(デフォルトで有効)
 * 各パッケージのテストが並行で実行される。
 	* 単体のパッケージのテストであれば並行実行はされない。
 * -p 1を指定すると直列で実行を強制できる。
@@ -63,7 +63,7 @@ docker compose exec api go test -v -count=1 -timeout 30s -run ^TestUserRepositor
 	* ここの回答の１つによるとps auxで別のプロセスになっていることから、競合することはなさそう。(ただ、上記のように同じDBを使っていればDBで競合する。)
 	* https://stackoverflow.com/questions/24375966/does-go-test-run-unit-tests-concurrently
 * https://zenn.dev/media_engine/articles/testing-go-applications#db%E3%81%AE%E6%8E%83%E9%99%A4%E6%96%B9%E6%B3%95
-## 個々のパッケージ・ファイル内の並列化
+### 個々のパッケージ・ファイル内の並列化
 * WIP
 * この機能に関してはデフォルトではオフになっている。
 	* https://stackoverflow.com/questions/24375966/does-go-test-run-unit-tests-concurrently
@@ -73,12 +73,12 @@ docker compose exec api go test -v -count=1 -timeout 30s -run ^TestUserRepositor
 
 
 
-# ヘルパーメソッドでエラー行を出力しないようにする
+## ヘルパーメソッドでエラー行を出力しないようにする
 * ヘルパーメソッドでtesting.T.Errorなどを呼ぶと、そのヘルパーメソッドの呼び出し箇所が出力される行数となってしまい特定に時間がかかってしまう。
 * t.Helper()をヘルパーメソッド内で呼び出しておくことで、これを回避できる。
 * https://pkg.go.dev/testing#T.Helper
 
-# TestMain
+## TestMain
 * TestMainで書いた処理は、m.Run()の前の処理 -> m.Run()で各テスト関数を上から順に実行 -> m.Run()の後の処理 という順で実行される。
   * この関数は各Test***メソッドごとに実行されるのではなく、１度しか実行されない。
 * なお、個別のテストを実行したとき（-runによって個別に指定したとき）もTestMainの処理は動作する。
@@ -90,25 +90,25 @@ docker compose exec api go test -v -count=1 -timeout 30s -run ^TestUserRepositor
 	* https://qiita.com/hgsgtk/items/40e63150affed01f6573
 
 
-# Goにはsetupやteardonwに該当する機能がない。
+## Goにはsetupやteardonwに該当する機能がない。
 * https://github.com/golang/go/issues/27927
 * つまり、各Test***関数ごとに前後にセットアップとクリーンアップを実行する機能は提供されていない。
 
 
 
-# テストカバレッジ
+## テストカバレッジ
 * https://qiita.com/takehanKosuke/items/4342ca544d205fb36eb0
 
-# net/http/httptest
+## net/http/httptest
 * NewRequest、NewRecorder
 * NewServerでスタブサーバーも立てられる。（あんま使わない？）
 * https://zenn.dev/media_engine/articles/testing-go-applications
 
- # テスト時のDBのロールバック
+## テスト時のDBのロールバック
  * ただ、このやり方だと外部APIで呼び出して更新するテストのロールバックは出来ないので、e2eテストではgo-migrationのdownとupを組合わせた。
 * https://zenn.dev/media_engine/articles/testing-go-applications#db%E3%81%AE%E6%8E%83%E9%99%A4%E6%96%B9%E6%B3%95
 
-# 日時をスタブする方法
+## 日時をスタブする方法
 * 主に以下の方法
 	* 関数やインターフェースを引数として渡す
 	* グローバルな関数を定義して、テストの際は置換する。(ただしスレッドセーフではない。テスト完了時に元に戻す必要がある)
@@ -117,7 +117,7 @@ docker compose exec api go test -v -count=1 -timeout 30s -run ^TestUserRepositor
 	* jsonの比較時等に、日時を比較対象から外す
 	* jsonの比較時等に、日時は個別に比較する
 
-# カバレッジの除外方法
+## カバレッジの除外方法
 * https://stackoverflow.com/questions/50065448/how-to-ignore-generated-files-from-go-test-coverage
 * （IME）自分の場合は、panicの行も除外したかった。
 	* 標準機能ではこの機能は無かったため、htmlをパースして特定の印（コメント）があるものを除外する機能を自分でスクラッチで作成した。
@@ -125,8 +125,8 @@ docker compose exec api go test -v -count=1 -timeout 30s -run ^TestUserRepositor
 		* https://github.com/golang/go/issues/53271
 
 
-# その他
-## testifyパッケージ
+## その他
+### testifyパッケージ
 * assert, require, suite
 * testify/mockおよびmockery（mock自動生成用の外部パッケージ）
   * https://qiita.com/muroon/items/f8beec802c29e66d1918#arguments

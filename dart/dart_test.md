@@ -6,13 +6,13 @@ title: "テスト - Dart"
 
 
 
-# 公式ドキュメント
+## 公式ドキュメント
 * https://dart.dev/guides/testing
 
-# Flutterのテスト
+## Flutterのテスト
 * [../flutter/flutter_test.md](../flutter/flutter_test.md)
 
-# expect
+## expect
 * https://api.flutter.dev/flutter/package-matcher_expect/expect.html
 * dynamic型として渡した値actualが、 同じくdynamic型のmatcherにマッチすることをassertする。
 * matcherにはMatcher派生型を指定する。
@@ -21,7 +21,7 @@ title: "テスト - Dart"
 * Future型を渡すと、Futureが値を返すまでテストが完了しない。
   * 完了を待ってからテストを続けたい場合は、代わりに expectLater を利用する
 
-# Matcher
+## Matcher
 * https://api.flutter.dev/flutter/package-matcher_matcher/Matcher-class.html
 * expectで指定するmatcherの基本クラス。
 * DartおよびFlutterには様々なMatcherが用意されている。以下は一例。

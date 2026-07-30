@@ -4,7 +4,7 @@ title: "データ構造 - Firestore"
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > データ構造
 
-# 構成要素
+## 構成要素
 * https://firebase.google.com/docs/firestore/data-model?hl=ja
 * コレクション - ドキュメント - データ の 構成となる。
 * ドキュメント
@@ -45,19 +45,19 @@ title: "データ構造 - Firestore"
     * サブコレクションを含むドキュメントを削除しても、それらのサブコレクションは削除されない。
 
 
-# 祖先ドキュメントが存在しない場合
+## 祖先ドキュメントが存在しない場合
 * 祖先が存在しない場合であっても、ドキュメントは存在できる。
 * たとえば、パス /mycoll/mydoc/mysubcoll/mysubdoc にあるドキュメントは、祖先ドキュメント /mycoll/mydoc が存在しなくても存在できる。
 * 存在しない祖先ドキュメントは、コンソールに表示されている場合でも、クエリとスナップショットには表示されない。そのドキュメントをクエリ結果に含めるには、ドキュメントを作成する必要がある。
 * https://firebase.google.com/docs/firestore/using-console?hl=ja#non-existent_ancestor_documents
 
 
-# コレクション、サブコレクションを削除する方法
+## コレクション、サブコレクションを削除する方法
 * コレクションまたはサブコレクション内のすべてのドキュメントを取得して削除
 * 大きなコレクションがある場合は、メモリ不足エラーを避けるため、小さなバッチに分けてドキュメントを削除する
 
 
-# 構造化
+## 構造化
 * https://firebase.google.com/docs/firestore/manage-data/structure-data?hl=ja
 * ドキュメント内でネストする
     * シンプルである
@@ -72,7 +72,7 @@ title: "データ構造 - Firestore"
     * データが階層的になっていることから、データベースが拡大するにつれ、データの取得が難しくなる可能性がある。
 
 
-# データ型
+## データ型
 * https://firebase.google.com/docs/firestore/manage-data/data-types?hl=ja
 * ブール値、整数（64ビット符号付き）、浮動小数点（64ビット倍精度）、日時、配列、地理的座標、オブジェクト（マップ）、参照、バイト（1MiB-89）、テキスト文字列（1MiB-89）、NULL
 * 地理的座標

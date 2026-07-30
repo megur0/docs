@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > UIKit
 
 
-# UIKit、Storyboard
+## UIKit、Storyboard
 * (参考) https://tech.amefure.com/swift-uikit
 * UIKitの特徴
     * Storyboard
@@ -17,18 +17,18 @@ updated: 2026-07-26
         * UIKitを使ったアプリ開発では、MVCアーキテクチャに則ったアプリ構造とすることがAppleから推奨されている。
 
 
-# Interface Builder
+## Interface Builder
 * XcodeのInterface Builderエディタを使用すると、コードを1行も記述することなく完全なユーザーインターフェイスを構築できる。
 * Interface Builderの機能として提供されているのが、Storyboard、Assistant、Auto Layout、Preview。
 
 
-# Storyboard
+## Storyboard
 * 開発中のアプリの見た目を確認したり、ドラッグ&ドロップでUIコンポーネント(ボタンなど)を配置したり、画面遷移を線で繋げるだけで実装できたりと、コードを書かずに視覚的に開発できる。
 * 「Storyboard」を選択した場合、プロジェクトファイル内に「Main.storyboard」と「LaunchScreen.storyboard」が生成される。
 * Storyboardでは、ViewControllerという単位でアプリの画面が管理される。
 
 
-# UIKitで生成されるファイルの役割
+## UIKitで生成されるファイルの役割
 * AppDelegate.swift
     * アプリ全体のライフサイクルを管理するクラスが実装されているファイル。
 * SceneDelegate.swift
@@ -50,7 +50,7 @@ updated: 2026-07-26
     * 作成したプロジェクトのIDEを起動するためのファイル。
 
 
-# UIKitでのUIの実装方法
+## UIKitでのUIの実装方法
 * 2つの方法がある。
     * Storyboard
     * コードで実装
@@ -58,7 +58,7 @@ updated: 2026-07-26
     * (参考) https://zenn.dev/kazumalab/articles/76ca59f82c189cf33d43
 
 
-# @IBOutlet、@IBAction
+## @IBOutlet、@IBAction
 * IBはInterface Builderの略。
 * @IBOutletは変数の宣言に付けられるアトリビュートで、Storyboardに配置されたUIとの関連付けをInterface Builder側で処理できるようにする。
 * @IBActionは、関数とStoryboard上のオブジェクトで発生したイベントを関連付けたいときに使うアトリビュート。

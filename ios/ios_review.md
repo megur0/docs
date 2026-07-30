@@ -5,10 +5,10 @@ title: "App Store レビュー - iOSアプリ開発"
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > App Store レビュー
 
 
-# 公式
+## 公式
 * https://developer.apple.com/jp/distribute/app-review/
 
-# 内容のピックアップ(24/7/20時点)
+## 内容のピックアップ(24/7/20時点)
 * レビューのガイドラインは全てに重要な内容が書かれている。
 * したがって全てを読んでおくことがもっとも効率的だろう
 * このメモは筆者の以下の観点でピックアップしたものとなる。
@@ -204,7 +204,7 @@ title: "App Store レビュー - iOSアプリ開発"
         > アプリが却下されたものの、このプロセスの対象に該当する場合は、App Store Connect経由でApp Reviewチームに直接連絡を取り、このプロセスの利用を希望する旨、および次回の提出時にその問題に対処する予定である旨を知らせてください。
 
 
-## 用語のメモ
+### 用語のメモ
 * アプリ内イベント
 * ウィジェット
 * watchOS
@@ -216,7 +216,7 @@ title: "App Store レビュー - iOSアプリ開発"
 
 
 
-# プライバシー
+## プライバシー
 * https://developer.apple.com/jp/app-store/review/guidelines/#privacy
 * ユーザーのプライバシーを保護する
     * https://developer.apple.com/jp/documentation/uikit/protecting_the_user_s_privacy/

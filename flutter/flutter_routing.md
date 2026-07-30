@@ -7,12 +7,12 @@ updated: 2024-10-13
 
 
 
-# NavigatorとRouter
+## NavigatorとRouter
 * https://docs.flutter.dev/ui/navigation
     > Flutter provides a complete system for navigating between screens and handling deep links. Small applications without complex deep linking can use Navigator, while apps with specific deep linking and navigation requirements should also use the Router to correctly handle deep links on Android and iOS, and to stay in sync with the address bar when the app is running on the web.
 * Flutterにおいては、NavigatorとRouterの２つの仕組みが提供されている。
 
-# Navigator
+## Navigator
 * Navigator自体はStatefulWidgetである。
     * Navigator2.0と言われているものから通常のウィジェットのように状態を持つウィジェットとなった。
     * MaterialAppやCupetinoApp, WidgetsAppではデフォルトでNavigatorウィジェットで包含される。
@@ -163,7 +163,7 @@ updated: 2024-10-13
     ```
 
 
-# Navigatorの不具合(24/10/11時点)
+## Navigatorの不具合(24/10/11時点)
 * https://github.com/flutter/flutter/issues/148768#issuecomment-2346863484
 * Issue自体はGoRouterのIssueとして報告されているが、リンク先のコメントに記載のようにFlutterの不具合の可能性が高いだろう。
 * 具体的には、ルーティングによる遷移によってグローバルキーを持つウィジェットが複数個、ツリー上に存在してしまう事があり、結果としてエラーとなってしまう不具合となる。
@@ -172,7 +172,7 @@ updated: 2024-10-13
     * 不具合が発生する画面でグローバルキーの利用を回避する
 
 
-# MaterialApp.routes(公式では推奨されていない)
+## MaterialApp.routes(公式では推奨されていない)
 * https://docs.flutter.dev/ui/navigation#using-named-routes
 * https://docs.flutter.dev/cookbook/navigation/named-routes
 * https://docs.flutter.dev/cookbook/navigation/navigate-with-arguments
@@ -198,7 +198,7 @@ onPressed: () {
 },
 ```
 
-# Router
+## Router
 * 以下のような処理が可能な、汎用的なカスタマイズ可能なルーティングの仕組みとなる。
     * historyの操作
     * Webアプリの戻る/進むボタン、ロケーションバーとの連動
@@ -225,7 +225,7 @@ onPressed: () {
     ```
 
 
-# Deep link
+## Deep link
 * https://docs.flutter.dev/ui/navigation/deep-linking
 * FlutterはRouter（あるいはroutesやonGenerateRouteパラメータ）によってDeep link（Custom URL Schemes と UniversalLink）をサポートしている。
 * 以下のセットアップを行うことで有効化される。
@@ -247,7 +247,7 @@ onPressed: () {
 * Android
     * https://docs.flutter.dev/cookbook/navigation/set-up-app-links
     * AndroidManifest.xmlにflutter_deeplinking_enabledを設定。
-## (IME)(参考)uni_links を追加済の場合
+### (IME)(参考)uni_links を追加済の場合
 * uni_linksを既にパッケージに追加している場合、FlutterDeepLinkingEnabledを動作させるにはuni_linksパッケージを削除する必要がある
 * 筆者はuni_linksのプラグインをインストールした状態のまま、上記のiosの手順を実行してFlutterDeepLinkingEnabledをtrueにしたところ、以下の問題が発生した。
     * uni_links自体は動作した。一方、Flutter Framework側でRouterへハンドリングされない。
@@ -256,7 +256,7 @@ onPressed: () {
 * uni_linksを依存関係から削除して再度ビルドしたところ、Routerへハンドリングされるようになった。
 
 
-# (参考)MaterialApp, CupertinoApp, WidgetsApp と Navigator
+## (参考)MaterialApp, CupertinoApp, WidgetsApp と Navigator
 * _WidgetsAppStateでは下記のようにRouter または Navigatorを 内部で生成している。
     * ※ MaterialApp, CupertinoAppもWidgetsAppを利用している。
     * 例えば MaterialApp(home:Text("test")) といった指定方法の場合はRouterウィジェットは使われず内部でNavigatorウィジェットが生成される。
@@ -289,7 +289,7 @@ class _WidgetsAppState extends State<WidgetsApp> with WidgetsBindingObserver {
 }
 ```
 
-# (参考)NavigatorStateの実装
+## (参考)NavigatorStateの実装
 * 下記のような実装となっていた
     * _historyというIterable<_RouteEntry>のメンバーを保持
         * _RouteEntryは、Routeオブジェクト(実際には具象はMaterialRoute等)を持つ。
@@ -458,7 +458,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
 ```
 
 
-# (参考)Routerについて
+## (参考)Routerについて
 * WidgetsApp.routerに渡すRouterConfigは４つの抽象で構成される。
     ```dart
     class RouterConfig<T> {
@@ -579,7 +579,7 @@ class OverlayState extends State<Overlay> with TickerProviderStateMixin {
         * RouterDelegate
             * RouterInfomationを元にしてウィジェットをビルドするデリゲーター
 
-## _RouterStateの実装
+### _RouterStateの実装
 * _RouterStateはルーター情報のプロバイダーとパーサー、戻るボタンのディスパッチャとデリゲーターをオーケストレーションしている。
 * routeInformationProviderのリスナーのコールバックとして routeInformationProviderから受け取ったRouteInformationをrouteInformationParserにパースさせ、戻ってきたコンフィグ情報でrouterDelegate.setNewRoutePath()によってルートパスとして設定して、setStateを行っている。
 * backButtonDispatcherのコールバックとして、routerDelegate.popRoute()を実行してsetStateを行う。

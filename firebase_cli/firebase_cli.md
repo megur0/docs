@@ -5,23 +5,23 @@ title: "Firebase CLI"
 [TOP(About this memo))](../README.md) > Firebase CLI
 
 
-# リファレンス
+## リファレンス
 * https://firebase.google.com/docs/cli?hl=ja
 
-# ヘルプ
+## ヘルプ
 * `firebase -h`
 * `firebase use -h`
 * `firebase login -h`
 
-# update
+## update
 * `npm i -g firebase-tools`
 
-# ログイン・ログアウト
+## ログイン・ログアウト
 * `firebase login:list`
 * `firebase login`
 * `firebase logout`
 
-# アクティブプロジェクト、エイリアス
+## アクティブプロジェクト、エイリアス
 * https://firebase.google.com/docs/cli?hl=ja#project_aliases
 * プロジェクトの一覧
     * `firebase projects:list`
@@ -63,7 +63,7 @@ title: "Firebase CLI"
     * gitにコミットすることでチームでdefaultのプロジェクトとエイリアスを共有できる。
         * (IMO)それぞれの開発者が別のfirebaseプロジェクトを利用して開発をするような環境下ではgit管理対象外とした方が良いだろう。
 
-# firebase init
+## firebase init
 * `firebase init`
 * `firebase init [feature]`
     * [feature] は database,emulators,firestore,functions,hosting,storage など
@@ -73,14 +73,14 @@ title: "Firebase CLI"
 * firebase.json と .firebaserc　が生成 or 更新される
     * 選択したプロジェクトは、.firebasercにdefaultとして設定される。
 
-# プロジェクト新規作成
+## プロジェクト新規作成
 * `firebase projects:create [プロジェクトID]`
 
-# 既存のGCPプロジェクトにfirebaseの設定をする
+## 既存のGCPプロジェクトにfirebaseの設定をする
 * `firebase projects:addfirebase [プロジェクトID]`
 * firebase init コマンドとの使い分けは?
 
-# トラブルシュート
+## トラブルシュート
 * コマンド実行時に認証エラーが発生する時
     * 一度`firebase logout`して、`firebase login`すると 解決することが多い
 

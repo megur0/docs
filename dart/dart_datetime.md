@@ -5,7 +5,7 @@ title: "日時 - Dart"
 [TOP(About this memo))](../README.md) > [一覧(Dart)](./README.md) > 日時
 
 
-# Duration
+## Duration
 * https://api.flutter.dev/flutter/dart-core/Duration-class.html
   > A span of time, such as 27 days, 4 hours, 12 minutes, and 3 seconds.
 * 比較や+, -のメソッドが実装されている
@@ -18,7 +18,7 @@ void main() {
 }
 ```
 
-# DateTimeクラス
+## DateTimeクラス
 * https://api.dart.dev/stable/3.3.3/dart-core/DateTime-class.html
 * DateTime は、エポック (1970-01-01 UTC) から最大 100,000,000 日離れた時刻値を表すことができる。
 ```dart
@@ -43,11 +43,11 @@ void main() {
 }
 ```
 
-# 日時の矯正
+## 日時の矯正
 * [参照](./dart_fake_async.md)
 
 
-# (参考) DartPad や Flutter Web 上ではparseの際にマイクロ秒の情報がロストする
+## (参考) DartPad や Flutter Web 上ではparseの際にマイクロ秒の情報がロストする
 * (追記 2025/1/3) 本件は修正済
 ```dart
 print(DateTime.parse('2023-09-04T15:54:04.274164+09:00').toIso8601String());

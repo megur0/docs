@@ -5,7 +5,7 @@ title: "Git"
 [TOP(About this memo))](../README.md) > Git
 
 
-# Git
+## Git
 
 * [基本用語・概念](./git_basics.md)
 

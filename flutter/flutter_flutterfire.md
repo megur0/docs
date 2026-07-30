@@ -8,10 +8,10 @@ updated: 2024-10-20
 
 
 
-# 注意:前提
+## 注意:前提
 * 筆者はiOSのみの開発のため、情報はiOSのみの情報となっている。
 
-# flutterfire
+## flutterfire
 * flutterfireはFlutterの公式のfirebaseのplugin全体を指す。
     * https://github.com/firebase/flutterfire
 * flutterfire_cli
@@ -19,7 +19,7 @@ updated: 2024-10-20
     * invertaseというソフトウェア企業が開発しているが、Firebaseの公式でもインストールはこのツールを使っているため、ほぼ公式のツールと考えて良い？
     * https://github.com/invertase/flutterfire_cli
 
-# firebaseの構成ファイル
+## firebaseの構成ファイル
 * Firebase 構成ファイルについて
     * https://firebase.google.com/docs/projects/learn-more?hl=ja#config-files-objects
 * firebase_options.dart のGit管理
@@ -27,7 +27,7 @@ updated: 2024-10-20
     * ただしOSSのようなプロジェクトでは含めることは非推奨となっている。
     * https://github.com/firebase/flutterfire/discussions/7617
 
-# flutterfire_cliのインストール、プロジェクトのconfigure
+## flutterfire_cliのインストール、プロジェクトのconfigure
 * https://firebase.google.com/docs/flutter/setup
 * https://github.com/invertase/flutterfire_cli
 * なお、firebaseのコンソールの「Flutterアプリ追加」を開くと手順が書いてある。以下は初めて実行するときにM1 Macでエラーになった内容も含めて記載している。
@@ -83,13 +83,13 @@ updated: 2024-10-20
     ```
     flutter: [core/no-app] No Firebase App '[DEFAULT]' has been created - call Firebase.initializeApp()
     ```
-## Firebaseコンソールに追加されるアプリ
+### Firebaseコンソールに追加されるアプリ
 * 上記のconfigureを行うことで、Firebaseプロジェクト上にiOSアプリが存在しない場合は追加される。
 * IME
     * コンソール上、デフォルトで非表示になっていたが、Firbaseコンソールのトップの「2個のアプリ」から表示をONにすることができた。
     * アプリのニックネーム、バンドルIDは  適当な名前が設定されている。
     * iOSのApp Store ID、チームIDは空。
-## (参考)flutterfireのスクリプト
+### (参考)flutterfireのスクリプト
 * `which flutterfire`
 ~/.pub-cache/bin/flutterfire
 * `cat ~/.pub-cache/bin/flutterfire`
@@ -124,11 +124,11 @@ fi
 古いスナップショットが見つかった場合、スナップショットを再生成せずに、dart pub 経由で直接 flutterfire コマンドを実行します。
 ```
 
-# (参考)(IME)Firebaseプロジェクトを入れ替え可能とする。
+## (参考)(IME)Firebaseプロジェクトを入れ替え可能とする。
 * 複数のFirebaseのテストプロジェクトを扱う場合は、ローカル環境のFirebaseプロジェクトをスイッチしたい時がある。
 * ネット上で検索すると方法1が多く見られた。
 * 筆者は方法2を使用した。
-## 方法1
+### 方法1
 * シェルなどを使ってファイルを生成・制御する方法
 * Xcode
     * XcodeのBuild PhasesでシェルによってGoogleService-Info.plist、lib/firebase_options.dart、ios/firebase_app_id_file.json の生成を行う。
@@ -141,7 +141,7 @@ fi
             * https://note.com/rect_angle/n/n7370f15c6a14?magazine_key=m869781f0a74f
 * lib/firebase_options.dart
     * Flutter側のコードでdart-defineの値に応じて制御する
-## 方法2
+### 方法2
 * Firebaseプロジェクトを入れ替える際は、都度、FlutterFire CLIで`flutterfire configure 〜`を実行する。
 * 以下のファイルはFirebaseプロジェクト依存のため、.gitignoreへ追加する。
     * ios/Runner/GoogleService-Info.plist
@@ -154,7 +154,7 @@ fi
 
 
 
-# トラブルシュート
+## トラブルシュート
 * Flutterプラグインが依存するFirebaseのSDKのバージョンと、Podsに入っているライブラリのバージョンが不一致
     * ビルドの際に "CocoaPods could not find compatible versions" のエラーが発生する 
     * 以下の２つのバージョンがマッチしていない

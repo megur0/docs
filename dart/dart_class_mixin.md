@@ -6,7 +6,7 @@ title: "ミックスイン - Dart"
 
 
 
-# mixin
+## mixin
 * https://dart.dev/language/mixins
   > Mixins are a way of defining code that can be reused in multiple class hierarchies. They are intended to provide member implementations en masse.
     * "en masse": ひとまとめにして
@@ -87,7 +87,7 @@ void main() => C2().f();
 // M1
 ```
 
-# mixin class
+## mixin class
 * https://dart.dev/language/mixins#class-mixin-or-mixin-class
 * 通常クラス、mixinの両方として利用が可能。
   * 通常クラス
@@ -100,7 +100,7 @@ void main() => C2().f();
   * 利用側がwithとextendsの両方で利用したい時など?
     * (参考)FlutterのChangeNotifierは mixin classとなっている。
 
-# 複数のmixinが同名のメソッドをオーバーライドした場合
+## 複数のmixinが同名のメソッドをオーバーライドした場合
 * withで先に書いたmixinのメソッドが、後に書いたmixinのメソッドにオーバーライドされる。
 * 最終的にもっとも後ろのmixinのメソッドが採用される。
 * superによってオーバーライドされたメソッドを呼ぶこともできる。
@@ -139,7 +139,7 @@ C1
 C2 constructor
 */
 ```
-## (参考)  Flutterの ensureInitialized()メソッド
+### (参考)  Flutterの ensureInitialized()メソッド
 * Flutterの初期化時に呼ぶ WidgetsFlutterBinding.ensureInitialized()メソッドでは、mixinによるオーバーライドを使って各初期化処理が実行されている。
 * superで親呼ぶことで、各mixinで定義されているinitInstance　メソッドが順に呼ばれることで各シングルトンの初期化処理が行われている。
   ```dart
@@ -158,5 +158,5 @@ C2 constructor
 * IMO
   * 各**Bindingを統一的に記述できている一方、コードは一見すると追いかけづらい。
 
-# 余談
+## 余談
 * 筆者はmixinをどうしても「ミックスイン」とは呼べず、「ミクシン」と読んでしまう。

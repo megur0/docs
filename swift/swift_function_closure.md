@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(Swift)](./README.md) > 関数・クロージャ
 
 
-# クロージャ
+## クロージャ
 * https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/
 * クロージャは次の3つの形式のいずれかである（つまり、普通の関数もクロージャに含まれる）。
     * グローバル関数（普通の関数のこと）は、名前を持ち、値をキャプチャしないクロージャ。
@@ -14,7 +14,7 @@ updated: 2026-07-26
     * クロージャ式は、周囲のコンテキストから値を取得できる軽量構文で記述された名前のないクロージャ。
 
 
-# 関数
+## 関数
 ```swift
 func someFunc(bbb: String) -> [String] {
     // 〜〜〜
@@ -48,12 +48,12 @@ var mathFunction: (Int, Int) -> Int
 mathFunction = addTwoInts
 print(mathFunction(3, 8)) // (?) 型宣言した変数経由で呼ぶ場合はラベルが使えなくなる？
 ```
-## 参照渡し
+### 参照渡し
 * inoutキーワードを引数に設定することで、いわゆる「参照渡し」を実装できる。
 * ただし、基本的にはあまり使う機会は無いだろう。
 
 
-# クロージャ式（無名関数）
+## クロージャ式（無名関数）
 * https://tea-leaves.jp/swift/content/%E9%96%A2%E6%95%B0
 * 波かっこ`{}`で囲った中に処理を記述する。
 * 中に記述した処理を1つの単位として扱うことができ、変数に格納したり、関数などの引数に渡すことも可能。
@@ -83,7 +83,7 @@ f = { (num1: Int, num2: Int) -> String in return String(num1 + num2) }
 ```
 
 
-# 高階関数へクロージャ式を渡す
+## 高階関数へクロージャ式を渡す
 * https://tea-leaves.jp/swift/content/%E9%96%A2%E6%95%B0
 * https://docs.swift.org/swift-book/documentation/the-swift-programming-language/closures/
 ```swift
@@ -113,7 +113,7 @@ calculate(10, 20, *)
 calculate(10, 20, +)
 calculate(10, 20, -)
 ```
-## トレーリングクロージャー
+### トレーリングクロージャー
 * 引数で渡す関数が引数リストの最後の引数の場合、次のように、関数名()の後の`{ }`の中に処理内容を記述することができる。
 ```swift
 calculate(10, 20) {
@@ -128,7 +128,7 @@ func sayHello(greeting: (String) -> String) -> () {
 sayHello { $0 + ", World" } // Hello, World
 sayHello { "Hi, " + $0 }    // Hi, Hello
 ```
-## 複数のクロージャを渡す際の省略記法
+### 複数のクロージャを渡す際の省略記法
 ```swift
 subject.sink(
     receiveCompletion: { completion in
@@ -147,7 +147,7 @@ subject.sink { completion in
     print("\(string)")
 }
 ```
-## イニシャライザでも同様
+### イニシャライザでも同様
 * 例えばButton
 ```swift
 init(action: () -> Void, label: () -> Label)

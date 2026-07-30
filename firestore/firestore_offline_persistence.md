@@ -5,7 +5,7 @@ title: "オフラインでのデータの永続性 - Firestore"
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > オフラインでのデータの永続性
 
 
-# オフラインでのデータの永続性
+## オフラインでのデータの永続性
 * https://firebase.google.com/docs/firestore/manage-data/enable-offline?hl=ja
 * Cloud Firestore は、オフライン データの永続性をサポート
 * オフラインの永続性は Android、Apple、ウェブアプリのみでサポート

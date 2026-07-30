@@ -5,23 +5,23 @@ updated: 2024-12-12
 
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 主なウィジェット
 
-# WIP: 随時更新
+## WIP: 随時更新
 * このメモは執筆中のため随時更新 
 
-# ドキュメント
+## ドキュメント
 * ウィジェットカタログ
     * https://docs.flutter.dev/ui/widgets
 * ウィジェットの基礎（ベーシックなウィジェット、ウィジェットのビルドの仕組み）
     * https://docs.flutter.dev/development/ui/widgets-intro
 
-# ウィジェットにおける責務
+## ウィジェットにおける責務
 * Flutterでは可能な限り継承ではなく、Compositionを使っている。
 * たとえば"padding"というものをTextウィジェットに持たせるのではなく、Paddingというウィジェットを使い責務を分けている。
 * IMO
     * 内部実装では継承はかなり多い。
     * ただ、責務が異なる機能はCompositionの使用、同じ責務のクラスの拡張は継承という使い分けがされている。
 
-# ウィジェットは@immutable
+## ウィジェットは@immutable
 * Widgetクラスは@immutableになっている
     ```dart
     @immutable
@@ -45,7 +45,7 @@ updated: 2024-12-12
     // This class (or a class that this class inherits from) is marked as '@immutable', but one or more of its instance fields aren't final: A.adartmust_be_immutable
     ```
 
-# ステートレス、ステートフルなウィジェット
+## ステートレス、ステートフルなウィジェット
 * ステートレスなウィジェット
     * Icon, IconButton, Text 等
     * Stateless widgets は StatelessWidget のサブクラスである。
@@ -54,7 +54,7 @@ updated: 2024-12-12
     * Stateful widgets は StatefulWidget のサブクラスである。
 
 
-# Key
+## Key
 * https://api.flutter.dev/flutter/foundation/Key-class.html
 * Keyの用途
     * Keyはフレームワーク内部ではElementのアップデートの判定に利用されている
@@ -85,7 +85,7 @@ updated: 2024-12-12
         * ValueKey<T> は、==においてValueKey.valueの値で比較される
 
 
-# レイアウトに関するウィジェット
+## レイアウトに関するウィジェット
 * Align
 * Center
 * SizedBox
@@ -102,7 +102,7 @@ updated: 2024-12-12
 * TabBar, TabBarView
 * Table, DataTable
 * Card
-## Container
+### Container
 * https://api.flutter.dev/flutter/widgets/Container-class.html
 * サイズ
     * Containerはそれぞれ独自のレイアウト動作を持つウィジェットを多数組み合わせているため、レイアウトの動作が複雑となる。
@@ -147,7 +147,7 @@ updated: 2024-12-12
         ),
     )
     ```
-## Flex派生ウィジェット(Column, Row)とFlexible派生ウィジェット
+### Flex派生ウィジェット(Column, Row)とFlexible派生ウィジェット
 * Column, Rowは、子のRenderObject.parentData.flexの値によって子へ渡すConstraintsと自身のSizeの設定内容が異なる。
     * Flexibleは子孫のこのflexの値を上書きすることができる
 * クラス図と内部の動作の仕組み
@@ -184,7 +184,7 @@ updated: 2024-12-12
     * ParentDataWidgetの派生クラスであり、内部処理としてParentDataWidget.applyParentData()によって最も近い子孫のRenderObjectのparentData.flexやfixを上書きする。
         * 内部処理の詳細はコードリーディングのメモを参照
     * FlexibleウィジェットはRow, Column, またはFlexの子孫である必要がある。
-## Stack, Positioned
+### Stack, Positioned
 * https://api.flutter.dev/flutter/widgets/Positioned-class.html
 * 例えば、Stack内で「右下」に配置したい場合に、下記のようにAlignを利用しても期待した動作とはならない。
     ```dart
@@ -215,7 +215,7 @@ updated: 2024-12-12
     ```
     * PositionedウィジェットはStackの子孫である必要がある。
     * Positionedウィジェットからそれを囲むStackへのパスにはStatelessWidgetまたはStatefulWidgetのみが含まれている必要がある。
-## Transform
+### Transform
 ```dart
   @override
   Widget build(BuildContext context) {
@@ -244,7 +244,7 @@ updated: 2024-12-12
     * 参考
         * https://zenn.dev/s134/articles/20231208matrix4transform
         * https://shogoisaji.github.io/matrix4_transform_demo/
-## 制約
+### 制約
 * ConstrainedBox
     * 子に追加の制約を課すウィジェット
     ```dart
@@ -258,13 +258,13 @@ updated: 2024-12-12
 * OverflowBox
 * LimitedBox
 * FittedBox
-## Overlay
+### Overlay
 * https://api.flutter.dev/flutter/widgets/Overlay-class.html
 * 他のウィジェットの上に「浮かべる」
 * Overlayに加えるには、OverlayEntryを作成して加える。
 * 直接Overlayを作成することも可能だが、先祖のNavigatorが作成したOverlayをOverlay.ofで取得して使用する事が一般的。
 
-# material
+## material
 * Scaffold
     * Scaffoldはよく使われるhelpfulなwidget
     * 以下を提供する
@@ -280,7 +280,7 @@ updated: 2024-12-12
         * title, bottom, leading
     * サイズの指定したい場合はPreferredSizeWidgetでラップする必要がある。
     * ただし、PreferredSizeWidget.preferredSizeは AppBar.bottomで指定したウィジェットの高さも含める必要がある
-## ダイアログ
+### ダイアログ
 * showDialog
     * https://api.flutter.dev/flutter/material/showDialog.html
 * DialogやCupertinoDialogではなく、AlertDialog, SimpleDialog, CupertinoAlertDialogを使うことが推奨されている。
@@ -290,7 +290,7 @@ updated: 2024-12-12
 * SimpleDialog
 * CupertinoAlertDialog
 * CupertinoDialog
-## スナックバー
+### スナックバー
 * Snackbar
     ```dart
     ScaffoldMessenger.of(context)
@@ -329,7 +329,7 @@ updated: 2024-12-12
     //...
     ```
 
-# Builder
+## Builder
 * Builder
     * https://api.flutter.dev/flutter/widgets/Builder-class.html
     * StatelessWidget サブクラスを定義するためのインラインの代替手段
@@ -342,7 +342,7 @@ updated: 2024-12-12
     * https://api.flutter.dev/flutter/widgets/LayoutBuilder-class.html
     * 親ウィジェットの制約を参照することができる
 
-# テキスト関連
+## テキスト関連
 * Text
     * https://api.flutter.dev/flutter/widgets/Text-class.html
     * レイアウト
@@ -369,7 +369,7 @@ updated: 2024-12-12
     * TextSpan
     * WidgetSpan
 
-# フォーム関連
+## フォーム関連
 * https://docs.flutter.dev/cookbook/forms/validation
 * Form/FormState
     * 複数のフォーム フィールドをグループ化して検証するためのコンテナーとして機能
@@ -385,21 +385,21 @@ updated: 2024-12-12
 * TextFormField(FormField派生クラス)
     * Formと連携させる場合はこのクラスを利用する。
     * 内部でTextFieldを生成している
-## グローバルキーを利用せずにメソッドを実行する方法
+### グローバルキーを利用せずにメソッドを実行する方法
 * Form.of(context)を利用する。
 * ただし、先祖にFormを含むBuildContextである必要があるため、Builderを経由するといった工夫が必要となる。
 * https://www.reddit.com/r/FlutterDev/comments/1d6p47x/friendly_reminder_you_dont_need_and_probably/
 
-# radio, checkbox, switch
+## radio, checkbox, switch
 * Radio
 * Switch
 * Checkbox
-## ListTileと組み合わせたウィジェット
+### ListTileと組み合わせたウィジェット
 * CheckboxListTile
 * SwitchListTile
 * RadioListTile
 
-# ドロップダウン
+## ドロップダウン
 * https://api.flutter.dev/flutter/material/DropdownButton-class.html
 * DropdownButton
 * DropdownMenu
@@ -409,13 +409,13 @@ updated: 2024-12-12
     * DropdownButtonの場合はisExpandedによって解決する。
     * DropdownMenuはwidthを指定することで解決するが、ダイアログなどの内側で利用している場合は幅の取得が難しいケースがある。(この場合は筆者はDropdownButtonを利用している)
 
-# カラー
+## カラー
 * ColoredBox
 * Colors.blue
 * Color.fromRGBO(0, 255, 0, 1.0)
 * Color(0xFF00FF00)
 
-# アイコン
+## アイコン
 * Icon
 * CircleAvatar
 * FlutterLogo
@@ -423,8 +423,8 @@ updated: 2024-12-12
 * https://fonts.google.com/icons
 * 例 `Icon(Icons.notifications)`
 
-# ボタン関連
-## ButtonStyleButton
+## ボタン関連
+### ButtonStyleButton
 * ButtonStyleButton
     * https://api.flutter.dev/flutter/material/ButtonStyleButton-class.html
     * ButtonStyleオブジェクトによってスタイルが定義されるボタンの基本StatefulWidget
@@ -455,12 +455,12 @@ updated: 2024-12-12
         // style: ElevatedButton.styleFrom(shape: const CircleBorder()),
     )
     ```
-## その他
+### その他
 * IconButton
     * 内部ではInkResponseを利用
     * 一般的にAppBar.actionsなどで利用されるが、他の多くの箇所にも利用できる。
 
-# 画像関連
+## 画像関連
 * Image
 * Image.asset
     * アプリ内(アセット)の画像を表示
@@ -494,16 +494,16 @@ updated: 2024-12-12
     });
     ```
 
-# 非同期関連
+## 非同期関連
 * FutureBuilder
 * StreamBuilder
 
-# リスナー、ジェスチャー関連
+## リスナー、ジェスチャー関連
 * ListenableBuilder
 * NotificationListener
 * GestureDetector
 
-# スクロール関連
+## スクロール関連
 * https://api.flutter.dev/flutter/widgets/ListView-class.html
 * ListView, ListView.Builder
 * SingleChildScrollView
@@ -514,7 +514,7 @@ updated: 2024-12-12
     > Less configurable than Row, but easier to use
 * SwitchListTile
 * RefreshIndicator
-## PageView
+### PageView
 * https://api.flutter.dev/flutter/widgets/PageView-class.html
 * 各ページを移動すると移動の度に子は廃棄・再生成される
 * PageViewのchildを廃棄せずに維持する方法
@@ -556,10 +556,10 @@ updated: 2024-12-12
         }
         ```
 
-# ライセンス
+## ライセンス
 * LicensePage
 
-# その他
+## その他
 * flutter/lib/src/material/constants.dart
     * AppBarのデフォルトの高さ等のconst値が定義されている
     ```dart

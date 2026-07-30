@@ -5,11 +5,11 @@ title: "セットアップ - Firebase Local Emulator Suite"
 [TOP(About this memo))](../README.md) > [一覧(Firebase Local Emulator Suite)](./README.md) > セットアップ
 
 
-# インストールに必要な環境
+## インストールに必要な環境
 * Node.js バージョン 16.0 以降
 * Java JDK バージョン 11 以降
 
-# インストール
+## インストール
 * JDKをインストールしておく必要がある。
 * firebase init
     * 質問にしたがって設定を行う。
@@ -19,7 +19,7 @@ title: "セットアップ - Firebase Local Emulator Suite"
     * 参考
         * https://techblog.sgr-ksmt.dev/2019/11/06/151755/
 
-# アップデート
+## アップデート
 * エミュレータがインストールされると、Firebase CLI のバージョンを更新するまでアップデートのチェックは行われない。
     * 追加の自動ダウンロードも行われない。
     * https://firebase.google.com/docs/emulator-suite/install_and_configure?hl=ja#install_the_local_emulator_suite
@@ -36,7 +36,7 @@ i  firestore: Firestore Emulator logging to firestore-debug.log
     * 例えば、firebase cli v13.16.0で、firestore emulator v1.19.8がリリースされている。
     * https://firebase.google.com/support/release-notes/cli
 
-# コマンド
+## コマンド
 * `emulators:start`
     * firebase.json で構成された Firebase プロダクトのエミュレータを起動
     * 未インストールの場合は、~/.cache/firebase/emulators/ にエミュレータがダウンロードされる。
@@ -55,11 +55,11 @@ i  firestore: Firestore Emulator logging to firestore-debug.log
     * https://firebase.google.com/docs/emulator-suite/install_and_configure?hl=ja#startup
 
 
-# CIとの統合
+## CIとの統合
 * https://firebase.google.com/docs/emulator-suite/install_and_configure?hl=ja#integrate_with_your_ci_system
 * コンテナ化された Emulator Suite イメージの実行
 
-# Admin SDKでエミュレータを使う場合
+## Admin SDKでエミュレータを使う場合
 * https://firebase.google.com/docs/emulator-suite/connect_auth?hl=ja#admin_sdks
 * 環境変数に設定する必要がある。
     * 例
@@ -67,7 +67,7 @@ i  firestore: Firestore Emulator logging to firestore-debug.log
 * Cloud Functions エミュレータは Authentication エミュレータを自動的に認識する
     * したがってCloud Functions エミュレータと Authentication エミュレータの統合をテストする場合はこの手順を省略できる。
 
-# デモプロジェクト
+## デモプロジェクト
 * https://firebase.google.com/docs/emulator-suite/connect_auth?hl=ja#choose_a_firebase_project
 * コンソールのプロジェクトの場合
     * サポートされているプロダクトの一部またはすべてに対してエミュレータを実行できる。
@@ -84,32 +84,32 @@ i  firestore: Firestore Emulator logging to firestore-debug.log
         * https://zenn.dev/tkow/scraps/8160da23277fb8
 
 
-# REST API
+## REST API
 * https://firebase.google.com/docs/firestore/reference/rest?hl=ja
-## Firestoreの情報取得
+### Firestoreの情報取得
 * https://firebase.google.com/docs/reference/rest/database?hl=ja
 ```
 curl "http://localhost:8081/v1/projects/(プロジェクトID)/databases/(default)/documents/users
 curl "http://localhost:8081/v1/projects/(プロジェクトID)/databases/(default)/documents/users/(UID)"
 ```
-## サインイン
+### サインイン
 * https://firebase.google.com/docs/reference/rest/auth?hl=ja
 ```
 curl -H "Content-Type: application/json" -d '{"email":"test@example.com", "password":"testtest"}' "http://localhost:9099/identitytoolkit.googleapis.com/v1/accounts:signInWithPassword?key=aa" 
 ```
-## ユーザーアカウントの全クリア
+### ユーザーアカウントの全クリア
 * https://firebase.google.com/docs/reference/rest/auth?hl=ja#section-auth-emulator-clearaccounts
 ```
 # アカウント全削除
 curl -H 'Authorization: Bearer owner' -X DELETE http://localhost:9099/emulator/v1/projects/(プロジェクトID)/accounts
 ```
-## Firestoreのクリア
+### Firestoreのクリア
 * https://firebase.google.com/docs/emulator-suite/connect_firestore?hl=ja#clear_your_database_between_tests
 ```
 # Firestoreデータクリア
 curl -v -X DELETE "http://localhost:8080/emulator/v1/projects/(プロジェクトID)/databases/(default)/documents"
 ```
-## Cloud Storageのファイルの全削除
+### Cloud Storageのファイルの全削除
 * おそらく、まとめて削除する手段は無く、ファイル１つ１つを取得して削除する方法となるだろう。
 * 以下のように実行可能と思われるが、ファイルの削除の方でエラーとなってしまった。
     ```

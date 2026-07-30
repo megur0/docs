@@ -7,7 +7,7 @@ updated: 2026-07-25
 [TOP(About this memo))](../README.md) > ネットワーク
 
 
-# ネットワーク
+## ネットワーク
 
 * [基本](./network_basic.md)
 * [イーサネット・VPN・回線](./network_line.md)

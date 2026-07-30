@@ -6,7 +6,7 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > IAM・アクセス管理
 
 
-# awsアカウント
+## awsアカウント
 * AWSアカウントとは、最初にサインアップしたときに作成されるアカウントのこと。すべてのリソース・サービスにアクセスできる強力なルート権限を持つ。
 * そのため通常は使用せず、別途IAMユーザーを作成して運用することが推奨されている。
 
@@ -46,7 +46,7 @@ AWSアカウント(1個。ルート権限)
     * そのロールを誰がAssumeRoleしてよいかを定めるポリシー。(例)「このロールはECSだけが利用できる」
     * ※ 一方、IAMポリシーは「AssumeRoleした後に何ができるか」を表す。
 
-# PassRole
+## PassRole
 * あるIAMロールを、自分自身ではなく「別のAWSサービス」に使わせるための権限。`iam:PassRole`アクションで許可する。
 * 例: アプリケーションがMediaConvertのような他のAWSサービスにジョブを投げる際、そのサービス自身がS3などにアクセスするための実行ロールを渡す必要がある。この「ロールを渡す」操作自体にIAM上の許可が必要で、それが`iam:PassRole`。
 * AssumeRoleとの違い: AssumeRoleは「自分がそのロールの権限を一時的に使う」操作。PassRoleは「他のサービスにそのロールを使わせる」操作で、渡す側自身がそのロールの権限を得るわけではない。
@@ -63,11 +63,11 @@ AWSアカウント(1個。ルート権限)
 }
 ```
 
-# IAM User/Group詳細
+## IAM User/Group詳細
 * IAM UserはUserName + Path、IAM GroupはGroupName + Pathから作成できる。
 * Pathは、大規模なユーザー管理を行う場合にユーザーをディレクトリ分けするような仕組み。小規模な場合はデフォルトの`/`を使うことが多い。
 
-# IAM Role詳細
+## IAM Role詳細
 * IAM Roleは以下3つの情報から作成できる。
     * RoleName
     * Path
@@ -75,12 +75,12 @@ AWSアカウント(1個。ルート権限)
 * User、Group、Roleに対しては、作成後にPolicyを付与(put)できる。ユーザーやグループへのポリシー付与と同様、ロールに対しても同じことができる。違いは`AssumeRolePolicyDocument`という設定値が増えている点。
 * (参考) https://dev.classmethod.jp/articles/iam-role-and-assumerole/#note-90289-8
 
-## IAMロールの機能
+### IAMロールの機能
 * EC2インスタンスにAPIアクセス権限を委譲する機能(一般的によく知られている使い方)
 * 自アカウントのAPI権限を委譲する機能(`sts:AssumeRole`)
 * (参考) https://dev.classmethod.jp/articles/iam-role-and-assumerole/
 
-## sts:AssumeRole
+### sts:AssumeRole
 * AssumeRoleはSTS(Security Token Service)に対するAPIアクションの一つ。
 * 「AssumeRoleはRoleArnを入力するとCredentialsを返すAPI」
     * RoleArn: IAM Roleの一意な名前で、`arn:aws:iam::123456789012:role/role-name`といった文字列。
@@ -109,7 +109,7 @@ AWSアカウント(1個。ルート権限)
     * Facebookアプリを介してFacebookユーザーを信頼する(AWSをmBaaS的に使うイメージ)。GoogleやAmazonのIDでも実現できる。
     * Identity Providersとして独自のシステムをSAML Providerとして登録すれば、そのシステムに認証を委譲することも可能。
 
-# ポリシー
+## ポリシー
 * ポリシーは基本的に「誰が」「どのAWSサービスの」「どのリソースに対して」「どんな操作を」「許可する(許可しない)」かをJSON形式で記述する。
 * 記述したポリシーをユーザー(IAMユーザー、IAMグループ、IAMロール)やAWSリソースに関連づけることで、アクセス制御を実現する。
 * (参考) https://dev.classmethod.jp/articles/aws-iam-policy/
@@ -133,7 +133,7 @@ AWSアカウント(1個。ルート権限)
 }
 ```
 
-## ポリシーの分類
+### ポリシーの分類
 * ユーザーベースのポリシー
     * このポリシーには「誰が」(操作する主体、ポリシーの記述項目で言うとPrincipal)の部分は記述しない。このポリシーを関連づけたIAMユーザー、IAMグループ、IAMロール(IAMロールをEC2インスタンスにアタッチした場合はEC2インスタンス)が「誰が」の部分に該当する。
     * 上の例では、AmazonS3ReadOnlyAccessポリシーを関連づけたIAMユーザー(やIAMグループ、IAMロール)がS3リソースを参照できる、ということ。
@@ -162,7 +162,7 @@ AWSアカウント(1個。ルート権限)
 
 * リソースベースのポリシーはS3等の一部のAWSサービスのみに対応している。対応サービスは[IAMと連携するAWSサービスの表](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_aws-services-that-work-with-iam.html)で「リソースベース」がYesになっている行を参照。Principalに指定できる値は[こちら](https://docs.aws.amazon.com/ja_jp/IAM/latest/UserGuide/reference_policies_elements.html#Principal)を参照。
 
-## ポリシーでIAMユーザーの操作を制限する具体例(2022/1/24時点でのメモ)
+### ポリシーでIAMユーザーの操作を制限する具体例(2022/1/24時点でのメモ)
 * ポリシーで特定のResource、特定のActionに対してEffectをAllowにし、IAMユーザーにアタッチすることで、記載した操作以外を不可にできる。
 * (参考) https://blog.ichikaway.com/entry/2017/11/28/174936
 * (参考) https://yohei-a.hatenablog.jp/entry/20191014/1571009915
@@ -204,7 +204,7 @@ AWSアカウント(1個。ルート権限)
 
 セキュリティグループ(EC2などの仮想ファイアウォール)については[セキュリティグループ](./aws_security_group.md)を参照。
 
-# ARN(Amazon Resource Name)
+## ARN(Amazon Resource Name)
 Amazon リソースネーム(ARN)は、AWSリソースを一意に識別する。IAMポリシー、Amazon RDSのタグ、APIコールなど、AWS全体に渡るリソースを指定する必要がある場合にARNが必要になる。
 
 ```

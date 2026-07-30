@@ -4,7 +4,7 @@ title: "リアルアップデート（リスナー） - Firestore"
 
 [TOP(About this memo))](../README.md) > [一覧(Firestore)](./README.md) > リアルアップデート（リスナー）
 
-# Cloud Firestore でリアルタイム アップデート
+## Cloud Firestore でリアルタイム アップデート
 * https://firebase.google.com/docs/firestore/query-data/listen?hl=ja
 * `db.collection("cities").doc("SF").snapshots().listen 〜〜`
 * `db.collection("cities").where("state", isEqualTo: "CA").snapshots().listen〜〜`
@@ -37,7 +37,7 @@ title: "リアルアップデート（リスナー） - Firestore"
     * `listener.cancel();`
     * なお、リスナーのアタッチ時にエラーが発生した場合（コールバックにて確認）は、リスナーはそれ以上イベントを受信しなくなるため、リスナーのデタッチは不要
 
-# (応用)大規模なリアルタイムクエリ
+## (応用)大規模なリアルタイムクエリ
 * https://firebase.google.com/docs/firestore/real-time_queries_at_scale?hl=ja
 * 実行されているアプリが Cloud Firestore への接続を確立すると、その接続は、データベースが配置されているのと同じリージョンにある Cloud Firestore フロントエンド サーバーにルーティングされる。
 * ユーザーの物理的な場所と Cloud Firestore データベースの場所の間の距離は、ユーザーが経験するレイテンシに影響

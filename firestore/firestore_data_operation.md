@@ -6,7 +6,7 @@ title: "データの操作 - Firestore"
 
 
 
-# データの追加・更新
+## データの追加・更新
 * https://firebase.google.com/docs/firestore/manage-data/add-data?hl=ja
 * set() を使用してドキュメントを作成する場合、作成するドキュメントの ID を指定する 
     ```
@@ -39,7 +39,7 @@ title: "データの操作 - Firestore"
     * 単純な足し算なら、incrementを使えばトランザクションを使わなくて済む。
 * カスタム オブジェクト
 
-# 削除
+## 削除
 * コレクション全体またはサブコレクションを削除するには、コレクションまたはサブコレクション内のすべてのドキュメントを取得して削除
 * 大きなコレクションがある場合は、メモリ不足エラーを避けるため、小さなバッチに分けてドキュメントを削除することをおすすめ
 * コレクションを削除するには、数に制約のない個別の削除リクエストを用意する必要がある。コレクション全体を削除する必要がある場合は、信頼できるサーバー環境からのみ実行。
@@ -47,7 +47,7 @@ title: "データの操作 - Firestore"
 * 効率的なデータ削除（未読）
     * https://firebase.google.com/docs/firestore/solutions/delete-collections?hl=ja
 
-# データの取得
+## データの取得
 * get() を使用して単一のドキュメントの内容を取得
     * `db.collection("cities").doc("SF").get()`
     * `db.collection("cities").doc("SF")`の参照にドキュメントがない場合、結果の document は空になり、existsを呼び出すとfalseになる。

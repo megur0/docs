@@ -5,7 +5,7 @@ title: "Firestore"
 [TOP(About this memo))](../README.md) > Firestore
 
 
-# Firestore
+## Firestore
 
 [導入](./firestore_introduction.md)
 

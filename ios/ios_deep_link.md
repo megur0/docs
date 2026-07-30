@@ -6,15 +6,15 @@ title: "ディープリンク - iOSアプリ開発"
 
 
 
-# 参考サイト
+## 参考サイト
 * https://engineering.mercari.com/blog/entry/20220224-deeplink-for-mercari-shops/
 
-# ディープリンクとは?
+## ディープリンクとは?
 * ディープリンクとは、モバイルアプリの特定の機能に直接アクセスできるURL
     * 「ディープリンク」という用語はもともと、Webサイトのトップではなく特定のコンテンツのページに直接遷移するURLのことを指す意味
 * ディープリンクを使用すると、Webページからアプリを起動したり、アプリから別のアプリを起動することができる。
 
-# ディープリンク実現の仕組み
+## ディープリンク実現の仕組み
 * iOS
     * iOSでディープリンクを実現するために最初に提供された機能はCustom URL Schemes
     * iOS9からUniversalLinksという機能が提供
@@ -23,7 +23,7 @@ title: "ディープリンク - iOSアプリ開発"
 * Smart App Banner
     * アプリに対応するWebページの上部にアプリを起動するためのバナーを表示する仕組みで、Appleが提供。
 
-# Custom URL Schemes
+## Custom URL Schemes
 * アプリを起動するために指定する特殊なURLスキーム
 * 例
     * instagram://
@@ -31,7 +31,7 @@ title: "ディープリンク - iOSアプリ開発"
 * 複数のアプリが同一のCustom URL Schemesを定義することができるという問題がある。
     * 複数存在する場合、OSやバージョンによって挙動が異なる。
 
-# UniversalLinks
+## UniversalLinks
 * UniversalLinksは通常のWebページのURLをディープリンクとして扱い、アプリを起動できるようになる仕組み
 * Custom URL Schemesで起きていたディープリンクの重複の問題は解決
 * PC で アクセスした場合やアプリがインストールされていない場合はそのURLのWebページに遷移し、アプリがインストールされている場合はアプリを起動して指定の画面に遷移。
@@ -54,7 +54,7 @@ title: "ディープリンク - iOSアプリ開発"
             * 回避方法があるが、開発モードでのビルドかつデバッグモードになっている実機にインストールした時のみ有効。
 
 
-# Custom URL Schemes と UniversalLinksの 設定
+## Custom URL Schemes と UniversalLinksの 設定
 * 参考
     * https://rnfirebase.io/dynamic-links/usage
     * https://firebase.google.com/docs/dynamic-links/flutter/receive
@@ -62,7 +62,7 @@ title: "ディープリンク - iOSアプリ開発"
     * https://note.com/ymmtshny/n/n13504f26308c
     * https://qiita.com/yosshi4486/items/521210701fb5feaf3808
 * UniversalLinksは、Associated Domainsを有効にする必要があるため、ADP加入が必要。
-## apple-app-site-associationのホスティング
+### apple-app-site-associationのホスティング
 * UniversalLinks によって紐づけるドメインが提供するホスト環境へ apple-app-site-association を設置する必要がある。
     * ルートの.well-known配下へ「apple-app-site-association」というファイルを設置する
     * ファイル内容の例は以下。
@@ -74,7 +74,7 @@ title: "ディープリンク - iOSアプリ開発"
     * apple-app-site-associationの探索はApple CDNのキャッシュが効いている?
         * ユニバーサルリンクを押下した際に動作端末（シミュレーターや実機）はApple CDNを通してapple-app-site-associationを探しに行く。
         * この時に失敗するとおそらくキャッシュが働き、その後apple-app-site-associationをアップロードしてもすぐには成功せず、少しタイムラグが発生した。
-## (参考)apple-app-site-associationのホスティングにFirebase Hostingを利用する場合
+### (参考)apple-app-site-associationのホスティングにFirebase Hostingを利用する場合
 * 参考
     * https://docs.flutter.dev/cookbook/navigation/set-up-universal-links
 * Firebase Hostingでは、apple-app-site-association をデフォルトでホスティングする。
@@ -87,7 +87,7 @@ title: "ディープリンク - iOSアプリ開発"
 * firebase hostingを「はじめる」のみでは「https://firebaseのプロジェクトID.web.app/」は有効にならないので注意。
     * なお、下記のFlutterの手順の場合はfirebaseが自動的に生成することは書かれておらず、手動でapple-app-site-associationをアップロードしている。
     * https://docs.flutter.dev/cookbook/navigation/set-up-universal-links
-## Xcodeの設定
+### Xcodeの設定
 * 手動で設定する場合
     * 「Signing & Capabilities」>「＋ Capability」>「Associated Domains」を追加
         * Domainsを設定
@@ -138,14 +138,14 @@ title: "ディープリンク - iOSアプリ開発"
             * CFBundleIdentifierと同じ値にしておくと分かりやすいだろう。
                 * 同一の値にする必要は無い。
                 * (参考)https://stackoverflow.com/questions/13040175/must-cfbundleurlname-match-cfbundleidentifier
-## Apple developerの設定
+### Apple developerの設定
 * identifierの設定のAssociated Domainsにチェックを入れる
 * 現在使っているProvisioning Profileは無効になるので注意。
 * 再度Profileを開き「save」することで変更を反映して有効化する
 * ローカルのXcode上で再度ダウンロードする。
 
 
-# 動作確認
+## 動作確認
 * シミュレーター
     * UniversalLinksは実機でのみ動作する。
         * シミュレーターで押下しても、ブラウザが開いてしまう。

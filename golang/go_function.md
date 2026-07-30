@@ -7,10 +7,10 @@ updated: 2026-07-25
 
 
 
-# 関数
+## 関数
 * 関数の引数を　x int, y int　　は x,y int　と書ける。
 
-# クロージャ
+## クロージャ
 * Goの関数はクロージャである。
   ```go
   package main
@@ -44,7 +44,7 @@ updated: 2026-07-25
   * https://blog.y-yuki.net/entry/2017/05/04/000000
 
 
-# variadic functions（可変長引数関数）
+## variadic functions（可変長引数関数）
 * 可変長引数は配列として受け取る。
 ```go
 func Query(db *sql.DB, args ...any) {
@@ -62,7 +62,7 @@ if diff := cmp.Diff(want, respObj, opts...); diff != "" {// 配列を可変長�
 }
 ```
 
-# multiple return values
+## multiple return values
 * 日本語だと、「多値」？
 * https://go.dev/tour/basics/6
 * 戻り値は分配できる
@@ -81,7 +81,7 @@ if diff := cmp.Diff(want, respObj, opts...); diff != "" {// 配列を可変長�
   }
   ```
 
-# Named return values
+## Named return values
 * ただ、若干可読性が悪い気もする。（短い関数であれば良いかも。）
 ```go
 func split(sum int) (x, y int) {
@@ -93,12 +93,12 @@ func split(sum int) (x, y int) {
 * https://go-tour-jp.appspot.com/basics/7
 
 
-# optional parameter, default value, named parameter
+## optional parameter, default value, named parameter
 * いずれもできない。
 * (IMO) named parameterは構造体を渡すことで擬似的に実現できるが、記述が長くなるためあまり好ましいとは思わない。
 
 
-# defer
+## defer
 * 実行を関数の終わりまで遅延させる。
   * https://go-tour-jp.appspot.com/flowcontrol/12
 * deferが発火するのは、関数呼び出しから戻る時のみ。
@@ -123,12 +123,12 @@ callback end
 f end
 */
 ```
-## deferはos.exitが呼ばれると意図しない挙動になる？
+### deferはos.exitが呼ばれると意図しない挙動になる？
 * https://budougumi0617.github.io/2021/06/30/which_termination_method_should_choose_on_go/
-## panicとの関係
+### panicとの関係
 * panicのときもdeferは実行される。
 * 詳細は[エラーハンドリング](./go_error.md)を参照
-## defer 関数 とブロックスコープ
+### defer 関数 とブロックスコープ
 * defer は関数呼び出しから戻る際に実行されるのであって、ブロックスコープの末尾ではない。
 * 下記の感じだと、後に呼んだdeferが先に実行される感じ？
 * 
@@ -146,14 +146,14 @@ func main() {
 ```
 
 
-# 特殊な関数　init 
+## 特殊な関数　init 
 * https://golang.org/doc/effective_go#init
 * init、変数の初期化の順番
   * https://qiita.com/YusukeIwaki/items/f1f92c23d7ee0ca8dc7a
   * 変数の初期化のほうが先に実行される。
   * 各モジュールのinitはそれぞれの順番は保証できないので、順番に依存しないように注意しないとね。
   * blankインポートを一緒に使うと便利かも。
-## 初期化のパターン
+### 初期化のパターン
 1. varで初期化する。
 ```go
 var (
@@ -163,7 +163,7 @@ var (
 ```
 2. Init関数で初期化する。
 3. Init関数を使わずに、明示的に自分で関数を作ってmain等から呼ぶ。
-## var, init, main の順番
+### var, init, main の順番
 * https://qiita.com/suin/items/ab2db295742afcf02334
 1. importしたパッケージのvarが定義される
 2. importしたパッケージのinit関数が実行される
@@ -173,7 +173,7 @@ var (
 
 
 
-# レシーバー
+## レシーバー
 * メソッド
   * 任意の型（type）に対してメソッドを定義することができる。
   * メソッド: 関数において、タイプに所属する関数
@@ -200,7 +200,7 @@ var (
   * でも、そもそも、後述しているけど、値レシーバーは自身を変更することができないから、
     * 混在するのは間違っていないと思う。
     * そもそもjson.Marshalerやjson.Unmarshalerも、値レシーバーとポインタレシーバーだし。
-## メソッドと関数は本質的に同義
+### メソッドと関数は本質的に同義
 ```go
 func (p Person) Greet(msg string) {
     // ...
@@ -212,7 +212,7 @@ func Person.Greet(p Person, msg string) {
 ```
 * https://skatsuta.github.io/2015/12/29/value-receiver-pointer-receiver/
 * https://zenn.dev/spiegel/articles/20201212-method-value-and-expression
-## サンプルコード
+### サンプルコード
 ```go
 import (
 	"encoding/json"
@@ -277,7 +277,7 @@ func (t testStruct1) pointerReciever() bool {
 }
 ```
 
-## 値レシーバーは自身を変更することができない？
+### 値レシーバーは自身を変更することができない？
 ```go
 type s1 struct {
 	f1 string
@@ -299,7 +299,7 @@ func main() {
 	fmt.Println(v1.f1)//bbbb
 }
 ```
-## (参考)レシーバーがポインターと値の２種類それぞれに対して処理を変える必要がある
+### (参考)レシーバーがポインターと値の２種類それぞれに対して処理を変える必要がある
 * レシーバーが、ポインターレシーバーと値レシーバーの２択あるため、ライブラリの実装に応じて処理を変えなければならない。
 * 例えば、errors.Asの第二引数は、interface{Error()string}を満たす型へのポインタを渡す必要がある。
 * この場合、値レシーバーで実装されている場合はその値へのポインタを渡す
@@ -314,7 +314,7 @@ fmt.Println(errors.As(json.Unmarshal([]byte("{"), &struct{}{}), &p))
 
 
 
-# 引数として渡した場合の元の値の変更
+## 引数として渡した場合の元の値の変更
 * Goでは関数へ渡す際はすべて、（いわゆる）値渡しとなる。
   * https://go.dev/ref/spec#Calls
   > In a function call, the function value and arguments are evaluated in the usual order. After they are evaluated, the parameters of the call are passed by value to the function and the called function begins execution. The return parameters of the function are passed by value back to the caller when the function returns.

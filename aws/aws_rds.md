@@ -6,14 +6,14 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > RDS・Aurora
 
 
-# DBへの接続
+## DBへの接続
 * Table PlusやSequel Proなどのクライアントで接続する。
 * DBは通常、MySQLのポートなどをセキュリティ上外部に解放しないため、SSH経由でAP/WEBサーバーなどのDMZを踏み台にしてアクセスする。
 
-# RDS
+## RDS
 * マネージドサービスであり、自動パッチ適用、自動バックアップなどの便利機能を備える。
 
-## 運用上の重要な設定項目
+### 運用上の重要な設定項目
 * DBサブネットグループ: DBを配置できるサブネットの候補群。単一AZ構成であっても、後からマルチAZに変更したりフェイルオーバー先を確保したりするため、複数AZにまたがるサブネットで構成しておくのが基本。
 * 保管時の暗号化は作成後に有効化できないサービスが多いため、初回作成時に有効にしておく。
 * バックアップウィンドウ(自動バックアップの実行時間帯)はUTCで指定するサービスが多い。日本時間からUTCへの変換(-9時間)を間違えると、想定と異なる時間帯にバックアップが走るため注意。
@@ -47,7 +47,7 @@ updated: 2026-07-26
     * どのクエリをどのデータベースに処理させるかはAWS側の設定ではなく、アプリケーション側で実装する必要がある点に注意。WordPressではHyperDBというプラグインを使うことで、Readクエリ(SELECT)をリードレプリカへ、Writeクエリ(DELETE、UPDATE、INSERT)をマスターへルーティングできる(?)。
     * さらに可用性を向上させるために、複数のリードレプリカへのルーティングをロードバランサーで負荷分散させる方法もある。
 
-## CPUクレジットについて(バースト可能なパフォーマンスインスタンス)
+### CPUクレジットについて(バースト可能なパフォーマンスインスタンス)
 * バースト可能なパフォーマンスインスタンス(db.t2/db.t3系)は、EC2のT2/T3系と同様のCPUクレジットの仕組みで動作する。
 * (参考) https://docs.aws.amazon.com/ja_jp/AWSEC2/latest/UserGuide/burstable-credits-baseline-concepts.html
 * db.t2.small、db.t2.mediumの性能は以下の通り。
@@ -70,10 +70,10 @@ updated: 2026-07-26
     * Unlimitedモードでは最大24時間分のクレジットを前借りでき、その前借り分も超えると追加料金が発生する。
     * (参考) https://dev.classmethod.jp/cloud/aws/t3-instance/ (EC2のT3インスタンスの記事だが、クレジットの考え方はdb.t3でも同様)
 
-# Aurora
+## Aurora
 * (参考) https://dev.classmethod.jp/articles/developers-io-2019-in-osaka-aurora-or-rds/
 
-## RDSとの違い
+### RDSとの違い
 * AuroraはRDSの一部である。独立したサービスのように見えるが、実態はOracle DatabaseやMicrosoft SQL Server、MySQLなどと同じくAmazon RDSで利用可能なRDBMSのオプションの一つ。Auroraを利用するにはAmazon RDSを利用する必要があり、自動パッチ適用や自動バックアップなどRDSの基本機能もAuroraへ引き継がれる。
 * 作成時にAurora DBクラスターが作成される。RDSとの違いは以下の通り。
     * RDS: 1つのAZにインスタンス+EBS2台の構成。EBSがもう1つのEBSへミラーリングすることで耐久性を高めている。レプリカを作成すると、このセット(インスタンス+EBS2台)が別のAZに増える。レプリカ(セカンダリ)はプライマリから連携されるログを使ってストレージデータを更新し、プライマリと同期する。プライマリ/セカンダリの関係はアクティブ/スタンバイであり、プライマリが稼働している間セカンダリは待機しているだけになる。
@@ -103,7 +103,7 @@ updated: 2026-07-26
     * Aurora Serverlessに接続する際に、コネクション数を気にせずLambdaなどのサービスと繋ぐためのAPI。
     * 従来のProvisioned Aurora向けにはAmazon RDS Proxyとして提供されている。
 
-# Aurora Serverless
+## Aurora Serverless
 * (参考) https://dev.classmethod.jp/articles/reinvent-2019-aurora-serverless-scalable-cost-effective-application-deployment-dat382/
 * (IME) Auroraの機能が一部制限される点が悩ましく、通常のAuroraとどちらを選ぶべきか判断に迷うことがある。
 * Auroraはストレージはオートスケールだが、インスタンス(コンピューティング)はオートスケールではない。これをオートスケールにしたのがAurora Serverless。

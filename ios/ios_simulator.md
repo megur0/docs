@@ -5,7 +5,7 @@ title: "iOSシミュレータの操作 - iOSアプリ開発"
 [TOP(About this memo))](../README.md) > [一覧(iOSアプリ開発)](./README.md) > iOSシミュレータの操作
 
 
-# iOS simulator
+## iOS simulator
 * 拡大縮小
     * option押しながら動かす
 * 現在地の設定
@@ -17,7 +17,7 @@ title: "iOSシミュレータの操作 - iOSアプリ開発"
 * app switcher
     * shift + ctl + cmd + H
 
-# キーボード
+## キーボード
 * I/O > input > Send Keyboard input To Device(opt + cmd + k)
     * キーボードからの入力を有効化
     * (IME)筆者の環境では、有効化しなくてもキーボードから入力は可能だった。ただ、日本語入力が不安定だったがこの項目を有効化することで安定した。
@@ -28,7 +28,7 @@ title: "iOSシミュレータの操作 - iOSアプリ開発"
     * _は shift+ハイフン
     * @は shift+2
 
-# トラブルシュート(IME)
+## トラブルシュート(IME)
 * File > Open Simulator に Simulatorが表示されない。
     * Macを再起動した結果動作した
 * シミュレーターで「Unable to boot the Simulator」のエラーが発生して 起動できない。

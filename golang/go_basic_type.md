@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# Types
+## Types
 * https://go.dev/ref/spec#Types
 * 型は、値のセットと、それらの値に固有の操作およびメソッドを決定する
 * 仕様書には下記のような分類がされている。
@@ -22,7 +22,7 @@ updated: 2026-07-25
 		* type literalsを利用して構築するもの
 		* array, struct, pointer, function, interface, slice, map, and channel types
 		
-# Assignability
+## Assignability
 * https://go.dev/ref/spec#Assignability
 * V型の値xがT型の変数に代入可能である（「xはTに代入可能である」）のは、以下の条件のいずれかに当てはまる場合
 	* VとTが同一(identical)である。
@@ -33,7 +33,7 @@ updated: 2026-07-25
 	* xはT型の値で表現可能な型付けされていない定数である。
 
 
-# 組み込み型(Predeclared types)
+## 組み込み型(Predeclared types)
 * https://go.dev/ref/spec#Predeclared_identifiers
 * https://go-tour-jp.appspot.com/basics/11
 ```go
@@ -50,8 +50,8 @@ complex64 complex128 //複素数？
 * int, uint, uintptr 型は、32-bitのシステムでは32 bitで、64-bitのシステムでは64 bit
 
 
-# 複合型(Composite types)の制約
-## Can I convert a []T to an []interface{}?
+## 複合型(Composite types)の制約
+### Can I convert a []T to an []interface{}?
 * https://blog.merovius.de/posts/2018-06-03-why-doesnt-go-have-variance-in/
 * 複合型においては、言語仕様としてanyの複合型へ代入することができない。
 * anyを他言語のObject型あるいはdynamic型のように捉えてしまうと齟齬が生じるだろう。
@@ -78,7 +78,7 @@ func f(a map[any]any) {
 }
 
 ```
-## Can I convert []T1 to []T2 if T1 and T2 have the same underlying type?
+### Can I convert []T1 to []T2 if T1 and T2 have the same underlying type?
 * 同一なunderlying typeをT1, T2において
 	* T1をT2へ変換することはできる(つまり、メソッドセットを変換することができる)
 	* []T1 を []T2 へ変換することはできない
@@ -98,7 +98,7 @@ func main() {
 * https://go.dev/doc/faq#convert_slice_with_same_underlying_type
 
 
-# Goの用語で「オブジェクト化」「インスタンス化」は何にあたる？
+## Goの用語で「オブジェクト化」「インスタンス化」は何にあたる？
 * specだと明示的にオブジェクトやインスタンスは使われていない。
 * 「Allocation」が適切っぽい。
 	* つまり、メモリ割り当て。
@@ -107,7 +107,7 @@ func main() {
 * https://www.reddit.com/r/golang/comments/x8utok/dumb_question_of_vocabulary_is_a_struct_instance/
 
 
-# 文字列
+## 文字列
 * ""で囲むとエスケープシーケンスが利用できる
 	* \nや\r
 	* \uはunicodeのコードポイント
@@ -134,18 +134,18 @@ func main() {
 * string型
   * string型は文字列実体へのポインタと文字列長を表すint型とで構成
   * https://qiita.com/hnw/items/ec3da327c37e3ad8c875
-## Goの文字列はbyteのsliceのような形式。
+### Goの文字列はbyteのsliceのような形式。
 * UTF-8文字列は3バイト。
   * fmt.Println(len("aaaaa"))//5
   * fmt.Println(len("あああああ"))//15
 * UTF-8の文字列としての長さを知りたい場合はutf8.RuneCountInStringを使う必要がある。
   * fmt.Println(utf8.RuneCountInString("あああああ"))//5
-## 切り出し
+### 切り出し
 * ASCIIコードであればよいが、UTF-8文字列は1バイト単位で切ってしまうと、不正なバイト列になってしまう。
 * なので、runeのsliceにキャストしてから切り出してstringへキャストする。runeのスライスはUTF-8一文字ごとになっている。
   * fmt.Println(string([]rune(str)[:2]))
 * https://qiita.com/catatsuy/items/4586597246264e4674e1
-## stringとintの相互変換
+### stringとintの相互変換
 ```go
 import (
 	"fmt"
@@ -162,7 +162,7 @@ func main() {
 	fmt.Println(is)
 }
 ```
-## サンプルコード: UTF-8（rune）, バイト, 文字
+### サンプルコード: UTF-8（rune）, バイト, 文字
 ```go
 // 文字 -> unicode
 fmt.Printf("%U\n", []rune("ああ\n\r")) // [U+3042 U+3042 U+000A U+000A]
@@ -199,12 +199,12 @@ func TestUnicode(t *testing.T) {
 ```
 
 
-# Goのエスケープシーケンス
+## Goのエスケープシーケンス
 ```go
 escaped_char = `\` ( "a" | "b" | "f" | "n" | "r" | "t" | "v" | `\` | "'" | `"` ) .
 ```
 * https://go.dev/ref/spec
-## 参考（url.Parseに出てくる関数）
+### 参考（url.Parseに出てくる関数）
 * エスケープシーケンスのチェックをしている。
 ```go
 func stringContainsCTLByte(s string) bool {
@@ -220,20 +220,20 @@ func stringContainsCTLByte(s string) bool {
 
 
 
-# stringの文字数上限
+## stringの文字数上限
 * 上限は無く、メモリの量が上限？
 https://stackoverflow.com/questions/40675029/is-there-any-string-length-limit-in-golangs-string-map-key
 
 
 
-# type
+## type
 * https://go.dev/ref/spec#Type_declarations
 ```go
 type a string // Type definitions:  これはstringとは別の型
 type b = string // Alias declarations: これはstringの別名(C言語のtypedefに相当する)
 ```
 * なお anyは`type any = interface{}`として定義されている
-## Type definitionsでは、レシーバーは継承されない。
+### Type definitionsでは、レシーバーは継承されない。
 * 一方、structの埋め込みだと（継承ではないが）移譲的に利用できる。
 ```go
 package main
@@ -280,7 +280,7 @@ func main() {
 ```
 
 
-# enum 
+## enum 
 * Goはenumに相当する機能がない。
 * 下記のようにiotaを利用して擬似的な表現は可能だが、enumに備わる値の制限といった機能はない。
 	* enumというよりは代入する値のエイリアス、といった

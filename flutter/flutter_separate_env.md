@@ -6,10 +6,10 @@ updated: 2024-08-30
 [TOP(About this memo))](../README.md) > [一覧(Flutter)](./README.md) > 環境を入れ替え可能とする
 
 
-# 注意
+## 注意
 * 本メモはAndroidに関しては触れていない
 
-# Flutterで環境を分ける
+## Flutterで環境を分ける
 * flutter runのオプションの--dart-define-from-fileを利用する
 * 例
     * `flutter run --dart-define-from-file=dart_defines/dev.json`
@@ -76,7 +76,7 @@ updated: 2024-08-30
     final appName = const String.fromEnvironment('appName');
     ```
 
-# --flavorや--dart-defineを利用する方法
+## --flavorや--dart-defineを利用する方法
 * これらを利用する方法は割愛する
 * https://docs.flutter.dev/deployment/flavors
 * https://dart.dev/guides/environment-declarations

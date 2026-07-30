@@ -6,7 +6,7 @@ updated: 2026-07-30
 [TOP(About this memo))](../README.md) > AWS
 
 
-# AWS
+## AWS
 
 * [料金・SLA・障害](./aws_pricing_sla.md)
 

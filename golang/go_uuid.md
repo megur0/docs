@@ -8,7 +8,7 @@ updated: 2026-07-25
 
 
 
-# サンプルコード
+## サンプルコード
 ```go
 import (
 	"testing"

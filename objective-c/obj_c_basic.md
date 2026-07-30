@@ -6,12 +6,12 @@ updated: 2026-07-26
 [TOP(About this memo))](../README.md) > Objective-C
 
 
-# 参考
+## 参考
 * (参考) https://gist.github.com/iyuuya/3231301
 * (参考) https://qiita.com/kidach1/items/866c7ea6ce7eaf02c35c
 
 
-# ブラケット記法（メッセージ式、メッセージング）
+## ブラケット記法（メッセージ式、メッセージング）
 * `[greeter sayHello];`
     * `greeter.sayHello();` と同じ意味。
 * `[@"checkPermissionStatus" isEqualToString:call.method];`
@@ -19,7 +19,7 @@ updated: 2026-07-26
 * なお、ブラケット記法だとデリゲート (委譲)などの機能があるらしい。詳細については把握していない(TODO)。
 
 
-# Blocks
+## Blocks
 * (参考) https://obc-fight.blogspot.com/2013/07/Block-basic.html
 * クロージャ的なもの(?)。
 ```objectivec
@@ -55,7 +55,7 @@ void (^blocksTest5)(int x, int y) = ^(int x, int y) {
 // 実行、NSLog()でログ出力
 NSLog(@"%d", blocksTest3());
 ```
-## メソッドの引数がBlocks
+### メソッドの引数がBlocks
 * 定義
 ```objectivec
 // 「(int(^) (int a, int b))bt7」の部分が、a, bを引数にとってintを返すBlocksとなる
@@ -71,7 +71,7 @@ int i = [self blocksTest7:^int(int a, int b){
 ```
 
 
-# @マーク
+## @マーク
 ```objectivec
 @1;     // => [NSNumber numberWithInteger:1]
 @0.5;   // => [NSNumber numberWithDouble:0.5]
@@ -83,7 +83,7 @@ int i = [self blocksTest7:^int(int a, int b){
 * (参考) https://akuraru.hatenadiary.jp/entry/20130427/p1
 
 
-# 型
+## 型
 * NSObject
     * ルートクラス的なもの。
     * 他の言語だとObject型に相当する。
@@ -91,7 +91,7 @@ int i = [self blocksTest7:^int(int a, int b){
     * 動的型(dynamic type)的なもの(?)。
 
 
-# 構造体
+## 構造体
 ```objectivec
 typedef struct Person {
     float height;
@@ -104,7 +104,7 @@ a.height = 170.5;
 ```
 
 
-# クラスのヘッダファイル（.h）
+## クラスのヘッダファイル（.h）
 * @propertyで宣言すると自動でsetter, getterが設定される。
     * 基本的には.mファイルの@synthesizeとセットで使用する。
 * デフォルトで、コンストラクタはinit（NSObject）が設定されている。
@@ -129,7 +129,7 @@ a.height = 170.5;
 ```
 
 
-# クラスの実装ファイル（.m）
+## クラスの実装ファイル（.m）
 * @synthesize
     * @propertyで定義したプロパティと、メンバ変数をsynthesize(合成)するもの。
 * メソッド
@@ -171,7 +171,7 @@ a.height = 170.5;
 ```
 
 
-# インスタンス生成
+## インスタンス生成
 * alloc
     * インスタンスの生成に必要なメモリ容量を確保する。
 * init
@@ -191,7 +191,7 @@ tarou->life = 10;
 ```
 
 
-# ラベルがついたメソッドの呼び出し例
+## ラベルがついたメソッドの呼び出し例
 * (参考) https://qiita.com/Pinehead/items/a9476dcac6e39f33c282
 * 宣言
 ```objectivec
