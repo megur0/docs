@@ -1,6 +1,6 @@
 ---
 title: "AWS CLI・CloudFormation - AWS"
-updated: 2026-07-24
+updated: 2026-08-01
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > AWS CLI・CloudFormation
@@ -19,6 +19,45 @@ updated: 2026-07-24
 * EC2のインスタンス上から利用する場合
     * 必要な権限を持つIAMロールを作成し、EC2インスタンスにアタッチする(推奨)。
     * またはアクセスキーを利用する方法もあるが、アクセスキーが万が一流出した場合に外部から不正利用される可能性があるため非推奨。
+
+### 新規AWSアカウントの初期セットアップ(IAMユーザー作成)
+新しく作成したAWSアカウントでAWS CLIを使う場合、ルートユーザーの認証情報を直接使うのではなく、IAMユーザーを作成してアクセスキーを発行し、`aws configure`に設定する方法が一般的。
+
+AWS CLIの認証方法は以下のいずれかを選べる。
+
+|方法|利用可否|推奨度|
+|-|-|-|
+|ルートユーザーのアクセスキー|可能|非推奨|
+|IAMユーザーのアクセスキー|可能|一般的|
+|IAM Identity Center(SSO)|可能|推奨|
+
+ルートユーザーのアクセスキーでもCLIは利用できるが、ルートユーザーは全権限を持ち誤操作時の影響が最大になるうえ、アクセスキー漏洩時のリスクも大きいため非推奨。以下の構成が現実的。
+
+```
+ルートユーザー
+  ↓
+IAMユーザー作成
+  ↓
+アクセスキー発行
+  ↓
+aws configure
+```
+
+#### IAMユーザーの作成手順(コンソール)
+```
+IAM → Users → Create user
+```
+* User name: 用途が分かる名前にする(例: `terraform-admin`)。
+* AWS Management Console access: CLI/Terraform専用に使うユーザーであればチェック不要。
+* Permissions: `Attach policies directly`を選択し、`AdministratorAccess`をアタッチする。
+    * Terraform等のIaCツールで多くのAWSサービス(VPC、ECS、RDS、ALB、IAM Role、S3、CloudFront、Route53、SESなど)を横断的に操作する場合、個別に権限を絞り込むよりもまずAdministratorAccessで構築し、必要に応じて後から権限を絞る方が現実的(IMO)。
+* Tags: 任意(例: `Name: terraform-user`)。
+
+#### アクセスキーの発行
+```
+IAM → Users → 対象ユーザー → Security credentials → Create access key
+```
+用途は`Command Line Interface (CLI)`を選択する。発行された「Access Key ID」と「Secret Access Key」は`aws configure`で使うため保存しておく。
 
 ### （参考）AWS CLIでEC2インスタンスの作成
 * VPC、IGWやセキュリティグループ、サブネット、SSH鍵の設定など、一通りAWS CLIから作成できる。
@@ -54,6 +93,22 @@ $ aws configure
 ```
 確認: `aws configure list`
 
+* リージョン: 日本国内で使う場合は東京リージョンの`ap-northeast-1`を指定することが多い。
+* 出力形式: `json`が無難(Terraformとの相性がよく、スクリプトでも処理しやすい)。他に`table`(人間には見やすい)、`text`(簡易表示)がある。
+
+アカウントを取り違えていないかは以下でも確認できる。
+```bash
+aws sts get-caller-identity
+```
+```json
+{
+    "UserId": "AIDAxxxxxxxx",
+    "Account": "123456789012",
+    "Arn": "arn:aws:iam::123456789012:user/terraform-admin"
+}
+```
+`Account`が意図したAWSアカウントIDになっていることを確認する。
+
 ### 名前付きプロファイル作成
 ```
 $ aws configure --profile user1
@@ -81,6 +136,28 @@ aws configure list  # 確認
 ```
 * `AWS_PROFILE`との関係(?): `AWS_DEFAULT_PROFILE`が設定されていない場合は`AWS_PROFILE`が優先されるらしい。両方設定されている場合は`AWS_DEFAULT_PROFILE`が優先される。
 
+### 別アカウントへ切り替える(既存の設定を削除する場合)
+プロファイルを使い分けるのではなく、古いAWSアカウントの設定自体を削除して新しいアカウントに一本化したい場合は、`~/.aws/credentials`・`~/.aws/config`を削除すればよい。
+
+削除前に念のためバックアップを取っておく。
+```bash
+mkdir -p ~/.aws-backup
+cp ~/.aws/credentials ~/.aws-backup/credentials.bak 2>/dev/null
+cp ~/.aws/config ~/.aws-backup/config.bak 2>/dev/null
+```
+
+ファイル単位で削除:
+```bash
+rm -f ~/.aws/credentials
+rm -f ~/.aws/config
+```
+またはAWS CLIの設定ディレクトリごと削除:
+```bash
+rm -rf ~/.aws
+```
+
+削除後に`aws configure`で新しいアカウントのIAMユーザーのアクセスキーを設定し直す。
+
 ### コマンド実行時にプロファイルを都度切り替える
 * `--profile`で指定すればよい。(例) `aws s3 ls --profile user1`
 
@@ -96,6 +173,10 @@ aws iam list-groups  # IAMグループを確認
 ```
 aws ec2 describe-instances
 ```
+
+### 補足: IAM Identity Center(SSO)への移行
+アクセスキーを長期間発行し続ける運用はキー漏洩のリスクがあるため、将来的にはIAM Identity Center(SSO)を使うと、長期間有効なアクセスキーを持たずにブラウザ認証と一時的な認証情報でCLI/Terraformを利用できるためより安全(IMO)。ただし個人開発やTerraform学習用途では、IAMユーザー + アクセスキー方式のほうがシンプルで扱いやすい。
+* AWS Organizationsとの関係、Identity Centerのユーザー/Permission Set/アカウント割り当ての概念整理、`aws configure sso`〜`aws sso login`/`logout`の具体的な使い方は[Organizations・IAM Identity Center](./aws_organizations_identity_center.md)を参照。
 
 ## CloudFormation
 * テンプレートファイルからAWSリソースをプロビジョニングするサービス。テンプレートベースで、作成〜変更〜削除が可能。CloudFormation自体への追加料金は無い。

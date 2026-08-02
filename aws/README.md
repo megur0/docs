@@ -1,6 +1,6 @@
 ---
 title: "AWS"
-updated: 2026-07-30
+updated: 2026-08-01
 ---
 
 [TOP(About this memo))](../README.md) > AWS
@@ -15,6 +15,8 @@ updated: 2026-07-30
 * [ELB(Elastic Load Balancing)](./aws_elb.md)
 
 * [IAM・アクセス管理](./aws_iam.md)
+
+* [Organizations・IAM Identity Center](./aws_organizations_identity_center.md)
 
 * [セキュリティグループ](./aws_security_group.md)
 
