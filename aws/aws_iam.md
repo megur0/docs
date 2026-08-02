@@ -1,6 +1,6 @@
 ---
 title: "IAM・アクセス管理 - AWS"
-updated: 2026-07-26
+updated: 2026-08-02
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > IAM・アクセス管理
@@ -29,14 +29,14 @@ AWSアカウント(1個。ルート権限)
     * IAMロールはユーザーやグループと似ているが、ユーザーやグループが「人」に対して割り当てられるのに対し、ロールは主に「(EC2等の)インスタンス」に割り当てられるケースが多い。
     * 例: EC2がS3との連携でファイルのアップロードや削除等の操作を自動で行うために、「MyEC2Role」というロールを作成し、それに「MyS3FullAccess」というポリシーをアタッチする。そのロールをEC2にアタッチすることで、EC2はS3に対する権限を得る。
     * 「人」が手動で行う操作の権限はユーザーやグループにポリシーをアタッチし、「インスタンス」が自動で行う操作の権限はロールにポリシーをアタッチしたうえで、そのロールをインスタンスにアタッチする。
-    * ロールの割り当て先はインスタンスだけに限らない。AWSではフェデレーション等のSAML連携でログインすることも可能で、その場合SAMLユーザーのIDは別組織のIdP(IDプロバイダー)から提供される。そのSAMLユーザーが持つ権限も「ロール」のアタッチによって定める。
+    * ロールの割り当て先はインスタンスだけに限らない。AWSではフェデレーション等のSAML連携でログインすることも可能で、その場合SAMLユーザーのIDは別組織のIdP(IDプロバイダー)から提供される。そのSAMLユーザーが持つ権限も「ロール」のアタッチによって定める(詳細は[フェデレーション](#フェデレーションfederated-identity)を参照)。
     * つまりロールの割り当てとは、IAMユーザーやIAMグループ以外の「何者か」に対して一時的に権限を与える仕組みだといえる。
     * 実際、ロールを割り当てられたエンティティは操作のたびにKMSの仕組みで「アクセスキー」と「シークレットキー」が発行され、その一時キーを使って操作を行う。
 * ログイン
     * IAMユーザー
         * アカウントID(アカウント欄)、アカウント名、パスワードでログインする方法
-        * または、専用URL(`ルートアカウント.signin.aws.amazon.com/console`)からアカウント名、パスワードでログインする方法
-        * (TODO) この2種類のログイン方法が用意されている理由の使い分けは理解しきれていない。
+        * または、専用URL(`<アカウントIDまたはエイリアス>.signin.aws.amazon.com/console`)からアカウント名、パスワードでログインする方法
+        * この2つは同じログイン(同じアカウント・同じIAMユーザー)で、後者は「アカウント欄への入力」を省略できる専用URLというだけの違い。機能的な差はない。
     * ルートアカウント(通常は使用しない)
         * メールアドレス/パスワードでログイン
 * AssumeRole
@@ -45,6 +45,19 @@ AWSアカウント(1個。ルート権限)
 * AssumeRoleポリシー
     * そのロールを誰がAssumeRoleしてよいかを定めるポリシー。(例)「このロールはECSだけが利用できる」
     * ※ 一方、IAMポリシーは「AssumeRoleした後に何ができるか」を表す。
+
+## サインインURLの種類
+AWSへのサインインにはユーザーの種類ごとに複数のURLパターンがあり、混同しやすい。
+
+|URL|対象|説明|
+|-|-|-|
+|`https://console.aws.amazon.com/`(実体は`https://signin.aws.amazon.com/signin`)|ルートユーザー / IAMユーザー|汎用のサインインページ。ページ内で「ルートユーザー」か「IAMユーザー」かを選び、IAMユーザーの場合はアカウントID(またはエイリアス)も入力する|
+|`https://<アカウントIDまたはエイリアス>.signin.aws.amazon.com/console/`|IAMユーザー|アカウントIDの入力を省略できる、特定アカウント専用のIAMユーザー用サインインURL|
+|`https://{d-xxxxxxxxxx}.awsapps.com/start`(またはカスタムサブドメイン)|IAM Identity CenterのUser|AWS access portal。詳細は[Organizations・IAM Identity Center](./aws_organizations_identity_center.md)を参照|
+|`https://{リージョン}.signin.aws/platform/{d-xxxxxxxxxx}/login`|IAM Identity CenterのUser|2020年11月以降、AWS access portalのログイン処理の実体がこちらの新ドメインに移行した。上のURLへアクセスすると自動的にリダイレクトされる中継地点で、ブックマークすべきは`.awsapps.com`側のURL|
+|`https://{リージョン}.signin.aws.amazon.com/oauth`等|ルートユーザー / IAMユーザー / フェデレーションID|`aws login`コマンド(2025年11月〜。[aws_cli_iac.md](./aws_cli_iac.md)参照)が使うOAuth 2.0認証フローの一部|
+
+(出典: [Determine your sign-in URL](https://docs.aws.amazon.com/signin/latest/userguide/sign-in-urls-defined.html)、[Get ready for upcoming changes in the AWS IAM Identity Center user sign-in process](https://aws.amazon.com/blogs/security/get-ready-upcoming-changes-aws-single-sign-on-user-sign-in-process/))
 
 ## PassRole
 * あるIAMロールを、自分自身ではなく「別のAWSサービス」に使わせるための権限。`iam:PassRole`アクションで許可する。
@@ -108,6 +121,51 @@ AWSアカウント(1個。ルート権限)
 * 「ロールによる権限委譲」は以下のような応用もできる。
     * Facebookアプリを介してFacebookユーザーを信頼する(AWSをmBaaS的に使うイメージ)。GoogleやAmazonのIDでも実現できる。
     * Identity Providersとして独自のシステムをSAML Providerとして登録すれば、そのシステムに認証を委譲することも可能。
+
+### フェデレーション(Federated Identity)
+上記のような「外部の認証結果を信頼してロールを引き受けさせる」仕組みを一般に**フェデレーション(ID連携)**と呼ぶ。フェデレーションで認証された主体を**フェデレーテッドユーザー(Federated User)**と呼び、IAMユーザーとは別の概念。
+
+* **IAMユーザー**: AWSアカウント内に実体として作成される、長期的な認証情報(パスワード・アクセスキー)を持つ主体。
+* **フェデレーテッドユーザー**: AWSアカウント内にユーザーの実体を持たない。外部のIdP(Identity Provider)が認証を行い、その結果(SAMLアサーションやOIDCトークン)を使ってSTSから一時的な認証情報を取得する。
+
+つまりフェデレーションは「IAMユーザーを作らずに、外部の認証結果をIAM Roleの一時クレデンシャルに変換する」仕組み。IAMユーザーの管理(作成・削除・パスワードローテーション等)から解放される点が最大のメリット。
+
+#### 主な2方式
+|方式|対象IdP|STS API|
+|-|-|-|
+|SAML 2.0|Active Directory Federation Services(AD FS)、Okta、Azure AD等の企業向けIdP|`sts:AssumeRoleWithSAML`|
+|OIDC(Web Identity Federation)|Google/Amazon/FacebookなどのソーシャルログインID、GitHub ActionsなどOIDC対応の外部システム|`sts:AssumeRoleWithWebIdentity`|
+
+どちらも流れは同じ。
+
+```
+外部IdPで認証
+    ↓
+IdPがSAMLアサーション/OIDCトークンを発行
+    ↓
+AWS STSへ AssumeRoleWithSAML / AssumeRoleWithWebIdentity
+    ↓
+IAM Roleの一時クレデンシャルを取得
+```
+
+事前にIAM側で、その外部IdPを信頼する「IDプロバイダー」リソースを登録し、IAM Roleの信頼ポリシー(`AssumeRolePolicyDocument`)の`Principal`にそのIdPを指定しておく必要がある。
+
+#### IAM Identity Centerとの関係
+[IAM Identity Center](./aws_organizations_identity_center.md)のUserも、実体としてはこのフェデレーションの仕組みの上に成り立っている。Identity Center自体が「内蔵IdP」または「外部IdPとの連携ブローカー」として機能し、Permission Setの割り当てから裏側でIAM Roleの一時クレデンシャルを発行している。Identity Centerは、フェデレーションを複数AWSアカウント横断で扱いやすくするためのAWSのマネージドな実装、と捉えられる(IMO)。
+
+#### 実務でよくある例: GitHub ActionsのOIDC連携
+Terraform等のCI/CDパイプラインでGitHub ActionsからAWSリソースを操作したい場合、GitHubのSecretsにIAMユーザーのアクセスキーを保存する方法は長期キーの管理・漏洩リスクがある。代わりにGitHub ActionsのOIDC機能を使うと、アクセスキーを一切使わずワークフロー実行時だけ一時クレデンシャルを取得できる。
+
+1. IAMで`https://token.actions.githubusercontent.com`を発行者とするOIDC IDプロバイダーを登録
+2. IAM Roleの信頼ポリシーで、対象リポジトリ・ブランチのみを許可する条件を設定(例: `token.actions.githubusercontent.com:sub`が`repo:<org>/<repo>:ref:refs/heads/main`と一致する場合のみ許可)
+3. ワークフロー側で`aws-actions/configure-aws-credentials`アクションを使い、`role-to-assume`にそのロールのARNを指定
+
+これにより、GitHub Actions実行時にIAMユーザーのアクセスキーを一切保存せずにTerraformを実行できる。
+
+#### aws loginの「フェデレーションID」
+[aws_cli_iac.md](./aws_cli_iac.md)で紹介した`aws login`コマンドが対応する3種類目の認証方式「フェデレーションID」は、IAM Identity Centerを介さず、AWSアカウントに直接SAML等でフェデレーション設定されている場合のサインイン情報を指す(Identity Center経由のログインとは別経路)。
+
+(参考) https://docs.aws.amazon.com/IAM/latest/UserGuide/id_roles_providers_oidc.html
 
 ## ポリシー
 * ポリシーは基本的に「誰が」「どのAWSサービスの」「どのリソースに対して」「どんな操作を」「許可する(許可しない)」かをJSON形式で記述する。

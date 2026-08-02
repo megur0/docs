@@ -1,6 +1,6 @@
 ---
 title: "AWS CLI・CloudFormation - AWS"
-updated: 2026-08-01
+updated: 2026-08-02
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > AWS CLI・CloudFormation
@@ -16,6 +16,7 @@ updated: 2026-08-01
 ### 利用ケース
 * 自分のPCやAWS以外のサーバーから利用する場合
     * 専用のIAMユーザーを作成し、アクセスキーの発行が必要。
+    * ただし2025年11月以降は、長期間有効なアクセスキーを発行せずに済む`aws login`コマンド([後述](#aws-login))という選択肢もある。
 * EC2のインスタンス上から利用する場合
     * 必要な権限を持つIAMロールを作成し、EC2インスタンスにアタッチする(推奨)。
     * またはアクセスキーを利用する方法もあるが、アクセスキーが万が一流出した場合に外部から不正利用される可能性があるため非推奨。
@@ -29,7 +30,8 @@ AWS CLIの認証方法は以下のいずれかを選べる。
 |-|-|-|
 |ルートユーザーのアクセスキー|可能|非推奨|
 |IAMユーザーのアクセスキー|可能|一般的|
-|IAM Identity Center(SSO)|可能|推奨|
+|`aws login`(root/IAMユーザーの一時クレデンシャル、[後述](#aws-login))|可能(CLI 2.32.0以降)|個人開発では有力な選択肢|
+|IAM Identity Center(SSO)|可能|推奨(組織・複数アカウント運用向け)|
 
 ルートユーザーのアクセスキーでもCLIは利用できるが、ルートユーザーは全権限を持ち誤操作時の影響が最大になるうえ、アクセスキー漏洩時のリスクも大きいため非推奨。以下の構成が現実的。
 
@@ -58,6 +60,35 @@ IAM → Users → Create user
 IAM → Users → 対象ユーザー → Security credentials → Create access key
 ```
 用途は`Command Line Interface (CLI)`を選択する。発行された「Access Key ID」と「Secret Access Key」は`aws configure`で使うため保存しておく。
+
+### aws login
+2025年11月に追加された、比較的新しいコマンド。IAM Identity Centerを使わずに、**既存のAWS Management Consoleのサインイン情報(ルートユーザー/IAMユーザー/フェデレーションID)をそのまま使って一時的なクレデンシャルを取得**できる。長期間有効なアクセスキーを発行・管理する必要がなくなる点が最大のメリット。
+
+* **前提**: AWS CLI **2.32.0以降**が必要。
+* IAMユーザーで使う場合は、そのIAMユーザー(またはロール・グループ)に管理ポリシー`SignInLocalDevelopmentAccess`をアタッチしておく必要がある。ルートユーザーで使う場合は追加の権限設定は不要。
+* IAM Identity Centerを使っている場合は、この`aws login`ではなく`aws configure sso`/`aws sso login`([前述](./aws_organizations_identity_center.md))を使う。
+
+```bash
+aws login
+```
+* `--profile <name>`でプロファイルを指定/新規作成できる(未指定時は`default`)。
+* ブラウザが自動的に開き、認証後にどの認証情報(ルート/IAMユーザー等)を使うか選択する。
+* ブラウザの無い端末では`aws login --remote`を使うと、別デバイスで開くURLと認証コードが表示され、コードを手動で貼り付ける形で認証できる。
+
+書き込まれる設定はアクセスキーではなく、対象IAMプリンシパルのARNのみ。
+```ini
+[default]
+login_session = arn:aws:iam::111122223333:user/terraform-admin
+region = ap-northeast-1
+```
+
+* 一時クレデンシャルは`~/.aws/login/cache`にキャッシュされる(SSOの`~/.aws/sso/cache`とは別ディレクトリ)。
+* セッションは最大12時間有効で、15分ごとに自動リフレッシュされる。12時間を超えたら`aws login`をやり直す。
+* ログアウトは`aws logout`(`--profile`指定可、`--all`で全プロファイル一括)。
+
+IAM Identity Centerのような複数アカウント横断の一元管理はできないが、個人開発で「IAMユーザーは使いたいが長期アクセスキーは避けたい」という場合に、Identity Center/Organizationsを構築するほどではない規模でも使える手軽な選択肢(IMO)。
+
+(出典: [Login for AWS local development using console credentials](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sign-in.html)、[Simplified developer access to AWS with 'aws login'](https://aws.amazon.com/blogs/security/simplified-developer-access-to-aws-with-aws-login/))
 
 ### （参考）AWS CLIでEC2インスタンスの作成
 * VPC、IGWやセキュリティグループ、サブネット、SSH鍵の設定など、一通りAWS CLIから作成できる。
@@ -174,8 +205,13 @@ aws iam list-groups  # IAMグループを確認
 aws ec2 describe-instances
 ```
 
-### 補足: IAM Identity Center(SSO)への移行
-アクセスキーを長期間発行し続ける運用はキー漏洩のリスクがあるため、将来的にはIAM Identity Center(SSO)を使うと、長期間有効なアクセスキーを持たずにブラウザ認証と一時的な認証情報でCLI/Terraformを利用できるためより安全(IMO)。ただし個人開発やTerraform学習用途では、IAMユーザー + アクセスキー方式のほうがシンプルで扱いやすい。
+### 補足: 長期アクセスキーを避ける方法
+アクセスキーを長期間発行し続ける運用はキー漏洩のリスクがあるため、避けられるなら避けたい(IMO)。選択肢は主に2つ。
+
+* **[`aws login`](#aws-login)**: 既存のIAMユーザー/ルートユーザーのサインイン情報はそのまま使い、アクセスキーの代わりに一時クレデンシャルを使う。Identity Centerを構築するほどではない個人開発規模で手軽に導入できる。
+* **IAM Identity Center(SSO)**: ブラウザ認証と一時的な認証情報でCLI/Terraformを利用できるうえ、複数AWSアカウントを1つのUserで横断管理できる。組織・複数アカウント運用ならこちらが本命(IMO)。
+
+個人開発やTerraform学習用途で、複数アカウントを横断する予定が無いなら、IAMユーザー+アクセスキー方式のままでも実用上困らないが、`aws login`に切り替えるだけでアクセスキーを持たずに済むため、乗り換えの手間は小さい(IMO)。
 * AWS Organizationsとの関係、Identity Centerのユーザー/Permission Set/アカウント割り当ての概念整理、`aws configure sso`〜`aws sso login`/`logout`の具体的な使い方は[Organizations・IAM Identity Center](./aws_organizations_identity_center.md)を参照。
 
 ## CloudFormation

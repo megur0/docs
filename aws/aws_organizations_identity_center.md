@@ -1,6 +1,6 @@
 ---
 title: "Organizations・IAM Identity Center - AWS"
-updated: 2026-08-01
+updated: 2026-08-02
 ---
 
 [TOP(About this memo))](../README.md) > [一覧(AWS)](./README.md) > Organizations・IAM Identity Center
@@ -163,22 +163,126 @@ IAM Identity Center → AWS accounts → 対象アカウントを選択 → Assi
 * **管理アカウントには割り当てず、メンバーアカウントに対して割り当てる**(管理アカウントに強い権限を持たせないため)。
 * 割り当てを行うと、対象アカウント内に自動でIAMロールがプロビジョニングされる。自分でIAMロールを作成する必要はない。
 
+## メンバーアカウントへのアクセス方法
+Organizationsで作成したメンバーアカウントは、IAMユーザーではなく**独立したAWSアカウント**([なぜAWSアカウント(メンバーアカウント)を分けるのか](#なぜawsアカウントメンバーアカウントを分けるのか)参照)。アクセス方法は主に3つある。
+
+### 1. OrganizationAccountAccessRoleでロール切り替え(AssumeRole)
+メンバーアカウント作成時、そのアカウントには通常以下のIAMロールが自動作成される([メンバーアカウントの作成](#メンバーアカウントの作成)の`IAM role name`参照)。
+
+```
+OrganizationAccountAccessRole
+```
+
+管理アカウント側で十分な権限を持つ主体(IAMユーザーやロール)から、このロールへAssumeRole(コンソールでは「Switch Role」)することでメンバーアカウントにアクセスできる。
+
+```
+Management Account
+    ↓ AssumeRole
+OrganizationAccountAccessRole
+    ↓
+Member Account
+```
+
+Terraform運用や、管理アカウント側からの日常的な管理作業では、この方法が最も一般的([Terraformでのマルチアカウント運用](#terraformでのマルチアカウント運用)を参照)。
+
+### 2. IAM Identity Center(SSO)経由でログイン
+人間がブラウザでログインする場合、AWSが推奨しているのはこちらの方法([AWSコンソール(ブラウザ)へのログイン](#awsコンソールブラウザへのログイン)を参照)。1つのUserで複数アカウントを横断でき、アカウントごとにIAMユーザーを作らずに済む。
+
+### 3. ルートユーザーでログイン(緊急時のみ)
+技術的には可能だが、Organizationsで作成したメンバーアカウントには**初期パスワードが設定されていない**。ログインするには以下の手順でパスワードを設定する必要がある。
+
+1. メンバーアカウント作成時に指定したメールアドレスを確認する([メンバーアカウントの作成](#メンバーアカウントの作成)の`Email address`)
+2. AWSサインイン画面で「パスワードをお忘れですか?」を実行
+3. 届いたメールの案内に従ってルートパスワードを設定
+4. ルートユーザーとしてログイン
+
+ルートユーザーは全権限を持ちアカウント個別の管理になるため、緊急時以外は利用しないのがAWSのベストプラクティス([管理アカウントとメンバーアカウント](#管理アカウントとメンバーアカウント)も参照)。
+
+### (非推奨) メンバーアカウントにIAMユーザーを作成してログイン
+`https://<アカウントID>.signin.aws.amazon.com/console`から専用IAMユーザーでログインする方法もあるが、これは「アカウントごとに個別のIDを持つ」という、Identity Centerで避けたい運用に逆戻りしてしまう(IMO)。
+
+## AWSコンソール(ブラウザ)へのログイン
+[AWS access portal URL](#aws-configure-sso)(`https://xxxxx.awsapps.com/start`形式)にブラウザでアクセスし、Identity Centerのユーザーでログインすると、CLIで使っているのと同じ「アカウント×Permission Setの一覧」画面が表示される。各アカウント/ロールの行に2つの選択肢がある。
+
+* **Management console**: クリックするとそのままブラウザで対象アカウントのAWSコンソールが開く(パスワード入力不要、フェデレーションされたセッションとしてログイン)
+* **Command line or programmatic access**: CLI用の一時credentials表示(こちらが`aws sso login`で使っている経路)
+
+つまり「CLIでの`aws sso login`」と「コンソールでの`Management console`クリック」は、同じ認証基盤の入り口違いなだけで、裏側の仕組みは同じ。ログインしているのはIdentity Centerのユーザーであり、対象アカウント内には自動生成されたIAMロール(`AWSReservedSSO_AdministratorAccess_xxxxxxxx`)にフェデレーションでスイッチしている形になる。
+
+## Terraformでのマルチアカウント運用
+環境ごとにメンバーアカウントを分ける構成([なぜAWSアカウント(メンバーアカウント)を分けるのか](#なぜawsアカウントメンバーアカウントを分けるのか)も参照)は、Terraform運用でもよくあるパターン。
+
+```
+Management Account
+├─ dev
+├─ stg
+└─ prod
+```
+
+管理アカウントから、各環境アカウントの`OrganizationAccountAccessRole`(または環境ごとに専用に作成したロール)へAssumeRoleする形で運用する。
+
+```
+Management Account
+    ↓ AssumeRole
+dev
+
+Management Account
+    ↓ AssumeRole
+stg
+
+Management Account
+    ↓ AssumeRole
+prod
+```
+
+Terraform自体も、各アカウントのロールをAssumeRoleしてリソースを管理するのが一般的(例: `provider "aws" { assume_role { role_arn = "arn:aws:iam::<各アカウントID>:role/OrganizationAccountAccessRole" } }`のような設定)。
+
 ## CLIでの利用
 
 ### aws configure sso
 ```bash
 aws configure sso
 ```
-対話式で以下を聞かれる。
+### 対話内容はCLIバージョンによって異なる
+`sso-session`(推奨形式、トークン自動リフレッシュ対応)は AWS CLI **v2.9系以降**で使える機能。実際に検証した結果、以下の違いを確認した。
 
-* `SSO start URL`: `IAM Identity Center → Dashboard`に表示されている「AWS access portal URL」
+|バージョン|挙動|
+|-|-|
+|v2.7.30|`SSO session name`という質問自体が出ない。常にレガシー形式(単一`[profile]`ブロック)で書き込まれる|
+|v2.9.6以降|`SSO session name (Recommended)`が質問される。名前を入力すると`sso-session`ブロックに分離された推奨形式になり、空欄で進めるとレガシー形式になる|
+
+つまり「推奨形式にならない」場合、まず`aws --version`でバージョンを確認し、v2.9系より古ければアップデートする(`brew upgrade awscli`、または[インストール手順](./aws_cli_iac.md)のpkgインストーラーを再実行)のが対応策になる。実際にv2.7.30からv2.36.14へアップデートしたところ、`SSO session name`の質問が表示されるようになることを確認済み。
+
+新しいバージョン(v2.9系以降)での対話例:
+
+* `SSO session name`(推奨): 任意の名前。空欄のまま進めるとレガシー形式になる。
+* `SSO start URL`: 以下のいずれかを入力する。どちらも`IAM Identity Center → Dashboard`の`Settings summary`(または`Settings → Identity source`)に表示されている。
+    * **AWS access portal URL**(例: `https://xxxxx.awsapps.com/start`): ブラウザで直接開いてログインするための人間向けポータル。アカウント作成時の招待メールにも記載されている。
+    * **Issuer URL**(例: `https://identitycenter.amazonaws.com/ssoins-xxxxxxxxxxxxxxx`): CLIのOIDC認証には問題なく使えるが、**ブラウザで直接開いてもログインポータルにはならない**。
 * `SSO region`: Identity Centerを有効化したリージョン
+* `SSO registration scopes`: デフォルト(`sso:account:access`)のままでよい
 
-ブラウザが開いてログイン後、割り当てられたアカウント/ロールの一覧から選択し、プロファイル名を入力すると`~/.aws/config`に以下のような設定が書き込まれる。
+ブラウザが開いてログイン後、割り当てられたアカウント/ロールの一覧から選択し、region/output/プロファイル名を入力すると`~/.aws/config`に設定が書き込まれる。
 
+**推奨形式(SSOトークンプロバイダー設定)**: セッション名を入力した場合(v2.9系以降のみ)。`sso-session`ブロックが分離され、複数プロファイルでのセッション共有やトークンの自動リフレッシュに対応する。
 ```ini
 [profile myprofile]
+sso_session = my-sso
+sso_account_id = 111122223333
+sso_role_name = AdministratorAccess
+region = ap-northeast-1
+output = json
+
+[sso-session my-sso]
+sso_region = ap-northeast-1
 sso_start_url = https://xxxxx.awsapps.com/start
+sso_registration_scopes = sso:account:access
+```
+
+**レガシー形式(非リフレッシュ設定)**: セッション名を空欄で進めた場合、またはv2.9系より古いCLIの場合。単一の`[profile]`ブロックに直接書き込まれ、トークンの自動リフレッシュには対応しない。今のところ機能が廃止されたわけではなく、単に古いバージョンや未入力時の挙動として現役でサポートされている。
+```ini
+[profile myprofile]
+sso_start_url = https://identitycenter.amazonaws.com/ssoins-xxxxxxxxxxxxxxx
 sso_region = ap-northeast-1
 sso_account_id = 111122223333
 sso_role_name = AdministratorAccess
@@ -186,7 +290,11 @@ region = ap-northeast-1
 output = json
 ```
 
-* AWS CLIのバージョンによっては、`sso_session`で別ブロック(`[sso-session <name>]`)を参照する形式になり、`SSO session name`や`SSO registration scopes`も追加で聞かれることがある(?)。その場合`sso_start_url`/`sso_region`は`[sso-session]`側に分離される。複数プロファイルで同じSSOセッションを使い回したい場合(`aws configure sso-session`コマンド)に使う形式で、単一プロファイルのみの利用ではどちらの形式でも動作は変わらない。
+古いCLIのままレガシー形式を使い続けても、個人利用でプロファイルが1つだけなら実用上の支障はない(IMO)。推奨形式にしたい場合はCLIのアップデートが必要。
+
+いずれの形式・いずれの`sso_start_url`の値でも、`aws sso login`/`aws sso logout`の挙動やCLIでの利用方法は変わらない。ただし**ブラウザでAWSコンソールにログインしたい場合は、`sso_start_url`の値ではなく、必ずAWS access portal URL(`*.awsapps.com/start`形式、招待メールにも記載)を使う**こと。`sso_start_url`にIssuer URLが設定されている場合、そのURLをブラウザで直接開いてもログイン画面は表示されない。
+
+(出典: [Configuring IAM Identity Center authentication with the AWS CLI](https://docs.aws.amazon.com/cli/latest/userguide/cli-configure-sso.html)、[Customizing the AWS access portal URL](https://docs.aws.amazon.com/singlesignon/latest/userguide/howtochangeURL.html))
 
 ### 設定(config)とセッション(トークン)の違い
 |対象|保存場所|ログイン/ログアウトの影響|
