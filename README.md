@@ -60,6 +60,8 @@ permalink: /
 
 * [Mac](./mac/README.md)
 
+* [VSCode](./vscode/README.md)
+
 * [Git](./git/README.md)
 
 * [Docker](./docker/README.md)
